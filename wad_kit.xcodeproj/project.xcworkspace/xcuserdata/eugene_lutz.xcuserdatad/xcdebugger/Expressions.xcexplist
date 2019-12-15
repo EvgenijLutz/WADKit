@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesViewState
+   version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "wadLoadFromData:wad_interface.c">
+         <PersistentStrings>
+            <PersistentString
+               value = "animationIndex">
+            </PersistentString>
+            <PersistentString
+               value = "commandIndex">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "wadRelease:wad_interface.c">
+         <PersistentStrings>
+            <PersistentString
+               value = "animation">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+   </ContextStates>
+</VariablesViewState>
