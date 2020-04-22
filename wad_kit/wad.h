@@ -28,16 +28,6 @@ typedef struct TEXTURE_PAGE
 }
 TEXTURE_PAGE;
 
-typedef struct BOUNDING_SPHERE
-{
-	short cx;
-	short cy;
-	short cz;
-	unsigned short radius;
-	unsigned short unknown;	// garbage?
-}
-BOUNDING_SPHERE;
-
 typedef struct VERTEX
 {
 	short vx;
@@ -65,18 +55,7 @@ typedef struct POLYGON
 }
 POLYGON;
 
-typedef struct MESH
-{
-	BOUNDING_SPHERE boundingSphere;
-	
-	unsigned char usesNormals;
-	unsigned short numVertices;
-	VERTEX* vertices;
-	
-	unsigned short numPolygons;
-	POLYGON* polygons;
-}
-MESH;
+typedef struct MESH MESH;
 
 typedef struct ROTATION
 {
@@ -213,29 +192,7 @@ typedef struct MOVABLE
 }
 MOVABLE;
 
-typedef struct STATIC
-{
-	unsigned int staticId;
-	unsigned int meshIndex;
-	short vx1;
-	short vy1;
-	short vz1;
-	
-	short vx2;
-	short vy2;
-	short vz2;
-	
-	short cx1;
-	short cy1;
-	short cz1;
-	
-	short cx2;
-	short cy2;
-	short cz2;
-	
-	unsigned short flags;
-}
-STATIC;
+typedef struct STATIC STATIC;
 
 typedef struct WAD
 {

@@ -7,11 +7,11 @@
 //
 
 #include "wad_interface.h"
-#include "wad.h"
-#include "raw_wad.h"
 #include "execute_result.h"
+#include "mesh.h"
+#include "static_object.h"
+#include "wad.h"
 #include <stdlib.h>
-#include <stdio.h>
 #include <string.h>
 
 
@@ -102,3 +102,73 @@ void wadRelease(WAD* wad)
 	free(wad);
 }
 
+unsigned int wadGetVersion(WAD* wad, EXECUTE_RESULT* executeResult)
+{
+	if (!wad)
+	{
+		executeResultFailed(executeResult, "WAD object is not given.");
+		return 0;
+	}
+	
+	executeResultSucceeded(executeResult);
+	return wad->version;
+}
+
+unsigned int wadGetNumStatics(WAD* wad, EXECUTE_RESULT* executeResult)
+{
+	if (!wad)
+	{
+		executeResultFailed(executeResult, "WAD object is not given.");
+		return 0;
+	}
+	
+	executeResultSucceeded(executeResult);
+	return wad->numStatics;
+}
+
+STATIC* wadGetStaticByIndex(WAD* wad, unsigned int staticIndex, EXECUTE_RESULT* executeResult)
+{
+	if (!wad)
+	{
+		executeResultFailed(executeResult, "WAD object is not given.");
+		return NULL;
+	}
+	
+	if (staticIndex >= wad->numStatics)
+	{
+		executeResultFailed(executeResult, "Index of static object is out of range.");
+		return NULL;
+	}
+	
+	executeResultSucceeded(executeResult);
+	return &(wad->statics[staticIndex]);
+}
+
+STATIC* wadGetStaticById(WAD* wad, unsigned int staticId, EXECUTE_RESULT* executeResult)
+{
+	if (!wad)
+	{
+		executeResultFailed(executeResult, "WAD object is not given.");
+		return NULL;
+	}
+	
+	STATIC* staticObject = NULL;
+	for (unsigned int i = 0; i < wad->numStatics; i++)
+	{
+		STATIC* currentStatic = &(wad->statics[i]);
+		if (currentStatic->staticId == staticId)
+		{
+			staticObject = currentStatic;
+			break;
+		}
+	}
+	
+	if (staticObject == NULL)
+	{
+		executeResultFailed(executeResult, "Static object is not found by this identifier.");
+		return NULL;
+	}
+	
+	executeResultSucceeded(executeResult);
+	return staticObject;
+}

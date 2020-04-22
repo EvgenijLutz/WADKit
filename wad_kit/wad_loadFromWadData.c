@@ -7,9 +7,11 @@
 //
 
 #include "wad_interface.h"
+#include "execute_result.h"
+#include "mesh.h"
+#include "static_object.h"
 #include "wad.h"
 #include "raw_wad.h"
-#include "execute_result.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -110,7 +112,7 @@ WAD* wadLoadFromWadData(const unsigned char* data, long dataSize, EXECUTE_RESULT
 	
 	/// SECTION 1 – VERSION
 	const unsigned int version = readUInt(reader);
-	if (version < 129 /*|| version > 130*/)
+	if (version < 129 || version > 130)
 	{
 		sprintf(errorMessage, "Invalid file version: %d", version);
 		executeResultFailed(executeResult, errorMessage);
@@ -222,11 +224,11 @@ WAD* wadLoadFromWadData(const unsigned char* data, long dataSize, EXECUTE_RESULT
 		
 		MESH* mesh = &(temporaryMeshes[numMeshes]);
 		numMeshes++;
-		mesh->boundingSphere.cx = readShort(reader);
-		mesh->boundingSphere.cy = readShort(reader);
-		mesh->boundingSphere.cz = readShort(reader);
-		mesh->boundingSphere.radius = readUShort(reader);
-		mesh->boundingSphere.unknown = readUShort(reader);
+		mesh->cx = readShort(reader);
+		mesh->cy = readShort(reader);
+		mesh->cz = readShort(reader);
+		mesh->radius = readUShort(reader);
+		mesh->unknown = readUShort(reader);
 		
 		const unsigned short numVertices = readUShort(reader);
 		VERTEX* vertices = malloc(sizeof(VERTEX) * numVertices);
@@ -691,6 +693,7 @@ WAD* wadLoadFromWadData(const unsigned char* data, long dataSize, EXECUTE_RESULT
 							readUShort(bufferReader);
 							wordsLeft--;
 						}
+						//bufferReader->position += wordsLeft * 2;
 					}
 				}
 				else
@@ -818,21 +821,14 @@ WAD* wadLoadFromWadData(const unsigned char* data, long dataSize, EXECUTE_RESULT
 		
 		staticObject->flags = rawStatic->flags;
 		
-		int found = 0;
 		const unsigned int meshAddress = raw_meshPointersList[rawStatic->pointersIndex];
 		for (unsigned int meshIndex = 0; meshIndex < wad->numMeshes; meshIndex++)
 		{
 			if (raw_meshAddresses[meshIndex] == meshAddress)
 			{
 				staticObject->meshIndex = meshIndex;
-				found = 1;
 				break;
 			}
-		}
-		
-		if (!found)
-		{
-			found = 0;
 		}
 	}
 	

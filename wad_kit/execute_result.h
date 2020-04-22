@@ -9,12 +9,17 @@
 #ifndef execute_result_h
 #define execute_result_h
 
+/**
+ Result of function execution.
+ */
 typedef struct EXECUTE_RESULT
 {
 	int succeeded;
 	char message[2048];
 }
 EXECUTE_RESULT;
+
+/* Convenience methods */
 
 void executeResultSucceeded(EXECUTE_RESULT* executeResult);
 void executeResultFailed(EXECUTE_RESULT* executeResult, const char* message);

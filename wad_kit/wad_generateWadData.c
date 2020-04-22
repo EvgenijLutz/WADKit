@@ -6,8 +6,11 @@
 //  Copyright © 2019 Eugene Lutz. All rights reserved.
 //
 
-#include "wad.h"
+#include "wad_interface.h"
 #include "execute_result.h"
+#include "mesh.h"
+#include "static_object.h"
+#include "wad.h"
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
@@ -257,11 +260,11 @@ static BUFFER_WRITER* _createMeshBuffer(WAD* wad, WAD_DATABLOCK_SIZES* sizes, un
 		meshOffsets[i] = writer->position;
 		
 		MESH* mesh = &(wad->meshes[i]);
-		writeShort(writer, mesh->boundingSphere.cx, &writeResult);
-		writeShort(writer, mesh->boundingSphere.cy, &writeResult);
-		writeShort(writer, mesh->boundingSphere.cz, &writeResult);
-		writeUShort(writer, mesh->boundingSphere.radius, &writeResult);
-		writeUShort(writer, mesh->boundingSphere.unknown, &writeResult);
+		writeShort(writer, mesh->cx, &writeResult);
+		writeShort(writer, mesh->cy, &writeResult);
+		writeShort(writer, mesh->cz, &writeResult);
+		writeUShort(writer, mesh->radius, &writeResult);
+		writeUShort(writer, mesh->unknown, &writeResult);
 		
 		writeUShort(writer, mesh->numVertices, &writeResult);
 		for (unsigned short j = 0; j < mesh->numVertices; j++)
