@@ -1,0 +1,611 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		C9BC729523AD560100EFE0D7 /* Window.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9BC729423AD560100EFE0D7 /* Window.xib */; };
+		C9BE0FD323A733E3000E25FC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C9BE0FD223A733E3000E25FC /* AppDelegate.m */; };
+		C9BE0FD523A733E7000E25FC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C9BE0FD423A733E7000E25FC /* Assets.xcassets */; };
+		C9BE0FD823A733E7000E25FC /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9BE0FD623A733E7000E25FC /* MainMenu.xib */; };
+		C9BE0FDB23A733E7000E25FC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C9BE0FDA23A733E7000E25FC /* main.m */; };
+		C9BE0FE623A733E7000E25FC /* WAD_EditorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C9BE0FE523A733E7000E25FC /* WAD_EditorTests.m */; };
+		C9BE0FF123A733E7000E25FC /* WAD_EditorUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = C9BE0FF023A733E7000E25FC /* WAD_EditorUITests.m */; };
+		C9BE100023A7341E000E25FC /* libwad_kit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C9BE0FFF23A7341E000E25FC /* libwad_kit.a */; };
+		C9BE100423A73434000E25FC /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9BE100123A73434000E25FC /* Metal.framework */; };
+		C9BE100523A73434000E25FC /* MetalPerformanceShaders.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9BE100223A73434000E25FC /* MetalPerformanceShaders.framework */; };
+		C9BE100623A73434000E25FC /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9BE100323A73434000E25FC /* MetalKit.framework */; };
+		C9BE100923A761D1000E25FC /* MainWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = C9BE100823A761D1000E25FC /* MainWindow.m */; };
+		C9BE100C23A76F23000E25FC /* MainWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9BE100B23A76F23000E25FC /* MainWindowController.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		C9BE0FE223A733E7000E25FC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C9BE0FC623A733E3000E25FC /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C9BE0FCD23A733E3000E25FC;
+			remoteInfo = "WAD Editor";
+		};
+		C9BE0FED23A733E7000E25FC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C9BE0FC623A733E3000E25FC /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C9BE0FCD23A733E3000E25FC;
+			remoteInfo = "WAD Editor";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		C9BC729423AD560100EFE0D7 /* Window.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Window.xib; sourceTree = "<group>"; };
+		C9BE0FCE23A733E3000E25FC /* WAD Editor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "WAD Editor.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C9BE0FD123A733E3000E25FC /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		C9BE0FD223A733E3000E25FC /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		C9BE0FD423A733E7000E25FC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		C9BE0FD723A733E7000E25FC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		C9BE0FD923A733E7000E25FC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C9BE0FDA23A733E7000E25FC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		C9BE0FDC23A733E7000E25FC /* WAD_Editor.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WAD_Editor.entitlements; sourceTree = "<group>"; };
+		C9BE0FE123A733E7000E25FC /* WAD EditorTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "WAD EditorTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C9BE0FE523A733E7000E25FC /* WAD_EditorTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WAD_EditorTests.m; sourceTree = "<group>"; };
+		C9BE0FE723A733E7000E25FC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C9BE0FEC23A733E7000E25FC /* WAD EditorUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "WAD EditorUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C9BE0FF023A733E7000E25FC /* WAD_EditorUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WAD_EditorUITests.m; sourceTree = "<group>"; };
+		C9BE0FF223A733E7000E25FC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C9BE0FFF23A7341E000E25FC /* libwad_kit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libwad_kit.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		C9BE100123A73434000E25FC /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
+		C9BE100223A73434000E25FC /* MetalPerformanceShaders.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalPerformanceShaders.framework; path = System/Library/Frameworks/MetalPerformanceShaders.framework; sourceTree = SDKROOT; };
+		C9BE100323A73434000E25FC /* MetalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalKit.framework; path = System/Library/Frameworks/MetalKit.framework; sourceTree = SDKROOT; };
+		C9BE100723A761D1000E25FC /* MainWindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MainWindow.h; sourceTree = "<group>"; };
+		C9BE100823A761D1000E25FC /* MainWindow.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MainWindow.m; sourceTree = "<group>"; };
+		C9BE100A23A76F23000E25FC /* MainWindowController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MainWindowController.h; sourceTree = "<group>"; };
+		C9BE100B23A76F23000E25FC /* MainWindowController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MainWindowController.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		C9BE0FCB23A733E3000E25FC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C9BE100423A73434000E25FC /* Metal.framework in Frameworks */,
+				C9BE100623A73434000E25FC /* MetalKit.framework in Frameworks */,
+				C9BE100523A73434000E25FC /* MetalPerformanceShaders.framework in Frameworks */,
+				C9BE100023A7341E000E25FC /* libwad_kit.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C9BE0FDE23A733E7000E25FC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C9BE0FE923A733E7000E25FC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		C9BE0FC523A733E3000E25FC = {
+			isa = PBXGroup;
+			children = (
+				C9BE0FD023A733E3000E25FC /* WAD Editor */,
+				C9BE0FE423A733E7000E25FC /* WAD EditorTests */,
+				C9BE0FEF23A733E7000E25FC /* WAD EditorUITests */,
+				C9BE0FCF23A733E3000E25FC /* Products */,
+				C9BE0FFE23A7341E000E25FC /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		C9BE0FCF23A733E3000E25FC /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C9BE0FCE23A733E3000E25FC /* WAD Editor.app */,
+				C9BE0FE123A733E7000E25FC /* WAD EditorTests.xctest */,
+				C9BE0FEC23A733E7000E25FC /* WAD EditorUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C9BE0FD023A733E3000E25FC /* WAD Editor */ = {
+			isa = PBXGroup;
+			children = (
+				C9BE0FD123A733E3000E25FC /* AppDelegate.h */,
+				C9BE0FD223A733E3000E25FC /* AppDelegate.m */,
+				C9BE100723A761D1000E25FC /* MainWindow.h */,
+				C9BE100823A761D1000E25FC /* MainWindow.m */,
+				C9BE100A23A76F23000E25FC /* MainWindowController.h */,
+				C9BE100B23A76F23000E25FC /* MainWindowController.m */,
+				C9BE0FD423A733E7000E25FC /* Assets.xcassets */,
+				C9BC729423AD560100EFE0D7 /* Window.xib */,
+				C9BE0FD623A733E7000E25FC /* MainMenu.xib */,
+				C9BE0FD923A733E7000E25FC /* Info.plist */,
+				C9BE0FDA23A733E7000E25FC /* main.m */,
+				C9BE0FDC23A733E7000E25FC /* WAD_Editor.entitlements */,
+			);
+			path = "WAD Editor";
+			sourceTree = "<group>";
+		};
+		C9BE0FE423A733E7000E25FC /* WAD EditorTests */ = {
+			isa = PBXGroup;
+			children = (
+				C9BE0FE523A733E7000E25FC /* WAD_EditorTests.m */,
+				C9BE0FE723A733E7000E25FC /* Info.plist */,
+			);
+			path = "WAD EditorTests";
+			sourceTree = "<group>";
+		};
+		C9BE0FEF23A733E7000E25FC /* WAD EditorUITests */ = {
+			isa = PBXGroup;
+			children = (
+				C9BE0FF023A733E7000E25FC /* WAD_EditorUITests.m */,
+				C9BE0FF223A733E7000E25FC /* Info.plist */,
+			);
+			path = "WAD EditorUITests";
+			sourceTree = "<group>";
+		};
+		C9BE0FFE23A7341E000E25FC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C9BE100123A73434000E25FC /* Metal.framework */,
+				C9BE100323A73434000E25FC /* MetalKit.framework */,
+				C9BE100223A73434000E25FC /* MetalPerformanceShaders.framework */,
+				C9BE0FFF23A7341E000E25FC /* libwad_kit.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		C9BE0FCD23A733E3000E25FC /* WAD Editor */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C9BE0FF523A733E7000E25FC /* Build configuration list for PBXNativeTarget "WAD Editor" */;
+			buildPhases = (
+				C9BE0FCA23A733E3000E25FC /* Sources */,
+				C9BE0FCB23A733E3000E25FC /* Frameworks */,
+				C9BE0FCC23A733E3000E25FC /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "WAD Editor";
+			productName = "WAD Editor";
+			productReference = C9BE0FCE23A733E3000E25FC /* WAD Editor.app */;
+			productType = "com.apple.product-type.application";
+		};
+		C9BE0FE023A733E7000E25FC /* WAD EditorTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C9BE0FF823A733E7000E25FC /* Build configuration list for PBXNativeTarget "WAD EditorTests" */;
+			buildPhases = (
+				C9BE0FDD23A733E7000E25FC /* Sources */,
+				C9BE0FDE23A733E7000E25FC /* Frameworks */,
+				C9BE0FDF23A733E7000E25FC /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C9BE0FE323A733E7000E25FC /* PBXTargetDependency */,
+			);
+			name = "WAD EditorTests";
+			productName = "WAD EditorTests";
+			productReference = C9BE0FE123A733E7000E25FC /* WAD EditorTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		C9BE0FEB23A733E7000E25FC /* WAD EditorUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C9BE0FFB23A733E7000E25FC /* Build configuration list for PBXNativeTarget "WAD EditorUITests" */;
+			buildPhases = (
+				C9BE0FE823A733E7000E25FC /* Sources */,
+				C9BE0FE923A733E7000E25FC /* Frameworks */,
+				C9BE0FEA23A733E7000E25FC /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C9BE0FEE23A733E7000E25FC /* PBXTargetDependency */,
+			);
+			name = "WAD EditorUITests";
+			productName = "WAD EditorUITests";
+			productReference = C9BE0FEC23A733E7000E25FC /* WAD EditorUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		C9BE0FC623A733E3000E25FC /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 1130;
+				ORGANIZATIONNAME = "Eugene Lutz";
+				TargetAttributes = {
+					C9BE0FCD23A733E3000E25FC = {
+						CreatedOnToolsVersion = 11.3;
+					};
+					C9BE0FE023A733E7000E25FC = {
+						CreatedOnToolsVersion = 11.3;
+						TestTargetID = C9BE0FCD23A733E3000E25FC;
+					};
+					C9BE0FEB23A733E7000E25FC = {
+						CreatedOnToolsVersion = 11.3;
+						TestTargetID = C9BE0FCD23A733E3000E25FC;
+					};
+				};
+			};
+			buildConfigurationList = C9BE0FC923A733E3000E25FC /* Build configuration list for PBXProject "WAD Editor" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = C9BE0FC523A733E3000E25FC;
+			productRefGroup = C9BE0FCF23A733E3000E25FC /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				C9BE0FCD23A733E3000E25FC /* WAD Editor */,
+				C9BE0FE023A733E7000E25FC /* WAD EditorTests */,
+				C9BE0FEB23A733E7000E25FC /* WAD EditorUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		C9BE0FCC23A733E3000E25FC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C9BE0FD523A733E7000E25FC /* Assets.xcassets in Resources */,
+				C9BE0FD823A733E7000E25FC /* MainMenu.xib in Resources */,
+				C9BC729523AD560100EFE0D7 /* Window.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C9BE0FDF23A733E7000E25FC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C9BE0FEA23A733E7000E25FC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		C9BE0FCA23A733E3000E25FC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C9BE0FDB23A733E7000E25FC /* main.m in Sources */,
+				C9BE0FD323A733E3000E25FC /* AppDelegate.m in Sources */,
+				C9BE100C23A76F23000E25FC /* MainWindowController.m in Sources */,
+				C9BE100923A761D1000E25FC /* MainWindow.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C9BE0FDD23A733E7000E25FC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C9BE0FE623A733E7000E25FC /* WAD_EditorTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C9BE0FE823A733E7000E25FC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C9BE0FF123A733E7000E25FC /* WAD_EditorUITests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		C9BE0FE323A733E7000E25FC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C9BE0FCD23A733E3000E25FC /* WAD Editor */;
+			targetProxy = C9BE0FE223A733E7000E25FC /* PBXContainerItemProxy */;
+		};
+		C9BE0FEE23A733E7000E25FC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C9BE0FCD23A733E3000E25FC /* WAD Editor */;
+			targetProxy = C9BE0FED23A733E7000E25FC /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		C9BE0FD623A733E7000E25FC /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C9BE0FD723A733E7000E25FC /* Base */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		C9BE0FF323A733E7000E25FC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		C9BE0FF423A733E7000E25FC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		C9BE0FF623A733E7000E25FC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "WAD Editor/WAD_Editor.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 7N525N28LV;
+				ENABLE_HARDENED_RUNTIME = YES;
+				INFOPLIST_FILE = "WAD Editor/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Eugene-Lutz.WAD-Editor";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		C9BE0FF723A733E7000E25FC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "WAD Editor/WAD_Editor.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 7N525N28LV;
+				ENABLE_HARDENED_RUNTIME = YES;
+				INFOPLIST_FILE = "WAD Editor/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Eugene-Lutz.WAD-Editor";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		C9BE0FF923A733E7000E25FC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 7N525N28LV;
+				INFOPLIST_FILE = "WAD EditorTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Eugene-Lutz.WAD-EditorTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WAD Editor.app/Contents/MacOS/WAD Editor";
+			};
+			name = Debug;
+		};
+		C9BE0FFA23A733E7000E25FC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 7N525N28LV;
+				INFOPLIST_FILE = "WAD EditorTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Eugene-Lutz.WAD-EditorTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WAD Editor.app/Contents/MacOS/WAD Editor";
+			};
+			name = Release;
+		};
+		C9BE0FFC23A733E7000E25FC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 7N525N28LV;
+				INFOPLIST_FILE = "WAD EditorUITests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Eugene-Lutz.WAD-EditorUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = "WAD Editor";
+			};
+			name = Debug;
+		};
+		C9BE0FFD23A733E7000E25FC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 7N525N28LV;
+				INFOPLIST_FILE = "WAD EditorUITests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Eugene-Lutz.WAD-EditorUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = "WAD Editor";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		C9BE0FC923A733E3000E25FC /* Build configuration list for PBXProject "WAD Editor" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C9BE0FF323A733E7000E25FC /* Debug */,
+				C9BE0FF423A733E7000E25FC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C9BE0FF523A733E7000E25FC /* Build configuration list for PBXNativeTarget "WAD Editor" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C9BE0FF623A733E7000E25FC /* Debug */,
+				C9BE0FF723A733E7000E25FC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C9BE0FF823A733E7000E25FC /* Build configuration list for PBXNativeTarget "WAD EditorTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C9BE0FF923A733E7000E25FC /* Debug */,
+				C9BE0FFA23A733E7000E25FC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C9BE0FFB23A733E7000E25FC /* Build configuration list for PBXNativeTarget "WAD EditorUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C9BE0FFC23A733E7000E25FC /* Debug */,
+				C9BE0FFD23A733E7000E25FC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = C9BE0FC623A733E3000E25FC /* Project object */;
+}

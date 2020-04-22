@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesViewState
+   version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "main:main.c">
+         <PersistentStrings>
+            <PersistentString
+               value = "wad-&gt;movables[1]">
+            </PersistentString>
+            <PersistentString
+               value = "wad-&gt;movables[0]">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "wadLoadFromData:wad_interface.c">
+         <PersistentStrings>
+            <PersistentString
+               value = "(int)rawAnimation-&gt;keyframeSize">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "_createModelsPackage:wad_generateWadData.c">
+         <PersistentStrings>
+            <PersistentString
+               value = "movable-&gt;meshIndices[j]">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "_createAnimationsPackage:wad_generateWadData.c">
+      </ContextState>
+      <ContextState
+         contextName = "-[MainWindow setupUI]:MainWindow.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.contentView">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+   </ContextStates>
+</VariablesViewState>

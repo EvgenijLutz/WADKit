@@ -1,0 +1,46 @@
+//
+//  AppDelegate.m
+//  WAD Editor
+//
+//  Created by Евгений Лютц on 16.12.2019.
+//  Copyright © 2019 Eugene Lutz. All rights reserved.
+//
+
+#import "AppDelegate.h"
+#import "MainWindow.h"
+
+@interface AppDelegate ()
+
+@property (weak) IBOutlet MainWindow *window;
+@end
+
+@implementation AppDelegate
+
+- (void)applicationDidFinishLaunching:(NSNotification *)aNotification
+{
+	// Insert code here to initialize your application
+	
+	if ([self.window isKindOfClass:MainWindow.class])
+	{
+		NSLog(@"It's a MainWindow");
+		[self.window setupUI];
+	}
+	else
+	{
+		NSLog(@"It's not a MainWindow");
+	}
+}
+
+
+- (void)applicationWillTerminate:(NSNotification *)aNotification {
+	// Insert code here to tear down your application
+}
+
+
+-(BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)sender
+{
+	return YES;
+}
+
+
+@end

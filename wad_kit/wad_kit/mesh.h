@@ -12,6 +12,8 @@
 typedef struct VERTEX VERTEX;
 typedef struct POLYGON POLYGON;
 
+// hello?
+
 typedef struct MESH
 {
 	//BOUNDING_SPHERE boundingSphere;

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <FileRef
+      location = "group:wad_kit/wad_kit.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:test_wad_kit/test_wad_kit.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:WAD Editor/WAD Editor.xcodeproj">
+   </FileRef>
+</Workspace>
