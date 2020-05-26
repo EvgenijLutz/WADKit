@@ -6,13 +6,14 @@
 //  Copyright © 2019 Eugene Lutz. All rights reserved.
 //
 
-#import <Cocoa/Cocoa.h>
+@import Cocoa;
+@import Metal;
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface MainWindow : NSWindow<NSOutlineViewDataSource, NSOutlineViewDelegate>
+@interface MainWindow : NSWindow
 
-- (void)setupUI;
+- (void)initializeWithMetalDevice:(id<MTLDevice>)device;
 
 @end
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="15702" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="16097" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15702"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="16097"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -17,7 +17,6 @@
                 <outlet property="window" destination="QvC-M9-y7g" id="gIp-Ho-8D9"/>
             </connections>
         </customObject>
-        <customObject id="yek-lH-6bv" customClass="MainWindowController"/>
         <menu title="Main Menu" systemMenu="main" id="AYu-sK-qS6">
             <items>
                 <menuItem title="WAD Editor" id="1Xt-HY-uBw">
@@ -220,9 +219,38 @@
             <view key="contentView" wantsLayer="YES" id="EiT-Mj-1SZ">
                 <rect key="frame" x="0.0" y="0.0" width="480" height="360"/>
                 <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <customView translatesAutoresizingMaskIntoConstraints="NO" id="xjZ-f9-fGe" customClass="WadKitView">
+                        <rect key="frame" x="200" y="0.0" width="280" height="360"/>
+                        <constraints>
+                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="200" id="5X7-nA-9Gr"/>
+                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="200" id="FdH-nS-WhM"/>
+                        </constraints>
+                    </customView>
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Qhd-23-YRm">
+                        <rect key="frame" x="2" y="324" width="196" height="32"/>
+                        <buttonCell key="cell" type="push" title="Load test data" bezelStyle="rounded" alignment="center" lineBreakMode="truncatingMiddle" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="xZv-jg-mwd">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="loadTestData:" target="QvC-M9-y7g" id="BFn-0C-YRW"/>
+                        </connections>
+                    </button>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="xjZ-f9-fGe" firstAttribute="top" secondItem="EiT-Mj-1SZ" secondAttribute="top" id="4xS-LU-Iho"/>
+                    <constraint firstAttribute="bottom" secondItem="xjZ-f9-fGe" secondAttribute="bottom" id="QFb-Vr-gyR"/>
+                    <constraint firstItem="xjZ-f9-fGe" firstAttribute="leading" secondItem="Qhd-23-YRm" secondAttribute="trailing" constant="8" id="VjY-2l-si6"/>
+                    <constraint firstAttribute="trailing" secondItem="xjZ-f9-fGe" secondAttribute="trailing" id="di3-rE-Ijv"/>
+                    <constraint firstItem="xjZ-f9-fGe" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" constant="200" id="gOC-ul-BQB"/>
+                    <constraint firstItem="Qhd-23-YRm" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" constant="8" id="itr-TN-mmH"/>
+                    <constraint firstItem="Qhd-23-YRm" firstAttribute="top" secondItem="EiT-Mj-1SZ" secondAttribute="top" constant="8" id="jhm-cy-wLt"/>
+                </constraints>
             </view>
             <connections>
                 <outlet property="menu" destination="AYu-sK-qS6" id="WFc-aK-ZNM"/>
+                <outlet property="wadKitView" destination="xjZ-f9-fGe" id="9o8-yA-SWB"/>
             </connections>
             <point key="canvasLocation" x="139" y="-120"/>
         </window>

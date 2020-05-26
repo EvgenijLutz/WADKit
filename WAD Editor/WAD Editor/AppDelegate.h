@@ -6,7 +6,7 @@
 //  Copyright © 2019 Eugene Lutz. All rights reserved.
 //
 
-#import <Cocoa/Cocoa.h>
+@import Cocoa;
 
 @interface AppDelegate : NSObject <NSApplicationDelegate>
 

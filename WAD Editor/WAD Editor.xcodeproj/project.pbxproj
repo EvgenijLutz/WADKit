@@ -19,7 +19,16 @@
 		C9BE100523A73434000E25FC /* MetalPerformanceShaders.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9BE100223A73434000E25FC /* MetalPerformanceShaders.framework */; };
 		C9BE100623A73434000E25FC /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9BE100323A73434000E25FC /* MetalKit.framework */; };
 		C9BE100923A761D1000E25FC /* MainWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = C9BE100823A761D1000E25FC /* MainWindow.m */; };
-		C9BE100C23A76F23000E25FC /* MainWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9BE100B23A76F23000E25FC /* MainWindowController.m */; };
+		C9E2BE88247D695C006FF2AE /* tut1.raw in Resources */ = {isa = PBXBuildFile; fileRef = C9E2BE7F247D695C006FF2AE /* tut1.raw */; };
+		C9E2BE89247D695C006FF2AE /* tut1.TOM in Resources */ = {isa = PBXBuildFile; fileRef = C9E2BE80247D695C006FF2AE /* tut1.TOM */; };
+		C9E2BE8A247D695C006FF2AE /* tut1.sfx in Resources */ = {isa = PBXBuildFile; fileRef = C9E2BE81247D695C006FF2AE /* tut1.sfx */; };
+		C9E2BE8B247D695C006FF2AE /* tut1.WAS in Resources */ = {isa = PBXBuildFile; fileRef = C9E2BE82247D695C006FF2AE /* tut1.WAS */; };
+		C9E2BE8C247D695C006FF2AE /* tut1.lar in Resources */ = {isa = PBXBuildFile; fileRef = C9E2BE83247D695C006FF2AE /* tut1.lar */; };
+		C9E2BE8D247D695C006FF2AE /* tut1.WAD in Resources */ = {isa = PBXBuildFile; fileRef = C9E2BE84247D695C006FF2AE /* tut1.WAD */; };
+		C9E2BE8E247D695C006FF2AE /* tut1.sam in Resources */ = {isa = PBXBuildFile; fileRef = C9E2BE85247D695C006FF2AE /* tut1.sam */; };
+		C9E2BE8F247D695C006FF2AE /* tut1.SWD in Resources */ = {isa = PBXBuildFile; fileRef = C9E2BE86247D695C006FF2AE /* tut1.SWD */; };
+		C9E2BE90247D695C006FF2AE /* tut1.CD in Resources */ = {isa = PBXBuildFile; fileRef = C9E2BE87247D695C006FF2AE /* tut1.CD */; };
+		C9E2BE93247D7187006FF2AE /* WadKitView.m in Sources */ = {isa = PBXBuildFile; fileRef = C9E2BE92247D7187006FF2AE /* WadKitView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,8 +70,17 @@
 		C9BE100323A73434000E25FC /* MetalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalKit.framework; path = System/Library/Frameworks/MetalKit.framework; sourceTree = SDKROOT; };
 		C9BE100723A761D1000E25FC /* MainWindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MainWindow.h; sourceTree = "<group>"; };
 		C9BE100823A761D1000E25FC /* MainWindow.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MainWindow.m; sourceTree = "<group>"; };
-		C9BE100A23A76F23000E25FC /* MainWindowController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MainWindowController.h; sourceTree = "<group>"; };
-		C9BE100B23A76F23000E25FC /* MainWindowController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MainWindowController.m; sourceTree = "<group>"; };
+		C9E2BE7F247D695C006FF2AE /* tut1.raw */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = tut1.raw; sourceTree = "<group>"; };
+		C9E2BE80247D695C006FF2AE /* tut1.TOM */ = {isa = PBXFileReference; lastKnownFileType = file; path = tut1.TOM; sourceTree = "<group>"; };
+		C9E2BE81247D695C006FF2AE /* tut1.sfx */ = {isa = PBXFileReference; lastKnownFileType = file; path = tut1.sfx; sourceTree = "<group>"; };
+		C9E2BE82247D695C006FF2AE /* tut1.WAS */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = tut1.WAS; sourceTree = "<group>"; };
+		C9E2BE83247D695C006FF2AE /* tut1.lar */ = {isa = PBXFileReference; lastKnownFileType = file; path = tut1.lar; sourceTree = "<group>"; };
+		C9E2BE84247D695C006FF2AE /* tut1.WAD */ = {isa = PBXFileReference; lastKnownFileType = file; path = tut1.WAD; sourceTree = "<group>"; };
+		C9E2BE85247D695C006FF2AE /* tut1.sam */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = tut1.sam; sourceTree = "<group>"; };
+		C9E2BE86247D695C006FF2AE /* tut1.SWD */ = {isa = PBXFileReference; lastKnownFileType = file; path = tut1.SWD; sourceTree = "<group>"; };
+		C9E2BE87247D695C006FF2AE /* tut1.CD */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = tut1.CD; sourceTree = "<group>"; };
+		C9E2BE91247D7187006FF2AE /* WadKitView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WadKitView.h; sourceTree = "<group>"; };
+		C9E2BE92247D7187006FF2AE /* WadKitView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WadKitView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,6 +115,7 @@
 		C9BE0FC523A733E3000E25FC = {
 			isa = PBXGroup;
 			children = (
+				C9E2BE7E247D690D006FF2AE /* Test wad */,
 				C9BE0FD023A733E3000E25FC /* WAD Editor */,
 				C9BE0FE423A733E7000E25FC /* WAD EditorTests */,
 				C9BE0FEF23A733E7000E25FC /* WAD EditorUITests */,
@@ -122,8 +141,8 @@
 				C9BE0FD223A733E3000E25FC /* AppDelegate.m */,
 				C9BE100723A761D1000E25FC /* MainWindow.h */,
 				C9BE100823A761D1000E25FC /* MainWindow.m */,
-				C9BE100A23A76F23000E25FC /* MainWindowController.h */,
-				C9BE100B23A76F23000E25FC /* MainWindowController.m */,
+				C9E2BE91247D7187006FF2AE /* WadKitView.h */,
+				C9E2BE92247D7187006FF2AE /* WadKitView.m */,
 				C9BE0FD423A733E7000E25FC /* Assets.xcassets */,
 				C9BC729423AD560100EFE0D7 /* Window.xib */,
 				C9BE0FD623A733E7000E25FC /* MainMenu.xib */,
@@ -161,6 +180,22 @@
 				C9BE0FFF23A7341E000E25FC /* libwad_kit.a */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		C9E2BE7E247D690D006FF2AE /* Test wad */ = {
+			isa = PBXGroup;
+			children = (
+				C9E2BE87247D695C006FF2AE /* tut1.CD */,
+				C9E2BE83247D695C006FF2AE /* tut1.lar */,
+				C9E2BE7F247D695C006FF2AE /* tut1.raw */,
+				C9E2BE85247D695C006FF2AE /* tut1.sam */,
+				C9E2BE81247D695C006FF2AE /* tut1.sfx */,
+				C9E2BE86247D695C006FF2AE /* tut1.SWD */,
+				C9E2BE80247D695C006FF2AE /* tut1.TOM */,
+				C9E2BE84247D695C006FF2AE /* tut1.WAD */,
+				C9E2BE82247D695C006FF2AE /* tut1.WAS */,
+			);
+			path = "Test wad";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -225,7 +260,7 @@
 		C9BE0FC623A733E3000E25FC /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1130;
+				LastUpgradeCheck = 1150;
 				ORGANIZATIONNAME = "Eugene Lutz";
 				TargetAttributes = {
 					C9BE0FCD23A733E3000E25FC = {
@@ -266,8 +301,17 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C9E2BE8B247D695C006FF2AE /* tut1.WAS in Resources */,
 				C9BE0FD523A733E7000E25FC /* Assets.xcassets in Resources */,
+				C9E2BE8A247D695C006FF2AE /* tut1.sfx in Resources */,
+				C9E2BE8C247D695C006FF2AE /* tut1.lar in Resources */,
+				C9E2BE89247D695C006FF2AE /* tut1.TOM in Resources */,
+				C9E2BE8E247D695C006FF2AE /* tut1.sam in Resources */,
+				C9E2BE90247D695C006FF2AE /* tut1.CD in Resources */,
+				C9E2BE8D247D695C006FF2AE /* tut1.WAD in Resources */,
 				C9BE0FD823A733E7000E25FC /* MainMenu.xib in Resources */,
+				C9E2BE88247D695C006FF2AE /* tut1.raw in Resources */,
+				C9E2BE8F247D695C006FF2AE /* tut1.SWD in Resources */,
 				C9BC729523AD560100EFE0D7 /* Window.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -295,8 +339,8 @@
 			files = (
 				C9BE0FDB23A733E7000E25FC /* main.m in Sources */,
 				C9BE0FD323A733E3000E25FC /* AppDelegate.m in Sources */,
-				C9BE100C23A76F23000E25FC /* MainWindowController.m in Sources */,
 				C9BE100923A761D1000E25FC /* MainWindow.m in Sources */,
+				C9E2BE93247D7187006FF2AE /* WadKitView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -457,6 +501,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "WAD Editor/WAD_Editor.entitlements";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 7N525N28LV;
@@ -476,6 +521,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "WAD Editor/WAD_Editor.entitlements";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 7N525N28LV;

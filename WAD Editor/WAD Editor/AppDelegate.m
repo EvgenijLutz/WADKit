@@ -8,10 +8,10 @@
 
 #import "AppDelegate.h"
 #import "MainWindow.h"
+@import Metal;
 
 @interface AppDelegate ()
-
-@property (weak) IBOutlet MainWindow *window;
+@property (weak) IBOutlet MainWindow* window;
 @end
 
 @implementation AppDelegate
@@ -20,15 +20,8 @@
 {
 	// Insert code here to initialize your application
 	
-	if ([self.window isKindOfClass:MainWindow.class])
-	{
-		NSLog(@"It's a MainWindow");
-		[self.window setupUI];
-	}
-	else
-	{
-		NSLog(@"It's not a MainWindow");
-	}
+	id<MTLDevice> device = MTLCreateSystemDefaultDevice();
+	[_window initializeWithMetalDevice:device];
 }
 
 
