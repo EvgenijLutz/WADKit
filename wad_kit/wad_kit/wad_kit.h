@@ -11,8 +11,16 @@
 
 /* * * Public WADKit interface * * */
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "execute_result.h"
 #include "wad_interface.h"
 #include "static_object_interface.h"
+
+#ifdef __cplusplus
+} // extern "C"
+#endif
 
 #endif /* wad_kit_h */

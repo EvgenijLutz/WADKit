@@ -19,10 +19,10 @@ void wadRelease(WAD* wad);
 WAD* wadLoadFromWadData(const unsigned char* data, long dataSize, EXECUTE_RESULT* executeResult);
 unsigned char* wadGenerateWadData(WAD* wad, long* dataSize, EXECUTE_RESULT* executeResult);
 
-unsigned int wadGetVersion(WAD* wad, EXECUTE_RESULT* executeResult);
+unsigned int wadGetVersion(WAD* wad);
 
-unsigned int wadGetNumStatics(WAD* wad, EXECUTE_RESULT* executeResult);
-STATIC* wadGetStaticByIndex(WAD* wad, unsigned int staticIndex, EXECUTE_RESULT* executeResult);
-STATIC* wadGetStaticById(WAD* wad, unsigned int staticId, EXECUTE_RESULT* executeResult);
+unsigned int wadGetNumStatics(WAD* wad);
+STATIC* wadGetStaticByIndex(WAD* wad, unsigned int staticIndex);
+STATIC* wadGetStaticById(WAD* wad, unsigned int staticId);
 
 #endif /* wad_interface_h */

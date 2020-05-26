@@ -81,6 +81,7 @@
 		C9E2BE87247D695C006FF2AE /* tut1.CD */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = tut1.CD; sourceTree = "<group>"; };
 		C9E2BE91247D7187006FF2AE /* WadKitView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WadKitView.h; sourceTree = "<group>"; };
 		C9E2BE92247D7187006FF2AE /* WadKitView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WadKitView.m; sourceTree = "<group>"; };
+		C9E2BE94247D8E7D006FF2AE /* wad_kit_link.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wad_kit_link.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -137,6 +138,7 @@
 		C9BE0FD023A733E3000E25FC /* WAD Editor */ = {
 			isa = PBXGroup;
 			children = (
+				C9E2BE94247D8E7D006FF2AE /* wad_kit_link.h */,
 				C9BE0FD123A733E3000E25FC /* AppDelegate.h */,
 				C9BE0FD223A733E3000E25FC /* AppDelegate.m */,
 				C9BE100723A761D1000E25FC /* MainWindow.h */,

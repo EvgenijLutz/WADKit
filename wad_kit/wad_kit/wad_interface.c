@@ -13,6 +13,7 @@
 #include "wad.h"
 #include <stdlib.h>
 #include <string.h>
+#include <assert.h>
 
 
 WAD* wadCreate(void)
@@ -102,55 +103,28 @@ void wadRelease(WAD* wad)
 	free(wad);
 }
 
-unsigned int wadGetVersion(WAD* wad, EXECUTE_RESULT* executeResult)
+unsigned int wadGetVersion(WAD* wad)
 {
-	if (!wad)
-	{
-		executeResultFailed(executeResult, "WAD object is not given.");
-		return 0;
-	}
-	
-	executeResultSucceeded(executeResult);
+	assert(wad);
 	return wad->version;
 }
 
-unsigned int wadGetNumStatics(WAD* wad, EXECUTE_RESULT* executeResult)
+unsigned int wadGetNumStatics(WAD* wad)
 {
-	if (!wad)
-	{
-		executeResultFailed(executeResult, "WAD object is not given.");
-		return 0;
-	}
-	
-	executeResultSucceeded(executeResult);
+	assert(wad);
 	return wad->numStatics;
 }
 
-STATIC* wadGetStaticByIndex(WAD* wad, unsigned int staticIndex, EXECUTE_RESULT* executeResult)
+STATIC* wadGetStaticByIndex(WAD* wad, unsigned int staticIndex)
 {
-	if (!wad)
-	{
-		executeResultFailed(executeResult, "WAD object is not given.");
-		return NULL;
-	}
-	
-	if (staticIndex >= wad->numStatics)
-	{
-		executeResultFailed(executeResult, "Index of static object is out of range.");
-		return NULL;
-	}
-	
-	executeResultSucceeded(executeResult);
+	assert(wad);
+	assert(wad->numStatics < staticIndex);
 	return &(wad->statics[staticIndex]);
 }
 
-STATIC* wadGetStaticById(WAD* wad, unsigned int staticId, EXECUTE_RESULT* executeResult)
+STATIC* wadGetStaticById(WAD* wad, unsigned int staticId)
 {
-	if (!wad)
-	{
-		executeResultFailed(executeResult, "WAD object is not given.");
-		return NULL;
-	}
+	assert(wad);
 	
 	STATIC* staticObject = NULL;
 	for (unsigned int i = 0; i < wad->numStatics; i++)
@@ -162,13 +136,7 @@ STATIC* wadGetStaticById(WAD* wad, unsigned int staticId, EXECUTE_RESULT* execut
 			break;
 		}
 	}
+	assert(staticObject);
 	
-	if (staticObject == NULL)
-	{
-		executeResultFailed(executeResult, "Static object is not found by this identifier.");
-		return NULL;
-	}
-	
-	executeResultSucceeded(executeResult);
 	return staticObject;
 }

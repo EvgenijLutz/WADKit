@@ -8,12 +8,16 @@
 
 #import "MainWindow.h"
 #import "WadKitView.h"
+#include "wad_kit_link.h"
 
 @interface MainWindow()
 @property (weak) IBOutlet WadKitView* wadKitView;
 @end
 
 @implementation MainWindow
+{
+	WAD* wad;
+}
 
 - (void)initializeWithMetalDevice:(id<MTLDevice>)device
 {
@@ -48,6 +52,8 @@
 		return;
 	}
 	
+	wad = NULL;
+	
 	WadKitView* wkView = _wadKitView;
 	wkView.device = device;
 	wkView.delegate = nil;
@@ -55,6 +61,28 @@
 
 - (IBAction)loadTestData:(id)sender
 {
+	if (wad)
+	{
+		wadRelease(wad);
+	}
+	
+	NSString* path = [NSBundle.mainBundle pathForResource:@"tut1" ofType:@"WAD"];
+	NSData* wadData = [NSData dataWithContentsOfFile:path];
+	if (!wadData)
+	{
+		NSLog(@"Failed to read wad file");
+		return;
+	}
+	
+	EXECUTE_RESULT executeResult;
+	wad = wadLoadFromWadData(wadData.bytes, wadData.length, &executeResult);
+	if (!executeResult.succeeded)
+	{
+		NSLog(@"Failed to read wad file with message: %s", executeResult.message);
+		return;
+	}
+	
+	// display something
 }
 
 @end
