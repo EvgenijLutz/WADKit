@@ -9,6 +9,17 @@
 #ifndef mesh_interface_h
 #define mesh_interface_h
 
-#include <stdio.h>
+#include "wk_vertex.h"
+#include "wk_polygon.h"
+
+typedef struct MESH MESH;
+
+int meshUsesNormals(MESH* mesh);
+
+unsigned int meshGetNumVertices(MESH* mesh);
+VERTEX meshGetVertex(MESH* mesh, unsigned int vertexIndex);
+
+unsigned int meshGetNumPolygons(MESH* mesh);
+POLYGON meshGetPolygon(MESH* mesh, unsigned int polygonIndex);
 
 #endif /* mesh_interface_h */

@@ -6,8 +6,8 @@
 //  Copyright © 2019 Eugene Lutz. All rights reserved.
 //
 
-#ifndef raw_wad_h
-#define raw_wad_h
+#ifndef wad_kit_raw_wad_h
+#define wad_kit_raw_wad_h
 
 typedef struct RAW_ANIMATION
 {
@@ -108,4 +108,4 @@ typedef struct RAW_WAD
 }
 RAW_WAD;
 
-#endif /* raw_wad_h */
+#endif /* wad_kit_raw_wad_h */

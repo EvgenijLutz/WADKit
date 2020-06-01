@@ -18,7 +18,6 @@
 		C9C73F5323A6A63B00FBB723 /* static_object_interface.h in Headers */ = {isa = PBXBuildFile; fileRef = C9C73F5123A6A63B00FBB723 /* static_object_interface.h */; };
 		C9C73F5423A6A63B00FBB723 /* static_object_interface.c in Sources */ = {isa = PBXBuildFile; fileRef = C9C73F5223A6A63B00FBB723 /* static_object_interface.c */; };
 		C9C73F5723A6A7ED00FBB723 /* mesh.h in Headers */ = {isa = PBXBuildFile; fileRef = C9C73F5523A6A7ED00FBB723 /* mesh.h */; };
-		C9C73F5823A6A7ED00FBB723 /* mesh.c in Sources */ = {isa = PBXBuildFile; fileRef = C9C73F5623A6A7ED00FBB723 /* mesh.c */; };
 		C9C73F5B23A6A7F900FBB723 /* mesh_interface.h in Headers */ = {isa = PBXBuildFile; fileRef = C9C73F5923A6A7F900FBB723 /* mesh_interface.h */; };
 		C9C73F5C23A6A7F900FBB723 /* mesh_interface.c in Sources */ = {isa = PBXBuildFile; fileRef = C9C73F5A23A6A7F900FBB723 /* mesh_interface.c */; };
 /* End PBXBuildFile section */
@@ -34,13 +33,14 @@
 		C97B6B6D239BAC02003B692E /* raw_wad.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = raw_wad.h; sourceTree = "<group>"; };
 		C97B6B6E239BAC02003B692E /* raw_wad.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = raw_wad.c; sourceTree = "<group>"; };
 		C98AFF1B239DDE6700CDC67A /* wad_generateWadData.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = wad_generateWadData.c; sourceTree = "<group>"; };
+		C9924941248599CA004511F5 /* wk_vertex.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wk_vertex.h; sourceTree = "<group>"; };
+		C992494224859B80004511F5 /* wk_polygon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wk_polygon.h; sourceTree = "<group>"; };
 		C9C73F4C23A686E800FBB723 /* wad_kit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wad_kit.h; sourceTree = "<group>"; };
 		C9C73F4D23A6A48B00FBB723 /* static_object.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = static_object.h; sourceTree = "<group>"; };
 		C9C73F4E23A6A48B00FBB723 /* static_object.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = static_object.c; sourceTree = "<group>"; };
 		C9C73F5123A6A63B00FBB723 /* static_object_interface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = static_object_interface.h; sourceTree = "<group>"; };
 		C9C73F5223A6A63B00FBB723 /* static_object_interface.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = static_object_interface.c; sourceTree = "<group>"; };
 		C9C73F5523A6A7ED00FBB723 /* mesh.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mesh.h; sourceTree = "<group>"; };
-		C9C73F5623A6A7ED00FBB723 /* mesh.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = mesh.c; sourceTree = "<group>"; };
 		C9C73F5923A6A7F900FBB723 /* mesh_interface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mesh_interface.h; sourceTree = "<group>"; };
 		C9C73F5A23A6A7F900FBB723 /* mesh_interface.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = mesh_interface.c; sourceTree = "<group>"; };
 		C9F01BC82398F63500E31FAB /* execute_result.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = execute_result.h; sourceTree = "<group>"; };
@@ -80,10 +80,8 @@
 			isa = PBXGroup;
 			children = (
 				C9C73F4C23A686E800FBB723 /* wad_kit.h */,
-				C9C73F5523A6A7ED00FBB723 /* mesh.h */,
-				C9C73F5623A6A7ED00FBB723 /* mesh.c */,
-				C9C73F5923A6A7F900FBB723 /* mesh_interface.h */,
-				C9C73F5A23A6A7F900FBB723 /* mesh_interface.c */,
+				C9924940248598A5004511F5 /* Primitives */,
+				C992493F248596D5004511F5 /* Mesh */,
 				C9C73F4D23A6A48B00FBB723 /* static_object.h */,
 				C9C73F4E23A6A48B00FBB723 /* static_object.c */,
 				C9C73F5123A6A63B00FBB723 /* static_object_interface.h */,
@@ -107,6 +105,25 @@
 			children = (
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		C992493F248596D5004511F5 /* Mesh */ = {
+			isa = PBXGroup;
+			children = (
+				C9C73F5523A6A7ED00FBB723 /* mesh.h */,
+				C9C73F5923A6A7F900FBB723 /* mesh_interface.h */,
+				C9C73F5A23A6A7F900FBB723 /* mesh_interface.c */,
+			);
+			name = Mesh;
+			sourceTree = "<group>";
+		};
+		C9924940248598A5004511F5 /* Primitives */ = {
+			isa = PBXGroup;
+			children = (
+				C9924941248599CA004511F5 /* wk_vertex.h */,
+				C992494224859B80004511F5 /* wk_polygon.h */,
+			);
+			name = Primitives;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -186,7 +203,6 @@
 				C9209A0623A577AB0070EEB0 /* wad_loadFromWadData.c in Sources */,
 				C941D8A8239D73C200F9D0CC /* raw_wad.c in Sources */,
 				C941D8AA239D73C200F9D0CC /* execute_result.c in Sources */,
-				C9C73F5823A6A7ED00FBB723 /* mesh.c in Sources */,
 				C98AFF1C239DDE6700CDC67A /* wad_generateWadData.c in Sources */,
 				C9C73F5023A6A48B00FBB723 /* static_object.c in Sources */,
 				C941D8A9239D73C200F9D0CC /* wad_interface.c in Sources */,

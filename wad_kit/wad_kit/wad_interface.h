@@ -11,6 +11,7 @@
 
 typedef struct EXECUTE_RESULT EXECUTE_RESULT;
 typedef struct WAD WAD;
+typedef struct MESH MESH;
 typedef struct STATIC STATIC;
 
 WAD* wadCreate(void);
@@ -20,6 +21,12 @@ WAD* wadLoadFromWadData(const unsigned char* data, long dataSize, EXECUTE_RESULT
 unsigned char* wadGenerateWadData(WAD* wad, long* dataSize, EXECUTE_RESULT* executeResult);
 
 unsigned int wadGetVersion(WAD* wad);
+
+unsigned int wadGetNumtexturePages(WAD* wad);
+unsigned char* wadGetTexturePageData(WAD* wad, unsigned int texturePageIndex);
+
+unsigned int wadGetNumMeshes(WAD* wad);
+MESH* wadGetMesh(WAD* wad, unsigned int meshIndex);
 
 unsigned int wadGetNumStatics(WAD* wad);
 STATIC* wadGetStaticByIndex(WAD* wad, unsigned int staticIndex);

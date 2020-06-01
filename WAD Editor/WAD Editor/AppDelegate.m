@@ -15,22 +15,26 @@
 @end
 
 @implementation AppDelegate
+{
+	id<MTLDevice> device;
+}
 
-- (void)applicationDidFinishLaunching:(NSNotification *)aNotification
+- (void)applicationDidFinishLaunching:(NSNotification*)aNotification
 {
 	// Insert code here to initialize your application
 	
-	id<MTLDevice> device = MTLCreateSystemDefaultDevice();
+	device = MTLCreateSystemDefaultDevice();
 	[_window initializeWithMetalDevice:device];
 }
 
 
-- (void)applicationWillTerminate:(NSNotification *)aNotification {
+- (void)applicationWillTerminate:(NSNotification*)aNotification
+{
 	// Insert code here to tear down your application
 }
 
 
--(BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)sender
+-(BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication*)sender
 {
 	return YES;
 }

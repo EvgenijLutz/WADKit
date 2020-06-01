@@ -21,7 +21,7 @@ typedef struct MESH
 	unsigned short radius;
 	unsigned short unknown;	// garbage?
 	
-	unsigned char usesNormals;
+	int usesNormals;
 	unsigned short numVertices;
 	VERTEX* vertices;
 	

@@ -10,12 +10,6 @@
 
 @implementation WadKitView
 
-- (void)drawRect:(NSRect)dirtyRect {
-    [super drawRect:dirtyRect];
-    
-    // Drawing code here.
-}
-
 - (BOOL)acceptsFirstResponder
 {
 	return YES;

@@ -7,8 +7,11 @@
 //
 /// These structures do not reflect .wad file
 
-#ifndef wad_h
-#define wad_h
+#ifndef wad_kit_wad_h
+#define wad_kit_wad_h
+
+#include "wk_vertex.h"
+#include "wk_polygon.h"
 
 typedef struct TEXTURE_SAMPLE
 {
@@ -27,33 +30,6 @@ typedef struct TEXTURE_PAGE
 	unsigned char data[256 * 256 * 3];
 }
 TEXTURE_PAGE;
-
-typedef struct VERTEX
-{
-	short vx;
-	short vy;
-	short vz;
-	
-	short nx;
-	short ny;
-	short nz;
-	
-	short shade;
-}
-VERTEX;
-
-typedef struct POLYGON
-{
-	char isTriangle;
-	unsigned short v1;
-	unsigned short v2;
-	unsigned short v3;
-	unsigned short v4;
-	unsigned short textureInfo;
-	unsigned char attributes;
-	unsigned char unknown;	// garbage?
-}
-POLYGON;
 
 typedef struct MESH MESH;
 
@@ -226,4 +202,4 @@ typedef struct WAD
 }
 WAD;
 
-#endif /* wad_h */
+#endif /* wad_kit_wad_h */

@@ -7,3 +7,40 @@
 //
 
 #include "mesh_interface.h"
+#include "mesh.h"
+#include <stdlib.h>
+#include <assert.h>
+
+int meshUsesNormals(MESH* mesh)
+{
+	assert(mesh);
+	return mesh->usesNormals;
+}
+
+
+unsigned int meshGetNumVertices(MESH* mesh)
+{
+	assert(mesh);
+	return mesh->numVertices;
+}
+
+VERTEX meshGetVertex(MESH* mesh, unsigned int vertexIndex)
+{
+	assert(mesh);
+	assert(vertexIndex < mesh->numVertices);
+	return mesh->vertices[vertexIndex];
+}
+
+
+unsigned int meshGetNumPolygons(MESH* mesh)
+{
+	assert(mesh);
+	return mesh->numPolygons;
+}
+
+POLYGON meshGetPolygon(MESH* mesh, unsigned int polygonIndex)
+{
+	assert(mesh);
+	assert(polygonIndex < mesh->numPolygons);
+	return mesh->polygons[polygonIndex];
+}

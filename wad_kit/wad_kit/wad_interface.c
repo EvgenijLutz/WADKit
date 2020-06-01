@@ -109,6 +109,35 @@ unsigned int wadGetVersion(WAD* wad)
 	return wad->version;
 }
 
+
+unsigned int wadGetNumtexturePages(WAD* wad)
+{
+	assert(wad);
+	return wad->numTexturePages;
+}
+
+unsigned char* wadGetTexturePageData(WAD* wad, unsigned int texturePageIndex)
+{
+	assert(wad);
+	assert(texturePageIndex < wad->numTexturePages);
+	return wad->texturePages[texturePageIndex].data;
+}
+
+
+unsigned int wadGetNumMeshes(WAD* wad)
+{
+	assert(wad);
+	return wad->numMeshes;
+}
+
+MESH* wadGetMesh(WAD* wad, unsigned int meshIndex)
+{
+	assert(wad);
+	assert(meshIndex < wad->numMeshes);
+	return &(wad->meshes[meshIndex]);
+}
+
+
 unsigned int wadGetNumStatics(WAD* wad)
 {
 	assert(wad);
