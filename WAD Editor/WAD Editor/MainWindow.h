@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface MainWindow : NSWindow
 
-- (void)initializeWithMetalDevice:(id<MTLDevice>)device;
+- (void)initializeWithMetalDevice:(id<MTLDevice>)metalDevice;
 
 @end
 

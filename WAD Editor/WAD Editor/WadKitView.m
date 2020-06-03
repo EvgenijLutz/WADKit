@@ -7,8 +7,16 @@
 //
 
 #import "WadKitView.h"
+#import "WKRenderer.h"
 
 @implementation WadKitView
+
+- (void)setDevice:(id<MTLDevice>)device
+{
+	[super setDevice:device];
+	
+	_renderer = [[WKRenderer alloc] initWithMetalDevice:device];
+}
 
 - (BOOL)acceptsFirstResponder
 {

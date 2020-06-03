@@ -26,7 +26,7 @@ STATIC_ID;
 
 typedef struct STATIC
 {
-	unsigned int staticId;
+	unsigned int staticId;	// TODO: STATIC_ID?
 	unsigned int meshIndex;
 	short vx1;
 	short vy1;

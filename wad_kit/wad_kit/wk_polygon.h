@@ -19,6 +19,10 @@ typedef struct POLYGON
 	unsigned short textureInfo;
 	unsigned char attributes;
 	unsigned char unknown;	// garbage?
+	
+	unsigned short flipped;
+	unsigned short textureSampleShape;
+	unsigned short textureSampleIndex;
 }
 POLYGON;
 

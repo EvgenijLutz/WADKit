@@ -7,6 +7,9 @@
 //
 
 #import "MainWindow.h"
+#import "ResourceReflectionStorage.h"
+#import "WKEditor.h"
+#import "WadKitViewDelegate.h"
 #import "WadKitView.h"
 #include "wad_kit_link.h"
 
@@ -16,11 +19,15 @@
 
 @implementation MainWindow
 {
-	WAD* wad;
+	id<MTLDevice> device;
+	WKEditor* editor;
+	WadKitViewDelegate* wkViewDelegate;
 }
 
-- (void)initializeWithMetalDevice:(id<MTLDevice>)device
+- (void)initializeWithMetalDevice:(id<MTLDevice>)metalDevice
 {
+	device = metalDevice;
+	
 	if (!device)
 	{
 		NSArray<__kindof NSView*>* subviews = self.contentView.subviews.copy;
@@ -52,37 +59,31 @@
 		return;
 	}
 	
-	wad = NULL;
+	editor = [[WKEditor alloc] initWithMetalDevice:device];
+	
+	wkViewDelegate = [[WadKitViewDelegate alloc] initWithViewport:editor];
 	
 	WadKitView* wkView = _wadKitView;
 	wkView.device = device;
-	wkView.delegate = nil;
+	wkView.delegate = wkViewDelegate;
+	
+	wkView.colorPixelFormat = MTLPixelFormatBGRA8Unorm;
+	wkView.depthStencilPixelFormat = MTLPixelFormatDepth32Float_Stencil8;
+	wkView.colorspace = CGColorSpaceCreateWithName(kCGColorSpaceDisplayP3);
+	/*if (self.screen)
+	{
+		wkView.colorspace = self.screen.colorSpace.CGColorSpace;
+		NSLog(@"%@", self.screen.colorSpace);
+	}*/
 }
 
 - (IBAction)loadTestData:(id)sender
 {
-	if (wad)
-	{
-		wadRelease(wad);
-	}
-	
 	NSString* path = [NSBundle.mainBundle pathForResource:@"tut1" ofType:@"WAD"];
-	NSData* wadData = [NSData dataWithContentsOfFile:path];
-	if (!wadData)
-	{
-		NSLog(@"Failed to read wad file");
-		return;
-	}
+	[editor loadWadByPath:path];
 	
-	EXECUTE_RESULT executeResult;
-	wad = wadLoadFromWadData(wadData.bytes, wadData.length, &executeResult);
-	if (!executeResult.succeeded)
-	{
-		NSLog(@"Failed to read wad file with message: %s", executeResult.message);
-		return;
-	}
-	
-	// display something
+	// 3. Display something
+	[_wadKitView draw];
 }
 
 @end

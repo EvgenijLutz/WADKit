@@ -8,9 +8,13 @@
 
 @import MetalKit;
 
+@class WKRenderer;
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface WadKitView : MTKView
+
+@property (readonly) WKRenderer* renderer;
 
 @end
 

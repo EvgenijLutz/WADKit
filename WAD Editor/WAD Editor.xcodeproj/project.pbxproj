@@ -7,6 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C93EB5B42486C3D6001CDE59 /* SubmeshGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = C93EB5B32486C3D6001CDE59 /* SubmeshGenerator.m */; };
+		C94F5648248644DA0089C915 /* WadKitViewDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C94F5647248644DA0089C915 /* WadKitViewDelegate.m */; };
+		C94F565224864D3A0089C915 /* ResourceReflectionStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = C94F565124864D3A0089C915 /* ResourceReflectionStorage.m */; };
+		C977D35424865C93002A7D6B /* WKRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = C977D35324865C93002A7D6B /* WKRenderer.m */; };
+		C977D35824865EA0002A7D6B /* WKEditor.m in Sources */ = {isa = PBXBuildFile; fileRef = C977D35724865EA0002A7D6B /* WKEditor.m */; };
+		C977D35D2486883A002A7D6B /* math_utils.m in Sources */ = {isa = PBXBuildFile; fileRef = C977D35C2486883A002A7D6B /* math_utils.m */; };
+		C977D3602486930A002A7D6B /* MeshReflection.m in Sources */ = {isa = PBXBuildFile; fileRef = C977D35F2486930A002A7D6B /* MeshReflection.m */; };
+		C977D3632486931A002A7D6B /* Submesh.m in Sources */ = {isa = PBXBuildFile; fileRef = C977D3622486931A002A7D6B /* Submesh.m */; };
+		C98AC97524864E830096BDCC /* TextureReflection.m in Sources */ = {isa = PBXBuildFile; fileRef = C98AC97424864E830096BDCC /* TextureReflection.m */; };
 		C9BC729523AD560100EFE0D7 /* Window.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9BC729423AD560100EFE0D7 /* Window.xib */; };
 		C9BE0FD323A733E3000E25FC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C9BE0FD223A733E3000E25FC /* AppDelegate.m */; };
 		C9BE0FD523A733E7000E25FC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C9BE0FD423A733E7000E25FC /* Assets.xcassets */; };
@@ -49,6 +58,26 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C93EB5B22486C3D6001CDE59 /* SubmeshGenerator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SubmeshGenerator.h; sourceTree = "<group>"; };
+		C93EB5B32486C3D6001CDE59 /* SubmeshGenerator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SubmeshGenerator.m; sourceTree = "<group>"; };
+		C94F5646248644DA0089C915 /* WadKitViewDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WadKitViewDelegate.h; sourceTree = "<group>"; };
+		C94F5647248644DA0089C915 /* WadKitViewDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WadKitViewDelegate.m; sourceTree = "<group>"; };
+		C94F565024864D3A0089C915 /* ResourceReflectionStorage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ResourceReflectionStorage.h; sourceTree = "<group>"; };
+		C94F565124864D3A0089C915 /* ResourceReflectionStorage.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ResourceReflectionStorage.m; sourceTree = "<group>"; };
+		C977D35224865C93002A7D6B /* WKRenderer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WKRenderer.h; sourceTree = "<group>"; };
+		C977D35324865C93002A7D6B /* WKRenderer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WKRenderer.m; sourceTree = "<group>"; };
+		C977D35624865EA0002A7D6B /* WKEditor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WKEditor.h; sourceTree = "<group>"; };
+		C977D35724865EA0002A7D6B /* WKEditor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WKEditor.m; sourceTree = "<group>"; };
+		C977D359248661CA002A7D6B /* WKViewport.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WKViewport.h; sourceTree = "<group>"; };
+		C977D35A2486855D002A7D6B /* RendererTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RendererTypes.h; sourceTree = "<group>"; };
+		C977D35B2486882F002A7D6B /* math_utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = math_utils.h; sourceTree = "<group>"; };
+		C977D35C2486883A002A7D6B /* math_utils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = math_utils.m; sourceTree = "<group>"; };
+		C977D35E2486930A002A7D6B /* MeshReflection.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MeshReflection.h; sourceTree = "<group>"; };
+		C977D35F2486930A002A7D6B /* MeshReflection.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MeshReflection.m; sourceTree = "<group>"; };
+		C977D3612486931A002A7D6B /* Submesh.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Submesh.h; sourceTree = "<group>"; };
+		C977D3622486931A002A7D6B /* Submesh.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Submesh.m; sourceTree = "<group>"; };
+		C98AC97324864E830096BDCC /* TextureReflection.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TextureReflection.h; sourceTree = "<group>"; };
+		C98AC97424864E830096BDCC /* TextureReflection.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TextureReflection.m; sourceTree = "<group>"; };
 		C9BC729423AD560100EFE0D7 /* Window.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Window.xib; sourceTree = "<group>"; };
 		C9BE0FCE23A733E3000E25FC /* WAD Editor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "WAD Editor.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9BE0FD123A733E3000E25FC /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -113,6 +142,54 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C977D34E24865C21002A7D6B /* WadKit view */ = {
+			isa = PBXGroup;
+			children = (
+				C94F5646248644DA0089C915 /* WadKitViewDelegate.h */,
+				C94F5647248644DA0089C915 /* WadKitViewDelegate.m */,
+				C9E2BE91247D7187006FF2AE /* WadKitView.h */,
+				C9E2BE92247D7187006FF2AE /* WadKitView.m */,
+			);
+			name = "WadKit view";
+			sourceTree = "<group>";
+		};
+		C977D35024865C49002A7D6B /* Resource reflection storage */ = {
+			isa = PBXGroup;
+			children = (
+				C98AC97324864E830096BDCC /* TextureReflection.h */,
+				C98AC97424864E830096BDCC /* TextureReflection.m */,
+				C93EB5B22486C3D6001CDE59 /* SubmeshGenerator.h */,
+				C93EB5B32486C3D6001CDE59 /* SubmeshGenerator.m */,
+				C977D3612486931A002A7D6B /* Submesh.h */,
+				C977D3622486931A002A7D6B /* Submesh.m */,
+				C977D35E2486930A002A7D6B /* MeshReflection.h */,
+				C977D35F2486930A002A7D6B /* MeshReflection.m */,
+				C94F565024864D3A0089C915 /* ResourceReflectionStorage.h */,
+				C94F565124864D3A0089C915 /* ResourceReflectionStorage.m */,
+			);
+			name = "Resource reflection storage";
+			sourceTree = "<group>";
+		};
+		C977D35124865C6F002A7D6B /* Renderer */ = {
+			isa = PBXGroup;
+			children = (
+				C977D35224865C93002A7D6B /* WKRenderer.h */,
+				C977D35324865C93002A7D6B /* WKRenderer.m */,
+				C977D35A2486855D002A7D6B /* RendererTypes.h */,
+			);
+			name = Renderer;
+			sourceTree = "<group>";
+		};
+		C977D35524865E91002A7D6B /* Editor */ = {
+			isa = PBXGroup;
+			children = (
+				C977D359248661CA002A7D6B /* WKViewport.h */,
+				C977D35624865EA0002A7D6B /* WKEditor.h */,
+				C977D35724865EA0002A7D6B /* WKEditor.m */,
+			);
+			name = Editor;
+			sourceTree = "<group>";
+		};
 		C9BE0FC523A733E3000E25FC = {
 			isa = PBXGroup;
 			children = (
@@ -139,12 +216,16 @@
 			isa = PBXGroup;
 			children = (
 				C9E2BE94247D8E7D006FF2AE /* wad_kit_link.h */,
+				C977D35B2486882F002A7D6B /* math_utils.h */,
+				C977D35C2486883A002A7D6B /* math_utils.m */,
 				C9BE0FD123A733E3000E25FC /* AppDelegate.h */,
 				C9BE0FD223A733E3000E25FC /* AppDelegate.m */,
 				C9BE100723A761D1000E25FC /* MainWindow.h */,
 				C9BE100823A761D1000E25FC /* MainWindow.m */,
-				C9E2BE91247D7187006FF2AE /* WadKitView.h */,
-				C9E2BE92247D7187006FF2AE /* WadKitView.m */,
+				C977D35024865C49002A7D6B /* Resource reflection storage */,
+				C977D35524865E91002A7D6B /* Editor */,
+				C977D35124865C6F002A7D6B /* Renderer */,
+				C977D34E24865C21002A7D6B /* WadKit view */,
 				C9BE0FD423A733E7000E25FC /* Assets.xcassets */,
 				C9BC729423AD560100EFE0D7 /* Window.xib */,
 				C9BE0FD623A733E7000E25FC /* MainMenu.xib */,
@@ -339,10 +420,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C93EB5B42486C3D6001CDE59 /* SubmeshGenerator.m in Sources */,
+				C977D3602486930A002A7D6B /* MeshReflection.m in Sources */,
+				C977D35424865C93002A7D6B /* WKRenderer.m in Sources */,
+				C977D35824865EA0002A7D6B /* WKEditor.m in Sources */,
+				C94F5648248644DA0089C915 /* WadKitViewDelegate.m in Sources */,
 				C9BE0FDB23A733E7000E25FC /* main.m in Sources */,
+				C94F565224864D3A0089C915 /* ResourceReflectionStorage.m in Sources */,
+				C977D35D2486883A002A7D6B /* math_utils.m in Sources */,
 				C9BE0FD323A733E3000E25FC /* AppDelegate.m in Sources */,
 				C9BE100923A761D1000E25FC /* MainWindow.m in Sources */,
 				C9E2BE93247D7187006FF2AE /* WadKitView.m in Sources */,
+				C98AC97524864E830096BDCC /* TextureReflection.m in Sources */,
+				C977D3632486931A002A7D6B /* Submesh.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

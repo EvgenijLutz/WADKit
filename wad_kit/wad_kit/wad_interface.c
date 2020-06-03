@@ -110,7 +110,7 @@ unsigned int wadGetVersion(WAD* wad)
 }
 
 
-unsigned int wadGetNumtexturePages(WAD* wad)
+unsigned int wadGetNumTexturePages(WAD* wad)
 {
 	assert(wad);
 	return wad->numTexturePages;
@@ -121,6 +121,20 @@ unsigned char* wadGetTexturePageData(WAD* wad, unsigned int texturePageIndex)
 	assert(wad);
 	assert(texturePageIndex < wad->numTexturePages);
 	return wad->texturePages[texturePageIndex].data;
+}
+
+
+unsigned int wadGetNumTextureSamples(WAD* wad)
+{
+	assert(wad);
+	return wad->numTextureSamples;
+}
+
+TEXTURE_SAMPLE wadGetTextureSample(WAD* wad, unsigned int textureSampleIndex)
+{
+	assert(wad);
+	assert(textureSampleIndex < wad->numTextureSamples);
+	return wad->textureSamples[textureSampleIndex];
 }
 
 

@@ -15,10 +15,12 @@
 extern "C" {
 #endif
 
+#include "execute_result.h"
+
 #include "wk_vertex.h"
 #include "wk_polygon.h"
+#include "texture.h"
 
-#include "execute_result.h"
 #include "wad_interface.h"
 #include "mesh_interface.h"
 #include "static_object_interface.h"

@@ -15,6 +15,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <assert.h>
 
 #define ROTATION_USED_THREE_AXES	0x0000
 #define ROTATION_USED_X_AXIS		0x4000
@@ -300,6 +301,38 @@ WAD* wadLoadFromWadData(const unsigned char* data, long dataSize, EXECUTE_RESULT
 			mesh->polygons[polygonIndex].textureInfo = readUShort(reader);
 			mesh->polygons[polygonIndex].attributes = readUChar(reader);
 			mesh->polygons[polygonIndex].unknown = readUChar(reader);
+			
+			unsigned short textureFlags = mesh->polygons[polygonIndex].textureInfo;
+			mesh->polygons[polygonIndex].flipped = (textureFlags & 0x8000) >> 15;
+			mesh->polygons[polygonIndex].textureSampleShape = (textureFlags & 0x7000) >> 12;
+			//mesh->polygons[polygonIndex].textureSampleIndex = (textureFlags & 0x0fff);
+			
+			if (mesh->polygons[polygonIndex].isTriangle)
+			{
+				const short sampleIndex = textureFlags & 0x0fff;
+				mesh->polygons[polygonIndex].textureSampleIndex = sampleIndex;
+				if (sampleIndex < 0)
+				{
+					mesh->polygons[polygonIndex].textureSampleIndex = -sampleIndex;
+				}
+			}
+			else
+			{
+				const short sampleIndex = textureFlags & 0xffff;
+				if (textureFlags & 0x8000)
+				{
+					mesh->polygons[polygonIndex].textureSampleIndex = -sampleIndex;
+				}
+				else
+				{
+					mesh->polygons[polygonIndex].textureSampleIndex = sampleIndex;
+				}
+			}
+			
+			const int textureSampleShape = mesh->polygons[polygonIndex].textureSampleShape;
+			assert(textureSampleShape == 0 || textureSampleShape == 2 || textureSampleShape == 4 ||
+				   textureSampleShape == 6 || textureSampleShape == 7);
+			assert(mesh->polygons[polygonIndex].textureSampleIndex < wad->numTextureSamples);
 		}
 		if (numQuads % 2)
 		{
