@@ -7,6 +7,7 @@
 //
 
 @import Foundation;
+#include <simd/simd.h>
 
 @class WKRenderer;
 
@@ -15,6 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 @protocol WKViewport <NSObject>
 
 @required
+- (void)sizeChanged:(simd_float2)viewportSize;
 - (void)drawWithRenderer:(WKRenderer*)renderer;
 
 @end

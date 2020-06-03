@@ -8,6 +8,9 @@
 
 @import Foundation;
 @import Metal;
+#include "RendererTypes.h"
+
+@class MeshReflection;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -17,7 +20,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 // -(instancetype)initWithRendererHandle:(id<RendererHandle>)handle;
 
-//- (void)drawSubMeshWithVertexBuffer:(id<MTLBuffer>)vertexBuffer indexBuffer:(id<MTLBuffer>)indexBuffer numIndices:(NSUInteger)numIndices texture:(id<MTLTexture>)texture;
+//- (void)drawSubMeshWithVertexBuffer:(id<MTLBuffer>)vertexBuffer indexBuffer:(id<MTLBuffer>)indexBuffer numIndices:(NSUInteger)numIndices texture:(id<MTLTexture>)texture uniforms:(id<MTLBuffer>)uniforms;
+
+- (void)drawMesh:(MeshReflection*)meshReflection withUniforms:(OBJECT_UNIFORMS*)uniforms;
 
 @property (readonly) id<MTLCommandQueue> drawCommandQueue;
 

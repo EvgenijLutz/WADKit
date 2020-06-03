@@ -9,12 +9,20 @@
 #import "WKEditor.h"
 #import "ResourceReflectionStorage.h"
 #include "wad_kit_link.h"
+#include "math_utils.h"
+#include "RendererTypes.h"
+#include "WKRenderer.h"
 
 @implementation WKEditor
 {
 	id<MTLDevice> device;
 	ResourceReflectionStorage* storage;
 	WAD* wad;
+	
+	simd_float2 size;
+	BOOL loaded;
+	float rotation;
+	float objectCounter;
 }
 
 - (instancetype)initWithMetalDevice:(id<MTLDevice>)metalDevice
@@ -25,6 +33,11 @@
 		device = metalDevice;
 		storage = [[ResourceReflectionStorage alloc] initWithMetalDevice:device];
 		wad = NULL;
+		
+		size = simd_make_float2(1.0f, 1.0f);
+		loaded = NO;
+		rotation = 0.0f;
+		objectCounter = 0.0f;
 	}
 	return self;
 }
@@ -37,6 +50,7 @@
 	{
 		wadRelease(wad);
 	}
+	loaded = NO;
 	
 	[storage clear];
 	
@@ -79,11 +93,49 @@
 	[blitCommandBuffer waitUntilCompleted];
 	
 	// 3. Display something
+	
+	loaded = YES;
+}
+
+- (void)sizeChanged:(simd_float2)viewportSize
+{
+	size = viewportSize;
 }
 
 - (void)drawWithRenderer:(WKRenderer*)renderer
 {
-	//
+	if (!loaded)
+	{
+		return;
+	}
+	
+	rotation += 0.005;
+	while (rotation > (M_PI * 2))
+	{
+		rotation -= (M_PI * 2);
+	}
+	
+	OBJECT_UNIFORMS uniforms;
+	simd_float4x4 model = matrix4fRotation(rotation, simd_make_float3(0.0f, 1.0f, 0.0f));
+	simd_float4x4 view = matrix4fTranslation(0.0f, -1.0f, -3.0f);
+	
+	const float fovyradians = 65.0 * (M_PI / 180.0f);
+	simd_float4x4 projection = matrix4fPerspectiveRightHand(fovyradians, size.x / size.y, 0.01f, 1000.0f);
+	
+	uniforms.modelViewProjection = simd_mul(view, model);
+	uniforms.modelViewProjection = simd_mul(projection, uniforms.modelViewProjection);
+	
+	objectCounter += 0.02;
+	//unsigned int meshIndex = 141;
+	unsigned int meshIndex = 141;//(unsigned int)objectCounter;
+	if (meshIndex >= [storage numMeshes])
+	{
+		meshIndex = 0;
+		objectCounter = 0.0f;
+	}
+	
+	MeshReflection* meshReflection = [storage meshAtIndex:meshIndex];
+	[renderer drawMesh:meshReflection withUniforms:&uniforms];
 }
 
 @end

@@ -24,6 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)createTextureWithData:(unsigned char*)data atIndex:(unsigned int)textureIndex blitCommandEncoder:(id<MTLBlitCommandEncoder>)blitCommandEncoder;
 - (id<MTLTexture>)textureAtIndex:(unsigned int)textureIndex;
 
+- (unsigned int)numMeshes;
 - (void)createMeshWithMeshData:(MESH*)mesh atIndex:(unsigned int)meshIndex wad:(WAD*)wad blitCommandEncoder:(id<MTLBlitCommandEncoder>)blitCommandEncoder;
 - (MeshReflection*)meshAtIndex:(unsigned int)meshIndex;
 

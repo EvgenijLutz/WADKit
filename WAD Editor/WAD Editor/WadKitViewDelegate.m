@@ -28,7 +28,8 @@
 
 - (void)mtkView:(nonnull MTKView*)view drawableSizeWillChange:(CGSize)size
 {
-	//
+	simd_float2 viewportSize = simd_make_float2(size.width, size.height);
+	[viewport sizeChanged:viewportSize];
 }
 
 - (void)drawInMTKView:(nonnull MTKView*)view

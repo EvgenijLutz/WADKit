@@ -97,6 +97,11 @@
 	return textureReflection.texture;
 }
 
+- (unsigned int)numMeshes
+{
+	return (unsigned int)(meshReflections.count);
+}
+
 - (void)createMeshWithMeshData:(MESH*)mesh atIndex:(unsigned int)meshIndex wad:(WAD*)wad blitCommandEncoder:(id<MTLBlitCommandEncoder>)blitCommandEncoder
 {
 	BOOL shaded = meshUsesNormals(mesh) == 0;
@@ -110,9 +115,12 @@
 	{
 		VERTEX vertex = meshGetVertex(mesh, vertexIndex);
 		
-		const float vx = ((float)(vertex.vx)) / 1024.0f;
+		/*const float vx = ((float)(vertex.vx)) / 1024.0f;
 		const float vy = ((float)(vertex.vy)) / 1024.0f;
-		const float vz = ((float)(vertex.vz)) / 1024.0f;
+		const float vz = ((float)(vertex.vz)) / 1024.0f;*/
+		const float vx = ((float)(vertex.vx)) / 64.0f;
+		const float vy = ((float)(vertex.vy)) / 64.0f;
+		const float vz = ((float)(vertex.vz)) / 64.0f;
 		
 		const float nx = ((float)(vertex.vx)) / 1024.0f;
 		const float ny = ((float)(vertex.vy)) / 1024.0f;

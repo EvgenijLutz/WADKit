@@ -26,4 +26,10 @@ typedef struct WE_INDEX
 }
 WE_INDEX;
 
+typedef struct OBJECT_UNIFORMS
+{
+	simd_float4x4 modelViewProjection;
+}
+OBJECT_UNIFORMS;
+
 #endif /* RendererTypes_h */

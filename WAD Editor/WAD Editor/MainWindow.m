@@ -75,6 +75,9 @@
 		wkView.colorspace = self.screen.colorSpace.CGColorSpace;
 		NSLog(@"%@", self.screen.colorSpace);
 	}*/
+	
+	NSString* path = [NSBundle.mainBundle pathForResource:@"tut1" ofType:@"WAD"];
+	[editor loadWadByPath:path];
 }
 
 - (IBAction)loadTestData:(id)sender

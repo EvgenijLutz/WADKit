@@ -65,11 +65,21 @@
 	indices[numIndices + 0].vertexIndex = polygon->v1;
 	indices[numIndices + 1].vertexIndex = polygon->v3;
 	indices[numIndices + 2].vertexIndex = polygon->v2;
-	if (polygon->isTriangle)
+	
+	indices[numIndices + 0].uv = simd_make_float2(0.0f, 0.0f);
+	indices[numIndices + 1].uv = simd_make_float2(1.0f, 0.0f);
+	indices[numIndices + 2].uv = simd_make_float2(1.0f, 1.0f);
+	
+	if (!polygon->isTriangle)
 	{
 		indices[numIndices + 3].vertexIndex = polygon->v1;
 		indices[numIndices + 4].vertexIndex = polygon->v4;
 		indices[numIndices + 5].vertexIndex = polygon->v3;
+		
+		indices[numIndices + 3].uv = simd_make_float2(0.0f, 0.0f);
+		indices[numIndices + 4].uv = simd_make_float2(1.0f, 1.0f);
+		indices[numIndices + 5].uv = simd_make_float2(0.0f, 1.0f);
+		
 		numIndices += 6;
 	}
 	else
