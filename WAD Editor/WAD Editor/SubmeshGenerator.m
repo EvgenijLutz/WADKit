@@ -66,9 +66,95 @@
 	indices[numIndices + 1].vertexIndex = polygon->v3;
 	indices[numIndices + 2].vertexIndex = polygon->v2;
 	
-	indices[numIndices + 0].uv = simd_make_float2(0.0f, 0.0f);
-	indices[numIndices + 1].uv = simd_make_float2(1.0f, 0.0f);
-	indices[numIndices + 2].uv = simd_make_float2(1.0f, 1.0f);
+	/*indices[numIndices + 0].uv = simd_make_float2(0.0f, 0.0f);
+	indices[numIndices + 1].uv = simd_make_float2(1.0f, 1.0f);
+	indices[numIndices + 2].uv = simd_make_float2(1.0f, 0.0f);*/
+	
+	/*const*/ float su = (float)(textureSample->x) / 255.0f;
+	/*const*/ float sv = (float)(textureSample->y) / 255.0f;
+	/*const*/ float eu = su + (float)(textureSample->addW) / 255.0f;
+	/*const*/ float ev = sv + (float)(textureSample->addH) / 255.0f;
+	
+	const int flipX = textureSample->flipX;
+	if (!flipX)
+	{
+		const float temp = su;
+		su = eu;
+		eu = temp;
+	}
+	
+	const int flipY = textureSample->flipY;
+	if (!flipY)
+	{
+		const float temp = sv;
+		sv = ev;
+		ev = temp;
+	}
+
+	if (polygon->flipped)
+	{
+		const float temp = su;
+		su = eu;
+		eu = temp;
+	}
+	
+	simd_float2 uvA = simd_make_float2(su, sv);
+	simd_float2 uvB = simd_make_float2(eu, sv);
+	simd_float2 uvC = simd_make_float2(eu, ev);
+	simd_float2 uvD = simd_make_float2(su, ev);
+	
+	simd_float2 uv1 = simd_make_float2(0.0f, 0.0f);
+	simd_float2 uv2 = simd_make_float2(1.0f, 0.0f);
+	simd_float2 uv3 = simd_make_float2(1.0f, 1.0f);
+	simd_float2 uv4 = simd_make_float2(0.0f, 1.0f);
+	
+	if (polygon->isTriangle)
+	{
+		if (polygon->textureSampleShape == 0)
+		{
+			uv1 = uvA;
+			uv2 = uvB;
+			uv3 = uvD;
+		}
+		else if (polygon->textureSampleShape == 2)
+		{
+			uv1 = uvB;
+			uv2 = uvC;
+			uv3 = uvA;
+		}
+		else if (polygon->textureSampleShape == 4)
+		{
+			uv1 = uvC;
+			uv2 = uvD;
+			uv3 = uvB;
+		}
+		else if (polygon->textureSampleShape == 6)
+		{
+			uv1 = uvD;
+			uv2 = uvA;
+			uv3 = uvC;
+		}
+	}
+	else
+	{
+		uv1 = uvA;
+		uv2 = uvB;
+		uv3 = uvC;
+		uv4 = uvD;
+	}
+	
+	/*
+	// omg debug stuff
+	if (polygon->textureInfo == 0xFFEE && !polygon->isTriangle &&
+		polygon->v1 == 16 && polygon->v2 == 15 && polygon->v3 == 14 && polygon->v4 == 13 &&
+		textureSample->x == 240 && textureSample->y == 0 && textureSample->page == 5)
+	{
+		indices[numIndices + 2].vertexIndex = polygon->v2;
+	}*/
+	
+	indices[numIndices + 0].uv = uv1;
+	indices[numIndices + 1].uv = uv3;
+	indices[numIndices + 2].uv = uv2;
 	
 	if (!polygon->isTriangle)
 	{
@@ -76,9 +162,9 @@
 		indices[numIndices + 4].vertexIndex = polygon->v4;
 		indices[numIndices + 5].vertexIndex = polygon->v3;
 		
-		indices[numIndices + 3].uv = simd_make_float2(0.0f, 0.0f);
-		indices[numIndices + 4].uv = simd_make_float2(1.0f, 1.0f);
-		indices[numIndices + 5].uv = simd_make_float2(0.0f, 1.0f);
+		indices[numIndices + 3].uv = uv1;
+		indices[numIndices + 4].uv = uv4;
+		indices[numIndices + 5].uv = uv3;
 		
 		numIndices += 6;
 	}

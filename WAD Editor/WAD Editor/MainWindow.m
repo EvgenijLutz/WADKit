@@ -89,4 +89,14 @@
 	[_wadKitView draw];
 }
 
+- (void)nextObject:(id)sender
+{
+	[editor selectNextObject];
+}
+
+- (void)previousObject:(id)sender
+{
+	[editor selectPreviousObject];
+}
+
 @end

@@ -78,7 +78,7 @@
 {
 	[_renderEncoder setDepthStencilState:depthStencilState];
 	[_renderEncoder setRenderPipelineState:drawSubmeshPipelineState];
-	//[_renderEncoder setCullMode:MTLCullModeBack];
+	[_renderEncoder setCullMode:MTLCullModeBack];
 	[_renderEncoder setFrontFacingWinding:MTLWindingCounterClockwise];
 	
 	[_renderEncoder setVertexBuffer:meshReflection.vertexBuffer offset:0 atIndex:0];
@@ -92,6 +92,11 @@
 		[_renderEncoder setFragmentTexture:submesh.texture atIndex:0];
 		
 		[_renderEncoder drawPrimitives:MTLPrimitiveTypeTriangle vertexStart:0 vertexCount:submesh.numIndices];
+		
+		if (submeshIndex == 2)
+		{
+			submeshIndex = 2;
+		}
 	}
 }
 

@@ -22,7 +22,7 @@
 	simd_float2 size;
 	BOOL loaded;
 	float rotation;
-	float objectCounter;
+	unsigned int selectedObjectIndex;
 }
 
 - (instancetype)initWithMetalDevice:(id<MTLDevice>)metalDevice
@@ -37,9 +37,31 @@
 		size = simd_make_float2(1.0f, 1.0f);
 		loaded = NO;
 		rotation = 0.0f;
-		objectCounter = 0.0f;
+		selectedObjectIndex = 0;
 	}
 	return self;
+}
+
+- (void)selectNextObject
+{
+	if (selectedObjectIndex + 1 >= [storage numMeshes])
+	{
+		selectedObjectIndex = 0;
+		return;
+	}
+	
+	selectedObjectIndex++;
+}
+
+- (void)selectPreviousObject
+{
+	if (selectedObjectIndex == 0)
+	{
+		selectedObjectIndex = [storage numMeshes] - 1;
+		return;
+	}
+	
+	selectedObjectIndex--;
 }
 
 - (void)loadWadByPath:(NSString*)wadPath
@@ -95,6 +117,8 @@
 	// 3. Display something
 	
 	loaded = YES;
+	selectedObjectIndex = 290;	// palm
+	selectedObjectIndex = 47;	// angry face
 }
 
 - (void)sizeChanged:(simd_float2)viewportSize
@@ -109,7 +133,7 @@
 		return;
 	}
 	
-	rotation += 0.005;
+	rotation += 0.01;
 	while (rotation > (M_PI * 2))
 	{
 		rotation -= (M_PI * 2);
@@ -117,7 +141,8 @@
 	
 	OBJECT_UNIFORMS uniforms;
 	simd_float4x4 model = matrix4fRotation(rotation, simd_make_float3(0.0f, 1.0f, 0.0f));
-	simd_float4x4 view = matrix4fTranslation(0.0f, -1.0f, -3.0f);
+	simd_float4x4 view = matrix4fTranslation(0.0f, -0.5f, -2.0f);
+	view = matrix4fTranslation(0.0f, 0.0f, -0.5f);
 	
 	const float fovyradians = 65.0 * (M_PI / 180.0f);
 	simd_float4x4 projection = matrix4fPerspectiveRightHand(fovyradians, size.x / size.y, 0.01f, 1000.0f);
@@ -125,16 +150,7 @@
 	uniforms.modelViewProjection = simd_mul(view, model);
 	uniforms.modelViewProjection = simd_mul(projection, uniforms.modelViewProjection);
 	
-	objectCounter += 0.02;
-	//unsigned int meshIndex = 141;
-	unsigned int meshIndex = 141;//(unsigned int)objectCounter;
-	if (meshIndex >= [storage numMeshes])
-	{
-		meshIndex = 0;
-		objectCounter = 0.0f;
-	}
-	
-	MeshReflection* meshReflection = [storage meshAtIndex:meshIndex];
+	MeshReflection* meshReflection = [storage meshAtIndex:selectedObjectIndex];
 	[renderer drawMesh:meshReflection withUniforms:&uniforms];
 }
 

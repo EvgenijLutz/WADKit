@@ -118,9 +118,9 @@
 		/*const float vx = ((float)(vertex.vx)) / 1024.0f;
 		const float vy = ((float)(vertex.vy)) / 1024.0f;
 		const float vz = ((float)(vertex.vz)) / 1024.0f;*/
-		const float vx = ((float)(vertex.vx)) / 64.0f;
-		const float vy = ((float)(vertex.vy)) / 64.0f;
-		const float vz = ((float)(vertex.vz)) / 64.0f;
+		const float vx = ((float)(vertex.vx)) / 1024.0f;
+		const float vy = -((float)(vertex.vy)) / 1024.0f;
+		const float vz = -((float)(vertex.vz)) / 1024.0f;
 		
 		const float nx = ((float)(vertex.vx)) / 1024.0f;
 		const float ny = ((float)(vertex.vy)) / 1024.0f;

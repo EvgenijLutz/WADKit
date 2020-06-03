@@ -18,6 +18,13 @@
 	_renderer = [[WKRenderer alloc] initWithMetalDevice:device];
 }
 
+- (void)setDelegate:(id<MTKViewDelegate>)delegate
+{
+	[super setDelegate:delegate];
+	
+	[delegate mtkView:self drawableSizeWillChange:self.frame.size];
+}
+
 - (BOOL)acceptsFirstResponder
 {
 	return YES;

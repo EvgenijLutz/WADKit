@@ -162,6 +162,16 @@
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <menu key="submenu" title="View" id="HyV-fh-RgO">
                         <items>
+                            <menuItem title="Next object" keyEquivalent="]" id="T9H-YU-AkQ">
+                                <connections>
+                                    <action selector="nextObject:" target="-1" id="Hyc-eY-b7X"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Previous object" keyEquivalent="[" id="21r-Kg-X9p">
+                                <connections>
+                                    <action selector="previousObject:" target="-1" id="lDU-N5-9GU"/>
+                                </connections>
+                            </menuItem>
                             <menuItem title="Enter Full Screen" keyEquivalent="f" id="4J7-dP-txa">
                                 <modifierMask key="keyEquivalentModifierMask" control="YES" command="YES"/>
                                 <connections>

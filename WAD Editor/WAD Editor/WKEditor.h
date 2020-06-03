@@ -16,6 +16,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype)initWithMetalDevice:(id<MTLDevice>)metalDevice;
 
+- (void)selectNextObject;
+- (void)selectPreviousObject;
+
 - (void)loadWadByPath:(NSString*)wadPath;
 
 @end
