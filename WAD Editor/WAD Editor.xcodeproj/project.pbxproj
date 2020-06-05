@@ -17,6 +17,9 @@
 		C977D3632486931A002A7D6B /* Submesh.m in Sources */ = {isa = PBXBuildFile; fileRef = C977D3622486931A002A7D6B /* Submesh.m */; };
 		C98AC97524864E830096BDCC /* TextureReflection.m in Sources */ = {isa = PBXBuildFile; fileRef = C98AC97424864E830096BDCC /* TextureReflection.m */; };
 		C9A3ACAD2487D47A002FD496 /* triangle_shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = C9A3ACAC2487D47A002FD496 /* triangle_shaders.metal */; };
+		C9B6FAD6248A9739006DBCA7 /* WKOutlineCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = C9B6FAD5248A9739006DBCA7 /* WKOutlineCellView.m */; };
+		C9B6FADA248AB06E006DBCA7 /* WKOutlineDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = C9B6FAD9248AB06E006DBCA7 /* WKOutlineDataSource.m */; };
+		C9B6FADD248AB0F0006DBCA7 /* WKOutlineItem.m in Sources */ = {isa = PBXBuildFile; fileRef = C9B6FADC248AB0F0006DBCA7 /* WKOutlineItem.m */; };
 		C9BC729523AD560100EFE0D7 /* Window.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9BC729423AD560100EFE0D7 /* Window.xib */; };
 		C9BE0FD323A733E3000E25FC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C9BE0FD223A733E3000E25FC /* AppDelegate.m */; };
 		C9BE0FD523A733E7000E25FC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C9BE0FD423A733E7000E25FC /* Assets.xcassets */; };
@@ -80,6 +83,13 @@
 		C98AC97324864E830096BDCC /* TextureReflection.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TextureReflection.h; sourceTree = "<group>"; };
 		C98AC97424864E830096BDCC /* TextureReflection.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TextureReflection.m; sourceTree = "<group>"; };
 		C9A3ACAC2487D47A002FD496 /* triangle_shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = triangle_shaders.metal; sourceTree = "<group>"; };
+		C9B6FAD4248A9739006DBCA7 /* WKOutlineCellView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WKOutlineCellView.h; sourceTree = "<group>"; };
+		C9B6FAD5248A9739006DBCA7 /* WKOutlineCellView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WKOutlineCellView.m; sourceTree = "<group>"; };
+		C9B6FAD7248AA974006DBCA7 /* WKEditorDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WKEditorDelegate.h; sourceTree = "<group>"; };
+		C9B6FAD8248AB06E006DBCA7 /* WKOutlineDataSource.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WKOutlineDataSource.h; sourceTree = "<group>"; };
+		C9B6FAD9248AB06E006DBCA7 /* WKOutlineDataSource.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WKOutlineDataSource.m; sourceTree = "<group>"; };
+		C9B6FADB248AB0F0006DBCA7 /* WKOutlineItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WKOutlineItem.h; sourceTree = "<group>"; };
+		C9B6FADC248AB0F0006DBCA7 /* WKOutlineItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WKOutlineItem.m; sourceTree = "<group>"; };
 		C9BC729423AD560100EFE0D7 /* Window.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Window.xib; sourceTree = "<group>"; };
 		C9BE0FCE23A733E3000E25FC /* WAD Editor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "WAD Editor.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9BE0FD123A733E3000E25FC /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -187,10 +197,26 @@
 			isa = PBXGroup;
 			children = (
 				C977D359248661CA002A7D6B /* WKViewport.h */,
+				C9B6FAD7248AA974006DBCA7 /* WKEditorDelegate.h */,
 				C977D35624865EA0002A7D6B /* WKEditor.h */,
 				C977D35724865EA0002A7D6B /* WKEditor.m */,
 			);
 			name = Editor;
+			sourceTree = "<group>";
+		};
+		C9B6FAD3248A96E1006DBCA7 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				C9B6FAD4248A9739006DBCA7 /* WKOutlineCellView.h */,
+				C9B6FAD5248A9739006DBCA7 /* WKOutlineCellView.m */,
+				C9B6FADB248AB0F0006DBCA7 /* WKOutlineItem.h */,
+				C9B6FADC248AB0F0006DBCA7 /* WKOutlineItem.m */,
+				C9B6FAD8248AB06E006DBCA7 /* WKOutlineDataSource.h */,
+				C9B6FAD9248AB06E006DBCA7 /* WKOutlineDataSource.m */,
+				C9BE100723A761D1000E25FC /* MainWindow.h */,
+				C9BE100823A761D1000E25FC /* MainWindow.m */,
+			);
+			name = UI;
 			sourceTree = "<group>";
 		};
 		C9BE0FC523A733E3000E25FC = {
@@ -223,12 +249,11 @@
 				C977D35C2486883A002A7D6B /* math_utils.m */,
 				C9BE0FD123A733E3000E25FC /* AppDelegate.h */,
 				C9BE0FD223A733E3000E25FC /* AppDelegate.m */,
-				C9BE100723A761D1000E25FC /* MainWindow.h */,
-				C9BE100823A761D1000E25FC /* MainWindow.m */,
 				C977D35024865C49002A7D6B /* Resource reflection storage */,
 				C977D35524865E91002A7D6B /* Editor */,
 				C977D35124865C6F002A7D6B /* Renderer */,
 				C977D34E24865C21002A7D6B /* WadKit view */,
+				C9B6FAD3248A96E1006DBCA7 /* UI */,
 				C9BE0FD423A733E7000E25FC /* Assets.xcassets */,
 				C9BC729423AD560100EFE0D7 /* Window.xib */,
 				C9BE0FD623A733E7000E25FC /* MainMenu.xib */,
@@ -423,6 +448,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C9B6FAD6248A9739006DBCA7 /* WKOutlineCellView.m in Sources */,
+				C9B6FADD248AB0F0006DBCA7 /* WKOutlineItem.m in Sources */,
 				C93EB5B42486C3D6001CDE59 /* SubmeshGenerator.m in Sources */,
 				C977D3602486930A002A7D6B /* MeshReflection.m in Sources */,
 				C977D35424865C93002A7D6B /* WKRenderer.m in Sources */,
@@ -435,6 +462,7 @@
 				C9BE0FD323A733E3000E25FC /* AppDelegate.m in Sources */,
 				C9BE100923A761D1000E25FC /* MainWindow.m in Sources */,
 				C9E2BE93247D7187006FF2AE /* WadKitView.m in Sources */,
+				C9B6FADA248AB06E006DBCA7 /* WKOutlineDataSource.m in Sources */,
 				C98AC97524864E830096BDCC /* TextureReflection.m in Sources */,
 				C977D3632486931A002A7D6B /* Submesh.m in Sources */,
 			);

@@ -21,7 +21,8 @@
 	
 	simd_float2 size;
 	BOOL loaded;
-	float rotation;
+	float cameraDistance;
+	simd_float2 rotation;
 	unsigned int selectedObjectIndex;
 }
 
@@ -36,8 +37,11 @@
 		
 		size = simd_make_float2(1.0f, 1.0f);
 		loaded = NO;
-		rotation = 0.0f;
+		cameraDistance = 0.5f;
+		rotation = simd_make_float2(0.0f, 0.0f);
 		selectedObjectIndex = 0;
+		
+		_delegate = nil;
 	}
 	return self;
 }
@@ -119,6 +123,37 @@
 	loaded = YES;
 	selectedObjectIndex = 290;	// palm
 	selectedObjectIndex = 47;	// angry face
+	
+	[_delegate editor:self wadLoaded:wad];
+}
+
+- (WAD*)wad
+{
+	return wad;
+}
+
+#pragma mark - Editor actions
+
+- (void)selectMeshAtIndex:(unsigned int)meshIndex
+{
+	assert(meshIndex < wadGetNumMeshes(wad));
+	selectedObjectIndex = meshIndex;
+}
+
+#pragma mark - Protocol implementation
+
+- (void)scaleView:(float)camDistance
+{
+	cameraDistance += camDistance;
+	if (cameraDistance < 0.02f)
+	{
+		cameraDistance = 0.02f;
+	}
+}
+
+- (void)rotateView:(simd_float2)rotationDelta
+{
+	rotation += rotationDelta;
 }
 
 - (void)sizeChanged:(simd_float2)viewportSize
@@ -133,20 +168,17 @@
 		return;
 	}
 	
-	rotation += 0.01;
-	while (rotation > (M_PI * 2))
-	{
-		rotation -= (M_PI * 2);
-	}
+	simd_float4x4 model = matrix_identity_float4x4;
 	
-	OBJECT_UNIFORMS uniforms;
-	simd_float4x4 model = matrix4fRotation(rotation, simd_make_float3(0.0f, 1.0f, 0.0f));
-	simd_float4x4 view = matrix4fTranslation(0.0f, -0.5f, -2.0f);
-	view = matrix4fTranslation(0.0f, 0.0f, -0.5f);
+	simd_float4x4 view = matrix_identity_float4x4;
+	view = simd_mul(matrix4fRotation(rotation.y, simd_make_float3(0.0f, 1.0f, 0.0f)), view);
+	view = simd_mul(matrix4fRotation(rotation.x, simd_make_float3(1.0f, 0.0f, 0.0f)), view);
+	view = simd_mul(matrix4fTranslation(0.0f, 0.0f, -cameraDistance), view);
 	
 	const float fovyradians = 65.0 * (M_PI / 180.0f);
 	simd_float4x4 projection = matrix4fPerspectiveRightHand(fovyradians, size.x / size.y, 0.01f, 1000.0f);
 	
+	OBJECT_UNIFORMS uniforms;
 	uniforms.modelViewProjection = simd_mul(view, model);
 	uniforms.modelViewProjection = simd_mul(projection, uniforms.modelViewProjection);
 	

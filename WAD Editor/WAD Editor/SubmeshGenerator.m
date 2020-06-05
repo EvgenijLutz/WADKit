@@ -66,14 +66,16 @@
 	indices[numIndices + 1].vertexIndex = polygon->v3;
 	indices[numIndices + 2].vertexIndex = polygon->v2;
 	
-	/*indices[numIndices + 0].uv = simd_make_float2(0.0f, 0.0f);
-	indices[numIndices + 1].uv = simd_make_float2(1.0f, 1.0f);
-	indices[numIndices + 2].uv = simd_make_float2(1.0f, 0.0f);*/
+	float su = (float)(textureSample->x) / 256.0f;
+	float sv = (float)(textureSample->y) / 256.0f;
+	float eu = su + (float)(textureSample->addW) / 256.0f;
+	float ev = sv + (float)(textureSample->addH) / 256.0f;
 	
-	/*const*/ float su = (float)(textureSample->x) / 255.0f;
-	/*const*/ float sv = (float)(textureSample->y) / 255.0f;
-	/*const*/ float eu = su + (float)(textureSample->addW) / 255.0f;
-	/*const*/ float ev = sv + (float)(textureSample->addH) / 255.0f;
+	/*const float duv = 0.5f / 256.0f;
+	su = (float)(textureSample->x) / 256.0f + duv;
+	sv = (float)(textureSample->y) / 256.0f + duv;
+	eu = su + (float)(textureSample->addW) / 256.0f - duv;
+	ev = sv + (float)(textureSample->addH) / 256.0f - duv;*/
 	
 	const int flipX = textureSample->flipX;
 	if (!flipX)

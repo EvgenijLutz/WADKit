@@ -26,6 +26,16 @@
 	return self;
 }
 
+- (void)scaleView:(float)cameraDistance
+{
+	[viewport scaleView:cameraDistance];
+}
+
+- (void)rotateView:(simd_float2)rotation
+{
+	[viewport rotateView:rotation];
+}
+
 - (void)mtkView:(nonnull MTKView*)view drawableSizeWillChange:(CGSize)size
 {
 	simd_float2 viewportSize = simd_make_float2(size.width, size.height);

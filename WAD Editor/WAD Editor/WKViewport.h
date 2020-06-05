@@ -16,6 +16,9 @@ NS_ASSUME_NONNULL_BEGIN
 @protocol WKViewport <NSObject>
 
 @required
+- (void)scaleView:(float)camDistance;
+- (void)rotateView:(simd_float2)rotationDelta;
+
 - (void)sizeChanged:(simd_float2)viewportSize;
 - (void)drawWithRenderer:(WKRenderer*)renderer;
 

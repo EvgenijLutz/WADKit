@@ -151,6 +151,18 @@ MESH* wadGetMesh(WAD* wad, unsigned int meshIndex)
 	return &(wad->meshes[meshIndex]);
 }
 
+unsigned int wadGetNumSkeletons(WAD* wad)
+{
+	assert(wad);
+	return wad->numSkeletons;
+}
+
+unsigned int wadGetNumMovables(WAD* wad)
+{
+	assert(wad);
+	return wad->numMovables;
+}
+
 
 unsigned int wadGetNumStatics(WAD* wad)
 {

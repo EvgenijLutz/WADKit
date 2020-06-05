@@ -9,6 +9,7 @@
 @import Foundation;
 @import Metal;
 #import "WKViewport.h"
+#import "WKEditorDelegate.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -20,6 +21,11 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)selectPreviousObject;
 
 - (void)loadWadByPath:(NSString*)wadPath;
+- (WAD*)wad;
+
+- (void)selectMeshAtIndex:(unsigned int)meshIndex;
+
+@property (nonatomic) id<WKEditorDelegate> delegate;
 
 @end
 

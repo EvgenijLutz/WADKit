@@ -33,6 +33,10 @@ TEXTURE_SAMPLE wadGetTextureSample(WAD* wad, unsigned int textureSampleIndex);
 unsigned int wadGetNumMeshes(WAD* wad);
 MESH* wadGetMesh(WAD* wad, unsigned int meshIndex);
 
+unsigned int wadGetNumSkeletons(WAD* wad);
+
+unsigned int wadGetNumMovables(WAD* wad);
+
 unsigned int wadGetNumStatics(WAD* wad);
 STATIC* wadGetStaticByIndex(WAD* wad, unsigned int staticIndex);
 STATIC* wadGetStaticById(WAD* wad, unsigned int staticId);

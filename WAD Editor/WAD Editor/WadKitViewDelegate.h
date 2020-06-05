@@ -8,6 +8,7 @@
 
 @import Foundation;
 @import MetalKit;
+#include <simd/simd.h>
 
 @protocol WKViewport;
 
@@ -17,6 +18,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 //- (instancetype)initWithEditor:(WKEditor*)editor;	// TODO: id<WKViewport>(WKPreviewViewport, WKAnimationViewport)?
 - (instancetype)initWithViewport:(id<WKViewport>)wkViewport;
+
+- (void)scaleView:(float)cameraDistance;
+- (void)rotateView:(simd_float2)rotation;
 
 @end
 
