@@ -81,6 +81,7 @@
 	wkView.colorPixelFormat = MTLPixelFormatBGRA8Unorm;
 	wkView.depthStencilPixelFormat = MTLPixelFormatDepth32Float_Stencil8;
 	wkView.colorspace = CGColorSpaceCreateWithName(kCGColorSpaceDisplayP3);
+	wkView.clearColor = MTLClearColorMake(0.1, 0.1, 0.1, 1.0);
 	/*if (self.screen)
 	{
 		wkView.colorspace = self.screen.colorSpace.CGColorSpace;
@@ -101,9 +102,6 @@
 {
 	NSString* path = [NSBundle.mainBundle pathForResource:@"tut1" ofType:@"WAD"];
 	[editor loadWadByPath:path];
-	
-	// 3. Display something
-	[_wadKitView draw];
 }
 
 - (void)nextObject:(id)sender
@@ -123,21 +121,21 @@
 	[outlineDataSource clear];
 	
 	// Texture pages
-	unsigned int numItems = wadGetNumTexturePages(editor.wad);
-	for (unsigned int i = 0; i < numItems; i++)
+	unsigned int numTexturePages = wadGetNumTexturePages(editor.wad);
+	for (unsigned int i = 0; i < numTexturePages; i++)
 	{
 		[outlineDataSource createItemWithSectionIndex:0 itemIndex:i name:[NSString stringWithFormat:@"Texture page #%d", i]];
 	}
 	
 	// Meshes
-	numItems = wadGetNumMeshes(editor.wad);
-	for (unsigned int i = 0; i < numItems; i++)
+	unsigned int numMeshes = wadGetNumMeshes(editor.wad);
+	for (unsigned int i = 0; i < numMeshes; i++)
 	{
 		[outlineDataSource createItemWithSectionIndex:1 itemIndex:i name:[NSString stringWithFormat:@"Mesh #%d", i]];
 	}
 	
 	// Skeletons
-	numItems = wadGetNumSkeletons(editor.wad);
+	unsigned numItems = wadGetNumSkeletons(editor.wad);
 	for (unsigned int i = 0; i < numItems; i++)
 	{
 		[outlineDataSource createItemWithSectionIndex:2 itemIndex:i name:[NSString stringWithFormat:@"Skeleton #%d", i]];
@@ -208,10 +206,6 @@
 	{
 		view = [[WKOutlineCellView alloc] init];
 		view.identifier = cellId;
-	}
-	else
-	{
-		NSLog(@"Yay!");
 	}
 	
 	if ([item isKindOfClass:WKOutlineItem.class])

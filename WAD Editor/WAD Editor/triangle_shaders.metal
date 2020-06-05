@@ -23,8 +23,6 @@ struct TexTriangleFragmentIn
 	float2 uv;
 };
 
-//- (void)drawSubMeshWithVertexBuffer:(id<MTLBuffer>)vertexBuffer indexBuffer:(id<MTLBuffer>)indexBuffer numIndices:(NSUInteger)numIndices texture:(id<MTLTexture>)texture uniforms:(id<MTLBuffer>)uniforms;
-
 vertex TexTriangleFragmentIn texturedTriangle_vs(uint id [[ vertex_id ]],
 												 constant WE_VERTEX* vertices [[ buffer(0) ]],
 												 constant WE_INDEX* indices [[ buffer(1) ]],
