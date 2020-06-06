@@ -20,6 +20,7 @@ typedef struct POLYGON
 	unsigned char attributes;
 	unsigned char unknown;	// garbage?
 	
+	// Calculated values:
 	unsigned short flipped;
 	unsigned short textureSampleShape;
 	unsigned short textureSampleIndex;

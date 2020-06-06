@@ -19,10 +19,15 @@ extern "C" {
 
 #include "wk_vertex.h"
 #include "wk_polygon.h"
-#include "texture.h"
+#include "texture_page.h"
 
 #include "wad_interface.h"
 #include "mesh_interface.h"
+
+#include "movable_id.h"
+#include "movable_interface.h"
+
+#include "static_object_id.h"
 #include "static_object_interface.h"
 
 #ifdef __cplusplus

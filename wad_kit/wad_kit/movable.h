@@ -9,11 +9,13 @@
 #ifndef movable_h
 #define movable_h
 
+#include "movable_id.h"
+
 typedef struct ANIMATION ANIMATION;
 
 typedef struct MOVABLE
 {
-	unsigned int movableId;		// TODO: replace with enum?
+	MOVABLE_ID movableId;
 	unsigned short numMeshes;
 	unsigned int* meshIndices;
 	unsigned int skeletonIndex;

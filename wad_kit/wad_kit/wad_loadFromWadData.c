@@ -9,6 +9,7 @@
 #include "wad_interface.h"
 #include "execute_result.h"
 #include "mesh.h"
+#include "movable_id.h"
 #include "static_object.h"
 #include "wad.h"
 #include "raw_wad.h"
@@ -521,7 +522,7 @@ WAD* wadLoadFromWadData(const unsigned char* data, long dataSize, EXECUTE_RESULT
 		RAW_MOVABLE* rawMovable = &rawMovables[movableIndex];
 		MOVABLE* movable = &wad->movables[movableIndex];
 		
-		movable->movableId = rawMovable->objectId;
+		movable->movableId = (MOVABLE_ID)rawMovable->objectId;
 		movable->numMeshes = rawMovable->numPointers;
 		
 		/* * * Get mesh indices (movable->meshIndices) for movable * * */
@@ -835,7 +836,7 @@ WAD* wadLoadFromWadData(const unsigned char* data, long dataSize, EXECUTE_RESULT
 		STATIC* staticObject = &(wad->statics[staticIndex]);
 		RAW_STATIC* rawStatic = &(statics[staticIndex]);
 		
-		staticObject->staticId = rawStatic->objectId;
+		staticObject->staticId = (STATIC_ID)rawStatic->objectId;
 		staticObject->vx1 = rawStatic->vx1;
 		staticObject->vy1 = rawStatic->vy1;
 		staticObject->vz1 = rawStatic->vz1;

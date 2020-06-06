@@ -1,13 +1,13 @@
 //
-//  texture.h
+//  texture_page.h
 //  wad_kit
 //
 //  Created by Евгений Лютц on 02.06.20.
 //  Copyright © 2020 Eugene Lutz. All rights reserved.
 //
 
-#ifndef texture_h
-#define texture_h
+#ifndef wad_kit_texture_page_h
+#define wad_kit_texture_page_h
 
 typedef struct TEXTURE_SAMPLE
 {
@@ -27,4 +27,4 @@ typedef struct TEXTURE_PAGE
 }
 TEXTURE_PAGE;
 
-#endif /* texture_h */
+#endif /* wad_kit_texture_page_h */

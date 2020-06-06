@@ -9,6 +9,13 @@
 #ifndef static_object_interface_h
 #define static_object_interface_h
 
+#include "static_object_id.h"
+
 typedef struct STATIC STATIC;
+
+STATIC_ID staticGetId(STATIC* staticObject);
+unsigned int staticGetMeshIndex(STATIC* staticObject);
+
+const char* staticIdGetName(STATIC_ID staticId);
 
 #endif /* static_object_interface_h */

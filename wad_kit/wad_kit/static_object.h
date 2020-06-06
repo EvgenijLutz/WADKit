@@ -9,25 +9,14 @@
 #ifndef static_object_h
 #define static_object_h
 
-typedef enum STATIC_ID
-{
-	STATIC_ID_PLANT0	= 0,
-	STATIC_ID_PLANT1	= 1,
-	STATIC_ID_PLANT2	= 2,
-	STATIC_ID_PLANT3	= 3,
-	STATIC_ID_PLANT4	= 4,
-	STATIC_ID_PLANT5	= 5,
-	STATIC_ID_PLANT6	= 6,
-	STATIC_ID_PLANT7	= 7,
-	STATIC_ID_PLANT8	= 8,
-	STATIC_ID_PLANT9	= 9
-}
-STATIC_ID;
+#include "static_object_id.h"
 
 typedef struct STATIC
 {
-	unsigned int staticId;	// TODO: STATIC_ID?
+	STATIC_ID staticId;
 	unsigned int meshIndex;
+	
+	// Visibility box?
 	short vx1;
 	short vy1;
 	short vz1;
@@ -36,6 +25,7 @@ typedef struct STATIC
 	short vy2;
 	short vz2;
 	
+	// Collision box?
 	short cx1;
 	short cy1;
 	short cz1;

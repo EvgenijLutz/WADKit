@@ -12,6 +12,7 @@
 #include "math_utils.h"
 #include "RendererTypes.h"
 #include "WKRenderer.h"
+#include "editor_selected_entity_type.h"
 
 @implementation WKEditor
 {
@@ -23,7 +24,9 @@
 	BOOL loaded;
 	float cameraDistance;
 	simd_float2 rotation;
-	unsigned int selectedObjectIndex;
+	
+	SELECTED_ENTITY_TYPE selectedEntityType;
+	unsigned int selectedEntityIndex;
 }
 
 - (instancetype)initWithMetalDevice:(id<MTLDevice>)metalDevice
@@ -39,7 +42,9 @@
 		loaded = NO;
 		cameraDistance = 0.5f;
 		rotation = simd_make_float2(0.0f, 0.0f);
-		selectedObjectIndex = 0;
+		
+		selectedEntityType = SELECTED_ENTITY_TYPE_NONE;
+		selectedEntityIndex = 0;
 		
 		_delegate = nil;
 	}
@@ -48,24 +53,24 @@
 
 - (void)selectNextObject
 {
-	if (selectedObjectIndex + 1 >= [storage numMeshes])
+	/*if (selectedEntityIndex + 1 >= [storage numMeshes])
 	{
-		selectedObjectIndex = 0;
+		selectedEntityIndex = 0;
 		return;
 	}
 	
-	selectedObjectIndex++;
+	selectedEntityIndex++;*/
 }
 
 - (void)selectPreviousObject
 {
-	if (selectedObjectIndex == 0)
+	/*if (selectedEntityIndex == 0)
 	{
-		selectedObjectIndex = [storage numMeshes] - 1;
+		selectedEntityIndex = [storage numMeshes] - 1;
 		return;
 	}
 	
-	selectedObjectIndex--;
+	selectedEntityIndex--;*/
 }
 
 - (void)loadWadByPath:(NSString*)wadPath
@@ -121,8 +126,8 @@
 	// 3. Display something
 	
 	loaded = YES;
-	selectedObjectIndex = 290;	// palm
-	selectedObjectIndex = 47;	// angry face
+	selectedEntityIndex = 290;	// palm
+	selectedEntityIndex = 47;	// angry face
 	
 	[_delegate editor:self wadLoaded:wad];
 }
@@ -134,10 +139,26 @@
 
 #pragma mark - Editor actions
 
+- (void)deselectEntity
+{
+	selectedEntityType = SELECTED_ENTITY_TYPE_NONE;
+	selectedEntityIndex = 0;
+}
+
 - (void)selectMeshAtIndex:(unsigned int)meshIndex
 {
 	assert(meshIndex < wadGetNumMeshes(wad));
-	selectedObjectIndex = meshIndex;
+	
+	selectedEntityType = SELECTED_ENTITY_TYPE_MESH;
+	selectedEntityIndex = meshIndex;
+}
+
+- (void)selectStaticAtIndex:(unsigned int)staticIndex
+{
+	assert(staticIndex < wadGetNumStatics(wad));
+	
+	selectedEntityType = SELECTED_ENTITY_TYPE_STATIC;
+	selectedEntityIndex = staticIndex;
 }
 
 #pragma mark - Protocol implementation
@@ -168,22 +189,37 @@
 		return;
 	}
 	
-	simd_float4x4 model = matrix_identity_float4x4;
-	
-	simd_float4x4 view = matrix_identity_float4x4;
-	view = simd_mul(matrix4fRotation(rotation.y, simd_make_float3(0.0f, 1.0f, 0.0f)), view);
-	view = simd_mul(matrix4fRotation(rotation.x, simd_make_float3(1.0f, 0.0f, 0.0f)), view);
-	view = simd_mul(matrix4fTranslation(0.0f, 0.0f, -cameraDistance), view);
-	
-	const float fovyradians = 65.0 * (M_PI / 180.0f);
-	simd_float4x4 projection = matrix4fPerspectiveRightHand(fovyradians, size.x / size.y, 0.01f, 1000.0f);
-	
-	OBJECT_UNIFORMS uniforms;
-	uniforms.modelViewProjection = simd_mul(view, model);
-	uniforms.modelViewProjection = simd_mul(projection, uniforms.modelViewProjection);
-	
-	MeshReflection* meshReflection = [storage meshAtIndex:selectedObjectIndex];
-	[renderer drawMesh:meshReflection withUniforms:&uniforms];
+	if (selectedEntityType == SELECTED_ENTITY_TYPE_MESH ||
+		selectedEntityType == SELECTED_ENTITY_TYPE_STATIC)
+	{
+		simd_float4x4 model = matrix_identity_float4x4;
+		
+		simd_float4x4 view = matrix_identity_float4x4;
+		view = simd_mul(matrix4fRotation(rotation.y, simd_make_float3(0.0f, 1.0f, 0.0f)), view);
+		view = simd_mul(matrix4fRotation(rotation.x, simd_make_float3(1.0f, 0.0f, 0.0f)), view);
+		view = simd_mul(matrix4fTranslation(0.0f, 0.0f, -cameraDistance), view);
+		
+		const float fovyradians = 45.0 * (M_PI / 180.0f);
+		simd_float4x4 projection = matrix4fPerspectiveRightHand(fovyradians, size.x / size.y, 0.01f, 1000.0f);
+		
+		OBJECT_UNIFORMS uniforms;
+		uniforms.modelViewProjection = simd_mul(view, model);
+		uniforms.modelViewProjection = simd_mul(projection, uniforms.modelViewProjection);
+		
+		unsigned int meshIndex = 0;
+		if (selectedEntityType == SELECTED_ENTITY_TYPE_MESH)
+		{
+			meshIndex = selectedEntityIndex;
+		}
+		else if (selectedEntityType == SELECTED_ENTITY_TYPE_STATIC)
+		{
+			STATIC* staticObject = wadGetStaticByIndex(wad, selectedEntityIndex);
+			meshIndex = staticGetMeshIndex(staticObject);
+		}
+		
+		MeshReflection* meshReflection = [storage meshAtIndex:meshIndex];
+		[renderer drawMesh:meshReflection withUniforms:&uniforms];
+	}
 }
 
 @end

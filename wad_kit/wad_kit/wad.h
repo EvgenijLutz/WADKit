@@ -13,7 +13,7 @@
 #include "wk_vertex.h"
 #include "wk_polygon.h"
 #include "animation.h"
-#include "texture.h"
+#include "texture_page.h"
 #include "movable.h"
 
 typedef struct MESH MESH;
@@ -32,14 +32,14 @@ typedef struct WAD
 	TEXTURE_PAGE* texturePages;
 	
 	// DONE
+	unsigned int numMeshes;
+	MESH* meshes;
+	
+	// DONE
 	/* In theory, movables can refer to the same skeleton. Let's check it in future.
 	   If not, then move each skeleton instance to related mesh. */
 	unsigned int numSkeletons;
 	SKELETON* skeletons;
-	
-	// DONE
-	unsigned int numMeshes;
-	MESH* meshes;
 	
 	// DONE
 	unsigned int numMovables;

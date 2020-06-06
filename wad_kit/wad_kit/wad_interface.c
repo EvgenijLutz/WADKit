@@ -157,10 +157,36 @@ unsigned int wadGetNumSkeletons(WAD* wad)
 	return wad->numSkeletons;
 }
 
+
 unsigned int wadGetNumMovables(WAD* wad)
 {
 	assert(wad);
 	return wad->numMovables;
+}
+
+MOVABLE* wadGetMovableByIndex(WAD* wad, unsigned int movableIndex)
+{
+	assert(wad);
+	assert(movableIndex < wad->numMovables);
+	return &(wad->movables[movableIndex]);
+}
+
+MOVABLE* wadGetMovableById(WAD* wad, MOVABLE_ID movableId)
+{
+	assert(wad);
+	
+	MOVABLE* movable = NULL;
+	for (unsigned int i = 0; i < wad->numMovables; i++)
+	{
+		MOVABLE* currentMovable = &(wad->movables[i]);
+		if (currentMovable->movableId == movableId)
+		{
+			movable = currentMovable;
+			break;
+		}
+	}
+	
+	return movable;
 }
 
 
@@ -173,11 +199,11 @@ unsigned int wadGetNumStatics(WAD* wad)
 STATIC* wadGetStaticByIndex(WAD* wad, unsigned int staticIndex)
 {
 	assert(wad);
-	assert(wad->numStatics < staticIndex);
+	assert(staticIndex < wad->numStatics);
 	return &(wad->statics[staticIndex]);
 }
 
-STATIC* wadGetStaticById(WAD* wad, unsigned int staticId)
+STATIC* wadGetStaticById(WAD* wad, STATIC_ID staticId)
 {
 	assert(wad);
 	
@@ -191,7 +217,6 @@ STATIC* wadGetStaticById(WAD* wad, unsigned int staticId)
 			break;
 		}
 	}
-	assert(staticObject);
 	
 	return staticObject;
 }

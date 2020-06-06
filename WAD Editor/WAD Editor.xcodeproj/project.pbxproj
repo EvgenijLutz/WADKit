@@ -111,6 +111,7 @@
 		C9BE100323A73434000E25FC /* MetalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalKit.framework; path = System/Library/Frameworks/MetalKit.framework; sourceTree = SDKROOT; };
 		C9BE100723A761D1000E25FC /* MainWindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MainWindow.h; sourceTree = "<group>"; };
 		C9BE100823A761D1000E25FC /* MainWindow.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MainWindow.m; sourceTree = "<group>"; };
+		C9BE3B1D248BC88600C430A1 /* editor_selected_entity_type.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = editor_selected_entity_type.h; sourceTree = "<group>"; };
 		C9E2BE7F247D695C006FF2AE /* tut1.raw */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = tut1.raw; sourceTree = "<group>"; };
 		C9E2BE80247D695C006FF2AE /* tut1.TOM */ = {isa = PBXFileReference; lastKnownFileType = file; path = tut1.TOM; sourceTree = "<group>"; };
 		C9E2BE81247D695C006FF2AE /* tut1.sfx */ = {isa = PBXFileReference; lastKnownFileType = file; path = tut1.sfx; sourceTree = "<group>"; };
@@ -198,6 +199,7 @@
 			children = (
 				C977D359248661CA002A7D6B /* WKViewport.h */,
 				C9B6FAD7248AA974006DBCA7 /* WKEditorDelegate.h */,
+				C9BE3B1D248BC88600C430A1 /* editor_selected_entity_type.h */,
 				C977D35624865EA0002A7D6B /* WKEditor.h */,
 				C977D35724865EA0002A7D6B /* WKEditor.m */,
 			);

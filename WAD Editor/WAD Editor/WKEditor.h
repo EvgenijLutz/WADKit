@@ -10,6 +10,7 @@
 @import Metal;
 #import "WKViewport.h"
 #import "WKEditorDelegate.h"
+#include "editor_selected_entity_type.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -23,7 +24,9 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)loadWadByPath:(NSString*)wadPath;
 - (WAD*)wad;
 
+- (void)deselectEntity;
 - (void)selectMeshAtIndex:(unsigned int)meshIndex;
+- (void)selectStaticAtIndex:(unsigned int)staticIndex;
 
 @property (nonatomic) id<WKEditorDelegate> delegate;
 

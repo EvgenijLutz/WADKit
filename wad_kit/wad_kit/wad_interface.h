@@ -9,11 +9,14 @@
 #ifndef wad_interface_h
 #define wad_interface_h
 
-#include "texture.h"
+#include "texture_page.h"
+#include "movable_id.h"
+#include "static_object_id.h"
 
 typedef struct EXECUTE_RESULT EXECUTE_RESULT;
 typedef struct WAD WAD;
 typedef struct MESH MESH;
+typedef struct MOVABLE MOVABLE;
 typedef struct STATIC STATIC;
 
 WAD* wadCreate(void);
@@ -36,9 +39,11 @@ MESH* wadGetMesh(WAD* wad, unsigned int meshIndex);
 unsigned int wadGetNumSkeletons(WAD* wad);
 
 unsigned int wadGetNumMovables(WAD* wad);
+MOVABLE* wadGetMovableByIndex(WAD* wad, unsigned int movableIndex);
+MOVABLE* wadGetMovableById(WAD* wad, MOVABLE_ID movableId);
 
 unsigned int wadGetNumStatics(WAD* wad);
 STATIC* wadGetStaticByIndex(WAD* wad, unsigned int staticIndex);
-STATIC* wadGetStaticById(WAD* wad, unsigned int staticId);
+STATIC* wadGetStaticById(WAD* wad, STATIC_ID staticId);
 
 #endif /* wad_interface_h */

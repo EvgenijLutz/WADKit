@@ -18,6 +18,8 @@
 
 #define SECTION_INDEX_TEXTURE_PAGE	(0)
 #define SECTION_INDEX_MESH			(1)
+#define SECTION_INDEX_MOVABLE		(3)
+#define SECTION_INDEX_STATIC		(4)
 
 @interface MainWindow()
 @property (weak) IBOutlet NSOutlineView* outlineView;
@@ -124,14 +126,14 @@
 	unsigned int numTexturePages = wadGetNumTexturePages(editor.wad);
 	for (unsigned int i = 0; i < numTexturePages; i++)
 	{
-		[outlineDataSource createItemWithSectionIndex:0 itemIndex:i name:[NSString stringWithFormat:@"Texture page #%d", i]];
+		[outlineDataSource createItemWithSectionIndex:SECTION_INDEX_TEXTURE_PAGE itemIndex:i name:[NSString stringWithFormat:@"Texture page #%d", i]];
 	}
 	
 	// Meshes
 	unsigned int numMeshes = wadGetNumMeshes(editor.wad);
 	for (unsigned int i = 0; i < numMeshes; i++)
 	{
-		[outlineDataSource createItemWithSectionIndex:1 itemIndex:i name:[NSString stringWithFormat:@"Mesh #%d", i]];
+		[outlineDataSource createItemWithSectionIndex:SECTION_INDEX_MESH itemIndex:i name:[NSString stringWithFormat:@"Mesh #%d", i]];
 	}
 	
 	// Skeletons
@@ -143,18 +145,26 @@
 	
 	// Movables
 	numItems = wadGetNumMovables(editor.wad);
-	for (unsigned int i = 0; i < numItems; i++)
+	for (unsigned int movableIndex = 0; movableIndex < numItems; movableIndex++)
 	{
-		// TODO: give them their own names
-		[outlineDataSource createItemWithSectionIndex:3 itemIndex:i name:[NSString stringWithFormat:@"Movable #%d", i]];
+		MOVABLE* movable = wadGetMovableByIndex(wad, movableIndex);
+		MOVABLE_ID movableId = movableGetId(movable);
+		const char* movableName = movableIdGetName(movableId);
+		NSString* movableNameString = [NSString stringWithUTF8String:movableName];
+		
+		[outlineDataSource createItemWithSectionIndex:SECTION_INDEX_MOVABLE itemIndex:movableIndex name:movableNameString];
 	}
 	
 	// Statics
 	numItems = wadGetNumStatics(editor.wad);
-	for (unsigned int i = 0; i < numItems; i++)
+	for (unsigned int staticIndex = 0; staticIndex < numItems; staticIndex++)
 	{
-		// TODO: give them their own names
-		[outlineDataSource createItemWithSectionIndex:4 itemIndex:i name:[NSString stringWithFormat:@"Static #%d", i]];
+		STATIC* staticObject = wadGetStaticByIndex(wad, staticIndex);
+		STATIC_ID staticId = staticGetId(staticObject);
+		const char* staticName = staticIdGetName(staticId);
+		NSString* staticNameString = [NSString stringWithUTF8String:staticName];
+		
+		[outlineDataSource createItemWithSectionIndex:SECTION_INDEX_STATIC itemIndex:staticIndex name:staticNameString];
 	}
 	
 	[_outlineView reloadData];
@@ -176,8 +186,8 @@
 			case SECTION_INDEX_TEXTURE_PAGE: return wadGetNumTexturePages(editor.wad);
 			case SECTION_INDEX_MESH: return wadGetNumMeshes(editor.wad);
 			case 2: return wadGetNumSkeletons(editor.wad);
-			case 3: return wadGetNumMovables(editor.wad);
-			case 4: return wadGetNumStatics(editor.wad);
+			case SECTION_INDEX_MOVABLE: return wadGetNumMovables(editor.wad);
+			case SECTION_INDEX_STATIC: return wadGetNumStatics(editor.wad);
 			default: return 0;
 		}
 		
@@ -257,6 +267,14 @@
 		if (item.sectionIndex == SECTION_INDEX_MESH)
 		{
 			[editor selectMeshAtIndex:item.itemIndex];
+		}
+		/*else if (item.sectionIndex == SECTION_INDEX_MOVABLE)
+		{
+			[editor selectMovableAtIndex:item.itemIndex];
+		}*/
+		else if (item.sectionIndex == SECTION_INDEX_STATIC)
+		{
+			[editor selectStaticAtIndex:item.itemIndex];
 		}
 	}
 	
