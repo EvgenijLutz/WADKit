@@ -153,6 +153,14 @@
 	selectedEntityIndex = meshIndex;
 }
 
+- (void)selectMovableAtIndex:(unsigned int)movableIndex
+{
+	assert(movableIndex < wadGetNumMovables(wad));
+	
+	selectedEntityType = SELECTED_ENTITY_TYPE_MOVABLE;
+	selectedEntityIndex = movableIndex;
+}
+
 - (void)selectStaticAtIndex:(unsigned int)staticIndex
 {
 	assert(staticIndex < wadGetNumStatics(wad));
@@ -190,6 +198,7 @@
 	}
 	
 	if (selectedEntityType == SELECTED_ENTITY_TYPE_MESH ||
+		selectedEntityType == SELECTED_ENTITY_TYPE_MOVABLE ||
 		selectedEntityType == SELECTED_ENTITY_TYPE_STATIC)
 	{
 		simd_float4x4 model = matrix_identity_float4x4;
@@ -206,19 +215,84 @@
 		uniforms.modelViewProjection = simd_mul(view, model);
 		uniforms.modelViewProjection = simd_mul(projection, uniforms.modelViewProjection);
 		
-		unsigned int meshIndex = 0;
 		if (selectedEntityType == SELECTED_ENTITY_TYPE_MESH)
 		{
-			meshIndex = selectedEntityIndex;
+			unsigned int meshIndex = selectedEntityIndex;
+			MeshReflection* meshReflection = [storage meshAtIndex:meshIndex];
+			[renderer drawMesh:meshReflection withUniforms:&uniforms];
+		}
+		else if (selectedEntityType == SELECTED_ENTITY_TYPE_MOVABLE)
+		{
+			MOVABLE* movable = wadGetMovableByIndex(wad, selectedEntityIndex);
+			unsigned int numMovableMeshes = movableGetNumMeshes(movable);
+			if (numMovableMeshes > 0)
+			{
+				unsigned int meshIndex = movableGetMeshIndex(movable, 0);
+				MeshReflection* meshReflection = [storage meshAtIndex:meshIndex];
+				[renderer drawMesh:meshReflection withUniforms:&uniforms];
+				
+				unsigned int stackIndex = 1;
+				simd_float4x4 stackMatrices[32];
+				stackMatrices[0] = model;
+				stackMatrices[1] = model;
+				
+				unsigned int parentIndex = 0;
+				unsigned int parentMatrixIndices[32];
+				parentMatrixIndices[parentIndex] = stackIndex;
+				
+				unsigned int skeletonIndex = movableGetSkeletonIndex(movable);
+				SKELETON* skeleton = wadGetSkeleton(wad, skeletonIndex);
+				
+				for (unsigned int movableMeshIndex = 1; movableMeshIndex < numMovableMeshes; movableMeshIndex++)
+				{
+					unsigned int meshIndex = movableGetMeshIndex(movable, movableMeshIndex);
+					MeshReflection* meshReflection = [storage meshAtIndex:meshIndex];
+					
+					JOINT* joint = skeletonGetJoint(skeleton, movableMeshIndex - 1);
+					
+					float jointX = ((float)jointGetOffsetX(joint)) / 1024.0f;
+					float jointY = ((float)jointGetOffsetY(joint)) / 1024.0f;
+					float jointZ = ((float)jointGetOffsetZ(joint)) / 1024.0f;
+					simd_float4x4 translation = matrix4fTranslation(jointX, -jointY, -jointZ);
+					
+					JOINT_LOCATION_TYPE jointLinkType = jointGetLocationType(joint);
+					if (jointLinkType == JOINT_LOCATION_TYPE_LINK_TO_PREVIOUS_MESH)
+					{
+						// do nothing lol
+					}
+					else if (jointLinkType == JOINT_LOCATION_TYPE_PULL_PARENT_FROM_STACK_AND_CONNECT)
+					{
+						parentIndex--;
+						stackIndex = parentMatrixIndices[parentIndex];
+					}
+					else if (jointLinkType == JOINT_LOCATION_TYPE_PUSH_PARENT_TO_STACK_AND_CONNECT)
+					{
+						stackIndex++;
+						stackMatrices[stackIndex] = stackMatrices[stackIndex - 1];
+						
+						parentIndex++;
+						parentMatrixIndices[parentIndex] = stackIndex;
+					}
+					else if (jointLinkType == JOINT_LOCATION_TYPE_LINK_TO_PARENT_IN_STACK)
+					{
+						stackIndex = parentMatrixIndices[parentIndex];
+						stackMatrices[stackIndex] = stackMatrices[stackIndex - 1];
+					}
+					
+					stackMatrices[stackIndex] = matrix_multiply(stackMatrices[stackIndex], translation);
+					uniforms.modelViewProjection = simd_mul(view, stackMatrices[stackIndex]);
+					uniforms.modelViewProjection = simd_mul(projection, uniforms.modelViewProjection);
+					[renderer drawMesh:meshReflection withUniforms:&uniforms];
+				}
+			}
 		}
 		else if (selectedEntityType == SELECTED_ENTITY_TYPE_STATIC)
 		{
 			STATIC* staticObject = wadGetStaticByIndex(wad, selectedEntityIndex);
-			meshIndex = staticGetMeshIndex(staticObject);
+			unsigned int meshIndex = staticGetMeshIndex(staticObject);
+			MeshReflection* meshReflection = [storage meshAtIndex:meshIndex];
+			[renderer drawMesh:meshReflection withUniforms:&uniforms];
 		}
-		
-		MeshReflection* meshReflection = [storage meshAtIndex:meshIndex];
-		[renderer drawMesh:meshReflection withUniforms:&uniforms];
 	}
 }
 

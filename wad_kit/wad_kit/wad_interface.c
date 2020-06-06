@@ -8,6 +8,7 @@
 
 #include "wad_interface.h"
 #include "execute_result.h"
+#include "skeleton.h"
 #include "mesh.h"
 #include "static_object.h"
 #include "wad.h"
@@ -155,6 +156,13 @@ unsigned int wadGetNumSkeletons(WAD* wad)
 {
 	assert(wad);
 	return wad->numSkeletons;
+}
+
+SKELETON* wadGetSkeleton(WAD* wad, unsigned int skeletonIndex)
+{
+	assert(wad);
+	assert(skeletonIndex < wad->numSkeletons);
+	return &(wad->skeletons[skeletonIndex]);
 }
 
 

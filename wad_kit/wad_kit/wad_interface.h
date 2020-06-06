@@ -15,6 +15,7 @@
 
 typedef struct EXECUTE_RESULT EXECUTE_RESULT;
 typedef struct WAD WAD;
+typedef struct SKELETON SKELETON;
 typedef struct MESH MESH;
 typedef struct MOVABLE MOVABLE;
 typedef struct STATIC STATIC;
@@ -37,6 +38,7 @@ unsigned int wadGetNumMeshes(WAD* wad);
 MESH* wadGetMesh(WAD* wad, unsigned int meshIndex);
 
 unsigned int wadGetNumSkeletons(WAD* wad);
+SKELETON* wadGetSkeleton(WAD* wad, unsigned int skeletonIndex);
 
 unsigned int wadGetNumMovables(WAD* wad);
 MOVABLE* wadGetMovableByIndex(WAD* wad, unsigned int movableIndex);

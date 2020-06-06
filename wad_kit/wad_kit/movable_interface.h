@@ -11,9 +11,17 @@
 
 #include "movable_id.h"
 
+typedef struct WAD WAD;
 typedef struct MOVABLE MOVABLE;
+typedef struct MESH MESH;
 
 MOVABLE_ID movableGetId(MOVABLE* movable);
 const char* movableIdGetName(MOVABLE_ID movableId);
+
+unsigned int movableGetNumMeshes(MOVABLE* movable);
+unsigned int movableGetMeshIndex(MOVABLE* movable, unsigned int movableMeshIndex);
+MESH* movableGetMesh(MOVABLE* movable, unsigned int movableMeshIndex, WAD* wad);
+
+unsigned int movableGetSkeletonIndex(MOVABLE* movable);
 
 #endif /* wad_kit_movable_interface_h */

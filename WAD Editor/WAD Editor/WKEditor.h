@@ -26,6 +26,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)deselectEntity;
 - (void)selectMeshAtIndex:(unsigned int)meshIndex;
+- (void)selectMovableAtIndex:(unsigned int)movableIndex;
 - (void)selectStaticAtIndex:(unsigned int)staticIndex;
 
 @property (nonatomic) id<WKEditorDelegate> delegate;

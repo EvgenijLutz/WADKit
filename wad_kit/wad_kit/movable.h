@@ -16,9 +16,12 @@ typedef struct ANIMATION ANIMATION;
 typedef struct MOVABLE
 {
 	MOVABLE_ID movableId;
+	
 	unsigned short numMeshes;
 	unsigned int* meshIndices;
-	unsigned int skeletonIndex;
+	
+	unsigned int skeletonIndex;	// TODO: maybe replace to SKELETON pointer?
+	
 	unsigned short numAnimations;
 	ANIMATION* animations;
 }

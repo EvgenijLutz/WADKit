@@ -268,10 +268,10 @@
 		{
 			[editor selectMeshAtIndex:item.itemIndex];
 		}
-		/*else if (item.sectionIndex == SECTION_INDEX_MOVABLE)
+		else if (item.sectionIndex == SECTION_INDEX_MOVABLE)
 		{
 			[editor selectMovableAtIndex:item.itemIndex];
-		}*/
+		}
 		else if (item.sectionIndex == SECTION_INDEX_STATIC)
 		{
 			[editor selectStaticAtIndex:item.itemIndex];

@@ -8,6 +8,8 @@
 
 #include "wad_interface.h"
 #include "execute_result.h"
+#include "joint.h"
+#include "skeleton.h"
 #include "mesh.h"
 #include "static_object.h"
 #include "wad.h"

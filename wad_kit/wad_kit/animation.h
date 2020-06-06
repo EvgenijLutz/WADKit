@@ -116,21 +116,4 @@ typedef struct ANIMATION
 }
 ANIMATION;
 
-typedef struct JOINT
-{
-	int opCode;
-	int dx;
-	int dy;
-	int dz;
-}
-JOINT;
-
-/// Skeleton information. Consists of skeleton joints except root joint.
-typedef struct SKELETON_INFO
-{
-	unsigned int numJoints;
-	JOINT* joints;
-}
-SKELETON;
-
 #endif /* animation_h */

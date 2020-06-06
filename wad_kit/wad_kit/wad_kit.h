@@ -24,6 +24,10 @@ extern "C" {
 #include "wad_interface.h"
 #include "mesh_interface.h"
 
+#include "joint_location_type.h"
+#include "joint_interface.h"
+#include "skeleton_interface.h"
+
 #include "movable_id.h"
 #include "movable_interface.h"
 

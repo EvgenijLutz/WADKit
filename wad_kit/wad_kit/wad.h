@@ -16,6 +16,7 @@
 #include "texture_page.h"
 #include "movable.h"
 
+typedef struct SKELETON SKELETON;
 typedef struct MESH MESH;
 typedef struct STATIC STATIC;
 
