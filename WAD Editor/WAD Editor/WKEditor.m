@@ -228,14 +228,28 @@
 			if (numMovableMeshes > 0)
 			{
 				unsigned int meshIndex = movableGetMeshIndex(movable, 0);
-				MeshReflection* meshReflection = [storage meshAtIndex:meshIndex];
-				[renderer drawMesh:meshReflection withUniforms:&uniforms];
+				if (meshIndex == 0)
+				{
+					WE_LINE_UNIFORMS lineUniforms;
+					lineUniforms.scale = 0.015f;
+					lineUniforms.color = simd_make_float4(1.0f, 1.0f, 1.0f, 1.0f);
+					lineUniforms.modelViewProjection = uniforms.modelViewProjection;
+					
+					[renderer drawCubeWithUniforms:&lineUniforms];
+				}
+				else
+				{
+					MeshReflection* meshReflection = [storage meshAtIndex:meshIndex];
+					[renderer drawMesh:meshReflection withUniforms:&uniforms];
+				}
 				
+				// FIXME: Don't use fixed number for matrix stack length
 				unsigned int stackIndex = 1;
-				simd_float4x4 stackMatrices[32];
+				simd_float4x4 stackMatrices[32];	// sch💩ße
 				stackMatrices[0] = model;
 				stackMatrices[1] = model;
 				
+				// FIXME: Don't use fixed number for parent stack length
 				unsigned int parentIndex = 0;
 				unsigned int parentMatrixIndices[32];
 				parentMatrixIndices[parentIndex] = stackIndex;
@@ -262,8 +276,18 @@
 					}
 					else if (jointLinkType == JOINT_LOCATION_TYPE_PULL_PARENT_FROM_STACK_AND_CONNECT)
 					{
-						parentIndex--;
-						stackIndex = parentMatrixIndices[parentIndex];
+						if (parentIndex)
+						{
+							parentIndex--;
+							stackIndex = parentMatrixIndices[parentIndex];
+						}
+						else
+						{
+							// This never should happen!
+							// But sometimes it does.
+							// Place breakpoint here if you want to catch the error.
+							parentIndex = 0;
+						}
 					}
 					else if (jointLinkType == JOINT_LOCATION_TYPE_PUSH_PARENT_TO_STACK_AND_CONNECT)
 					{
@@ -279,10 +303,27 @@
 						stackMatrices[stackIndex] = stackMatrices[stackIndex - 1];
 					}
 					
+					// why not
+					assert(stackIndex < 32);
+					assert(parentIndex < 32);
+
 					stackMatrices[stackIndex] = matrix_multiply(stackMatrices[stackIndex], translation);
 					uniforms.modelViewProjection = simd_mul(view, stackMatrices[stackIndex]);
 					uniforms.modelViewProjection = simd_mul(projection, uniforms.modelViewProjection);
-					[renderer drawMesh:meshReflection withUniforms:&uniforms];
+					
+					if (meshIndex == 0)
+					{
+						WE_LINE_UNIFORMS lineUniforms;
+						lineUniforms.scale = 0.015f;
+						lineUniforms.color = simd_make_float4(1.0f, 1.0f, 1.0f, 1.0f);
+						lineUniforms.modelViewProjection = uniforms.modelViewProjection;
+						
+						[renderer drawCubeWithUniforms:&lineUniforms];
+					}
+					else
+					{
+						[renderer drawMesh:meshReflection withUniforms:&uniforms];
+					}
 				}
 			}
 		}

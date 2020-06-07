@@ -11,6 +11,7 @@
 
 #include <simd/simd.h>
 
+simd_float4x4 matrix4fScale(simd_float3 scale);
 simd_float4x4 matrix4fTranslation(float tx, float ty, float tz);
 simd_float4x4 matrix4fRotation(float radians, simd_float3 axis);
 simd_float4x4 matrix4fPerspectiveRightHand(float fovyRadians, float aspect, float nearZ, float farZ);

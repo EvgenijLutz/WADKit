@@ -11,7 +11,9 @@ using namespace metal;
 
 #include "RendererTypes.h"
 
-#define CALCULATE_LIGHT 1
+#define DISCARD_MAGENTA 0
+#define MAGENTA_TO_BLACK 1
+#define MAGENTA_TO_TRANSPARENT 0
 
 //=============================//
 //===== Textured triangle =====//
@@ -49,6 +51,29 @@ fragment float4 texturedTriangle_fs(TexTriangleFragmentIn in [[ stage_in ]],
 	
 	float4 color = float4(texture.sample(textureSampler, in.uv));
 	color.a = 1.0f;
+	
+#if DISCARD_MAGENTA
+	if (color.r >= 0.999f && color.g <= 0.001 && color.b >= 0.999f)
+	{
+		discard_fragment();
+	}
+#endif
+	
+#if MAGENTA_TO_BLACK
+	if (color.r >= 0.999f && color.g <= 0.001 && color.b >= 0.999f)
+	{
+		color.r = 0.0f;
+		color.g = 0.0f;
+		color.b = 0.0f;
+	}
+#endif
+	
+#if MAGENTA_TO_TRANSPARENT
+	if (color.r >= 0.999f && color.g <= 0.001 && color.b >= 0.999f)
+	{
+		color.a = 0.0f;
+	}
+#endif
 	
 	return color;
 }

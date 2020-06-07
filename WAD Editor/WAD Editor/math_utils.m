@@ -8,6 +8,16 @@
 
 #include "math_utils.h"
 
+simd_float4x4 matrix4fScale(simd_float3 scale)
+{
+	return (simd_float4x4) {{
+		{ scale.x,    0.0f,    0.0f, 0.0f },
+		{    0.0f, scale.y,    0.0f, 0.0f },
+		{    0.0f,    0.0f, scale.z, 0.0f },
+		{    0.0f,    0.0f,    0.0f, 1.0f }
+	}};
+}
+
 simd_float4x4 matrix4fTranslation(float tx, float ty, float tz)
 {
 	return (simd_float4x4) {{

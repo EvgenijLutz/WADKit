@@ -97,6 +97,7 @@
 	_outlineView.delegate = self;
 	
 	NSString* path = [NSBundle.mainBundle pathForResource:@"tut1" ofType:@"WAD"];
+	//NSString* path = [NSBundle.mainBundle pathForResource:@"1-tutorial" ofType:@"wad"];
 	[editor loadWadByPath:path];
 }
 

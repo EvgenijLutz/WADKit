@@ -96,6 +96,7 @@
 			isa = PBXGroup;
 			children = (
 				C9C73F4C23A686E800FBB723 /* wad_kit.h */,
+				C9BE3B32248C3A0A00C430A1 /* Math */,
 				C9924940248598A5004511F5 /* Primitives */,
 				C94F564C248647ED0089C915 /* Texture */,
 				C992493F248596D5004511F5 /* Mesh */,
@@ -200,6 +201,13 @@
 				C9BE3B29248C17E200C430A1 /* skeleton_interface.c */,
 			);
 			name = Skeleton;
+			sourceTree = "<group>";
+		};
+		C9BE3B32248C3A0A00C430A1 /* Math */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Math;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

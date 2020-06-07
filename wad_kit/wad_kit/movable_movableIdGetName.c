@@ -548,6 +548,13 @@ char* movableNames[] =
 
 const char* movableIdGetName(MOVABLE_ID movableId)
 {
-	assert(movableId >= MOVABLE_ID_LARA && movableId < MOVABLE_ID_NUMBER_OBJECTS);
-	return movableNames[movableId];
+	/*assert(movableId >= MOVABLE_ID_LARA && movableId < MOVABLE_ID_NUMBER_OBJECTS);
+	return movableNames[movableId];*/
+	
+	if (movableId >= MOVABLE_ID_LARA && movableId < MOVABLE_ID_NUMBER_OBJECTS)
+	{
+		return movableNames[movableId];
+	}
+	
+	return "Unknown";
 }

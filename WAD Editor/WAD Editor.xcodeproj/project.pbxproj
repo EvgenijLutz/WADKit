@@ -15,6 +15,7 @@
 		C977D35D2486883A002A7D6B /* math_utils.m in Sources */ = {isa = PBXBuildFile; fileRef = C977D35C2486883A002A7D6B /* math_utils.m */; };
 		C977D3602486930A002A7D6B /* MeshReflection.m in Sources */ = {isa = PBXBuildFile; fileRef = C977D35F2486930A002A7D6B /* MeshReflection.m */; };
 		C977D3632486931A002A7D6B /* Submesh.m in Sources */ = {isa = PBXBuildFile; fileRef = C977D3622486931A002A7D6B /* Submesh.m */; };
+		C983F82D248CCB7800211C5F /* colored_line_shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = C983F82C248CCB7800211C5F /* colored_line_shaders.metal */; };
 		C98AC97524864E830096BDCC /* TextureReflection.m in Sources */ = {isa = PBXBuildFile; fileRef = C98AC97424864E830096BDCC /* TextureReflection.m */; };
 		C9A3ACAD2487D47A002FD496 /* triangle_shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = C9A3ACAC2487D47A002FD496 /* triangle_shaders.metal */; };
 		C9B6FAD6248A9739006DBCA7 /* WKOutlineCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = C9B6FAD5248A9739006DBCA7 /* WKOutlineCellView.m */; };
@@ -80,6 +81,7 @@
 		C977D35F2486930A002A7D6B /* MeshReflection.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MeshReflection.m; sourceTree = "<group>"; };
 		C977D3612486931A002A7D6B /* Submesh.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Submesh.h; sourceTree = "<group>"; };
 		C977D3622486931A002A7D6B /* Submesh.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Submesh.m; sourceTree = "<group>"; };
+		C983F82C248CCB7800211C5F /* colored_line_shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = colored_line_shaders.metal; sourceTree = "<group>"; };
 		C98AC97324864E830096BDCC /* TextureReflection.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TextureReflection.h; sourceTree = "<group>"; };
 		C98AC97424864E830096BDCC /* TextureReflection.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TextureReflection.m; sourceTree = "<group>"; };
 		C9A3ACAC2487D47A002FD496 /* triangle_shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = triangle_shaders.metal; sourceTree = "<group>"; };
@@ -190,6 +192,7 @@
 				C977D35324865C93002A7D6B /* WKRenderer.m */,
 				C977D35A2486855D002A7D6B /* RendererTypes.h */,
 				C9A3ACAC2487D47A002FD496 /* triangle_shaders.metal */,
+				C983F82C248CCB7800211C5F /* colored_line_shaders.metal */,
 			);
 			name = Renderer;
 			sourceTree = "<group>";
@@ -457,6 +460,7 @@
 				C977D35424865C93002A7D6B /* WKRenderer.m in Sources */,
 				C977D35824865EA0002A7D6B /* WKEditor.m in Sources */,
 				C94F5648248644DA0089C915 /* WadKitViewDelegate.m in Sources */,
+				C983F82D248CCB7800211C5F /* colored_line_shaders.metal in Sources */,
 				C9BE0FDB23A733E7000E25FC /* main.m in Sources */,
 				C94F565224864D3A0089C915 /* ResourceReflectionStorage.m in Sources */,
 				C977D35D2486883A002A7D6B /* math_utils.m in Sources */,
