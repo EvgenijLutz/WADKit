@@ -7,7 +7,7 @@
 //
 
 #import "SubmeshGenerator.h"
-#import "ResourceReflectionStorage.h"
+#import "ResourceStorage.h"
 #import "Submesh.h"
 #include "RendererTypes.h"
 
@@ -196,13 +196,13 @@
 
 @implementation SubmeshGenerator
 {
-	ResourceReflectionStorage* storage;
+	ResourceStorage* storage;
 	WAD* wad;
 	
 	NSMutableArray<SubmeshData*>* submeshesData;
 }
 
-- (instancetype)initWithStorage:(ResourceReflectionStorage*)resourceStorage wad:(WAD*)_wad
+- (instancetype)initWithStorage:(ResourceStorage*)resourceStorage wad:(WAD*)_wad
 {
 	self = [super init];
 	if (self)
@@ -224,7 +224,8 @@
 		}
 	}
 	
-	id<MTLTexture> texture = [storage textureAtIndex:textureIndex];
+	TEXTURE_PAGE* texturePage = wadGetTexturePage(wad, textureIndex);
+	id<MTLTexture> texture = [storage textureAtTexturePage:texturePage];//[storage textureAtIndex:textureIndex];
 	SubmeshData* submeshData = [[SubmeshData alloc] initWithTextureIndex:textureIndex texture:texture];
 	[submeshesData addObject:submeshData];
 	

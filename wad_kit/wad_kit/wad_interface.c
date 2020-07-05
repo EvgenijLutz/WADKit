@@ -117,6 +117,13 @@ unsigned int wadGetNumTexturePages(WAD* wad)
 	return wad->numTexturePages;
 }
 
+TEXTURE_PAGE* wadGetTexturePage(WAD* wad, unsigned int texturePageIndex)
+{
+	assert(wad);
+	assert(texturePageIndex < wad->numTexturePages);
+	return &(wad->texturePages[texturePageIndex]);
+}
+
 unsigned char* wadGetTexturePageData(WAD* wad, unsigned int texturePageIndex)
 {
 	assert(wad);

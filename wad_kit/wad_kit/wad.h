@@ -16,37 +16,34 @@
 #include "texture_page.h"
 #include "movable.h"
 
-typedef struct SKELETON SKELETON;
+typedef struct TEXTURE_SAMPLE TEXTURE_SAMPLE;
+typedef struct TEXTURE_PAGE TEXTURE_PAGE;
 typedef struct MESH MESH;
+typedef struct SKELETON SKELETON;
+typedef struct MOVABLE MOVABLE;
 typedef struct STATIC STATIC;
 
 typedef struct WAD
 {
 	unsigned int version;
 	
-	// DONE
 	unsigned int numTextureSamples;
 	TEXTURE_SAMPLE* textureSamples;
 	
-	// DONE
 	unsigned int numTexturePages;
 	TEXTURE_PAGE* texturePages;
 	
-	// DONE
 	unsigned int numMeshes;
 	MESH* meshes;
 	
-	// DONE
 	/* In theory, movables can refer to the same skeleton. Let's check it in future.
 	   If not, then move each skeleton instance to related mesh. */
 	unsigned int numSkeletons;
 	SKELETON* skeletons;
 	
-	// DONE
 	unsigned int numMovables;
 	MOVABLE* movables;
 	
-	// DONE
 	unsigned int numStatics;
 	STATIC* statics;
 }

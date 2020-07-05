@@ -13,11 +13,12 @@
 	NSArray<Submesh*>* submeshes;
 }
 
-- (instancetype)initWithVertexBuffer:(id<MTLBuffer>)vertexBuffer submeshes:(NSArray<Submesh*>*)meshSubmeshes shaded:(BOOL)shaded
+- (instancetype)initWithMesh:(MESH*)mesh vertexBuffer:(id<MTLBuffer>)vertexBuffer submeshes:(NSArray<Submesh*>*)meshSubmeshes shaded:(BOOL)shaded
 {
 	self = [super init];
 	if (self)
 	{
+		_mesh = mesh;
 		submeshes = [meshSubmeshes copy];
 		_vertexBuffer = vertexBuffer;
 		_shaded = shaded;

@@ -12,7 +12,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface MainWindow : NSWindow<NSOutlineViewDataSource, NSOutlineViewDelegate, WKEditorDelegate>
+@interface MainWindow : NSWindow<NSOutlineViewDataSource, NSOutlineViewDelegate, WKEditorDelegate, NSSplitViewDelegate>
 
 - (void)initializeWithMetalDevice:(id<MTLDevice>)metalDevice;
 

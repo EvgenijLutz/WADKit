@@ -27,6 +27,7 @@ typedef struct KEYFRAME
 	short bb2y;
 	short bb2z;
 	
+	// Root mesh offset
 	short offx;
 	short offy;
 	short offz;
@@ -98,19 +99,24 @@ COMMAND;
 typedef struct ANIMATION
 {
 	unsigned short stateId;
+	
 	unsigned short numKeyframes;
 	KEYFRAME* keyframes;
+	
 	unsigned char frameDuration;
 	short unknown1;
 	short speed;
 	int acceleration;
 	long unknown2;
+	
 	unsigned short frameStart;
 	unsigned short frameEnd;
 	unsigned short nextAnimation;
 	unsigned short nextAnimationFrame;
+	
 	unsigned short numStateChanges;
 	STATE_CHANGE* stateChanges;
+	
 	unsigned short numCommands;
 	COMMAND* commands;
 }

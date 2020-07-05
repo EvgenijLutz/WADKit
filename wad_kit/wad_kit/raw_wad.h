@@ -102,10 +102,4 @@ typedef struct RAW_STATIC
 }
 RAW_STATIC;
 
-typedef struct RAW_WAD
-{
-	//
-}
-RAW_WAD;
-
 #endif /* wad_kit_raw_wad_h */

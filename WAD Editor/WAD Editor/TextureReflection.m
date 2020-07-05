@@ -10,13 +10,13 @@
 
 @implementation TextureReflection
 
-- (instancetype)init
+- (instancetype)initWithTexturePage:(TEXTURE_PAGE*)texturePage texture:(id<MTLTexture>)texture
 {
 	self = [super init];
 	if (self)
 	{
-		_texture = nil;
-		_index = 0;
+		_texturePage = texturePage;
+		_texture = texture;
 	}
 	return self;
 }

@@ -10,17 +10,13 @@
 @import MetalKit;
 #include <simd/simd.h>
 
+#include "wad_editor_lib_link.h"
+
 @protocol WKViewport;
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface WadKitViewDelegate : NSObject<MTKViewDelegate>
-
-//- (instancetype)initWithEditor:(WKEditor*)editor;	// TODO: id<WKViewport>(WKPreviewViewport, WKAnimationViewport)?
-- (instancetype)initWithViewport:(id<WKViewport>)wkViewport;
-
-- (void)scaleView:(float)cameraDistance;
-- (void)rotateView:(simd_float2)rotation;
 
 @end
 

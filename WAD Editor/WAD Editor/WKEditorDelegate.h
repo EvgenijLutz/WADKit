@@ -7,7 +7,7 @@
 //
 
 @import Foundation;
-#include "wad_kit_link.h"
+#include "wad_editor_lib_link.h"
 
 @class WKEditor;
 

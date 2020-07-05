@@ -1,0 +1,392 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		C9112CFC2498CC47000264A5 /* wad_editor_item_interface.h in Headers */ = {isa = PBXBuildFile; fileRef = C9112CFA2498CC47000264A5 /* wad_editor_item_interface.h */; };
+		C9112CFD2498CC47000264A5 /* wad_editor_item_interface.c in Sources */ = {isa = PBXBuildFile; fileRef = C9112CFB2498CC47000264A5 /* wad_editor_item_interface.c */; };
+		C9349FA3248CF46A0044565D /* wad_editor_interface.h in Headers */ = {isa = PBXBuildFile; fileRef = C9349FA1248CF46A0044565D /* wad_editor_interface.h */; };
+		C9349FA4248CF46A0044565D /* wad_editor_interface.c in Sources */ = {isa = PBXBuildFile; fileRef = C9349FA2248CF46A0044565D /* wad_editor_interface.c */; };
+		C9349FAF248CFB850044565D /* renderer_interface.h in Headers */ = {isa = PBXBuildFile; fileRef = C9349FAD248CFB850044565D /* renderer_interface.h */; };
+		C9349FB0248CFB850044565D /* renderer_interface.c in Sources */ = {isa = PBXBuildFile; fileRef = C9349FAE248CFB850044565D /* renderer_interface.c */; };
+		C9453C942495579900604E60 /* wad_editor_viewport_interface.h in Headers */ = {isa = PBXBuildFile; fileRef = C9453C922495579900604E60 /* wad_editor_viewport_interface.h */; };
+		C9453C952495579900604E60 /* wad_editor_viewport_interface.c in Sources */ = {isa = PBXBuildFile; fileRef = C9453C932495579900604E60 /* wad_editor_viewport_interface.c */; };
+		C9D59DE824B1C0F80048F2CA /* resource_storage_interface.h in Headers */ = {isa = PBXBuildFile; fileRef = C9D59DE624B1C0F80048F2CA /* resource_storage_interface.h */; };
+		C9D59DE924B1C0F80048F2CA /* resource_storage_interface.c in Sources */ = {isa = PBXBuildFile; fileRef = C9D59DE724B1C0F80048F2CA /* resource_storage_interface.c */; };
+		C9D59DF724B1CA900048F2CA /* wad_editor_viewport_delegate_interface.h in Headers */ = {isa = PBXBuildFile; fileRef = C9D59DF524B1CA900048F2CA /* wad_editor_viewport_delegate_interface.h */; };
+		C9D59DF824B1CA900048F2CA /* wad_editor_viewport_delegate_interface.c in Sources */ = {isa = PBXBuildFile; fileRef = C9D59DF624B1CA900048F2CA /* wad_editor_viewport_delegate_interface.c */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		C9112CF82498A86C000264A5 /* wad_editor_item_type.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wad_editor_item_type.h; sourceTree = "<group>"; };
+		C9112CF92498C34C000264A5 /* wad_editor_item.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wad_editor_item.h; sourceTree = "<group>"; };
+		C9112CFA2498CC47000264A5 /* wad_editor_item_interface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wad_editor_item_interface.h; sourceTree = "<group>"; };
+		C9112CFB2498CC47000264A5 /* wad_editor_item_interface.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = wad_editor_item_interface.c; sourceTree = "<group>"; };
+		C9112CFE2498CC59000264A5 /* wad_editor_item_private_interface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wad_editor_item_private_interface.h; sourceTree = "<group>"; };
+		C9112CFF2498E002000264A5 /* wad_editor_item_data.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wad_editor_item_data.h; sourceTree = "<group>"; };
+		C9349F95248CF3110044565D /* libwad_editor_lib_macos.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libwad_editor_lib_macos.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		C9349F9D248CF3460044565D /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		C9349F9E248CF3FB0044565D /* wad_editor_lib.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wad_editor_lib.h; sourceTree = "<group>"; };
+		C9349F9F248CF41A0044565D /* wad_kit_link.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wad_kit_link.h; sourceTree = "<group>"; };
+		C9349FA0248CF45A0044565D /* wad_editor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wad_editor.h; sourceTree = "<group>"; };
+		C9349FA1248CF46A0044565D /* wad_editor_interface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wad_editor_interface.h; sourceTree = "<group>"; };
+		C9349FA2248CF46A0044565D /* wad_editor_interface.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = wad_editor_interface.c; sourceTree = "<group>"; };
+		C9349FA6248CF4B80044565D /* common.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = common.h; sourceTree = "<group>"; };
+		C9349FAC248CFB720044565D /* renderer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = renderer.h; sourceTree = "<group>"; };
+		C9349FAD248CFB850044565D /* renderer_interface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = renderer_interface.h; sourceTree = "<group>"; };
+		C9349FAE248CFB850044565D /* renderer_interface.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = renderer_interface.c; sourceTree = "<group>"; };
+		C9349FB2248CFC4A0044565D /* resource_storage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = resource_storage.h; sourceTree = "<group>"; };
+		C9453C8E249534AA00604E60 /* renderer_functions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = renderer_functions.h; sourceTree = "<group>"; };
+		C9453C90249544B400604E60 /* wad_editor_viewport.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wad_editor_viewport.h; sourceTree = "<group>"; };
+		C9453C922495579900604E60 /* wad_editor_viewport_interface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wad_editor_viewport_interface.h; sourceTree = "<group>"; };
+		C9453C932495579900604E60 /* wad_editor_viewport_interface.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = wad_editor_viewport_interface.c; sourceTree = "<group>"; };
+		C9D59DE624B1C0F80048F2CA /* resource_storage_interface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = resource_storage_interface.h; sourceTree = "<group>"; };
+		C9D59DE724B1C0F80048F2CA /* resource_storage_interface.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = resource_storage_interface.c; sourceTree = "<group>"; };
+		C9D59DF324B1CA760048F2CA /* wad_editor_viewport_delegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wad_editor_viewport_delegate.h; sourceTree = "<group>"; };
+		C9D59DF424B1CA820048F2CA /* wad_editor_viewport_delegate_functions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wad_editor_viewport_delegate_functions.h; sourceTree = "<group>"; };
+		C9D59DF524B1CA900048F2CA /* wad_editor_viewport_delegate_interface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wad_editor_viewport_delegate_interface.h; sourceTree = "<group>"; };
+		C9D59DF624B1CA900048F2CA /* wad_editor_viewport_delegate_interface.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = wad_editor_viewport_delegate_interface.c; sourceTree = "<group>"; };
+		C9D59DF924B1CB770048F2CA /* we_mouse_key.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = we_mouse_key.h; sourceTree = "<group>"; };
+		C9D59DFF24B1F5D00048F2CA /* resource_storage_functions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = resource_storage_functions.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		C9349F93248CF3110044565D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		C9349F8C248CF3110044565D = {
+			isa = PBXGroup;
+			children = (
+				C9349F9D248CF3460044565D /* README.md */,
+				C9349F9C248CF3290044565D /* wad_editor_lib */,
+				C9349F96248CF3110044565D /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		C9349F96248CF3110044565D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C9349F95248CF3110044565D /* libwad_editor_lib_macos.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C9349F9C248CF3290044565D /* wad_editor_lib */ = {
+			isa = PBXGroup;
+			children = (
+				C9349F9E248CF3FB0044565D /* wad_editor_lib.h */,
+				C9349F9F248CF41A0044565D /* wad_kit_link.h */,
+				C9349FA6248CF4B80044565D /* common.h */,
+				C9349FB1248CFC390044565D /* Resource storage */,
+				C9349FAB248CFB5F0044565D /* Renderer */,
+				C9453C8F2495440E00604E60 /* Editor viewport */,
+				C9349FAA248CFAA80044565D /* Editor */,
+			);
+			path = wad_editor_lib;
+			sourceTree = "<group>";
+		};
+		C9349FAA248CFAA80044565D /* Editor */ = {
+			isa = PBXGroup;
+			children = (
+				C9112CF82498A86C000264A5 /* wad_editor_item_type.h */,
+				C9112CFF2498E002000264A5 /* wad_editor_item_data.h */,
+				C9112CF92498C34C000264A5 /* wad_editor_item.h */,
+				C9112CFA2498CC47000264A5 /* wad_editor_item_interface.h */,
+				C9112CFE2498CC59000264A5 /* wad_editor_item_private_interface.h */,
+				C9112CFB2498CC47000264A5 /* wad_editor_item_interface.c */,
+				C9349FA0248CF45A0044565D /* wad_editor.h */,
+				C9349FA1248CF46A0044565D /* wad_editor_interface.h */,
+				C9349FA2248CF46A0044565D /* wad_editor_interface.c */,
+			);
+			name = Editor;
+			sourceTree = "<group>";
+		};
+		C9349FAB248CFB5F0044565D /* Renderer */ = {
+			isa = PBXGroup;
+			children = (
+				C9453C8E249534AA00604E60 /* renderer_functions.h */,
+				C9349FAC248CFB720044565D /* renderer.h */,
+				C9349FAD248CFB850044565D /* renderer_interface.h */,
+				C9349FAE248CFB850044565D /* renderer_interface.c */,
+			);
+			name = Renderer;
+			sourceTree = "<group>";
+		};
+		C9349FB1248CFC390044565D /* Resource storage */ = {
+			isa = PBXGroup;
+			children = (
+				C9D59DFF24B1F5D00048F2CA /* resource_storage_functions.h */,
+				C9349FB2248CFC4A0044565D /* resource_storage.h */,
+				C9D59DE624B1C0F80048F2CA /* resource_storage_interface.h */,
+				C9D59DE724B1C0F80048F2CA /* resource_storage_interface.c */,
+			);
+			name = "Resource storage";
+			sourceTree = "<group>";
+		};
+		C9453C8F2495440E00604E60 /* Editor viewport */ = {
+			isa = PBXGroup;
+			children = (
+				C9D59DF924B1CB770048F2CA /* we_mouse_key.h */,
+				C9D59DF424B1CA820048F2CA /* wad_editor_viewport_delegate_functions.h */,
+				C9D59DF324B1CA760048F2CA /* wad_editor_viewport_delegate.h */,
+				C9D59DF524B1CA900048F2CA /* wad_editor_viewport_delegate_interface.h */,
+				C9D59DF624B1CA900048F2CA /* wad_editor_viewport_delegate_interface.c */,
+				C9453C90249544B400604E60 /* wad_editor_viewport.h */,
+				C9453C922495579900604E60 /* wad_editor_viewport_interface.h */,
+				C9453C932495579900604E60 /* wad_editor_viewport_interface.c */,
+			);
+			name = "Editor viewport";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		C9349F91248CF3110044565D /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C9D59DE824B1C0F80048F2CA /* resource_storage_interface.h in Headers */,
+				C9D59DF724B1CA900048F2CA /* wad_editor_viewport_delegate_interface.h in Headers */,
+				C9349FA3248CF46A0044565D /* wad_editor_interface.h in Headers */,
+				C9112CFC2498CC47000264A5 /* wad_editor_item_interface.h in Headers */,
+				C9453C942495579900604E60 /* wad_editor_viewport_interface.h in Headers */,
+				C9349FAF248CFB850044565D /* renderer_interface.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		C9349F94248CF3110044565D /* wad_editor_lib_macos */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C9349F99248CF3110044565D /* Build configuration list for PBXNativeTarget "wad_editor_lib_macos" */;
+			buildPhases = (
+				C9349F91248CF3110044565D /* Headers */,
+				C9349F92248CF3110044565D /* Sources */,
+				C9349F93248CF3110044565D /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = wad_editor_lib_macos;
+			productName = wad_editor_lib;
+			productReference = C9349F95248CF3110044565D /* libwad_editor_lib_macos.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		C9349F8D248CF3110044565D /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 1150;
+				ORGANIZATIONNAME = "Eugene Lutz";
+				TargetAttributes = {
+					C9349F94248CF3110044565D = {
+						CreatedOnToolsVersion = 11.5;
+					};
+				};
+			};
+			buildConfigurationList = C9349F90248CF3110044565D /* Build configuration list for PBXProject "wad_editor_lib" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = C9349F8C248CF3110044565D;
+			productRefGroup = C9349F96248CF3110044565D /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				C9349F94248CF3110044565D /* wad_editor_lib_macos */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		C9349F92248CF3110044565D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C9D59DF824B1CA900048F2CA /* wad_editor_viewport_delegate_interface.c in Sources */,
+				C9D59DE924B1C0F80048F2CA /* resource_storage_interface.c in Sources */,
+				C9112CFD2498CC47000264A5 /* wad_editor_item_interface.c in Sources */,
+				C9349FB0248CFB850044565D /* renderer_interface.c in Sources */,
+				C9453C952495579900604E60 /* wad_editor_viewport_interface.c in Sources */,
+				C9349FA4248CF46A0044565D /* wad_editor_interface.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		C9349F97248CF3110044565D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		C9349F98248CF3110044565D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		C9349F9A248CF3110044565D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 7N525N28LV;
+				EXECUTABLE_PREFIX = lib;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		C9349F9B248CF3110044565D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 7N525N28LV;
+				EXECUTABLE_PREFIX = lib;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		C9349F90248CF3110044565D /* Build configuration list for PBXProject "wad_editor_lib" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C9349F97248CF3110044565D /* Debug */,
+				C9349F98248CF3110044565D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C9349F99248CF3110044565D /* Build configuration list for PBXNativeTarget "wad_editor_lib_macos" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C9349F9A248CF3110044565D /* Debug */,
+				C9349F9B248CF3110044565D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = C9349F8D248CF3110044565D /* Project object */;
+}

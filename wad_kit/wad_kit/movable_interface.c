@@ -9,6 +9,7 @@
 #include "movable_interface.h"
 #include "movable.h"
 #include "wad_interface.h"
+#include "animation.h"
 #include <stdlib.h>
 #include <assert.h>
 
@@ -47,4 +48,17 @@ unsigned int movableGetSkeletonIndex(MOVABLE* movable)
 {
 	assert(movable);
 	return movable->skeletonIndex;
+}
+
+unsigned int movableGetNumAnimations(MOVABLE* movable)
+{
+	assert(movable);
+	return movable->numAnimations;
+}
+
+ANIMATION* movableGetAnimation(MOVABLE* movable, unsigned int animationIndex)
+{
+	assert(movable);
+	assert(animationIndex < movable->numAnimations);
+	return &(movable->animations[animationIndex]);
 }

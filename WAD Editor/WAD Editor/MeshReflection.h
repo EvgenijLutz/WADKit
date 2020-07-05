@@ -8,6 +8,7 @@
 
 @import Foundation;
 @import Metal;
+#include "wad_editor_lib_link.h"
 
 @class Submesh;
 
@@ -15,11 +16,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface MeshReflection : NSObject
 
-- (instancetype)initWithVertexBuffer:(id<MTLBuffer>)vertexBuffer submeshes:(NSArray<Submesh*>*)meshSubmeshes shaded:(BOOL)shaded;
+- (instancetype)initWithMesh:(MESH*)mesh vertexBuffer:(id<MTLBuffer>)vertexBuffer submeshes:(NSArray<Submesh*>*)meshSubmeshes shaded:(BOOL)shaded;
 
 - (unsigned int)numSubmeshes;
 - (Submesh*)submeshAtIndex:(unsigned int)submeshIndex;
 
+@property (readonly) MESH* mesh;
 @property (readonly) BOOL shaded;
 @property (readonly) id<MTLBuffer> vertexBuffer;
 

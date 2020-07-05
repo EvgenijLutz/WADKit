@@ -29,6 +29,7 @@ unsigned char* wadGenerateWadData(WAD* wad, long* dataSize, EXECUTE_RESULT* exec
 unsigned int wadGetVersion(WAD* wad);
 
 unsigned int wadGetNumTexturePages(WAD* wad);
+TEXTURE_PAGE* wadGetTexturePage(WAD* wad, unsigned int texturePageIndex);
 unsigned char* wadGetTexturePageData(WAD* wad, unsigned int texturePageIndex);
 
 unsigned int wadGetNumTextureSamples(WAD* wad);

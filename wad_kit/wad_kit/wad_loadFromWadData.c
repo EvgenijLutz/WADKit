@@ -228,6 +228,7 @@ WAD* wadLoadFromWadData(const unsigned char* data, long dataSize, EXECUTE_RESULT
 		
 		MESH* mesh = &(temporaryMeshes[numMeshes]);
 		numMeshes++;
+		mesh->wad = wad;
 		mesh->cx = readShort(reader);
 		mesh->cy = readShort(reader);
 		mesh->cz = readShort(reader);
@@ -308,21 +309,17 @@ WAD* wadLoadFromWadData(const unsigned char* data, long dataSize, EXECUTE_RESULT
 			unsigned short textureFlags = mesh->polygons[polygonIndex].textureInfo;
 			mesh->polygons[polygonIndex].flipped = (textureFlags & 0x8000) >> 15;
 			mesh->polygons[polygonIndex].textureSampleShape = (textureFlags & 0x7000) >> 12;
-			//mesh->polygons[polygonIndex].textureSampleIndex = (textureFlags & 0x0fff);
 			
 			if (mesh->polygons[polygonIndex].isTriangle)
 			{
 				const short sampleIndex = textureFlags & 0x0fff;
+				assert(sampleIndex >= 0);
 				mesh->polygons[polygonIndex].textureSampleIndex = sampleIndex;
-				if (sampleIndex < 0)
-				{
-					mesh->polygons[polygonIndex].textureSampleIndex = -sampleIndex;
-				}
 			}
 			else
 			{
 				const short sampleIndex = textureFlags & 0xffff;
-				if (textureFlags & 0x8000)
+				if (mesh->polygons[polygonIndex].flipped)
 				{
 					mesh->polygons[polygonIndex].textureSampleIndex = -sampleIndex;
 				}
@@ -337,6 +334,7 @@ WAD* wadLoadFromWadData(const unsigned char* data, long dataSize, EXECUTE_RESULT
 				   textureSampleShape == 6 || textureSampleShape == 7);
 			assert(mesh->polygons[polygonIndex].textureSampleIndex < wad->numTextureSamples);
 		}
+		
 		if (numQuads % 2)
 		{
 			/*unsigned short padding = */

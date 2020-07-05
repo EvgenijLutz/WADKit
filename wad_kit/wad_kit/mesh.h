@@ -9,11 +9,14 @@
 #ifndef mesh_h
 #define mesh_h
 
+typedef struct WAD WAD;
 typedef struct VERTEX VERTEX;
 typedef struct POLYGON POLYGON;
 
 typedef struct MESH
 {
+	WAD* wad;
+	
 	//BOUNDING_SPHERE boundingSphere;
 	short cx;
 	short cy;

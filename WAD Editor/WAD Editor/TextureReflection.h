@@ -8,15 +8,16 @@
 
 @import Foundation;
 @import Metal;
+#include "wad_editor_lib_link.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TextureReflection : NSObject
 
-- (instancetype)init;
+- (instancetype)initWithTexturePage:(TEXTURE_PAGE*)texturePage texture:(id<MTLTexture>)texture;
 
-@property (nonatomic, nullable) id<MTLTexture> texture;
-@property (nonatomic) unsigned int index;
+@property (readonly, nonatomic) TEXTURE_PAGE* texturePage;
+@property (readonly, nonatomic) id<MTLTexture> texture;
 
 @end
 

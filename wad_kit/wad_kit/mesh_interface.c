@@ -11,6 +11,12 @@
 #include <stdlib.h>
 #include <assert.h>
 
+WAD* meshGetWad(MESH* mesh)
+{
+	assert(mesh);
+	return mesh->wad;
+}
+
 int meshUsesNormals(MESH* mesh)
 {
 	assert(mesh);

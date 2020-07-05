@@ -12,10 +12,13 @@
 typedef struct POLYGON
 {
 	int isTriangle;
+	
+	// Vertex indices
 	unsigned short v1;
 	unsigned short v2;
 	unsigned short v3;
-	unsigned short v4;	// optional - this value is used when isTriangle is true
+	unsigned short v4;		// optional - this value is used when isTriangle is true
+	
 	unsigned short textureInfo;
 	unsigned char attributes;
 	unsigned char unknown;	// garbage?

@@ -12,7 +12,10 @@
 #include "wk_vertex.h"
 #include "wk_polygon.h"
 
+typedef struct WAD WAD;
 typedef struct MESH MESH;
+
+WAD* meshGetWad(MESH* mesh);
 
 int meshUsesNormals(MESH* mesh);
 

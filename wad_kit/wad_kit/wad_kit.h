@@ -17,11 +17,15 @@ extern "C" {
 
 #include "execute_result.h"
 
+#include "wk_math.h"
+#include "wk_math_functions.h"
+
 #include "wk_vertex.h"
 #include "wk_polygon.h"
 #include "texture_page.h"
 
 #include "wad_interface.h"
+#include "texture_page_interface.h"
 #include "mesh_interface.h"
 
 #include "joint_location_type.h"

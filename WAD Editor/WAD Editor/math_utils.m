@@ -6,6 +6,8 @@
 //  Copyright © 2020 Eugene Lutz. All rights reserved.
 //
 
+#if 0
+
 #include "math_utils.h"
 
 simd_float4x4 matrix4fScale(simd_float3 scale)
@@ -82,3 +84,5 @@ simd_float4x4 matrix4fLookAt_rightHand(vector_float3 eye, vector_float3 target, 
 		{ t.x, t.y, t.z, 1 }
 	}};
 }
+
+#endif

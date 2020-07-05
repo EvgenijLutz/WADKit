@@ -7,12 +7,19 @@
 //
 
 @import MetalKit;
+#include "wad_editor_lib_link.h"
 
+@class ResourceStorage;
 @class WKRenderer;
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface WadKitView : MTKView
+
+- (instancetype)initWithFrame:(NSRect)frame resourceStorage:(ResourceStorage*)resourceStorage;
+
+@property (nonatomic) WAD_EDITOR_VIEWPORT* viewport;
+@property (nonatomic) ResourceStorage* resourceStorage;
 
 @property (readonly) WKRenderer* renderer;
 

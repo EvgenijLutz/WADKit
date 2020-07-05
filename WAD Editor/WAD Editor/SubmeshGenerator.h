@@ -8,16 +8,16 @@
 
 @import Foundation;
 @import Metal;
-#include "wad_kit_link.h"
+#include "wad_editor_lib_link.h"
 
-@class ResourceReflectionStorage;
+@class ResourceStorage;
 @class Submesh;
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SubmeshGenerator : NSObject
 
-- (instancetype)initWithStorage:(ResourceReflectionStorage*)resourceStorage wad:(WAD*)_wad;
+- (instancetype)initWithStorage:(ResourceStorage*)resourceStorage wad:(WAD*)_wad;
 
 - (void)addPolygon:(POLYGON*)polygon;
 - (NSArray<Submesh*>*)generateSubmeshesWithBlitEncoder:(id<MTLBlitCommandEncoder>)blitCommandEncoder;

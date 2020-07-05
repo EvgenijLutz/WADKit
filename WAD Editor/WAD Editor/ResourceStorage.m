@@ -1,21 +1,59 @@
 //
-//  ResourceReflectionStorage.m
+//  ResourceStorage.m
 //  WAD Editor
 //
 //  Created by Евгений Лютц on 02.06.20.
 //  Copyright © 2020 Eugene Lutz. All rights reserved.
 //
 
-#import "ResourceReflectionStorage.h"
+#import "ResourceStorage.h"
 #import "TextureReflection.h"
 #import "Submesh.h"
 #import "MeshReflection.h"
 #import "SubmeshGenerator.h"
 #include "RendererTypes.h"
 
-@implementation ResourceReflectionStorage
+// MARK: - Resource storage delegate functions
+
+static ResourceStorage* _resourceStorageFromUserInfo(void* userInfo)
 {
-	id<MTLDevice> device;
+	return (__bridge ResourceStorage*)userInfo;
+}
+
+static void _resourceStorageDelegateBeginUploadData(void* userInfo)
+{
+	ResourceStorage* resourceStorage = _resourceStorageFromUserInfo(userInfo);
+	[resourceStorage beginUploadData];
+}
+
+static void _resourceStorageDelegateFinishUploadData(void* userInfo)
+{
+	ResourceStorage* resourceStorage = _resourceStorageFromUserInfo(userInfo);
+	[resourceStorage finishUploadData];
+}
+
+static void _resourceStorageDelegateCreateTexture(TEXTURE_PAGE* texturePage, const char* name, void* userInfo)
+{
+	ResourceStorage* resourceStorage = _resourceStorageFromUserInfo(userInfo);
+	[resourceStorage createTextureWithData:texturePage named:name];
+}
+
+static void _resourceStorageDelegateCreateMesh(MESH* mesh, void* userInfo)
+{
+	ResourceStorage* resourceStorage = _resourceStorageFromUserInfo(userInfo);
+	[resourceStorage createMeshWithMeshData:mesh];
+}
+
+// MARK: - Resource storage implementation
+
+// FIXME: uncomment in Xcode 12
+//__attribute__((objc_direct_members))
+@implementation ResourceStorage
+{
+	id<MTLCommandQueue> blitCommandQueue;
+	id<MTLCommandBuffer> blitCommandBuffer;
+	id<MTLBlitCommandEncoder> blitCommandEncoder;
+	
 	NSMutableArray<TextureReflection*>* textureReflections;
 	NSMutableArray<MeshReflection*>* meshReflections;
 }
@@ -25,25 +63,41 @@
 	self = [super init];
 	if (self)
 	{
-		device = metalDevice;
+		_resourceStorage = resourceStorageCreate(_resourceStorageDelegateBeginUploadData, _resourceStorageDelegateFinishUploadData, _resourceStorageDelegateCreateTexture, _resourceStorageDelegateCreateMesh, (__bridge void*)self);
+		
+		_device = metalDevice;
 		textureReflections = [[NSMutableArray alloc] init];
 		meshReflections = [[NSMutableArray alloc] init];
 	}
 	return self;
 }
 
+- (void)dealloc
+{
+	resourceStorageRelease(_resourceStorage);
+}
+
 - (void)clear
 {
-	for (TextureReflection* textureReflection in textureReflections)
-	{
-		textureReflection.texture = nil;
-		textureReflection.index = 0;
-	}
-	
+	[textureReflections removeAllObjects];
 	[meshReflections removeAllObjects];
 }
 
-- (void)createTextureWithData:(unsigned char*)data atIndex:(unsigned int)textureIndex blitCommandEncoder:(id<MTLBlitCommandEncoder>)blitCommandEncoder
+- (void)beginUploadData
+{
+	blitCommandQueue = [_device newCommandQueue];
+	blitCommandBuffer = [blitCommandQueue commandBuffer];
+	blitCommandEncoder = [blitCommandBuffer blitCommandEncoder];
+}
+
+- (void)finishUploadData
+{
+	[blitCommandEncoder endEncoding];
+	[blitCommandBuffer commit];
+	[blitCommandBuffer waitUntilCompleted];
+}
+
+- (void)createTextureWithData:(TEXTURE_PAGE*)texturePage named:(const char*)name
 {
 	const unsigned int textureSize = 256;
 	const unsigned int numComponents = 4;
@@ -51,6 +105,7 @@
 	
 	unsigned char textureData[textureSize * numComponents * textureSize];
 	
+	unsigned char* data = texturePageGetData(texturePage);
 	unsigned char* dataPointer = data;
 	unsigned char* textureDataPointer = textureData;
 	for (unsigned int j = 0; j < textureSize; j++)
@@ -72,29 +127,36 @@
 	textureDescriptor.width = textureSize;
 	textureDescriptor.pixelFormat = MTLPixelFormatBGRA8Unorm;
 	//textureDescriptor.storageMode = MTLStorageModePrivate;
-	id<MTLTexture> texture = [device newTextureWithDescriptor:textureDescriptor];
+	id<MTLTexture> texture = [_device newTextureWithDescriptor:textureDescriptor];
 	MTLRegion textureRegion = MTLRegionMake2D(0, 0, textureSize, textureSize);
 	[texture replaceRegion:textureRegion mipmapLevel:0 slice:0 withBytes:textureData bytesPerRow:bytesPerRow bytesPerImage:textureSize * textureSize * numComponents];
-	texture.label = [NSString stringWithFormat:@"Texture page #%03d", textureIndex];
-	
-	while (textureIndex >= textureReflections.count)
+	//texture.label = [NSString stringWithFormat:@"Texture page #%03d", textureIndex];
+	texture.label = [NSString stringWithUTF8String:name];
+
+	TextureReflection* reflection = [[TextureReflection alloc] initWithTexturePage:texturePage texture:texture];
+	[textureReflections addObject:reflection];
+}
+
+- (id<MTLTexture>)textureAtTexturePage:(TEXTURE_PAGE*)texturePage
+{
+	TextureReflection* result = nil;
+	for (TextureReflection* textureReflection in textureReflections)
 	{
-		TextureReflection* reflection = [[TextureReflection alloc] init];
-		[textureReflections addObject:reflection];
+		if (textureReflection.texturePage == texturePage)
+		{
+			result = textureReflection;
+			break;
+		}
 	}
+	assert(result);
 	
-	TextureReflection* reflection = textureReflections[textureIndex];
-	reflection.texture = texture;
-	reflection.index = textureIndex;
+	return result.texture;
 }
 
 - (id<MTLTexture>)textureAtIndex:(unsigned int)textureIndex
 {
 	assert(textureIndex < textureReflections.count);
-	
-	TextureReflection* textureReflection = textureReflections[textureIndex];
-	assert(textureReflection.index == textureIndex);
-	return textureReflection.texture;
+	return textureReflections[textureIndex].texture;
 }
 
 - (unsigned int)numMeshes
@@ -102,22 +164,23 @@
 	return (unsigned int)(meshReflections.count);
 }
 
-- (void)createMeshWithMeshData:(MESH*)mesh atIndex:(unsigned int)meshIndex wad:(WAD*)wad blitCommandEncoder:(id<MTLBlitCommandEncoder>)blitCommandEncoder
+- (void)createMeshWithMeshData:(MESH*)mesh
 {
+	assert(blitCommandEncoder);
+	
+	WAD* wad = meshGetWad(mesh);
+	
 	BOOL shaded = meshUsesNormals(mesh) == 0;
 	
 	// Create vertex buffer
 	const unsigned int numVertices = meshGetNumVertices(mesh);
 	const unsigned int meshVerticesSize = sizeof(WE_VERTEX) * numVertices;
-	id<MTLBuffer> copyBuffer = [device newBufferWithLength:meshVerticesSize options:MTLResourceStorageModeShared];
+	id<MTLBuffer> copyBuffer = [_device newBufferWithLength:meshVerticesSize options:MTLResourceStorageModeShared];
 	WE_VERTEX* meshVertices = (WE_VERTEX*)(copyBuffer.contents);
 	for (unsigned int vertexIndex = 0; vertexIndex < numVertices; vertexIndex++)
 	{
 		VERTEX vertex = meshGetVertex(mesh, vertexIndex);
 		
-		/*const float vx = ((float)(vertex.vx)) / 1024.0f;
-		const float vy = ((float)(vertex.vy)) / 1024.0f;
-		const float vz = ((float)(vertex.vz)) / 1024.0f;*/
 		const float vx = ((float)(vertex.vx)) / 1024.0f;
 		const float vy = -((float)(vertex.vy)) / 1024.0f;
 		const float vz = -((float)(vertex.vz)) / 1024.0f;
@@ -135,7 +198,7 @@
 	}
 	
 	// Upload vertex buffer to private storage
-	id<MTLBuffer> vertexBuffer = [device newBufferWithLength:meshVerticesSize options:MTLResourceStorageModePrivate];
+	id<MTLBuffer> vertexBuffer = [_device newBufferWithLength:meshVerticesSize options:MTLResourceStorageModePrivate];
 	[blitCommandEncoder copyFromBuffer:copyBuffer sourceOffset:0 toBuffer:vertexBuffer destinationOffset:0 size:meshVerticesSize];
 	
 	// Create submeshses
@@ -148,9 +211,25 @@
 	}
 	NSArray<Submesh*>* submeshes = [submeshGenerator generateSubmeshesWithBlitEncoder:blitCommandEncoder];
 	
-	MeshReflection* meshReflection = [[MeshReflection alloc] initWithVertexBuffer:vertexBuffer submeshes:submeshes shaded:shaded];
+	MeshReflection* meshReflection = [[MeshReflection alloc] initWithMesh:mesh vertexBuffer:vertexBuffer submeshes:submeshes shaded:shaded];
 	
 	[meshReflections addObject:meshReflection];
+}
+
+- (MeshReflection*)meshAtMesh:(MESH*)mesh
+{
+	MeshReflection* result = nil;
+	for (MeshReflection* meshReflection in meshReflections)
+	{
+		if (meshReflection.mesh == mesh)
+		{
+			result = meshReflection;
+			break;
+		}
+	}
+	assert(result);
+	
+	return result;
 }
 
 - (MeshReflection*)meshAtIndex:(unsigned int)meshIndex

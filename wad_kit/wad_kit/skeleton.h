@@ -16,6 +16,8 @@ typedef struct JOINT JOINT;
  */
 typedef struct SKELETON
 {
+	//TODO: unsigned int numReferences;
+	
 	unsigned int numJoints;
 	JOINT* joints;
 }

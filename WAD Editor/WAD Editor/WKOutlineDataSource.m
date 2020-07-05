@@ -14,7 +14,7 @@
 	NSMutableArray<WKOutlineItem*>* items;
 }
 
-- (instancetype)init
+- (instancetype)init;
 {
 	self = [super init];
 	if (self)

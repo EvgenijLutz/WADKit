@@ -7,8 +7,8 @@
 //
 
 #import "WKEditor.h"
-#import "ResourceReflectionStorage.h"
-#include "wad_kit_link.h"
+#import "ResourceStorage.h"
+#include "wad_editor_lib_link.h"
 #include "math_utils.h"
 #include "RendererTypes.h"
 #include "WKRenderer.h"
@@ -17,7 +17,7 @@
 @implementation WKEditor
 {
 	id<MTLDevice> device;
-	ResourceReflectionStorage* storage;
+	ResourceStorage* storage;
 	WAD* wad;
 	
 	simd_float2 size;
@@ -35,7 +35,7 @@
 	if (self)
 	{
 		device = metalDevice;
-		storage = [[ResourceReflectionStorage alloc] initWithMetalDevice:device];
+		storage = [[ResourceStorage alloc] initWithMetalDevice:device];
 		wad = NULL;
 		
 		size = simd_make_float2(1.0f, 1.0f);
@@ -108,15 +108,15 @@
 	const unsigned int numTexturePages = wadGetNumTexturePages(wad);
 	for (unsigned int texturePageIndex = 0; texturePageIndex < numTexturePages; texturePageIndex++)
 	{
-		unsigned char* data = wadGetTexturePageData(wad, texturePageIndex);
-		[storage createTextureWithData:data atIndex:texturePageIndex blitCommandEncoder:blitCommandEncoder];
+		//unsigned char* data = wadGetTexturePageData(wad, texturePageIndex);
+		//[storage createTextureWithData:data atIndex:texturePageIndex blitCommandEncoder:blitCommandEncoder];
 	}
 	
 	const unsigned int numMeshes = wadGetNumMeshes(wad);
 	for (unsigned int meshIndex = 0; meshIndex < numMeshes; meshIndex++)
 	{
-		MESH* mesh = wadGetMesh(wad, meshIndex);
-		[storage createMeshWithMeshData:mesh atIndex:meshIndex wad:wad blitCommandEncoder:blitCommandEncoder];
+		//MESH* mesh = wadGetMesh(wad, meshIndex);
+		//[storage createMeshWithMeshData:mesh atIndex:meshIndex wad:wad blitCommandEncoder:blitCommandEncoder];
 	}
 	
 	[blitCommandEncoder endEncoding];

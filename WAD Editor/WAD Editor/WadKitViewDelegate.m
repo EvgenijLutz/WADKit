@@ -13,39 +13,23 @@
 
 @implementation WadKitViewDelegate
 {
-	id<WKViewport> viewport;
-}
-
-- (instancetype)initWithViewport:(id<WKViewport>)wkViewport
-{
-	self = [super init];
-	if (self)
-	{
-		viewport = wkViewport;
-	}
-	return self;
-}
-
-- (void)scaleView:(float)cameraDistance
-{
-	[viewport scaleView:cameraDistance];
-}
-
-- (void)rotateView:(simd_float2)rotation
-{
-	[viewport rotateView:rotation];
+	//
 }
 
 - (void)mtkView:(nonnull MTKView*)view drawableSizeWillChange:(CGSize)size
 {
-	simd_float2 viewportSize = simd_make_float2(size.width, size.height);
-	[viewport sizeChanged:viewportSize];
+	WadKitView* wkView = (WadKitView*)view;
+	WAD_EDITOR_VIEWPORT* viewport = wkView.viewport;
+	
+	vector2f viewportSize = vector2fCreate(size.width, size.height);
+	wadEditorViewportSetSize(viewport, viewportSize);
 }
 
 - (void)drawInMTKView:(nonnull MTKView*)view
 {
 	WadKitView* wkView = (WadKitView*)view;
 	WKRenderer* renderer = wkView.renderer;
+	WAD_EDITOR_VIEWPORT* viewport = wkView.viewport;
 	
 	id<MTLCommandBuffer> commandBuffer = [renderer.drawCommandQueue commandBuffer];
 	[commandBuffer addCompletedHandler:^(id<MTLCommandBuffer> _Nonnull buffer) {
@@ -58,7 +42,9 @@
 		id<MTLRenderCommandEncoder> renderEncoder = [commandBuffer renderCommandEncoderWithDescriptor:renderPassDescriptor];
 	
 		renderer.renderEncoder = renderEncoder;
-		[viewport drawWithRenderer:renderer];
+		//[viewport drawWithRenderer:renderer];
+		
+		wadEditorViewportDraw(viewport);
 		
 		[renderEncoder endEncoding];
 		[commandBuffer presentDrawable:view.currentDrawable];

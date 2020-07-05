@@ -7,14 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C9349FA8248CF5420044565D /* libwad_editor_lib_macos.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C9349FA7248CF5420044565D /* libwad_editor_lib_macos.a */; };
 		C93EB5B42486C3D6001CDE59 /* SubmeshGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = C93EB5B32486C3D6001CDE59 /* SubmeshGenerator.m */; };
+		C9453C892495023600604E60 /* WadItemsDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = C9453C882495023600604E60 /* WadItemsDataSource.m */; };
+		C9453C8D2495068200604E60 /* WadItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = C9453C8C2495068200604E60 /* WadItemView.m */; };
 		C94F5648248644DA0089C915 /* WadKitViewDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C94F5647248644DA0089C915 /* WadKitViewDelegate.m */; };
-		C94F565224864D3A0089C915 /* ResourceReflectionStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = C94F565124864D3A0089C915 /* ResourceReflectionStorage.m */; };
+		C94F565224864D3A0089C915 /* ResourceStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = C94F565124864D3A0089C915 /* ResourceStorage.m */; };
 		C977D35424865C93002A7D6B /* WKRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = C977D35324865C93002A7D6B /* WKRenderer.m */; };
 		C977D35824865EA0002A7D6B /* WKEditor.m in Sources */ = {isa = PBXBuildFile; fileRef = C977D35724865EA0002A7D6B /* WKEditor.m */; };
 		C977D35D2486883A002A7D6B /* math_utils.m in Sources */ = {isa = PBXBuildFile; fileRef = C977D35C2486883A002A7D6B /* math_utils.m */; };
 		C977D3602486930A002A7D6B /* MeshReflection.m in Sources */ = {isa = PBXBuildFile; fileRef = C977D35F2486930A002A7D6B /* MeshReflection.m */; };
 		C977D3632486931A002A7D6B /* Submesh.m in Sources */ = {isa = PBXBuildFile; fileRef = C977D3622486931A002A7D6B /* Submesh.m */; };
+		C97A41212498191C0031ACD3 /* WadItem.m in Sources */ = {isa = PBXBuildFile; fileRef = C97A41202498191C0031ACD3 /* WadItem.m */; };
 		C983F82D248CCB7800211C5F /* colored_line_shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = C983F82C248CCB7800211C5F /* colored_line_shaders.metal */; };
 		C98AC97524864E830096BDCC /* TextureReflection.m in Sources */ = {isa = PBXBuildFile; fileRef = C98AC97424864E830096BDCC /* TextureReflection.m */; };
 		C9A3ACAD2487D47A002FD496 /* triangle_shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = C9A3ACAC2487D47A002FD496 /* triangle_shaders.metal */; };
@@ -63,12 +67,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C9349FA7248CF5420044565D /* libwad_editor_lib_macos.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libwad_editor_lib_macos.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		C93EB5B22486C3D6001CDE59 /* SubmeshGenerator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SubmeshGenerator.h; sourceTree = "<group>"; };
 		C93EB5B32486C3D6001CDE59 /* SubmeshGenerator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SubmeshGenerator.m; sourceTree = "<group>"; };
+		C9453C872495023600604E60 /* WadItemsDataSource.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WadItemsDataSource.h; sourceTree = "<group>"; };
+		C9453C882495023600604E60 /* WadItemsDataSource.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WadItemsDataSource.m; sourceTree = "<group>"; };
+		C9453C8B2495068200604E60 /* WadItemView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WadItemView.h; sourceTree = "<group>"; };
+		C9453C8C2495068200604E60 /* WadItemView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WadItemView.m; sourceTree = "<group>"; };
 		C94F5646248644DA0089C915 /* WadKitViewDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WadKitViewDelegate.h; sourceTree = "<group>"; };
 		C94F5647248644DA0089C915 /* WadKitViewDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WadKitViewDelegate.m; sourceTree = "<group>"; };
-		C94F565024864D3A0089C915 /* ResourceReflectionStorage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ResourceReflectionStorage.h; sourceTree = "<group>"; };
-		C94F565124864D3A0089C915 /* ResourceReflectionStorage.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ResourceReflectionStorage.m; sourceTree = "<group>"; };
+		C94F565024864D3A0089C915 /* ResourceStorage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ResourceStorage.h; sourceTree = "<group>"; };
+		C94F565124864D3A0089C915 /* ResourceStorage.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ResourceStorage.m; sourceTree = "<group>"; };
 		C977D35224865C93002A7D6B /* WKRenderer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WKRenderer.h; sourceTree = "<group>"; };
 		C977D35324865C93002A7D6B /* WKRenderer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WKRenderer.m; sourceTree = "<group>"; };
 		C977D35624865EA0002A7D6B /* WKEditor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WKEditor.h; sourceTree = "<group>"; };
@@ -81,6 +90,9 @@
 		C977D35F2486930A002A7D6B /* MeshReflection.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MeshReflection.m; sourceTree = "<group>"; };
 		C977D3612486931A002A7D6B /* Submesh.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Submesh.h; sourceTree = "<group>"; };
 		C977D3622486931A002A7D6B /* Submesh.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Submesh.m; sourceTree = "<group>"; };
+		C97A411F2498191C0031ACD3 /* WadItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WadItem.h; sourceTree = "<group>"; };
+		C97A41202498191C0031ACD3 /* WadItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WadItem.m; sourceTree = "<group>"; };
+		C97D12C62494C040005EAC04 /* wad_editor_lib_link.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wad_editor_lib_link.h; sourceTree = "<group>"; };
 		C983F82C248CCB7800211C5F /* colored_line_shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = colored_line_shaders.metal; sourceTree = "<group>"; };
 		C98AC97324864E830096BDCC /* TextureReflection.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TextureReflection.h; sourceTree = "<group>"; };
 		C98AC97424864E830096BDCC /* TextureReflection.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TextureReflection.m; sourceTree = "<group>"; };
@@ -125,7 +137,6 @@
 		C9E2BE87247D695C006FF2AE /* tut1.CD */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = tut1.CD; sourceTree = "<group>"; };
 		C9E2BE91247D7187006FF2AE /* WadKitView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WadKitView.h; sourceTree = "<group>"; };
 		C9E2BE92247D7187006FF2AE /* WadKitView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WadKitView.m; sourceTree = "<group>"; };
-		C9E2BE94247D8E7D006FF2AE /* wad_kit_link.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wad_kit_link.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -135,6 +146,7 @@
 			files = (
 				C9BE100423A73434000E25FC /* Metal.framework in Frameworks */,
 				C9BE100623A73434000E25FC /* MetalKit.framework in Frameworks */,
+				C9349FA8248CF5420044565D /* libwad_editor_lib_macos.a in Frameworks */,
 				C9BE100523A73434000E25FC /* MetalPerformanceShaders.framework in Frameworks */,
 				C9BE100023A7341E000E25FC /* libwad_kit.a in Frameworks */,
 			);
@@ -157,6 +169,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C9453C8A2495023C00604E60 /* Wad items data source */ = {
+			isa = PBXGroup;
+			children = (
+				C97A411F2498191C0031ACD3 /* WadItem.h */,
+				C97A41202498191C0031ACD3 /* WadItem.m */,
+				C9453C8B2495068200604E60 /* WadItemView.h */,
+				C9453C8C2495068200604E60 /* WadItemView.m */,
+				C9453C872495023600604E60 /* WadItemsDataSource.h */,
+				C9453C882495023600604E60 /* WadItemsDataSource.m */,
+			);
+			name = "Wad items data source";
+			sourceTree = "<group>";
+		};
 		C977D34E24865C21002A7D6B /* WadKit view */ = {
 			isa = PBXGroup;
 			children = (
@@ -168,7 +193,7 @@
 			name = "WadKit view";
 			sourceTree = "<group>";
 		};
-		C977D35024865C49002A7D6B /* Resource reflection storage */ = {
+		C977D35024865C49002A7D6B /* Resource storage */ = {
 			isa = PBXGroup;
 			children = (
 				C98AC97324864E830096BDCC /* TextureReflection.h */,
@@ -179,10 +204,10 @@
 				C977D3622486931A002A7D6B /* Submesh.m */,
 				C977D35E2486930A002A7D6B /* MeshReflection.h */,
 				C977D35F2486930A002A7D6B /* MeshReflection.m */,
-				C94F565024864D3A0089C915 /* ResourceReflectionStorage.h */,
-				C94F565124864D3A0089C915 /* ResourceReflectionStorage.m */,
+				C94F565024864D3A0089C915 /* ResourceStorage.h */,
+				C94F565124864D3A0089C915 /* ResourceStorage.m */,
 			);
-			name = "Resource reflection storage";
+			name = "Resource storage";
 			sourceTree = "<group>";
 		};
 		C977D35124865C6F002A7D6B /* Renderer */ = {
@@ -197,7 +222,7 @@
 			name = Renderer;
 			sourceTree = "<group>";
 		};
-		C977D35524865E91002A7D6B /* Editor */ = {
+		C977D35524865E91002A7D6B /* DEPRECATED Editor */ = {
 			isa = PBXGroup;
 			children = (
 				C977D359248661CA002A7D6B /* WKViewport.h */,
@@ -206,12 +231,13 @@
 				C977D35624865EA0002A7D6B /* WKEditor.h */,
 				C977D35724865EA0002A7D6B /* WKEditor.m */,
 			);
-			name = Editor;
+			name = "DEPRECATED Editor";
 			sourceTree = "<group>";
 		};
 		C9B6FAD3248A96E1006DBCA7 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				C9453C8A2495023C00604E60 /* Wad items data source */,
 				C9B6FAD4248A9739006DBCA7 /* WKOutlineCellView.h */,
 				C9B6FAD5248A9739006DBCA7 /* WKOutlineCellView.m */,
 				C9B6FADB248AB0F0006DBCA7 /* WKOutlineItem.h */,
@@ -249,13 +275,13 @@
 		C9BE0FD023A733E3000E25FC /* WAD Editor */ = {
 			isa = PBXGroup;
 			children = (
-				C9E2BE94247D8E7D006FF2AE /* wad_kit_link.h */,
+				C97D12C62494C040005EAC04 /* wad_editor_lib_link.h */,
 				C977D35B2486882F002A7D6B /* math_utils.h */,
 				C977D35C2486883A002A7D6B /* math_utils.m */,
 				C9BE0FD123A733E3000E25FC /* AppDelegate.h */,
 				C9BE0FD223A733E3000E25FC /* AppDelegate.m */,
-				C977D35024865C49002A7D6B /* Resource reflection storage */,
-				C977D35524865E91002A7D6B /* Editor */,
+				C977D35024865C49002A7D6B /* Resource storage */,
+				C977D35524865E91002A7D6B /* DEPRECATED Editor */,
 				C977D35124865C6F002A7D6B /* Renderer */,
 				C977D34E24865C21002A7D6B /* WadKit view */,
 				C9B6FAD3248A96E1006DBCA7 /* UI */,
@@ -290,6 +316,7 @@
 		C9BE0FFE23A7341E000E25FC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C9349FA7248CF5420044565D /* libwad_editor_lib_macos.a */,
 				C9BE100123A73434000E25FC /* Metal.framework */,
 				C9BE100323A73434000E25FC /* MetalKit.framework */,
 				C9BE100223A73434000E25FC /* MetalPerformanceShaders.framework */,
@@ -462,11 +489,14 @@
 				C94F5648248644DA0089C915 /* WadKitViewDelegate.m in Sources */,
 				C983F82D248CCB7800211C5F /* colored_line_shaders.metal in Sources */,
 				C9BE0FDB23A733E7000E25FC /* main.m in Sources */,
-				C94F565224864D3A0089C915 /* ResourceReflectionStorage.m in Sources */,
+				C94F565224864D3A0089C915 /* ResourceStorage.m in Sources */,
+				C9453C8D2495068200604E60 /* WadItemView.m in Sources */,
 				C977D35D2486883A002A7D6B /* math_utils.m in Sources */,
 				C9A3ACAD2487D47A002FD496 /* triangle_shaders.metal in Sources */,
 				C9BE0FD323A733E3000E25FC /* AppDelegate.m in Sources */,
 				C9BE100923A761D1000E25FC /* MainWindow.m in Sources */,
+				C97A41212498191C0031ACD3 /* WadItem.m in Sources */,
+				C9453C892495023600604E60 /* WadItemsDataSource.m in Sources */,
 				C9E2BE93247D7187006FF2AE /* WadKitView.m in Sources */,
 				C9B6FADA248AB06E006DBCA7 /* WKOutlineDataSource.m in Sources */,
 				C98AC97524864E830096BDCC /* TextureReflection.m in Sources */,
