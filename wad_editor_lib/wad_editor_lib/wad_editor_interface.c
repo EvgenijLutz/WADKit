@@ -49,21 +49,16 @@ static void _viewportDrawMesh(RENDERER* renderer, void* userInfo)
 	
 	WAD_EDITOR_VIEWPORT* viewport = wadEditor->mainViewport;
 	
-	if (wadEditorItemGetType(wadEditor->selectedItem) != WAD_EDITOR_ITEM_TYPE_MESH)
+	if (wadEditorItemGetType(wadEditor->selectedItem) == WAD_EDITOR_ITEM_TYPE_MESH)
 	{
-		return;
+		MESH* mesh = wadEditorItemGetData(wadEditor->selectedItem).mesh;
+		
+		matrix4f model = matrix4f_identity;
+		matrix4f view = wadEditorViewportGetViewMatrix(viewport);
+		matrix4f projection = wadEditorViewportGetProjectionMatrix(viewport);
+		
+		rendererRenderMesh(renderer, mesh, &model, &view, &projection);
 	}
-	
-	MESH* mesh = wadEditorItemGetData(wadEditor->selectedItem).mesh;
-	
-	matrix4f model = matrix_identity_float4x4;
-	matrix4f view = matrix4fTranslation(0.0f, 0.0f, -1.0f);
-	
-	vector2f size = wadEditorViewportGetSize(viewport);
-	float aspectRatio = vec_x(size) / vec_y(size);
-	matrix4f projection = matrix4fPerspectiveRightHand(180.0f / M_PI * 65.0f, aspectRatio, 0.05f, 1000.0f);
-	
-	rendererRenderMesh(renderer, mesh, &model, &view, &projection);
 }
 
 // MARK: - Editor interface implementation
@@ -88,7 +83,7 @@ WAD_EDITOR* wadEditorCreate(RESOURCE_STORAGE* resourceStorage)
 	wadEditor->staticsItem = wadEditorItemAddChild(root, WAD_EDITOR_ITEM_TYPE_SECTION, itemData, "Statics");
 	
 	wadEditor->meshViewportDelegate = wadEditorViewportDelegateCreate(_viewportMouseDown, _viewportMouseUp, _viewportMouseMove, _viewportDrawMesh, wadEditor);
-	wadEditor->mainViewport = wadEditorViewportCreate();
+	wadEditor->mainViewport = wadEditorViewportCreate(wadEditor);
 	
 	return wadEditor;
 }
@@ -96,6 +91,9 @@ WAD_EDITOR* wadEditorCreate(RESOURCE_STORAGE* resourceStorage)
 void wadEditorRelease(WAD_EDITOR* wadEditor)
 {
 	assert(wadEditor);
+	
+	wadEditorViewportRelease(wadEditor->mainViewport);
+	wadEditorViewportDelegateRelease(wadEditor->meshViewportDelegate);
 	
 	wadEditorItemRelease(wadEditor->rootItem);
 	

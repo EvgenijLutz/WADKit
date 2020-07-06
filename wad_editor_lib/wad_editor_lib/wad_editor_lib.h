@@ -11,6 +11,10 @@
 
 // Public WAD editor interface
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "resource_storage_functions.h"
 #include "resource_storage_interface.h"
 
@@ -18,10 +22,16 @@
 #include "renderer_interface.h"
 
 #include "we_mouse_key.h"
+#include "we_modifier_key.h"
+#include "wad_editor_viewport_camera_mode.h"
 #include "wad_editor_viewport_interface.h"
 
 #include "wad_editor_item_type.h"
 #include "wad_editor_item_interface.h"
 #include "wad_editor_interface.h"
+
+#ifdef __cplusplus
+} // extern "C"
+#endif
 
 #endif /* wad_editor_lib__wad_editor_lib_h */

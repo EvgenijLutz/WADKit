@@ -9,7 +9,6 @@
 #import "WKEditor.h"
 #import "ResourceStorage.h"
 #include "wad_editor_lib_link.h"
-#include "math_utils.h"
 #include "RendererTypes.h"
 #include "WKRenderer.h"
 #include "editor_selected_entity_type.h"

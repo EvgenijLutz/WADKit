@@ -186,8 +186,8 @@ static void _rendererDelegateDummyCube(matrix4f* model, matrix4f* view, matrix4f
 - (void)drawMesh:(MESH*)mesh model:(matrix4f*)model view:(matrix4f*)view projection:(matrix4f*)projection
 {
 	OBJECT_UNIFORMS uniforms;
-	uniforms.modelViewProjection = matrix_multiply(*view, *model);
-	uniforms.modelViewProjection = matrix_multiply(*projection, uniforms.modelViewProjection);
+	uniforms.modelViewProjection = simd_mul(*view, *model);
+	uniforms.modelViewProjection = simd_mul(*projection, uniforms.modelViewProjection);
 	
 	MeshReflection* meshReflection = [resourceStorage meshAtMesh:mesh];
 	

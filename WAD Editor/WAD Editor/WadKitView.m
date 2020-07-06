@@ -24,6 +24,15 @@
 	{
 		_resourceStorage = resourceStorage;
 		_renderer = [[WKRenderer alloc] initWithResourceStorage:resourceStorage];
+		
+		NSTrackingAreaOptions options = (NSTrackingActiveAlways | NSTrackingInVisibleRect |
+								 NSTrackingMouseEnteredAndExited | NSTrackingMouseMoved);
+
+		NSTrackingArea* area = [[NSTrackingArea alloc] initWithRect:[self bounds]
+															options:options
+															  owner:self
+														   userInfo:nil];
+		[self addTrackingArea:area];
 	}
 	return self;
 }
@@ -86,7 +95,11 @@
 {
 	if (_viewport)
 	{
-		//wadEditorViewportMouseUp(_viewport, key);
+		NSPoint locationInWindow = event.locationInWindow;
+		NSPoint localPoint = [self convertPoint:locationInWindow fromView:nil];
+		
+		vector2f pointerPosition = vector2fCreate((float)localPoint.x, (float)localPoint.y);
+		wadEditorViewportMouseMove(_viewport, pointerPosition);
 	}
 }
 
@@ -95,7 +108,7 @@
 }
 
 - (void)otherMouseDown:(NSEvent*)event {
-	[self _viewportMouseDown:WE_MOUSE_KEY_OTHER];
+	[self _viewportMouseDown:WE_MOUSE_KEY_UNKNOWN];
 }
 
 - (void)rightMouseDown:(NSEvent*)event {
@@ -108,7 +121,7 @@
 }
 
 - (void)otherMouseUp:(NSEvent*)event {
-	[self _viewportMouseUp:WE_MOUSE_KEY_OTHER];
+	[self _viewportMouseUp:WE_MOUSE_KEY_UNKNOWN];
 }
 
 - (void)rightMouseUp:(NSEvent*)event {

@@ -14,13 +14,18 @@
 #include <simd/simd.h>
 
 typedef simd_float2 vector2f;
+#define vector2fCreate(valueX, valueY) simd_make_float2(valueX, valueY)
+
 typedef simd_float3 vector3f;
+#define vector3fCreate(valueX, valueY, valueZ) simd_make_float3(valueX, valueY, valueZ)
+
 typedef simd_float4 vector4f;
 typedef simd_quatf quaternionf;
 
 typedef simd_float4x4 matrix4f;
+#define matrix4f_identity matrix_identity_float4x4
+#define matrix4fMul(mat1, mat2) matrix_multiply(mat1, mat2)
 
-#define vector2fCreate(valueX, valueY) simd_make_float2(valueX, valueY)
 
 #else // IF !__APPLE__
 
@@ -70,6 +75,8 @@ matrix4f;
 #define quat_y(quat)	(quat.y)
 #define quat_z(quat)	(quat.z)
 #define quat_w(quat)	(quat.w)
+
+#define vec_dif(vec1, vec2)	(vec1 - vec2)
 
 
 #endif /* wk_math_h */

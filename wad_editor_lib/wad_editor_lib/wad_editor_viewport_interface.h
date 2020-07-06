@@ -12,11 +12,12 @@
 #include "wad_kit_link.h"
 #include "we_mouse_key.h"
 
+typedef struct WAD_EDITOR WAD_EDITOR;
 typedef struct WAD_EDITOR_VIEWPORT WAD_EDITOR_VIEWPORT;
 typedef struct WAD_EDITOR_VIEWPORT_DELEGATE WAD_EDITOR_VIEWPORT_DELEGATE;
 typedef struct RENDERER RENDERER;
 
-WAD_EDITOR_VIEWPORT* wadEditorViewportCreate(void);
+WAD_EDITOR_VIEWPORT* wadEditorViewportCreate(WAD_EDITOR* editor);
 void wadEditorViewportRelease(WAD_EDITOR_VIEWPORT* viewport);
 
 void wadEditorViewportConnectRenderer(WAD_EDITOR_VIEWPORT* viewport, RENDERER* renderer);
@@ -27,6 +28,7 @@ void wadEditorViewportDraw(WAD_EDITOR_VIEWPORT* viewport);
 
 // MARK: - User interaction
 
+void wadEditorViewportZoom(WAD_EDITOR_VIEWPORT* viewport, float value);
 void wadEditorViewportMouseDown(WAD_EDITOR_VIEWPORT* viewport, WE_MOUSE_KEY keyCode);
 void wadEditorViewportMouseUp(WAD_EDITOR_VIEWPORT* viewport, WE_MOUSE_KEY keyCode);
 void wadEditorViewportMouseMove(WAD_EDITOR_VIEWPORT* viewport, vector2f pointerPosition);
@@ -37,5 +39,7 @@ void wadEditorViewportSetDelegate(WAD_EDITOR_VIEWPORT* viewport, WAD_EDITOR_VIEW
 
 void wadEditorViewportSetSize(WAD_EDITOR_VIEWPORT* viewport, vector2f size);
 vector2f wadEditorViewportGetSize(WAD_EDITOR_VIEWPORT* viewport);
+matrix4f wadEditorViewportGetViewMatrix(WAD_EDITOR_VIEWPORT* viewport);
+matrix4f wadEditorViewportGetProjectionMatrix(WAD_EDITOR_VIEWPORT* viewport);
 
 #endif /* wad_editor_lib__wad_editor_viewport_interface_h */

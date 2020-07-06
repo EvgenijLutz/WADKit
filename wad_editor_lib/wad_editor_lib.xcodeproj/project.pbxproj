@@ -52,6 +52,8 @@
 		C9D59DF624B1CA900048F2CA /* wad_editor_viewport_delegate_interface.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = wad_editor_viewport_delegate_interface.c; sourceTree = "<group>"; };
 		C9D59DF924B1CB770048F2CA /* we_mouse_key.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = we_mouse_key.h; sourceTree = "<group>"; };
 		C9D59DFF24B1F5D00048F2CA /* resource_storage_functions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = resource_storage_functions.h; sourceTree = "<group>"; };
+		C9FD83A424B30F4400C3D7CC /* we_modifier_key.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = we_modifier_key.h; sourceTree = "<group>"; };
+		C9FD83A524B315C900C3D7CC /* wad_editor_viewport_camera_mode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wad_editor_viewport_camera_mode.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -138,10 +140,12 @@
 			isa = PBXGroup;
 			children = (
 				C9D59DF924B1CB770048F2CA /* we_mouse_key.h */,
+				C9FD83A424B30F4400C3D7CC /* we_modifier_key.h */,
 				C9D59DF424B1CA820048F2CA /* wad_editor_viewport_delegate_functions.h */,
 				C9D59DF324B1CA760048F2CA /* wad_editor_viewport_delegate.h */,
 				C9D59DF524B1CA900048F2CA /* wad_editor_viewport_delegate_interface.h */,
 				C9D59DF624B1CA900048F2CA /* wad_editor_viewport_delegate_interface.c */,
+				C9FD83A524B315C900C3D7CC /* wad_editor_viewport_camera_mode.h */,
 				C9453C90249544B400604E60 /* wad_editor_viewport.h */,
 				C9453C922495579900604E60 /* wad_editor_viewport_interface.h */,
 				C9453C932495579900604E60 /* wad_editor_viewport_interface.c */,

@@ -185,9 +185,9 @@ static void _resourceStorageDelegateCreateMesh(MESH* mesh, void* userInfo)
 		const float vy = -((float)(vertex.vy)) / 1024.0f;
 		const float vz = -((float)(vertex.vz)) / 1024.0f;
 		
-		const float nx = ((float)(vertex.vx)) / 1024.0f;
-		const float ny = ((float)(vertex.vy)) / 1024.0f;
-		const float nz = ((float)(vertex.vz)) / 1024.0f;
+		const float nx = ((float)(vertex.vx)) / 2048.0f;//1024.0f;
+		const float ny = ((float)(vertex.vy)) / 2048.0f;//1024.0f;
+		const float nz = ((float)(vertex.vz)) / 2048.0f;//1024.0f;
 		
 		const float shade = ((float)(vertex.shade)) / 1024.0f;
 		

@@ -11,6 +11,8 @@
 
 #include "wad_kit_link.h"
 #include "we_mouse_key.h"
+#include "we_modifier_key.h"
+#include "wad_editor_viewport_camera_mode.h"
 
 typedef struct WAD_EDITOR WAD_EDITOR;
 typedef struct WAD_EDITOR_VIEWPORT_DELEGATE WAD_EDITOR_VIEWPORT_DELEGATE;
@@ -25,9 +27,22 @@ typedef struct WAD_EDITOR_VIEWPORT
 	
 	vector2f size;
 	
+	WAD_EDITOR_VIEWPORT_CAMERA_MODE cameraMode;
+	vector3f cameraPosition;
+	vector3f cameraRotation;
+	float cameraDistance;
+	float fovyRadians;
+	float frustumNear;
+	float frustumFar;
+	matrix4f viewMatrix;
+	matrix4f projectionMatrix;
+	
 	// Mouse stashed data
-	vector2f mouseDelta;
-	WE_MOUSE_KEY keys[WE_MOUSE_KEY_OTHER + 1];
+	//vector2f mouseDelta;
+	vector2f previousMousePosition;
+	WE_MOUSE_KEY mouseKeys[WE_MOUSE_KEY_NUM_KEYS];
+	
+	WE_MOUSE_KEY modifierKeys[WE_MODIFIER_KEY_NUM_KEYS];
 }
 WAD_EDITOR_VIEWPORT;
 

@@ -30,7 +30,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (unsigned int)numMeshes;
 - (void)createMeshWithMeshData:(MESH*)mesh;
-- (MeshReflection*)meshAtMesh:(MESH*)mesh;
+- (MeshReflection*)meshAtMesh:(MESH*)mesh /*__attribute__((objc_direct))*/;
 - (MeshReflection*)meshAtIndex:(unsigned int)meshIndex /*__attribute__((objc_direct))*/;
 
 @property (nonatomic, readonly) id<MTLDevice> device;
