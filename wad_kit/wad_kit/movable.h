@@ -9,9 +9,7 @@
 #ifndef movable_h
 #define movable_h
 
-#include "movable_id.h"
-
-typedef struct ANIMATION ANIMATION;
+#include "wad_kit.h"
 
 typedef struct MOVABLE
 {

@@ -6,12 +6,7 @@
 //  Copyright © 2020 Eugene Lutz. All rights reserved.
 //
 
-#include "movable_interface.h"
-#include "movable.h"
-#include "wad_interface.h"
-#include "animation.h"
-#include <stdlib.h>
-#include <assert.h>
+#include "private_interface.h"
 
 
 MOVABLE_ID movableGetId(MOVABLE* movable)
@@ -34,7 +29,7 @@ unsigned int movableGetMeshIndex(MOVABLE* movable, unsigned int movableMeshIndex
 	return movable->meshIndices[movableMeshIndex];
 }
 
-MESH* movableGetMesh(MOVABLE* movable, unsigned int movableMeshIndex, WAD* wad)
+MESH* movableGetMesh(MOVABLE* movable, unsigned int movableMeshIndex, WK_WAD* wad)
 {
 	assert(movable);
 	assert(movableMeshIndex < movable->numMeshes);

@@ -16,21 +16,58 @@
 
 @implementation AppDelegate
 {
-	id<MTLDevice> device;
+	WK_SYSTEM* _system;
+	id<MTLDevice> _device;
+}
+
+- (void)_showErrorAndDieWithMessage:(NSString*)message
+{
+	NSAlert* alert = [[NSAlert alloc] init];
+	alert.messageText = message;
+	[alert beginSheetModalForWindow:_window completionHandler:^(NSModalResponse returnCode) {
+		[NSApplication.sharedApplication terminate:self];
+	}];
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification*)aNotification
 {
-	// Insert code here to initialize your application
+	_system = systemCreateDefaultIfAvailable();
+	if (!_system)
+	{
+		[self _showErrorAndDieWithMessage:@"Cannot initialize WAD Kits essential components to work 😢"];
+		return;
+	}
 	
-	device = MTLCreateSystemDefaultDevice();
-	[_window initializeWithMetalDevice:device];
+	EXECUTE_RESULT executeResult;
+	WK_WAD* wad = wadCreateFromContentsOfResourceFile(_system, "tut1", &executeResult);
+	if (executeResultIsFailed(&executeResult)) {
+		systemRelease(_system);
+		NSString* message = [NSString stringWithFormat:@"Could not load WAD file: %s", executeResult.message];
+		[self _showErrorAndDieWithMessage:message];
+		return;
+	}
+	wadRelease(wad);
+	
+	_device = MTLCreateSystemDefaultDevice();
+	[_window initializeWithMetalDevice:_device];
+}
+
++ (WK_SYSTEM*)system
+{
+	AppDelegate* appDelegate = (AppDelegate*)NSApplication.sharedApplication.delegate;
+	return appDelegate->_system;
 }
 
 
 - (void)applicationWillTerminate:(NSNotification*)aNotification
 {
-	// Insert code here to tear down your application
+	NSLog(@"Bye 👋");
+	
+	if (_system) {
+		systemRelease(_system);
+	}
+	
+	_device = nil;
 }
 
 

@@ -88,17 +88,17 @@ static void readData(DATA_READER* reader, void* data, unsigned int size, EXECUTE
 	{
 		char errorMessage[2048];
 		sprintf(errorMessage, "Insufficient amount of data requested. Requested %d bytes, but only %ld bytes are available.", size, reader->size - reader->position);
-		executeResultFailed(executeResult, errorMessage);
+		executeResultSetFailed(executeResult, errorMessage);
 		return;
 	}
 	
 	memcpy(data, (reader->data + reader->position), size);
 	reader->position += size;
-	executeResultSucceeded(executeResult);
+	executeResultSetSucceeded(executeResult);
 }
 
 
-WAD* wadLoadFromWadData(const unsigned char* data, long dataSize, EXECUTE_RESULT* executeResult)
+WK_WAD* wadLoadFromWadData(const unsigned char* data, long dataSize, EXECUTE_RESULT* executeResult)
 {
 	DATA_READER _reader;
 	_reader.data = data;
@@ -112,14 +112,14 @@ WAD* wadLoadFromWadData(const unsigned char* data, long dataSize, EXECUTE_RESULT
 	
 	char errorMessage[2048];
 	EXECUTE_RESULT readDataResult;
-	WAD* wad = wadCreate();
+	WK_WAD* wad = wadCreate();
 	
 	/// SECTION 1 – VERSION
 	const unsigned int version = readUInt(reader);
 	if (version < 129 || version > 130)
 	{
-		sprintf(errorMessage, "Invalid file version: %d", version);
-		executeResultFailed(executeResult, errorMessage);
+		sprintf(errorMessage, "Unsupported WAD file version: %d", version);
+		executeResultSetFailed(executeResult, errorMessage);
 		wadRelease(wad);
 		return NULL;
 	}
@@ -130,7 +130,7 @@ WAD* wadLoadFromWadData(const unsigned char* data, long dataSize, EXECUTE_RESULT
 	if (numTextureSamples > 4096)
 	{
 		sprintf(errorMessage, "Too much texture samples found in file: %d", numTextureSamples);
-		executeResultFailed(executeResult, errorMessage);
+		executeResultSetFailed(executeResult, errorMessage);
 		wadRelease(wad);
 		return NULL;
 	}
@@ -142,7 +142,7 @@ WAD* wadLoadFromWadData(const unsigned char* data, long dataSize, EXECUTE_RESULT
 		readData(reader, wad->textureSamples, rawTextureSapmplesDataSize, &readDataResult);
 		if (!readDataResult.succeeded)
 		{
-			executeResultFailedCopy(executeResult, &readDataResult);
+			executeResultSetFailedCopy(executeResult, &readDataResult);
 			wadRelease(wad);
 			return NULL;
 		}
@@ -167,7 +167,7 @@ WAD* wadLoadFromWadData(const unsigned char* data, long dataSize, EXECUTE_RESULT
 	if (numPagesBalance > 0)
 	{
 		sprintf(errorMessage, "Incorrect size of texture data: %d. %d bytes are exceeded", numTextureBytes, numPagesBalance);
-		executeResultFailed(executeResult, errorMessage);
+		executeResultSetFailed(executeResult, errorMessage);
 		wadRelease(wad);
 		return NULL;
 	}
@@ -175,7 +175,7 @@ WAD* wadLoadFromWadData(const unsigned char* data, long dataSize, EXECUTE_RESULT
 	if (numPagesBalance > 0)
 	{
 		sprintf(errorMessage, "Incorrect size of texture data: %d. %d bytes are exceeded", numTextureBytes, mapHeightBalance);
-		executeResultFailed(executeResult, errorMessage);
+		executeResultSetFailed(executeResult, errorMessage);
 		wadRelease(wad);
 		return NULL;
 	}
@@ -188,7 +188,7 @@ WAD* wadLoadFromWadData(const unsigned char* data, long dataSize, EXECUTE_RESULT
 		readData(reader, wad->texturePages[pageIndex].data, sizeof(wad->texturePages[pageIndex].data), &readDataResult);
 		if (!readDataResult.succeeded)
 		{
-			executeResultFailedCopy(executeResult, &readDataResult);
+			executeResultSetFailedCopy(executeResult, &readDataResult);
 			wadRelease(wad);
 			return NULL;
 		}
@@ -199,7 +199,7 @@ WAD* wadLoadFromWadData(const unsigned char* data, long dataSize, EXECUTE_RESULT
 	if (numMeshPointers > 4096)
 	{
 		sprintf(errorMessage, "Too much mesh pointers found in file: %d", numMeshPointers);
-		executeResultFailed(executeResult, errorMessage);
+		executeResultSetFailed(executeResult, errorMessage);
 		wadRelease(wad);
 		return NULL;
 	}
@@ -208,7 +208,7 @@ WAD* wadLoadFromWadData(const unsigned char* data, long dataSize, EXECUTE_RESULT
 	readData(reader, raw_meshPointersList, meshPointersSize, &readDataResult);
 	if (!readDataResult.succeeded)
 	{
-		executeResultFailedCopy(executeResult, &readDataResult);
+		executeResultSetFailedCopy(executeResult, &readDataResult);
 		wadRelease(wad);
 		return NULL;
 	}
@@ -254,7 +254,7 @@ WAD* wadLoadFromWadData(const unsigned char* data, long dataSize, EXECUTE_RESULT
 			if (numVertices != numNormals)
 			{
 				sprintf(errorMessage, "Number of vertices(%d) does not match with number of normals(%d)", numVertices, numNormals);
-				executeResultFailed(executeResult, errorMessage);
+				executeResultSetFailed(executeResult, errorMessage);
 				wadRelease(wad);
 				return NULL;
 			}
@@ -276,7 +276,7 @@ WAD* wadLoadFromWadData(const unsigned char* data, long dataSize, EXECUTE_RESULT
 			if (numVertices != numShades)
 			{
 				sprintf(errorMessage, "Number of vertices(%d) does not match with number of shades(%d)", numVertices, numShades);
-				executeResultFailed(executeResult, errorMessage);
+				executeResultSetFailed(executeResult, errorMessage);
 				wadRelease(wad);
 				return NULL;
 			}
@@ -362,7 +362,7 @@ WAD* wadLoadFromWadData(const unsigned char* data, long dataSize, EXECUTE_RESULT
 		readData(reader, rawAnimations, rawAnimationsDataSize, &readDataResult);
 		if (!readDataResult.succeeded)
 		{
-			executeResultFailedCopy(executeResult, &readDataResult);
+			executeResultSetFailedCopy(executeResult, &readDataResult);
 			wadRelease(wad);
 			return NULL;
 		}
@@ -424,7 +424,7 @@ WAD* wadLoadFromWadData(const unsigned char* data, long dataSize, EXECUTE_RESULT
 		free(rawAnimations);
 		free(raw_meshPointersList);
 		
-		executeResultFailedCopy(executeResult, &readDataResult);
+		executeResultSetFailedCopy(executeResult, &readDataResult);
 		wadRelease(wad);
 		return NULL;
 	}
@@ -443,7 +443,7 @@ WAD* wadLoadFromWadData(const unsigned char* data, long dataSize, EXECUTE_RESULT
 		free(rawAnimations);
 		free(raw_meshPointersList);
 		
-		executeResultFailedCopy(executeResult, &readDataResult);
+		executeResultSetFailedCopy(executeResult, &readDataResult);
 		wadRelease(wad);
 		return NULL;
 	}
@@ -462,7 +462,7 @@ WAD* wadLoadFromWadData(const unsigned char* data, long dataSize, EXECUTE_RESULT
 		free(rawAnimations);
 		free(raw_meshPointersList);
 		
-		executeResultFailedCopy(executeResult, &readDataResult);
+		executeResultSetFailedCopy(executeResult, &readDataResult);
 		wadRelease(wad);
 		return NULL;
 	}
@@ -870,6 +870,6 @@ WAD* wadLoadFromWadData(const unsigned char* data, long dataSize, EXECUTE_RESULT
 	free(raw_meshPointersList);	// ...
 	free(raw_meshAddresses);
 	
-	executeResultSucceeded(executeResult);
+	executeResultSetSucceeded(executeResult);
 	return wad;
 }

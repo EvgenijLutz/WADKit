@@ -9,7 +9,7 @@
 #ifndef wk_math_functions_h
 #define wk_math_functions_h
 
-#include "wk_math.h"
+#include "wad_kit.h"
 
 matrix4f matrix4fScale(vector3f scale);
 matrix4f matrix4fTranslation(float tx, float ty, float tz);

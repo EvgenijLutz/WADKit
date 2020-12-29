@@ -8,11 +8,10 @@
 
 @import Cocoa;
 @import Metal;
-#import "WKEditorDelegate.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface MainWindow : NSWindow<NSOutlineViewDataSource, NSOutlineViewDelegate, WKEditorDelegate, NSSplitViewDelegate>
+@interface MainWindow : NSWindow<NSOutlineViewDataSource, NSOutlineViewDelegate, NSSplitViewDelegate>
 
 - (void)initializeWithMetalDevice:(id<MTLDevice>)metalDevice;
 

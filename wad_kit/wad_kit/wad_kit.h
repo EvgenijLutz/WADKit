@@ -15,28 +15,86 @@
 extern "C" {
 #endif
 
-#include "execute_result.h"
+// MARK: - Preprocessor macros
 
-#include "wk_math.h"
-#include "wk_math_functions.h"
+#define WK_TEXTURE_PAGE_WIDTH (256)
+#define WK_TEXTURE_PAGE_HEIGHT (256)
+#define WK_TEXTURE_PAGE_NUM_COMPONENTS (3)
+#define WK_SIZE_OF_TEXTURE_PAGE ((sizeof(char)) * (WK_TEXTURE_PAGE_WIDTH * WK_TEXTURE_PAGE_HEIGHT * WK_TEXTURE_PAGE_NUM_COMPONENTS))
 
-#include "wk_vertex.h"
-#include "wk_polygon.h"
-#include "texture_page.h"
+// MARK: - Declarations
 
-#include "wad_interface.h"
-#include "texture_page_interface.h"
-#include "mesh_interface.h"
+typedef struct EXECUTE_RESULT EXECUTE_RESULT;
+
+typedef struct WK_BUFFER WK_BUFFER;
+typedef struct WK_STRING WK_STRING;
+typedef struct WK_ARRAY WK_ARRAY;
+
+typedef struct WK_SYSTEM WK_SYSTEM;
+typedef struct WK_FILE_READER WK_FILE_READER;
+
+typedef struct TEXTURE_PAGE TEXTURE_PAGE;
+typedef struct TEXTURE_SAMPLE TEXTURE_SAMPLE;
+typedef struct VERTEX VERTEX;
+typedef struct POLYGON POLYGON;
+typedef struct MESH MESH;
+typedef struct JOINT JOINT;
+typedef struct ANIMATION ANIMATION;
+typedef struct SKELETON SKELETON;
+typedef struct MOVABLE MOVABLE;
+typedef struct STATIC STATIC;
+typedef struct WK_WAD WK_WAD;
+
+// MARK: - Enumerations
+
+#include "file_mode.h"
 
 #include "joint_location_type.h"
+#include "movable_id.h"
+#include "static_object_id.h"
+
+// MARK: - Callbacks
+
+#include "system_functions.h"
+
+// MARK: - Structures
+
+#include "execute_result.h"
+#include "buffer.h"
+#include "buffer_reader.h"
+#include "string.h"
+#include "array.h"
+
+#include "vector2f.h"
+#include "wk_math.h"
+
+#include "texture_page.h"
+#include "vertex.h"
+#include "polygon.h"
+
+// MARK: - Public interface
+
+#include "buffer_interface.h"
+#include "buffer_reader_interface.h"
+#include "string_interface.h"
+#include "array_interface.h"
+
+#include "system_interface.h"
+#include "file_reader_interface.h"
+
+#include "wk_math_functions.h"
+
+#include "texture_page_interface.h"
+#include "texture_sample_interface.h"
+#include "vertex_interface.h"
+#include "polygon_interface.h"
+#include "mesh_interface.h"
 #include "joint_interface.h"
 #include "skeleton_interface.h"
-
-#include "movable_id.h"
 #include "movable_interface.h"
-
-#include "static_object_id.h"
 #include "static_object_interface.h"
+
+#include "wad_interface.h"
 
 #ifdef __cplusplus
 } // extern "C"

@@ -13,9 +13,6 @@
 
 #include <simd/simd.h>
 
-typedef simd_float2 vector2f;
-#define vector2fCreate(valueX, valueY) simd_make_float2(valueX, valueY)
-
 typedef simd_float3 vector3f;
 #define vector3fCreate(valueX, valueY, valueZ) simd_make_float3(valueX, valueY, valueZ)
 

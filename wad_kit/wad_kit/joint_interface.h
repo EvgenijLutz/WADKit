@@ -9,9 +9,7 @@
 #ifndef wad_kit_joint_interface_h
 #define wad_kit_joint_interface_h
 
-#include "joint_location_type.h"
-
-typedef struct JOINT JOINT;
+#include "wad_kit.h"
 
 JOINT_LOCATION_TYPE jointGetLocationType(JOINT* joint);
 int jointGetOffsetX(JOINT* joint);

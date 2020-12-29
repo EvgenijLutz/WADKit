@@ -9,27 +9,34 @@
 #ifndef mesh_h
 #define mesh_h
 
-typedef struct WAD WAD;
-typedef struct VERTEX VERTEX;
-typedef struct POLYGON POLYGON;
+#include "private_interface.h"
 
 typedef struct MESH
 {
-	WAD* wad;
+	WK_WAD* wad;
+	unsigned long numReferences;
 	
-	//BOUNDING_SPHERE boundingSphere;
 	short cx;
 	short cy;
 	short cz;
 	unsigned short radius;
-	unsigned short unknown;	// garbage?
+	
+	/*!
+	 Presumably garbage.
+	 */
+	unsigned short unknown;
 	
 	int usesNormals;
-	unsigned short numVertices;
-	VERTEX* vertices;
 	
-	unsigned short numPolygons;
-	POLYGON* polygons;
+	/*!
+	 Array of @b VERTEX elements.
+	 */
+	WK_ARRAY vertices;
+	
+	/*!
+	 Array of @b POLYGON elements.
+	 */
+	WK_ARRAY polygons;
 }
 MESH;
 

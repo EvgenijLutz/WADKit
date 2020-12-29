@@ -21,7 +21,7 @@ typedef struct WAD_EDITOR
 	RESOURCE_STORAGE* resourceStorage;
 	
 	char* filePath;
-	WAD* wad;
+	WK_WAD* wad;
 	
 	WAD_EDITOR_ITEM* rootItem;
 	WAD_EDITOR_ITEM* texturePagesItem;

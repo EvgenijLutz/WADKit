@@ -6,7 +6,7 @@
 //  Copyright © 2020 Eugene Lutz. All rights reserved.
 //
 
-#include "wk_math_functions.h"
+#include "private_interface.h"
 
 #if defined(__APPLE__) && __APPLE__
 

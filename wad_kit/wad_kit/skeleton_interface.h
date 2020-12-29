@@ -9,8 +9,7 @@
 #ifndef wad_kit_skeleton_interface_h
 #define wad_kit_skeleton_interface_h
 
-typedef struct SKELETON SKELETON;
-typedef struct JOINT JOINT;
+#include "wad_kit.h"
 
 unsigned int skeletonGetNumJoints(SKELETON* skeleton);
 JOINT* skeletonGetJoint(SKELETON* skeleton, unsigned int jointIndex);

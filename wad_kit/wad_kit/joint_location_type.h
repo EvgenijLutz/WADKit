@@ -9,6 +9,8 @@
 #ifndef wad_kit_joint_location_type_h
 #define wad_kit_joint_location_type_h
 
+#include "wad_kit.h"
+
 typedef enum JOINT_LOCATION_TYPE
 {
 	JOINT_LOCATION_TYPE_LINK_TO_PREVIOUS_MESH = 0,

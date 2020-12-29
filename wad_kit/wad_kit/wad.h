@@ -10,36 +10,32 @@
 #ifndef wad_kit_wad_h
 #define wad_kit_wad_h
 
-#include "wk_vertex.h"
-#include "wk_polygon.h"
-#include "animation.h"
-#include "texture_page.h"
-#include "movable.h"
+#include "private_interface.h"
 
-typedef struct TEXTURE_SAMPLE TEXTURE_SAMPLE;
-typedef struct TEXTURE_PAGE TEXTURE_PAGE;
-typedef struct MESH MESH;
-typedef struct SKELETON SKELETON;
-typedef struct MOVABLE MOVABLE;
-typedef struct STATIC STATIC;
-
-typedef struct WAD
+typedef struct WK_WAD
 {
 	unsigned int version;
 	
-	unsigned int numTextureSamples;
-	TEXTURE_SAMPLE* textureSamples;
+	/*!
+	 Array of @b TEXTURE_PAGE elements.
+	 */
+	WK_ARRAY texturePages;
 	
-	unsigned int numTexturePages;
-	TEXTURE_PAGE* texturePages;
+	/*!
+	 Array of @b TEXTURE_SAMPLE elements.
+	 */
+	WK_ARRAY textureSamples;
 	
-	unsigned int numMeshes;
-	MESH* meshes;
+	/*!
+	 Array of @b WK_ARRAY elements.
+	 */
+	WK_ARRAY meshes;
 	
-	/* In theory, movables can refer to the same skeleton. Let's check it in future.
-	   If not, then move each skeleton instance to related mesh. */
-	unsigned int numSkeletons;
-	SKELETON* skeletons;
+	/*!
+	 Array of @b SKELETON elements.
+	 In theory, movables can refer to the same skeleton. Let's check it in future.
+	 If not, then move each skeleton instance to related movable. */
+	WK_ARRAY skeletons;
 	
 	unsigned int numMovables;
 	MOVABLE* movables;
@@ -47,6 +43,6 @@ typedef struct WAD
 	unsigned int numStatics;
 	STATIC* statics;
 }
-WAD;
+WK_WAD;
 
 #endif /* wad_kit_wad_h */

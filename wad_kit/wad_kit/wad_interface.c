@@ -6,25 +6,24 @@
 //  Copyright © 2019 Eugene Lutz. All rights reserved.
 //
 
-#include "wad_interface.h"
-#include "execute_result.h"
-#include "skeleton.h"
-#include "mesh.h"
-#include "static_object.h"
-#include "wad.h"
-#include <stdlib.h>
-#include <string.h>
-#include <assert.h>
+#include "private_interface.h"
 
 
-WAD* wadCreate(void)
+WK_WAD* wadCreate(void)
 {
-	WAD* wad = malloc(sizeof(WAD));
-	memset(wad, 0, sizeof(WAD));
+	WK_WAD* wad = malloc(sizeof(WK_WAD));
+	memset(wad, 0, sizeof(WK_WAD));
+	wad->version = 129;
+	
+	arrayInitializeWithCapacityIncrement(&wad->texturePages, sizeof(TEXTURE_PAGE), 16);
+	arrayInitializeWithCapacityIncrement(&wad->textureSamples, sizeof(TEXTURE_SAMPLE), 256);
+	arrayInitializeWithCapacityIncrement(&wad->meshes, sizeof(MESH), 128);
+	arrayInitializeWithCapacityIncrement(&wad->skeletons, sizeof(SKELETON), 64);
+	
 	return wad;
 }
 
-void wadRelease(WAD* wad)
+void wadRelease(WK_WAD* wad)
 {
 	if (wad->statics)
 	{
@@ -72,121 +71,103 @@ void wadRelease(WAD* wad)
 		free(wad->movables);
 	}
 	
-	if (wad->meshes)
+	for (unsigned int i = 0; i < wad->skeletons.length; i++)
 	{
-		for (unsigned int meshIndex = 0; meshIndex < wad->numMeshes; meshIndex++)
-		{
-			free(wad->meshes[meshIndex].polygons);
-			free(wad->meshes[meshIndex].vertices);
-		}
-		free(wad->meshes);
+		SKELETON* skeleton = arrayGetItem(&wad->skeletons, i);
+		skeletonDeinitialize(skeleton);
 	}
+	arrayDeinitialize(&wad->skeletons);
 	
-	if (wad->skeletons)
+	for (unsigned int i = 0; i < wad->meshes.length; i++)
 	{
-		for (unsigned int skeletonIndex = 0; skeletonIndex < wad->numSkeletons; skeletonIndex++)
-		{
-			free(wad->skeletons[skeletonIndex].joints);
-		}
-		free(wad->skeletons);
+		MESH* mesh = arrayGetItem(&wad->meshes, i);
+		meshDeinitialize(mesh);
 	}
+	arrayDeinitialize(&wad->meshes);
 	
-	if (wad->texturePages)
+	for (unsigned int i = 0; i < wad->textureSamples.length; i++)
 	{
-		free(wad->texturePages);
+		TEXTURE_SAMPLE* textureSample = arrayGetItem(&wad->textureSamples, i);
+		textureSampleDeinitialize(textureSample);
 	}
+	arrayDeinitialize(&wad->textureSamples);
 	
-	if (wad->textureSamples)
+	for (unsigned int i = 0; i < wad->texturePages.length; i++)
 	{
-		free(wad->textureSamples);
+		TEXTURE_PAGE* texturePage = arrayGetItem(&wad->texturePages, i);
+		texturePageDeinitialize(texturePage);
 	}
-	
+	arrayDeinitialize(&wad->texturePages);
+
 	free(wad);
 }
 
-unsigned int wadGetVersion(WAD* wad)
+unsigned int wadGetVersion(WK_WAD* wad)
 {
 	assert(wad);
 	return wad->version;
 }
 
 
-unsigned int wadGetNumTexturePages(WAD* wad)
+unsigned int wadGetNumTexturePages(WK_WAD* wad)
 {
 	assert(wad);
-	return wad->numTexturePages;
+	return wad->texturePages.length;
 }
 
-TEXTURE_PAGE* wadGetTexturePage(WAD* wad, unsigned int texturePageIndex)
+TEXTURE_PAGE* wadGetTexturePage(WK_WAD* wad, unsigned int texturePageIndex)
 {
 	assert(wad);
-	assert(texturePageIndex < wad->numTexturePages);
-	return &(wad->texturePages[texturePageIndex]);
+	return arrayGetItem(&wad->texturePages, texturePageIndex);
 }
 
-unsigned char* wadGetTexturePageData(WAD* wad, unsigned int texturePageIndex)
+unsigned char* wadGetTexturePageData(WK_WAD* wad, unsigned int texturePageIndex)
 {
 	assert(wad);
-	assert(texturePageIndex < wad->numTexturePages);
-	return wad->texturePages[texturePageIndex].data;
-}
-
-
-unsigned int wadGetNumTextureSamples(WAD* wad)
-{
-	assert(wad);
-	return wad->numTextureSamples;
-}
-
-TEXTURE_SAMPLE wadGetTextureSample(WAD* wad, unsigned int textureSampleIndex)
-{
-	assert(wad);
-	assert(textureSampleIndex < wad->numTextureSamples);
-	return wad->textureSamples[textureSampleIndex];
+	TEXTURE_PAGE* texturePage = wadGetTexturePage(wad, texturePageIndex);
+	return texturePage->data;
 }
 
 
-unsigned int wadGetNumMeshes(WAD* wad)
+unsigned int wadGetNumMeshes(WK_WAD* wad)
 {
 	assert(wad);
-	return wad->numMeshes;
+	return wad->meshes.length;
 }
 
-MESH* wadGetMesh(WAD* wad, unsigned int meshIndex)
+MESH* wadGetMesh(WK_WAD* wad, unsigned int meshIndex)
 {
 	assert(wad);
-	assert(meshIndex < wad->numMeshes);
-	return &(wad->meshes[meshIndex]);
+	return arrayGetItem(&wad->meshes, meshIndex);
 }
 
-unsigned int wadGetNumSkeletons(WAD* wad)
+unsigned int wadGetNumSkeletons(WK_WAD* wad)
 {
 	assert(wad);
-	return wad->numSkeletons;
+	return wad->skeletons.length;
 }
 
-SKELETON* wadGetSkeleton(WAD* wad, unsigned int skeletonIndex)
+SKELETON* wadGetSkeleton(WK_WAD* wad, unsigned int skeletonIndex)
 {
 	assert(wad);
-	assert(skeletonIndex < wad->numSkeletons);
-	return &(wad->skeletons[skeletonIndex]);
+	return arrayGetItem(&wad->skeletons, skeletonIndex);
 }
 
 
-unsigned int wadGetNumMovables(WAD* wad)
+unsigned int wadGetNumMovables(WK_WAD* wad)
 {
 	assert(wad);
 	return wad->numMovables;
 }
 
-MOVABLE* wadGetMovableByIndex(WAD* wad, unsigned int movableIndex)
+MOVABLE* wadGetMovableByIndex(WK_WAD* wad, unsigned int movableIndex)
 {
 	assert(wad);
 	assert(movableIndex < wad->numMovables);
 	return &(wad->movables[movableIndex]);
 }
 
-MOVABLE* wadGetMovableById(WAD* wad, MOVABLE_ID movableId)
+MOVABLE* wadGetMovableById(WK_WAD* wad, MOVABLE_ID movableId)
 {
 	assert(wad);
 	
@@ -205,20 +186,20 @@ MOVABLE* wadGetMovableById(WAD* wad, MOVABLE_ID movableId)
 }
 
 
-unsigned int wadGetNumStatics(WAD* wad)
+unsigned int wadGetNumStatics(WK_WAD* wad)
 {
 	assert(wad);
 	return wad->numStatics;
 }
 
-STATIC* wadGetStaticByIndex(WAD* wad, unsigned int staticIndex)
+STATIC* wadGetStaticByIndex(WK_WAD* wad, unsigned int staticIndex)
 {
 	assert(wad);
 	assert(staticIndex < wad->numStatics);
 	return &(wad->statics[staticIndex]);
 }
 
-STATIC* wadGetStaticById(WAD* wad, STATIC_ID staticId)
+STATIC* wadGetStaticById(WK_WAD* wad, STATIC_ID staticId)
 {
 	assert(wad);
 	

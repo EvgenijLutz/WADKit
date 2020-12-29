@@ -6,11 +6,7 @@
 //  Copyright © 2020 Eugene Lutz. All rights reserved.
 //
 
-#include "skeleton_interface.h"
-#include "skeleton.h"
-#include "joint.h"
-#include <stdlib.h>
-#include <assert.h>
+#include "private_interface.h"
 
 
 unsigned int skeletonGetNumJoints(SKELETON* skeleton)

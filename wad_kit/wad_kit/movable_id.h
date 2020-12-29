@@ -9,6 +9,8 @@
 #ifndef wad_kit_movable_id_h
 #define wad_kit_movable_id_h
 
+#include "wad_kit.h"
+
 typedef enum MOVABLE_ID
 {
 	MOVABLE_ID_LARA,

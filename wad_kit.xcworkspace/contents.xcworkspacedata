@@ -5,9 +5,6 @@
       location = "group:wad_kit/wad_kit.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:test_wad_kit/test_wad_kit.xcodeproj">
-   </FileRef>
-   <FileRef
       location = "group:wad_editor_lib/wad_editor_lib.xcodeproj">
    </FileRef>
    <FileRef

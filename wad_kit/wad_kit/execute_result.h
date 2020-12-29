@@ -21,8 +21,18 @@ EXECUTE_RESULT;
 
 /* Convenience methods */
 
-void executeResultSucceeded(EXECUTE_RESULT* executeResult);
-void executeResultFailed(EXECUTE_RESULT* executeResult, const char* message);
-void executeResultFailedCopy(EXECUTE_RESULT* executeResult, EXECUTE_RESULT* source);
+static inline int executeResultIsSucceeded(EXECUTE_RESULT* executeResult)
+{
+	return executeResult ? executeResult->succeeded : 1;
+}
+
+static inline int executeResultIsFailed(EXECUTE_RESULT* executeResult)
+{
+	return executeResult ? !executeResult->succeeded : 0;
+}
+
+void executeResultSetSucceeded(EXECUTE_RESULT* executeResult);
+void executeResultSetFailed(EXECUTE_RESULT* executeResult, const char* message);
+void executeResultSetFailedCopy(EXECUTE_RESULT* executeResult, EXECUTE_RESULT* source);
 
 #endif /* execute_result_h */

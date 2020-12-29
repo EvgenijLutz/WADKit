@@ -46,7 +46,7 @@ void wadEditorSelectItem(WAD_EDITOR* editor, WAD_EDITOR_ITEM* item);
 
 // MARK: - Properties
 
-WAD* wadEditorGetWad(WAD_EDITOR* wadEditor);
+WK_WAD* wadEditorGetWad(WAD_EDITOR* wadEditor);
 WAD_EDITOR_VIEWPORT* wadEditorGetMainViewport(WAD_EDITOR* wadEditor);
 
 #endif /* wad_editor_lib__wad_editor_interface_h */

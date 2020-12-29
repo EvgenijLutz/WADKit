@@ -9,6 +9,8 @@
 #ifndef animation_h
 #define animation_h
 
+#include "private_interface.h"
+
 typedef struct ROTATION
 {
 	unsigned short rotx;

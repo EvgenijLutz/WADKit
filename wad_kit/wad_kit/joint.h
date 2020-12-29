@@ -9,17 +9,19 @@
 #ifndef wad_kit_joint_h
 #define wad_kit_joint_h
 
+#include "private_interface.h"
+
 typedef struct JOINT
 {
 	/**
-	 Documentation:
+	 From @b documentation:
 	 The opCode takes the values 0, 1, 2, 3, where:
 	 0 = stack not used. Link the current mesh to the previous mesh.
 	 1 = pull the parent from the stack. Link the current mesh to the parent.
 	 2 = push the parent into the stack. Link the current mesh to the parent.
 	 3 = read the parent in the stack. Link the current mesh to the parent.
 	 */
-	int opCode;
+	JOINT_LOCATION_TYPE opCode;
 	
 	int dx;
 	int dy;

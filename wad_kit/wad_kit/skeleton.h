@@ -9,7 +9,7 @@
 #ifndef wad_kit_skeleton_h
 #define wad_kit_skeleton_h
 
-typedef struct JOINT JOINT;
+#include "private_interface.h"
 
 /**
  Skeleton information. Consists of skeleton joints except root joint.

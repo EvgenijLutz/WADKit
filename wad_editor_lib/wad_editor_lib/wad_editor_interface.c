@@ -133,7 +133,9 @@ void wadEditorLoadWad(WAD_EDITOR* wadEditor, const char* filePath)
 	fclose(file);
 	
 	EXECUTE_RESULT executeResult;
-	WAD* wad = wadLoadFromWadData(data, dataSize, &executeResult);
+	// TODO: implement
+	assert(0);
+	WK_WAD* wad = NULL;//wadLoadFromWadData(data, dataSize, &executeResult);
 	if (!executeResult.succeeded)
 	{
 		printf("%s", executeResult.message);
@@ -389,7 +391,7 @@ void wadEditorSelectItem(WAD_EDITOR* editor, WAD_EDITOR_ITEM* item)
 
 // MARK: - Properties
 
-WAD* wadEditorGetWad(WAD_EDITOR* wadEditor)
+WK_WAD* wadEditorGetWad(WAD_EDITOR* wadEditor)
 {
 	assert(wadEditor);
 	return wadEditor->wad;

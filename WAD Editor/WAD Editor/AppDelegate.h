@@ -7,9 +7,11 @@
 //
 
 @import Cocoa;
+#include "wad_editor_lib_link.h"
 
 @interface AppDelegate : NSObject <NSApplicationDelegate>
 
++ (WK_SYSTEM*)system;
 
 @end
 

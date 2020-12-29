@@ -6,16 +6,12 @@
 //  Copyright © 2020 Eugene Lutz. All rights reserved.
 //
 
-#include "joint_interface.h"
-#include "joint.h"
-#include <stdlib.h>
-#include <assert.h>
-
+#include "private_interface.h"
 
 JOINT_LOCATION_TYPE jointGetLocationType(JOINT* joint)
 {
 	assert(joint);
-	return (JOINT_LOCATION_TYPE)joint->opCode;
+	return joint->opCode;
 }
 
 int jointGetOffsetX(JOINT* joint)

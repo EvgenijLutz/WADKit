@@ -9,21 +9,17 @@
 #ifndef wad_kit_texture_page_h
 #define wad_kit_texture_page_h
 
-typedef struct TEXTURE_SAMPLE
-{
-	unsigned char x;
-	unsigned char y;
-	unsigned short page;
-	char flipX;
-	unsigned char addW;
-	char flipY;
-	unsigned char addH;
-}
-TEXTURE_SAMPLE;
+#include "wad_kit.h"
 
 typedef struct TEXTURE_PAGE
 {
-	unsigned char data[256 * 256 * 3];
+	WK_WAD* wad;
+	unsigned long numReferences;
+	
+	/*!
+	 Bitmap representation of 8-bit texture page. The size is always 256 * 256 * 3: width, height and number of color components.
+	 */
+	unsigned char* data;
 }
 TEXTURE_PAGE;
 

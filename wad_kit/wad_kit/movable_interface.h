@@ -9,19 +9,14 @@
 #ifndef wad_kit_movable_interface_h
 #define wad_kit_movable_interface_h
 
-#include "movable_id.h"
-
-typedef struct WAD WAD;
-typedef struct MOVABLE MOVABLE;
-typedef struct MESH MESH;
-typedef struct ANIMATION ANIMATION;
+#include "wad_kit.h"
 
 MOVABLE_ID movableGetId(MOVABLE* movable);
 const char* movableIdGetName(MOVABLE_ID movableId);
 
 unsigned int movableGetNumMeshes(MOVABLE* movable);
 unsigned int movableGetMeshIndex(MOVABLE* movable, unsigned int movableMeshIndex);
-MESH* movableGetMesh(MOVABLE* movable, unsigned int movableMeshIndex, WAD* wad);
+MESH* movableGetMesh(MOVABLE* movable, unsigned int movableMeshIndex, WK_WAD* wad);
 
 unsigned int movableGetSkeletonIndex(MOVABLE* movable);
 

@@ -6,10 +6,9 @@
 //  Copyright © 2019 Eugene Lutz. All rights reserved.
 //
 
-#include "execute_result.h"
-#include <string.h>
+#include "private_interface.h"
 
-void executeResultSucceeded(EXECUTE_RESULT* executeResult)
+void executeResultSetSucceeded(EXECUTE_RESULT* executeResult)
 {
 	if (executeResult)
 	{
@@ -18,7 +17,7 @@ void executeResultSucceeded(EXECUTE_RESULT* executeResult)
 	}
 }
 
-void executeResultFailed(EXECUTE_RESULT* executeResult, const char* message)
+void executeResultSetFailed(EXECUTE_RESULT* executeResult, const char* message)
 {
 	if (executeResult)
 	{
@@ -27,7 +26,7 @@ void executeResultFailed(EXECUTE_RESULT* executeResult, const char* message)
 	}
 }
 
-void executeResultFailedCopy(EXECUTE_RESULT* executeResult, EXECUTE_RESULT* source)
+void executeResultSetFailedCopy(EXECUTE_RESULT* executeResult, EXECUTE_RESULT* source)
 {
 	if (executeResult && source)
 	{

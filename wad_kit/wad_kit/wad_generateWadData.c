@@ -49,19 +49,19 @@ static void writeBuffer(BUFFER_WRITER* writer, unsigned char* buffer, unsigned i
 {
 	if (writer == NULL)
 	{
-		executeResultFailed(executeResult, "Buffer writer is not created.");
+		executeResultSetFailed(executeResult, "Buffer writer is not created.");
 		return;
 	}
 	
 	if (buffer == NULL)
 	{
-		executeResultFailed(executeResult, "No data passed to write.");
+		executeResultSetFailed(executeResult, "No data passed to write.");
 		return;
 	}
 	
 	if (bufferSize == 0)
 	{
-		executeResultFailed(executeResult, "Nothing to write.");
+		executeResultSetFailed(executeResult, "Nothing to write.");
 		return;
 	}
 	
@@ -71,7 +71,7 @@ static void writeBuffer(BUFFER_WRITER* writer, unsigned char* buffer, unsigned i
 		unsigned char* newData = realloc(writer->buffer, newDataSize);
 		if (newData == NULL)
 		{
-			executeResultFailed(executeResult, "Cannot reallocate memory.");
+			executeResultSetFailed(executeResult, "Cannot reallocate memory.");
 			return;
 		}
 		writer->buffer = newData;
@@ -80,7 +80,7 @@ static void writeBuffer(BUFFER_WRITER* writer, unsigned char* buffer, unsigned i
 	//*((unsigned int*)(writer->buffer + writer->position)) = value;
 	memcpy(writer->buffer + writer->position, buffer, bufferSize);
 	writer->position += bufferSize;
-	executeResultSucceeded(executeResult);
+	executeResultSetSucceeded(executeResult);
 }
 
 #define defWriteFunc(funcName, dataType, dataTypeSize) \
@@ -88,7 +88,7 @@ static void funcName(BUFFER_WRITER* writer, dataType value, EXECUTE_RESULT* exec
 {\
 	if (writer == NULL)\
 	{\
-		executeResultFailed(executeResult, "Buffer writer is not created.");\
+		executeResultSetFailed(executeResult, "Buffer writer is not created.");\
 		return;\
 	}\
 	\
@@ -98,7 +98,7 @@ static void funcName(BUFFER_WRITER* writer, dataType value, EXECUTE_RESULT* exec
 		unsigned char* data = realloc(writer->buffer, newSize);\
 		if (data == NULL)\
 		{\
-			executeResultFailed(executeResult, "Cannot reallocate memory.");\
+			executeResultSetFailed(executeResult, "Cannot reallocate memory.");\
 			return;\
 		}\
 		writer->buffer = data;\
@@ -106,7 +106,7 @@ static void funcName(BUFFER_WRITER* writer, dataType value, EXECUTE_RESULT* exec
 	}\
 	*((dataType*)(writer->buffer + writer->position)) = value;\
 	writer->position += dataTypeSize;\
-	executeResultSucceeded(executeResult);\
+	executeResultSetSucceeded(executeResult);\
 }
 
 defWriteFunc(writeUInt, unsigned int, sizeof(unsigned int))
@@ -135,7 +135,7 @@ typedef struct WAD_DATABLOCK_SIZES
 }
 WAD_DATABLOCK_SIZES;
 
-static void _calculateEstimatedWadFileSize(WAD* wad, WAD_DATABLOCK_SIZES* sizes)
+static void _calculateEstimatedWadFileSize(WK_WAD* wad, WAD_DATABLOCK_SIZES* sizes)
 {
 	// file version, number of texture samples, movables, etc
 	sizes->generalData = 1024;
@@ -205,7 +205,7 @@ static void _calculateEstimatedWadFileSize(WAD* wad, WAD_DATABLOCK_SIZES* sizes)
 	sizes->staticObject = wad->numStatics * 32;
 }
 
-static BUFFER_WRITER* _createTexturePackageData(WAD* wad, WAD_DATABLOCK_SIZES* sizes, EXECUTE_RESULT* executeResult)
+static BUFFER_WRITER* _createTexturePackageData(WK_WAD* wad, WAD_DATABLOCK_SIZES* sizes, EXECUTE_RESULT* executeResult)
 {
 	EXECUTE_RESULT writeResult;
 	BUFFER_WRITER* writer = createBufferWriter(sizes->texture);
@@ -227,7 +227,7 @@ static BUFFER_WRITER* _createTexturePackageData(WAD* wad, WAD_DATABLOCK_SIZES* s
 	// delete this
 	if (!writeResult.succeeded)
 	{
-		executeResultFailed(executeResult, writeResult.message);
+		executeResultSetFailed(executeResult, writeResult.message);
 		return NULL;
 	}
 	
@@ -240,17 +240,17 @@ static BUFFER_WRITER* _createTexturePackageData(WAD* wad, WAD_DATABLOCK_SIZES* s
 		writeBuffer(writer, wad->texturePages[i].data, 256 * 256 * 3, &writeResult);
 		if (!writeResult.succeeded)
 		{
-			executeResultFailed(executeResult, writeResult.message);
+			executeResultSetFailed(executeResult, writeResult.message);
 			return NULL;
 		}
 	}
 	
-	executeResultSucceeded(executeResult);
+	executeResultSetSucceeded(executeResult);
 	
 	return writer;
 }
 
-static BUFFER_WRITER* _createMeshBuffer(WAD* wad, WAD_DATABLOCK_SIZES* sizes, unsigned int** out_meshOffsets, EXECUTE_RESULT* executeResult)
+static BUFFER_WRITER* _createMeshBuffer(WK_WAD* wad, WAD_DATABLOCK_SIZES* sizes, unsigned int** out_meshOffsets, EXECUTE_RESULT* executeResult)
 {
 	EXECUTE_RESULT writeResult;
 	BUFFER_WRITER* writer = createBufferWriter(sizes->mesh);
@@ -319,11 +319,11 @@ static BUFFER_WRITER* _createMeshBuffer(WAD* wad, WAD_DATABLOCK_SIZES* sizes, un
 		}
 	}
 	
-	executeResultSucceeded(executeResult);
+	executeResultSetSucceeded(executeResult);
 	return writer;
 }
 
-static BUFFER_WRITER* _createAnimationsPackage(WAD* wad, WAD_DATABLOCK_SIZES* sizes, /* out */ short** out_animationIndices, /* out */ unsigned int** out_keyframeOffsets, /* out */ unsigned int** out_linkOffsets, /* out */ EXECUTE_RESULT* executeResult)
+static BUFFER_WRITER* _createAnimationsPackage(WK_WAD* wad, WAD_DATABLOCK_SIZES* sizes, /* out */ short** out_animationIndices, /* out */ unsigned int** out_keyframeOffsets, /* out */ unsigned int** out_linkOffsets, /* out */ EXECUTE_RESULT* executeResult)
 {
 	EXECUTE_RESULT writeResult;
 	BUFFER_WRITER* keyframeBuffer = createBufferWriter(sizes->keyframe);
@@ -516,11 +516,11 @@ static BUFFER_WRITER* _createAnimationsPackage(WAD* wad, WAD_DATABLOCK_SIZES* si
 	writeBuffer(animationPackage, keyframeBuffer->buffer, keyframeBuffer->position, &writeResult);
 	releaseBufferWriter(keyframeBuffer);
 	
-	executeResultSucceeded(executeResult);
+	executeResultSetSucceeded(executeResult);
 	return animationPackage;
 }
 
-static BUFFER_WRITER* _createModelsPackage(WAD* wad, WAD_DATABLOCK_SIZES* sizes, BUFFER_WRITER** out_meshPointers, unsigned int* meshOffsets, unsigned int* meshLinks, short* animationIndices, unsigned int* keyframeOffsets, EXECUTE_RESULT* executeResult)
+static BUFFER_WRITER* _createModelsPackage(WK_WAD* wad, WAD_DATABLOCK_SIZES* sizes, BUFFER_WRITER** out_meshPointers, unsigned int* meshOffsets, unsigned int* meshLinks, short* animationIndices, unsigned int* keyframeOffsets, EXECUTE_RESULT* executeResult)
 {
 	EXECUTE_RESULT writeResult;
 	
@@ -585,11 +585,11 @@ static BUFFER_WRITER* _createModelsPackage(WAD* wad, WAD_DATABLOCK_SIZES* sizes,
 	writeBuffer(modelsPackage, staticsBuffer->buffer, staticsBuffer->position, &writeResult);
 	releaseBufferWriter(staticsBuffer);
 	
-	executeResultSucceeded(executeResult);
+	executeResultSetSucceeded(executeResult);
 	return modelsPackage;
 }
 
-unsigned char* wadGenerateWadData(WAD* wad, long* dataSize, EXECUTE_RESULT* executeResult)
+unsigned char* wadGenerateWadData(WK_WAD* wad, long* dataSize, EXECUTE_RESULT* executeResult)
 {
 	/* * * Calculate estimated file size * * */
 	WAD_DATABLOCK_SIZES sizes = { };
