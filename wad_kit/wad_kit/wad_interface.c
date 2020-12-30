@@ -18,65 +18,30 @@ WK_WAD* wadCreate(void)
 	arrayInitializeWithCapacityIncrement(&wad->texturePages, sizeof(TEXTURE_PAGE), 16);
 	arrayInitializeWithCapacityIncrement(&wad->textureSamples, sizeof(TEXTURE_SAMPLE), 256);
 	arrayInitializeWithCapacityIncrement(&wad->meshes, sizeof(MESH), 128);
-	arrayInitializeWithCapacityIncrement(&wad->skeletons, sizeof(SKELETON), 64);
+	arrayInitializeWithCapacityIncrement(&wad->movables, sizeof(MOVABLE), 32);
+	arrayInitializeWithCapacityIncrement(&wad->statics, sizeof(STATIC), 32);
 	
 	return wad;
 }
 
 void wadRelease(WK_WAD* wad)
 {
-	if (wad->statics)
+	for (unsigned int i = 0; i < wad->statics.length; i++)
 	{
-		free(wad->statics);
+		// TODO: uncomment
+		//STATIC* staticItem = arrayGetItem(&wad->statics, i);
+		// TODO: remove
+		assert(0);
+		//staticDeinitialize(staticItem);
 	}
+	arrayDeinitialize(&wad->statics);
 	
-	if (wad->movables)
+	for (unsigned int i = 0; i < wad->movables.length; i++)
 	{
-		for (unsigned int movableIndex = 0; movableIndex < wad->numMovables; movableIndex++)
-		{
-			MOVABLE* movable = &(wad->movables[movableIndex]);
-			if (movable->animations)
-			{
-				for (unsigned int animIndex = 0; animIndex < movable->numAnimations; animIndex++)
-				{
-					ANIMATION* animation = &(movable->animations[animIndex]);
-					if (animation->commands)
-					{
-						free(animation->commands);
-					}
-					
-					if (animation->stateChanges)
-					{
-						for (unsigned int stateChangeIndex = 0; stateChangeIndex < animation->numStateChanges; stateChangeIndex++)
-						{
-							STATE_CHANGE* stateChange = &(animation->stateChanges[stateChangeIndex]);
-							free(stateChange->dispatches);
-						}
-						free(animation->stateChanges);
-					}
-					
-					if (animation->keyframes)
-					{
-						for (unsigned int keyframeIndex = 0; keyframeIndex < animation->numKeyframes; keyframeIndex++)
-						{
-							free(animation->keyframes[keyframeIndex].rotations);
-						}
-						free(animation->keyframes);
-					}
-				}
-				free(movable->animations);
-			}
-			free(movable->meshIndices);
-		}
-		free(wad->movables);
+		MOVABLE* movable = arrayGetItem(&wad->movables, i);
+		movableDeinitialize(movable);
 	}
-	
-	for (unsigned int i = 0; i < wad->skeletons.length; i++)
-	{
-		SKELETON* skeleton = arrayGetItem(&wad->skeletons, i);
-		skeletonDeinitialize(skeleton);
-	}
-	arrayDeinitialize(&wad->skeletons);
+	arrayDeinitialize(&wad->movables);
 	
 	for (unsigned int i = 0; i < wad->meshes.length; i++)
 	{
@@ -141,30 +106,17 @@ MESH* wadGetMesh(WK_WAD* wad, unsigned int meshIndex)
 	return arrayGetItem(&wad->meshes, meshIndex);
 }
 
-unsigned int wadGetNumSkeletons(WK_WAD* wad)
-{
-	assert(wad);
-	return wad->skeletons.length;
-}
-
-SKELETON* wadGetSkeleton(WK_WAD* wad, unsigned int skeletonIndex)
-{
-	assert(wad);
-	return arrayGetItem(&wad->skeletons, skeletonIndex);
-}
-
 
 unsigned int wadGetNumMovables(WK_WAD* wad)
 {
 	assert(wad);
-	return wad->numMovables;
+	return wad->movables.length;
 }
 
 MOVABLE* wadGetMovableByIndex(WK_WAD* wad, unsigned int movableIndex)
 {
 	assert(wad);
-	assert(movableIndex < wad->numMovables);
-	return &(wad->movables[movableIndex]);
+	return arrayGetItem(&wad->movables, movableIndex);
 }
 
 MOVABLE* wadGetMovableById(WK_WAD* wad, MOVABLE_ID movableId)
@@ -172,9 +124,9 @@ MOVABLE* wadGetMovableById(WK_WAD* wad, MOVABLE_ID movableId)
 	assert(wad);
 	
 	MOVABLE* movable = NULL;
-	for (unsigned int i = 0; i < wad->numMovables; i++)
+	for (unsigned int i = 0; i < wad->movables.length; i++)
 	{
-		MOVABLE* currentMovable = &(wad->movables[i]);
+		MOVABLE* currentMovable = arrayGetItem(&wad->movables, i);
 		if (currentMovable->movableId == movableId)
 		{
 			movable = currentMovable;
@@ -189,14 +141,13 @@ MOVABLE* wadGetMovableById(WK_WAD* wad, MOVABLE_ID movableId)
 unsigned int wadGetNumStatics(WK_WAD* wad)
 {
 	assert(wad);
-	return wad->numStatics;
+	return wad->statics.length;
 }
 
 STATIC* wadGetStaticByIndex(WK_WAD* wad, unsigned int staticIndex)
 {
 	assert(wad);
-	assert(staticIndex < wad->numStatics);
-	return &(wad->statics[staticIndex]);
+	return arrayGetItem(&wad->statics, staticIndex);
 }
 
 STATIC* wadGetStaticById(WK_WAD* wad, STATIC_ID staticId)
@@ -204,9 +155,9 @@ STATIC* wadGetStaticById(WK_WAD* wad, STATIC_ID staticId)
 	assert(wad);
 	
 	STATIC* staticObject = NULL;
-	for (unsigned int i = 0; i < wad->numStatics; i++)
+	for (unsigned int i = 0; i < wad->statics.length; i++)
 	{
-		STATIC* currentStatic = &(wad->statics[i]);
+		STATIC* currentStatic = arrayGetItem(&wad->statics, i);
 		if (currentStatic->staticId == staticId)
 		{
 			staticObject = currentStatic;

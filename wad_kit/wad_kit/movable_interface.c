@@ -16,44 +16,21 @@ MOVABLE_ID movableGetId(MOVABLE* movable)
 }
 
 
-unsigned int movableGetNumMeshes(MOVABLE* movable)
+MESH* movableGetRootMesh(MOVABLE* movable)
 {
 	assert(movable);
-	return movable->numMeshes;
+	return movable->rootMesh;
 }
 
-unsigned int movableGetMeshIndex(MOVABLE* movable, unsigned int movableMeshIndex)
-{
-	assert(movable);
-	assert(movableMeshIndex < movable->numMeshes);
-	return movable->meshIndices[movableMeshIndex];
-}
-
-MESH* movableGetMesh(MOVABLE* movable, unsigned int movableMeshIndex, WK_WAD* wad)
-{
-	assert(movable);
-	assert(movableMeshIndex < movable->numMeshes);
-	assert(wad);
-	
-	unsigned int meshIndex = movable->meshIndices[movableMeshIndex];
-	return wadGetMesh(wad, meshIndex);
-}
-
-unsigned int movableGetSkeletonIndex(MOVABLE* movable)
-{
-	assert(movable);
-	return movable->skeletonIndex;
-}
 
 unsigned int movableGetNumAnimations(MOVABLE* movable)
 {
 	assert(movable);
-	return movable->numAnimations;
+	return movable->animations.length;
 }
 
 ANIMATION* movableGetAnimation(MOVABLE* movable, unsigned int animationIndex)
 {
 	assert(movable);
-	assert(animationIndex < movable->numAnimations);
-	return &(movable->animations[animationIndex]);
+	return arrayGetItem(&movable->animations, animationIndex);
 }

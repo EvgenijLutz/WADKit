@@ -17,12 +17,6 @@ typedef union WAD_EDITOR_ITEM_DATA
 	
 	MESH* mesh;
 	
-	SKELETON* skeleton;
-	struct {
-		SKELETON* skeleton;
-		JOINT* joint;
-	} skeletonJoint;
-	
 	MOVABLE* movable;
 	struct {
 		MOVABLE* movable;
@@ -31,11 +25,9 @@ typedef union WAD_EDITOR_ITEM_DATA
 	} movableRootMesh;
 	struct {
 		MOVABLE* movable;
-		SKELETON* skeleton;
 	} movableSkeleton;
 	struct {
 		MOVABLE* movable;
-		SKELETON* skeleton;
 		JOINT* joint;
 	} movableSkeletonJoint;
 	struct {

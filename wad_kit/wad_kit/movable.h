@@ -13,15 +13,22 @@
 
 typedef struct MOVABLE
 {
+	WK_WAD* wad;
+	unsigned long numReferences;
+	
 	MOVABLE_ID movableId;
 	
-	unsigned short numMeshes;
-	unsigned int* meshIndices;
+	MESH* rootMesh;
 	
-	unsigned int skeletonIndex;	// TODO: maybe replace to SKELETON pointer?
+	/*!
+	 Collection of @b JOINT objects, where other meshes are located.
+	 */
+	WK_ARRAY joints;
 	
-	unsigned short numAnimations;
-	ANIMATION* animations;
+	/*!
+	 Collection of @b ANIMATION objects.
+	 */
+	WK_ARRAY animations;
 }
 MOVABLE;
 

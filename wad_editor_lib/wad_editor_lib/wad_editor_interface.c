@@ -180,27 +180,27 @@ void wadEditorLoadWad(WAD_EDITOR* wadEditor, const char* filePath)
 	}
 	
 	wadEditorItemRemoveAllChildren(wadEditor->skeletonsItem);
-	numItems = wadGetNumSkeletons(wad);
+	numItems = 0;//wadGetNumSkeletons(wad);
 	itemType = WAD_EDITOR_ITEM_TYPE_SKELETON;
-	for (unsigned int i = 0; i < numItems; i++)
-	{
-		SKELETON* skeleton = wadGetSkeleton(wad, i);
-		itemData.skeleton = skeleton;
-		sprintf(text, "Skeleton #%03d", i);
-		WAD_EDITOR_ITEM* skeletonItem = wadEditorItemAddChild(wadEditor->skeletonsItem, itemType, itemData, text);
-		
-		const unsigned int numSkeletonJoints = skeletonGetNumJoints(skeleton);
-		for (unsigned int jointIndex = 0; jointIndex < numSkeletonJoints; jointIndex++)
-		{
-			WAD_EDITOR_ITEM_TYPE jointItemType = WAD_EDITOR_ITEM_TYPE_SKELETON_JOINT;
-			WAD_EDITOR_ITEM_DATA jointItemData;
-			jointItemData.skeletonJoint.skeleton = skeleton;
-			jointItemData.skeletonJoint.joint = skeletonGetJoint(skeleton, jointIndex);
-			
-			sprintf(text, "Joint #%03d", jointIndex);
-			wadEditorItemAddChild(skeletonItem, jointItemType, jointItemData, text);
-		}
-	}
+//	for (unsigned int i = 0; i < numItems; i++)
+//	{
+//		SKELETON* skeleton = NULL;//wadGetSkeleton(wad, i);
+//		itemData.skeleton = skeleton;
+//		sprintf(text, "Skeleton #%03d", i);
+//		WAD_EDITOR_ITEM* skeletonItem = wadEditorItemAddChild(wadEditor->skeletonsItem, itemType, itemData, text);
+//
+//		const unsigned int numSkeletonJoints = skeletonGetNumJoints(skeleton);
+//		for (unsigned int jointIndex = 0; jointIndex < numSkeletonJoints; jointIndex++)
+//		{
+//			WAD_EDITOR_ITEM_TYPE jointItemType = WAD_EDITOR_ITEM_TYPE_SKELETON_JOINT;
+//			WAD_EDITOR_ITEM_DATA jointItemData;
+//			jointItemData.skeletonJoint.skeleton = skeleton;
+//			jointItemData.skeletonJoint.joint = skeletonGetJoint(skeleton, jointIndex);
+//
+//			sprintf(text, "Joint #%03d", jointIndex);
+//			wadEditorItemAddChild(skeletonItem, jointItemType, jointItemData, text);
+//		}
+//	}
 	
 	wadEditorItemRemoveAllChildren(wadEditor->movablesItem);
 	numItems = wadGetNumMovables(wad);
@@ -219,31 +219,31 @@ void wadEditorLoadWad(WAD_EDITOR* wadEditor, const char* filePath)
 		WAD_EDITOR_ITEM_DATA movableItemData;
 		movableItemData.movableRootMesh.movable = movable;
 		movableItemData.movableRootMesh.movableMeshIndex = 0;
-		movableItemData.movableRootMesh.mesh = movableGetMesh(movable, 0, wad);
+		//movableItemData.movableRootMesh.mesh = movableGetMesh(movable, 0, wad);
 		wadEditorItemAddChild(item, movableItemType, movableItemData, "Root mesh");
 		
 		// Assigned skeleton
-		movableItemType = WAD_EDITOR_ITEM_TYPE_MOVABLE_SKELETON;
-		movableItemData.movableSkeleton.movable = movable;
-		const unsigned int movableSkeletonIndex = movableGetSkeletonIndex(movable);
-		SKELETON* skeleton = wadGetSkeleton(wad, movableSkeletonIndex);
-		movableItemData.movableSkeleton.skeleton = skeleton;
-		WAD_EDITOR_ITEM* movableSkeletonItem = wadEditorItemAddChild(item, movableItemType, movableItemData, "Skeleton");
-		const unsigned int numSkeletonJoints = skeletonGetNumJoints(skeleton);
-		for (unsigned int jointIndex = 0; jointIndex < numSkeletonJoints; jointIndex++)
-		{
-			WAD_EDITOR_ITEM_TYPE jointItemType = WAD_EDITOR_ITEM_TYPE_MOVABLE_MESHES;
-			WAD_EDITOR_ITEM_DATA jointItemData;
-			jointItemData.movableSkeletonJoint.movable = movable;
-			jointItemData.movableSkeletonJoint.skeleton = skeleton;
-			jointItemData.movableSkeletonJoint.joint = skeletonGetJoint(skeleton, jointIndex);
-			
-			sprintf(text, "Joint #%03d", jointIndex);
-			wadEditorItemAddChild(movableSkeletonItem, jointItemType, jointItemData, text);
-		}
+//		movableItemType = WAD_EDITOR_ITEM_TYPE_MOVABLE_SKELETON;
+//		movableItemData.movableSkeleton.movable = movable;
+//		const unsigned int movableSkeletonIndex = 0;//movableGetSkeletonIndex(movable);
+//		SKELETON* skeleton = NULL;//wadGetSkeleton(wad, movableSkeletonIndex);
+//		movableItemData.movableSkeleton.skeleton = skeleton;
+//		WAD_EDITOR_ITEM* movableSkeletonItem = wadEditorItemAddChild(item, movableItemType, movableItemData, "Skeleton");
+//		const unsigned int numSkeletonJoints = skeletonGetNumJoints(skeleton);
+//		for (unsigned int jointIndex = 0; jointIndex < numSkeletonJoints; jointIndex++)
+//		{
+//			WAD_EDITOR_ITEM_TYPE jointItemType = WAD_EDITOR_ITEM_TYPE_MOVABLE_MESHES;
+//			WAD_EDITOR_ITEM_DATA jointItemData;
+//			jointItemData.movableSkeletonJoint.movable = movable;
+//			jointItemData.movableSkeletonJoint.skeleton = skeleton;
+//			jointItemData.movableSkeletonJoint.joint = skeletonGetJoint(skeleton, jointIndex);
+//			
+//			sprintf(text, "Joint #%03d", jointIndex);
+//			wadEditorItemAddChild(movableSkeletonItem, jointItemType, jointItemData, text);
+//		}
 		
 		// Meshes assigned to skeleton
-		const unsigned int numMovableMeshes = movableGetNumMeshes(movable);
+		const unsigned int numMovableMeshes = 0;//movableGetNumMeshes(movable);
 		if (numMovableMeshes > 0)
 		{
 			WAD_EDITOR_ITEM_TYPE itemType = WAD_EDITOR_ITEM_TYPE_MOVABLE_MESHES;
@@ -257,9 +257,9 @@ void wadEditorLoadWad(WAD_EDITOR* wadEditor, const char* filePath)
 				WAD_EDITOR_ITEM_DATA movableItemData;
 				movableItemData.movableRootMesh.movable = movable;
 				movableItemData.movableRootMesh.movableMeshIndex = j;
-				movableItemData.movableRootMesh.mesh = movableGetMesh(movable, j, wad);
+				//movableItemData.movableRootMesh.mesh = movableGetMesh(movable, j, wad);
 				
-				unsigned int meshIndex = movableGetMeshIndex(movable, j);
+				unsigned int meshIndex = 0;//movableGetMeshIndex(movable, j);
 				sprintf(text, "Mesh #%03d", meshIndex);
 				wadEditorItemAddChild(movableMeshsesItem, movableItemType, movableItemData, text);
 			}
@@ -340,7 +340,7 @@ unsigned int wadEditorGetNumChildrenInItem(WAD_EDITOR* wadEditor, WAD_EDITOR_ITE
 		{
 			case 0: return wadGetNumTexturePages(wadEditor->wad);
 			case 1: return wadGetNumMeshes(wadEditor->wad);
-			case 2: return wadGetNumSkeletons(wadEditor->wad);
+			//case 2: return wadGetNumSkeletons(wadEditor->wad);
 			case 3: return wadGetNumMovables(wadEditor->wad);
 			case 4: return wadGetNumStatics(wadEditor->wad);
 				

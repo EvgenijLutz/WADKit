@@ -10,10 +10,24 @@
 
 #define WAD_TEXTURE_SAMPLE_SIZE (8)
 #define WAD_ANIMATION_SIZE (40)
+#define WAD_STATE_CHANGE_SIZE (6)
+#define WAD_DISPATCH_SIZE (8)
+#define WAD_MOVABLE_SIZE (18)
+#define WAD_STATIC_SIZE (32)
 
-static void _wad_loadDataFromBuffer(WK_WAD* wad, WK_BUFFER* buffer, EXECUTE_RESULT* executeResult)
+static void _wad_loadDataFromLoader(WK_WAD_LOAD_INFO* loadInfo)
 {
+	_Static_assert(sizeof(RAW_KEYFRAME) == 18, "Size of RAW_KEYFRAME has to be 18");
+	_Static_assert(sizeof(RAW_ANIMATION) == 40, "Size of RAW_ANIMATION has to be 40");
+	_Static_assert(sizeof(RAW_STATE_CHANGE) == 6, "Size of RAW_STATE_CHANGE has to be 6");
+	_Static_assert(sizeof(RAW_DISPATCH) == 8, "Size of RAW_DISPATCH has to be 8");
+	_Static_assert(sizeof(RAW_MOVABLE) == 18, "Size of RAW_MOVABLE has to be 18");
+	_Static_assert(sizeof(RAW_STATIC) == 32, "Size of RAW_STATIC has to be 32");
+	
 	char errorMessage[2048];
+	WK_WAD* wad = loadInfo->wad;
+	WK_BUFFER* buffer = loadInfo->buffer;
+	EXECUTE_RESULT* executeResult = loadInfo->executeResult;
 	
 	/// MARK:  SECTION 1 – VERSION
 	const unsigned int version = bufferReadUInt32(buffer, executeResult);
@@ -67,53 +81,120 @@ static void _wad_loadDataFromBuffer(WK_WAD* wad, WK_BUFFER* buffer, EXECUTE_RESU
 	
 	/// MARK: SECTION 3 – MESHES
 	bufferSetEditorPosition(buffer, meshesDataBufferEditorPosition);
-	const unsigned int numMeshPointers = bufferReadUInt32(buffer, executeResult);
+	loadInfo->numMeshPointers = bufferReadUInt32(buffer, executeResult);
 	if (executeResultIsFailed(executeResult)) { return; }
-	if (numMeshPointers > 4096)
+	if (loadInfo->numMeshPointers > 4096)
 	{
-		sprintf(errorMessage, "Too much mesh pointers found in file: %d", numMeshPointers);
+		sprintf(errorMessage, "Too much mesh pointers found in file: %d", loadInfo->numMeshPointers);
 		executeResultSetFailed(executeResult, errorMessage);
 		return;
 	}
 	
 	// Mesh pointers list, we will use it later
-	const unsigned int meshPointersSize = numMeshPointers * 4;
-	const unsigned int* raw_meshPointersList = (unsigned int*)bufferRequestDataToRead(buffer, meshPointersSize, executeResult);
+	loadInfo->meshPointersDataSize = loadInfo->numMeshPointers * 4;
+	loadInfo->meshPointersDataLocation = buffer->editorPosition;
+	loadInfo->meshPointers = (unsigned int*)bufferRequestDataToRead(buffer, loadInfo->meshPointersDataSize, executeResult);
 	if (executeResultIsFailed(executeResult)) { return; }
 	
 	// Figuring out the end of meshes section, because it's not possible to deternime the number of meshes here
-	const unsigned long meshDataPackageSize = bufferReadUInt32(buffer, executeResult) * 2;
+	const unsigned long meshDataSize = bufferReadUInt32(buffer, executeResult) * 2;
 	if (executeResultIsFailed(executeResult)) { return; }
-	const unsigned long meshDataPackageEnd = buffer->editorPosition + meshDataPackageSize;
+	const unsigned long meshDataPackageEnd = buffer->editorPosition + meshDataSize;
 	
 	// Make bizzare list of memory offsers for meshes because WAD wants so
-	unsigned int* meshAddresses = malloc(sizeof(unsigned int) * numMeshPointers);
-	const unsigned long meshDataPackageAddress = buffer->editorPosition;
+	loadInfo->numMeshDataOffsets = loadInfo->numMeshPointers;
+	loadInfo->meshDataOffsets = malloc(sizeof(unsigned int) * loadInfo->numMeshDataOffsets);
+	const unsigned long meshDataLocation = buffer->editorPosition;
 	unsigned int numMeshes = 0;
 	
 	// Get each mesh data
 	while (meshDataPackageEnd > buffer->editorPosition)
 	{
-		meshAddresses[numMeshes] = (unsigned int)(buffer->editorPosition - meshDataPackageAddress);
+		loadInfo->meshDataOffsets[numMeshes] = (unsigned int)(buffer->editorPosition - meshDataLocation);
 		
 		MESH* mesh = arrayAddItem(&wad->meshes);
 		meshInitializeFromBuffer(mesh, wad, buffer, executeResult);
-		if (executeResultIsFailed(executeResult))
-		{
-			free(meshAddresses);
-			return;
-		}
+		if (executeResultIsFailed(executeResult)) { return; }
 		
 		numMeshes++;
 	}
 	
 	// MARK: SECTION 4 – ANIMATIONS
 	
-	/// In theory, we can share animations across objects. But we won't do this, because it will make headaches for everyone
+	/// In theory, we can share animations across objects. But we won't do this, because it will make headaches for everyone.
 	
-	//
+	// Animations
+	loadInfo->numAnimations = bufferReadUInt32(buffer, executeResult);				// 731
+	if (executeResultIsFailed(executeResult)) { return; }
+	loadInfo->animationsDataSize = WAD_ANIMATION_SIZE * loadInfo->numAnimations;
+	loadInfo->animationsDataLocation = buffer->editorPosition;
+	loadInfo->rawAnimations = (RAW_ANIMATION*)bufferRequestDataToRead(buffer, loadInfo->animationsDataSize, executeResult);
+	if (executeResultIsFailed(executeResult)) { return; }
 	
-	free(meshAddresses);
+	// State changes
+	const unsigned int numStateChanges = bufferReadUInt32(buffer, executeResult);	// 487
+	if (executeResultIsFailed(executeResult)) { return; }
+	loadInfo->stateChangesDataSize = WAD_STATE_CHANGE_SIZE * numStateChanges;
+	loadInfo->stateChangesDataLocation = buffer->editorPosition;
+	loadInfo->rawStateChanges = (RAW_STATE_CHANGE*)bufferRequestDataToRead(buffer, loadInfo->stateChangesDataSize, executeResult);
+	if (executeResultIsFailed(executeResult)) { return; }
+	
+	// Dispatches
+	const unsigned int numDispatches = bufferReadUInt32(buffer, executeResult);		// 574
+	if (executeResultIsFailed(executeResult)) { return; }
+	loadInfo->dispatchesDataSize = WAD_DISPATCH_SIZE * numDispatches;
+	loadInfo->dispatchesDataLocation = buffer->editorPosition;
+	loadInfo->rawDispatches = (RAW_DISPATCH*)bufferRequestDataToRead(buffer, loadInfo->dispatchesDataSize, executeResult);
+	if (executeResultIsFailed(executeResult)) { return; }
+	
+	// Commands
+	const unsigned int numCommandWords = bufferReadUInt32(buffer, executeResult);	// 2411
+	if (executeResultIsFailed(executeResult)) { return; }
+	loadInfo->commandsDataSize = numCommandWords * 2;
+	loadInfo->commandsDataLocation = buffer->editorPosition;
+	bufferSetEditorPosition(buffer, loadInfo->commandsDataLocation + loadInfo->commandsDataSize);
+	
+	// Links
+	const unsigned int numLinksDWords = bufferReadUInt32(buffer, executeResult);	// 1544
+	if (executeResultIsFailed(executeResult)) { return; }
+	loadInfo->linksDataSize = numLinksDWords * 4;
+	loadInfo->linksDataLocation = buffer->editorPosition;
+	bufferSetEditorPosition(buffer, loadInfo->linksDataLocation + loadInfo->linksDataSize);
+	
+	// Keyframes
+	loadInfo->numKeyframesWords = bufferReadUInt32(buffer, executeResult);	// 239668
+	if (executeResultIsFailed(executeResult)) { return; }
+	loadInfo->keyframesDataSize = loadInfo->numKeyframesWords * 2;
+	loadInfo->keyframesDataLocation = buffer->editorPosition;
+	bufferSetEditorPosition(buffer, loadInfo->keyframesDataLocation + loadInfo->keyframesDataSize);
+	
+	/// MARK: SECTION 5 – MODELS
+	
+	// Movables
+	loadInfo->numMovables = bufferReadUInt32(buffer, executeResult);				// 109
+	if (executeResultIsFailed(executeResult)) { return; }
+	loadInfo->movablesDataSize = WAD_MOVABLE_SIZE * loadInfo->numMovables;
+	loadInfo->movablesDataLocation = buffer->editorPosition;
+	loadInfo->rawMovables = (RAW_MOVABLE*)bufferRequestDataToRead(buffer, loadInfo->movablesDataSize, executeResult);
+	if (executeResultIsFailed(executeResult)) { return; }
+	
+	// Statics
+	const unsigned int numStatics = bufferReadUInt32(buffer, executeResult);		// 11
+	if (executeResultIsFailed(executeResult)) { return; }
+	loadInfo->staticsDataSize = WAD_STATIC_SIZE * numStatics;
+	loadInfo->staticsDataLocation = buffer->editorPosition;
+	loadInfo->rawStatics = (RAW_STATIC*)bufferRequestDataToRead(buffer, loadInfo->staticsDataSize, executeResult);
+	if (executeResultIsFailed(executeResult)) { return; }
+	
+	/// MARK: Process received data
+	
+	bufferSetEditorPosition(buffer, loadInfo->movablesDataLocation);
+	for (unsigned int i = 0; i < loadInfo->numMovables; i++)
+	{
+		RAW_MOVABLE* rawMovable = &loadInfo->rawMovables[i];
+		MOVABLE* movable = arrayAddItem(&wad->movables);
+		movableInitialize(movable, rawMovable, loadInfo);
+	}
 }
 
 WK_WAD* wadCreateFromContentsOfResourceFile(WK_SYSTEM* system, const char* name, EXECUTE_RESULT* executeResult)
@@ -148,10 +229,20 @@ WK_WAD* wadCreateFromContentsOfResourceFile(WK_SYSTEM* system, const char* name,
 		return NULL;
 	}
 	
-	bufferResetEditorPosition(&buffer);
 	WK_WAD* wad = wadCreate();
-	_wad_loadDataFromBuffer(wad, &buffer, executeResult);
+	
+	WK_WAD_LOAD_INFO loadInfo;
+	memset(&loadInfo, 0, sizeof(WK_WAD_LOAD_INFO));
+	loadInfo.wad = wad;
+	loadInfo.buffer = &buffer;
+	loadInfo.executeResult = executeResult;
+	
+	bufferResetEditorPosition(&buffer);
+	_wad_loadDataFromLoader(&loadInfo);
 	bufferDeinitialize(&buffer);
+	if (loadInfo.meshDataOffsets) {
+		free(loadInfo.meshDataOffsets);
+	}
 	if (executeResultIsFailed(executeResult)) {
 		wadRelease(wad);
 		return NULL;

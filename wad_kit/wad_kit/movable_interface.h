@@ -14,11 +14,7 @@
 MOVABLE_ID movableGetId(MOVABLE* movable);
 const char* movableIdGetName(MOVABLE_ID movableId);
 
-unsigned int movableGetNumMeshes(MOVABLE* movable);
-unsigned int movableGetMeshIndex(MOVABLE* movable, unsigned int movableMeshIndex);
-MESH* movableGetMesh(MOVABLE* movable, unsigned int movableMeshIndex, WK_WAD* wad);
-
-unsigned int movableGetSkeletonIndex(MOVABLE* movable);
+MESH* movableGetRootMesh(MOVABLE* movable);
 
 unsigned int movableGetNumAnimations(MOVABLE* movable);
 ANIMATION* movableGetAnimation(MOVABLE* movable, unsigned int animationIndex);

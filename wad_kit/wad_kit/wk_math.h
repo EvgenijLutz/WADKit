@@ -13,9 +13,6 @@
 
 #include <simd/simd.h>
 
-typedef simd_float3 vector3f;
-#define vector3fCreate(valueX, valueY, valueZ) simd_make_float3(valueX, valueY, valueZ)
-
 typedef simd_float4 vector4f;
 typedef simd_quatf quaternionf;
 

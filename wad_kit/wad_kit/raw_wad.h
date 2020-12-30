@@ -9,96 +9,95 @@
 #ifndef wad_kit_raw_wad_h
 #define wad_kit_raw_wad_h
 
-typedef struct RAW_ANIMATION
+typedef struct __attribute__((__packed__)) RAW_ANIMATION
 {
-	unsigned int keyframeOffset;
-	unsigned char frameDuration;
-	unsigned char keyframeSize;
-	unsigned short stateId;
-	short unknown1;
-	short speed;
-	int acceleration;
-	long unknown2;
-	unsigned short frameStart;
-	unsigned short frameEnd;
-	unsigned short nextAnimation;
-	unsigned short frameIn;
-	unsigned short numStateChanges;
-	unsigned short changesIndex;
-	unsigned short numCommands;
-	unsigned short commandOffsets;
+	uint32_t keyframeOffset;
+	uint8_t frameDuration;
+	uint8_t keyframeSize;
+	uint16_t stateId;
+	int16_t unknown1;
+	int16_t speed;
+	int32_t acceleration;
+	int64_t unknown2;
+	uint16_t frameStart;
+	uint16_t frameEnd;
+	uint16_t nextAnimation;
+	uint16_t frameIn;
+	uint16_t numStateChanges;
+	uint16_t changesIndex;
+	uint16_t numCommands;
+	uint16_t commandOffsets;
 }
 RAW_ANIMATION;
 
-typedef struct RAW_STATE_CHANGE
+typedef struct __attribute__((__packed__)) RAW_STATE_CHANGE
 {
-	unsigned short stateId;
-	unsigned short numDispatches;
-	unsigned short dispatchesIndex;
+	uint16_t stateId;
+	uint16_t numDispatches;
+	uint16_t dispatchesIndex;
 }
 RAW_STATE_CHANGE;
 
-typedef struct RAW_DISPATCH
+typedef struct __attribute__((__packed__)) RAW_DISPATCH
 {
-	unsigned short inRange;
-	unsigned short outRange;
-	unsigned short nextAnim;
-	unsigned short frameIn;
+	uint16_t inRange;
+	uint16_t outRange;
+	uint16_t nextAnim;
+	uint16_t frameIn;
 }
 RAW_DISPATCH;
 
-typedef struct RAW_LINK
+typedef struct __attribute__((__packed__)) RAW_LINK
 {
-	int opCode;
-	int dx;
-	int dy;
-	int dz;
+	int32_t opCode;
+	int32_t dx;
+	int32_t dy;
+	int32_t dz;
 }
 RAW_LINK;
 
-typedef struct RAW_KEYFRAME
+typedef struct __attribute__((__packed__)) RAW_KEYFRAME
 {
-	short bb1x;
-	short bb2x;
-	short bb1y;
-	short bb2y;
-	short bb1z;
-	short bb2z;
-	short offx;
-	short offy;
-	short offz;
-	// keys
+	int16_t bb1x;
+	int16_t bb2x;
+	int16_t bb1y;
+	int16_t bb2y;
+	int16_t bb1z;
+	int16_t bb2z;
+	int16_t offx;
+	int16_t offy;
+	int16_t offz;
 }
 RAW_KEYFRAME;
 
-typedef struct RAW_MOVABLE
+typedef struct __attribute__((__packed__)) RAW_MOVABLE
 {
-	unsigned int objectId;
-	unsigned short numPointers;
-	unsigned short pointersIndex;
-	unsigned int linksIndex;
-	unsigned int keyframesOffset;
-	short animsIndex;
+	uint32_t objectId;
+	uint16_t numPointers;
+	uint16_t pointersIndex;
+	uint32_t linksIndex;
+	uint32_t keyframesOffset;
+	int16_t animsIndex;
 }
 RAW_MOVABLE;
 
-typedef struct RAW_STATIC
+typedef struct __attribute__((__packed__)) RAW_STATIC
 {
-	unsigned int objectId;
-	unsigned short pointersIndex;
-	short vx1;
-	short vx2;
-	short vy1;
-	short vy2;
-	short vz1;
-	short vz2;
-	short cx1;
-	short cx2;
-	short cy1;
-	short cy2;
-	short cz1;
-	short cz2;
-	unsigned short flags;
+	uint32_t objectId;
+	uint16_t pointersIndex;
+	int16_t vx1;
+	int16_t vx2;
+	int16_t vy1;
+	int16_t vy2;
+	int16_t vz1;
+	int16_t vz2;
+	int16_t cx1;
+	int16_t cx2;
+	int16_t cy1;
+	int16_t cy2;
+	int16_t cz1;
+	int16_t cz2;
+	uint16_t flags;
 }
 RAW_STATIC;
 

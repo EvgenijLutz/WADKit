@@ -13,6 +13,9 @@
 
 typedef struct JOINT
 {
+	MOVABLE* movable;
+	MESH* mesh;
+	
 	/**
 	 From @b documentation:
 	 The opCode takes the values 0, 1, 2, 3, where:

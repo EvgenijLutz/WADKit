@@ -25,9 +25,6 @@ unsigned char* wadGetTexturePageData(WK_WAD* wad, unsigned int texturePageIndex)
 unsigned int wadGetNumMeshes(WK_WAD* wad);
 MESH* wadGetMesh(WK_WAD* wad, unsigned int meshIndex);
 
-unsigned int wadGetNumSkeletons(WK_WAD* wad);
-SKELETON* wadGetSkeleton(WK_WAD* wad, unsigned int skeletonIndex);
-
 unsigned int wadGetNumMovables(WK_WAD* wad);
 MOVABLE* wadGetMovableByIndex(WK_WAD* wad, unsigned int movableIndex);
 MOVABLE* wadGetMovableById(WK_WAD* wad, MOVABLE_ID movableId);

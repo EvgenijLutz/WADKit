@@ -24,15 +24,19 @@
 #include "polygon.h"
 #include "mesh.h"
 #include "joint.h"
-#include "skeleton.h"
+#include "keyframe.h"
 #include "animation.h"
 #include "movable.h"
 #include "static_object.h"
+#include "raw_wad.h"
 #include "wad.h"
 
 // MARK: - Private interface
 
-#include "skeleton_internal_interface.h"
+#include "joint_private_interface.h"
+#include "keyframe_internal_interface.h"
+#include "animation_internal_interface.h"
+#include "movable_internal_interface.h"
 
 #include <stdio.h>
 #include <stdlib.h>

@@ -20,7 +20,7 @@ extern "C" {
 #define WK_TEXTURE_PAGE_WIDTH (256)
 #define WK_TEXTURE_PAGE_HEIGHT (256)
 #define WK_TEXTURE_PAGE_NUM_COMPONENTS (3)
-#define WK_SIZE_OF_TEXTURE_PAGE ((sizeof(char)) * (WK_TEXTURE_PAGE_WIDTH * WK_TEXTURE_PAGE_HEIGHT * WK_TEXTURE_PAGE_NUM_COMPONENTS))
+#define WK_SIZE_OF_TEXTURE_PAGE ((sizeof(unsigned char)) * (WK_TEXTURE_PAGE_WIDTH * WK_TEXTURE_PAGE_HEIGHT * WK_TEXTURE_PAGE_NUM_COMPONENTS))
 
 // MARK: - Declarations
 
@@ -40,7 +40,6 @@ typedef struct POLYGON POLYGON;
 typedef struct MESH MESH;
 typedef struct JOINT JOINT;
 typedef struct ANIMATION ANIMATION;
-typedef struct SKELETON SKELETON;
 typedef struct MOVABLE MOVABLE;
 typedef struct STATIC STATIC;
 typedef struct WK_WAD WK_WAD;
@@ -66,11 +65,8 @@ typedef struct WK_WAD WK_WAD;
 #include "array.h"
 
 #include "vector2f.h"
+#include "vector3f.h"
 #include "wk_math.h"
-
-#include "texture_page.h"
-#include "vertex.h"
-#include "polygon.h"
 
 // MARK: - Public interface
 
@@ -82,6 +78,8 @@ typedef struct WK_WAD WK_WAD;
 #include "system_interface.h"
 #include "file_reader_interface.h"
 
+#include "vector2f_interface.h"
+#include "vector3f_interface.h"
 #include "wk_math_functions.h"
 
 #include "texture_page_interface.h"
@@ -90,7 +88,6 @@ typedef struct WK_WAD WK_WAD;
 #include "polygon_interface.h"
 #include "mesh_interface.h"
 #include "joint_interface.h"
-#include "skeleton_interface.h"
 #include "movable_interface.h"
 #include "static_object_interface.h"
 

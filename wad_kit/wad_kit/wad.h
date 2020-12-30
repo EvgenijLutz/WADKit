@@ -12,6 +12,57 @@
 
 #include "private_interface.h"
 
+typedef struct WK_WAD_LOAD_INFO
+{
+	WK_WAD* wad;
+	WK_BUFFER* buffer;
+	EXECUTE_RESULT* executeResult;
+	
+	unsigned int numMeshPointers;
+	unsigned int meshPointersDataSize;
+	unsigned long meshPointersDataLocation;
+	unsigned int* meshPointers;
+	
+	unsigned int numMeshDataOffsets;
+	unsigned int* meshDataOffsets;
+	
+	unsigned long meshDataSize;
+	unsigned long meshDataLocation;
+	
+	unsigned int numAnimations;
+	unsigned long animationsDataSize;
+	unsigned long animationsDataLocation;
+	RAW_ANIMATION* rawAnimations;
+	
+	unsigned long stateChangesDataSize;
+	unsigned long stateChangesDataLocation;
+	RAW_STATE_CHANGE* rawStateChanges;
+	
+	unsigned long dispatchesDataSize;
+	unsigned long dispatchesDataLocation;
+	RAW_DISPATCH* rawDispatches;
+	
+	unsigned long commandsDataSize;
+	unsigned long commandsDataLocation;
+	
+	unsigned long linksDataSize;
+	unsigned long linksDataLocation;
+	
+	unsigned int numKeyframesWords;
+	unsigned long keyframesDataSize;
+	unsigned long keyframesDataLocation;
+	
+	unsigned int numMovables;
+	unsigned long movablesDataSize;
+	unsigned long movablesDataLocation;
+	RAW_MOVABLE* rawMovables;
+	
+	unsigned long staticsDataSize;
+	unsigned long staticsDataLocation;
+	RAW_STATIC* rawStatics;
+}
+WK_WAD_LOAD_INFO;
+
 typedef struct WK_WAD
 {
 	unsigned int version;
@@ -34,14 +85,20 @@ typedef struct WK_WAD
 	/*!
 	 Array of @b SKELETON elements.
 	 In theory, movables can refer to the same skeleton. Let's check it in future.
-	 If not, then move each skeleton instance to related movable. */
-	WK_ARRAY skeletons;
+	 If not, then move each skeleton instance to related movable.
+	 No, we will not doing it, it's just a headache.
+	 */
+	//WK_ARRAY skeletons;
 	
-	unsigned int numMovables;
-	MOVABLE* movables;
+	/*!
+	 Array of @b MOVABLE elements.
+	 */
+	WK_ARRAY movables;
 	
-	unsigned int numStatics;
-	STATIC* statics;
+	/*!
+	 Array of @b STATIC elements.
+	 */
+	WK_ARRAY statics;
 }
 WK_WAD;
 

@@ -9,13 +9,12 @@
 #ifndef vector2f_h
 #define vector2f_h
 
+#include "wad_kit.h"
+
 #if defined(__APPLE__) && __APPLE__
 
 #include <simd/simd.h>
-
 typedef simd_float2 vector2f;
-
-static inline vector2f vector2fCreate(float x, float y) { return simd_make_float2(x, y); }
 
 #else
 

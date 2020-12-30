@@ -27,7 +27,6 @@ WK_FILE_READER* systemOpenFileReader(WK_SYSTEM* system, const char* path, WK_FIL
 	reader->size = system->fileReaderGetFileSizeFunc(reader, fileId, executeResult);
 	if (executeResultIsFailed(executeResult)) {
 		fileReaderClose(reader, NULL);
-		free(reader);
 		return NULL;
 	}
 	
