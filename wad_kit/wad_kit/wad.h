@@ -57,6 +57,7 @@ typedef struct WK_WAD_LOAD_INFO
 	unsigned long movablesDataLocation;
 	RAW_MOVABLE* rawMovables;
 	
+	unsigned int numStatics;
 	unsigned long staticsDataSize;
 	unsigned long staticsDataLocation;
 	RAW_STATIC* rawStatics;

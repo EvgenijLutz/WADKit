@@ -25,6 +25,8 @@
 #include "mesh.h"
 #include "joint.h"
 #include "keyframe.h"
+#include "command.h"
+#include "state_change.h"
 #include "animation.h"
 #include "movable.h"
 #include "static_object.h"
@@ -33,10 +35,16 @@
 
 // MARK: - Private interface
 
+#include "texture_page_private_interface.h"
+#include "texture_sample_private_interface.h"
 #include "joint_private_interface.h"
+#include "command_private_interface.h"
+#include "state_change_private_interface.h"
 #include "keyframe_internal_interface.h"
 #include "animation_internal_interface.h"
 #include "movable_internal_interface.h"
+#include "static_object_private_interface.h"
+#include "wad_private_interface.h"
 
 #include <stdio.h>
 #include <stdlib.h>

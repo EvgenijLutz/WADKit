@@ -28,11 +28,8 @@ void wadRelease(WK_WAD* wad)
 {
 	for (unsigned int i = 0; i < wad->statics.length; i++)
 	{
-		// TODO: uncomment
-		//STATIC* staticItem = arrayGetItem(&wad->statics, i);
-		// TODO: remove
-		assert(0);
-		//staticDeinitialize(staticItem);
+		STATIC* staticItem = arrayGetItem(&wad->statics, i);
+		staticDeinitialize(staticItem);
 	}
 	arrayDeinitialize(&wad->statics);
 	

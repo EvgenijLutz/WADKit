@@ -8,27 +8,6 @@
 
 #include "private_interface.h"
 
-static MESH* _movable_findMesh(unsigned short pointerListStart, unsigned short index, WK_WAD_LOAD_INFO* loadInfo)
-{
-	if (pointerListStart + index >= loadInfo->numMeshPointers)
-	{
-		executeResultSetFailed(loadInfo->executeResult, "Cannot find mesh. Invalid index to data is given.");
-		return NULL;
-	}
-	
-	unsigned int value = loadInfo->meshPointers[pointerListStart + index];
-	
-	for (unsigned int i = 0; i < loadInfo->numMeshDataOffsets; i++)
-	{
-		if (loadInfo->meshDataOffsets[i] == value)
-		{
-			return wadGetMesh(loadInfo->wad, i);
-		}
-	}
-	
-	executeResultSetFailed(loadInfo->executeResult, "Cannot find mesh.");
-	return NULL;
-}
 
 void movableInitialize(MOVABLE* movable, RAW_MOVABLE* rawMovable, WK_WAD_LOAD_INFO* loadInfo)
 {
@@ -47,7 +26,7 @@ void movableInitialize(MOVABLE* movable, RAW_MOVABLE* rawMovable, WK_WAD_LOAD_IN
 	
 	unsigned short numPointers = rawMovable->numPointers;
 	unsigned short meshPointersStart = rawMovable->pointersIndex;
-	movable->rootMesh = _movable_findMesh(meshPointersStart, 0, loadInfo);
+	movable->rootMesh = _wad_findMesh(meshPointersStart, 0, loadInfo);
 	if (executeResultIsFailed(executeResult)) { return; }
 	movable->rootMesh->numReferences++;
 	
@@ -57,7 +36,7 @@ void movableInitialize(MOVABLE* movable, RAW_MOVABLE* rawMovable, WK_WAD_LOAD_IN
 	bufferSetEditorPosition(buffer, loadInfo->linksDataLocation + firstLinkAddress * 4);
 	for (unsigned int i = 1; i < numPointers; i++)
 	{
-		MESH* mesh = _movable_findMesh(meshPointersStart, i, loadInfo);
+		MESH* mesh = _wad_findMesh(meshPointersStart, i, loadInfo);
 		if (executeResultIsFailed(executeResult)) { return; }
 		
 		JOINT* joint = arrayAddItem(&movable->joints);

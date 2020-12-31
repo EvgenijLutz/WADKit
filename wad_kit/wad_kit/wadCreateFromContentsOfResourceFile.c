@@ -179,21 +179,30 @@ static void _wad_loadDataFromLoader(WK_WAD_LOAD_INFO* loadInfo)
 	if (executeResultIsFailed(executeResult)) { return; }
 	
 	// Statics
-	const unsigned int numStatics = bufferReadUInt32(buffer, executeResult);		// 11
+	loadInfo->numStatics = bufferReadUInt32(buffer, executeResult);					// 11
 	if (executeResultIsFailed(executeResult)) { return; }
-	loadInfo->staticsDataSize = WAD_STATIC_SIZE * numStatics;
+	loadInfo->staticsDataSize = WAD_STATIC_SIZE * loadInfo->numStatics;
 	loadInfo->staticsDataLocation = buffer->editorPosition;
 	loadInfo->rawStatics = (RAW_STATIC*)bufferRequestDataToRead(buffer, loadInfo->staticsDataSize, executeResult);
 	if (executeResultIsFailed(executeResult)) { return; }
 	
 	/// MARK: Process received data
 	
+	// Movables
 	bufferSetEditorPosition(buffer, loadInfo->movablesDataLocation);
 	for (unsigned int i = 0; i < loadInfo->numMovables; i++)
 	{
 		RAW_MOVABLE* rawMovable = &loadInfo->rawMovables[i];
 		MOVABLE* movable = arrayAddItem(&wad->movables);
 		movableInitialize(movable, rawMovable, loadInfo);
+	}
+	
+	// Statics
+	for (unsigned int i = 0; i < loadInfo->numStatics; i++)
+	{
+		RAW_STATIC* rawStatic = &loadInfo->rawStatics[i];
+		STATIC* movable = arrayAddItem(&wad->statics);
+		staticInitialize(movable, rawStatic, loadInfo);
 	}
 }
 

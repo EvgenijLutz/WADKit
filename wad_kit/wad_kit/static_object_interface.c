@@ -6,10 +6,7 @@
 //  Copyright © 2019 Eugene Lutz. All rights reserved.
 //
 
-#include "static_object_interface.h"
-#include "static_object.h"
-#include <stdlib.h>
-#include <assert.h>
+#include "private_interface.h"
 
 char* staticIdNames[] =
 {
@@ -39,10 +36,10 @@ STATIC_ID staticGetId(STATIC* staticObject)
 	return staticObject->staticId;
 }
 
-unsigned int staticGetMeshIndex(STATIC* staticObject)
+MESH* staticGetMesh(STATIC* staticObject)
 {
 	assert(staticObject);
-	return staticObject->meshIndex;
+	return staticObject->mesh;
 }
 
 const char* staticIdGetName(STATIC_ID staticId)

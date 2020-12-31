@@ -52,6 +52,7 @@ void animationInitialize(ANIMATION* animation, MOVABLE* movable, RAW_MOVABLE* ra
 	arrayInitializeWithCapacityIncrement(&animation->stateChanges, sizeof(STATE_CHANGE), 8);
 	arrayInitializeWithCapacityIncrement(&animation->commands, sizeof(COMMAND), 8);
 	
+	// MARK: Read keyframes
 	if (rawAnimation->keyframeSize > 0)
 	{
 		// Calculate number of keyframes. It's also tricky as reading movable's number of animations.
@@ -66,15 +67,30 @@ void animationInitialize(ANIMATION* animation, MOVABLE* movable, RAW_MOVABLE* ra
 		bufferSetEditorPosition(buffer, loadInfo->keyframesDataLocation + rawAnimation->keyframeOffset);
 		for (unsigned int keyframeIndex = 0; keyframeIndex < numKeyframes; keyframeIndex++)
 		{
-			//bufferSetEditorPosition(buffer, loadInfo->keyframesDataLocation + rawAnimation->keyframeOffset + keyframeIndex * rawAnimation->keyframeSize * 2);
+			bufferSetEditorPosition(buffer, loadInfo->keyframesDataLocation + rawAnimation->keyframeOffset + keyframeIndex * rawAnimation->keyframeSize * 2);
 			
 			KEYFRAME* keyframe = arrayAddItem(&animation->keyframes);
 			keyframeInitialize(keyframe, animation, rawAnimation, loadInfo);
 			if (executeResultIsFailed(executeResult)) { return; }
-			
-			// Not every keyframe is evenly alignet. Thus sometimes the keyframeInitialize function does not reach end of keyframe buffer.
-			bufferSetEditorPosition(buffer, loadInfo->keyframesDataLocation + rawAnimation->keyframeOffset + (keyframeIndex + 1) * rawAnimation->keyframeSize * 2);
 		}
+	}
+	
+	// MARK: Read commands
+	bufferSetEditorPosition(buffer, loadInfo->commandsDataLocation + rawAnimation->commandOffsets * 2);
+	for (unsigned int i = 0; i < rawAnimation->numCommands; i++)
+	{
+		COMMAND* command = arrayAddItem(&animation->commands);
+		commandInitialize(command, animation, loadInfo);
+		if (executeResultIsFailed(executeResult)) { return; }
+	}
+	
+	// MARK: Read state changes
+	for (unsigned int i = 0; i < rawAnimation->numStateChanges; i++)
+	{
+		RAW_STATE_CHANGE* rawStateChange = &loadInfo->rawStateChanges[rawAnimation->changesIndex + i];
+		STATE_CHANGE* stateChange = arrayAddItem(&animation->stateChanges);
+		stateChangeInitialize(stateChange, animation, rawStateChange, loadInfo);
+		if (executeResultIsFailed(executeResult)) { return; }
 	}
 	
 	executeResultSetSucceeded(executeResult);
@@ -84,19 +100,19 @@ void animationDeinitialize(ANIMATION* animation)
 {
 	assert(animation);
 	
-	for (unsigned int i = 0; i < animation->commands.length; i++)
-	{
-		//COMMAND* command = arrayGetItem(&animation->commands, i);
-		//commandDeinitialize(command);
-	}
-	arrayDeinitialize(&animation->commands);
-	
 	for (unsigned int i = 0; i < animation->stateChanges.length; i++)
 	{
-		//STATE_CHANGE* stateChange = arrayGetItem(&animation->stateChanges, i);
-		//stateChangeDeinitialize(stateChange);
+		STATE_CHANGE* stateChange = arrayGetItem(&animation->stateChanges, i);
+		stateChangeDeinitialize(stateChange);
 	}
 	arrayDeinitialize(&animation->stateChanges);
+	
+	for (unsigned int i = 0; i < animation->commands.length; i++)
+	{
+		COMMAND* command = arrayGetItem(&animation->commands, i);
+		commandDeinitialize(command);
+	}
+	arrayDeinitialize(&animation->commands);
 	
 	for (unsigned int i = 0; i < animation->keyframes.length; i++)
 	{

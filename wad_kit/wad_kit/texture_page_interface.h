@@ -11,11 +11,6 @@
 
 #include "wad_kit.h"
 
-void texturePageInitializeFromBuffer(TEXTURE_PAGE* texturePage, WK_WAD* wad, WK_BUFFER* buffer, EXECUTE_RESULT* executeResult);
-void texturePageInitializeEmpty(TEXTURE_PAGE* texturePage, WK_WAD* wad);
-void texturePageInitializeWithData(TEXTURE_PAGE* texturePage, WK_WAD* wad, const char* data);
-void texturePageDeinitialize(TEXTURE_PAGE* texturePage);
-
 unsigned long texturePageGetNumReferences(TEXTURE_PAGE* texturePage);
 unsigned char* texturePageGetData(TEXTURE_PAGE* texturePage);
 

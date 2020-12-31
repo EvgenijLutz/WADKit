@@ -9,12 +9,10 @@
 #ifndef static_object_interface_h
 #define static_object_interface_h
 
-#include "static_object_id.h"
-
-typedef struct STATIC STATIC;
+#include "wad_kit.h"
 
 STATIC_ID staticGetId(STATIC* staticObject);
-unsigned int staticGetMeshIndex(STATIC* staticObject);
+MESH* staticGetMesh(STATIC* staticObject);
 
 const char* staticIdGetName(STATIC_ID staticId);
 

@@ -11,7 +11,4 @@
 
 #include "wad_kit.h"
 
-void textureSampleInitializeFromBuffer(TEXTURE_SAMPLE* textureSample, WK_WAD* wad, WK_BUFFER* buffer, EXECUTE_RESULT* executeResult);
-void textureSampleDeinitialize(TEXTURE_SAMPLE* textureSample);
-
 #endif /* texture_sample_interface_h */

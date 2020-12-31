@@ -9,14 +9,16 @@
 #ifndef static_object_h
 #define static_object_h
 
-#include "static_object_id.h"
+#include "private_interface.h"
 
 typedef struct STATIC
 {
-	STATIC_ID staticId;
-	unsigned int meshIndex;
+	WK_WAD* wad;
 	
-	// Visibility box?
+	STATIC_ID staticId;
+	MESH* mesh;
+	
+	// Visibility box
 	short vx1;
 	short vy1;
 	short vz1;
@@ -25,7 +27,7 @@ typedef struct STATIC
 	short vy2;
 	short vz2;
 	
-	// Collision box?
+	// Collision box
 	short cx1;
 	short cy1;
 	short cz1;

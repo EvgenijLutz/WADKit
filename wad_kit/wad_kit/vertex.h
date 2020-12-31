@@ -22,6 +22,9 @@ typedef struct VERTEX
 	short nz;
 	
 	short shade;
+	
+	vector3f position;
+	vector3f nornal;
 }
 VERTEX;
 

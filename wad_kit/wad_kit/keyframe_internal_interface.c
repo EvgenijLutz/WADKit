@@ -26,7 +26,7 @@ static void _keyframe_updateModelOffset(KEYFRAME* keyframe)
 
 static void _keyframe_updateRotation(ROTATION* rotation)
 {
-	rotation->rotation = vector3fCreate(0, 0, 0);
+	//rotation->rotation = vector3fCreate(0, 0, 0);
 }
 
 void keyframeInitialize(KEYFRAME* keyframe, ANIMATION* animation, RAW_ANIMATION* rawAnimation, WK_WAD_LOAD_INFO* loadInfo)
@@ -117,6 +117,7 @@ void keyframeInitialize(KEYFRAME* keyframe, ANIMATION* animation, RAW_ANIMATION*
 							
 			default:
 				/* This never should happen */
+				assert(0);
 				break;
 		}
 		

@@ -49,6 +49,7 @@ typedef struct WK_WAD WK_WAD;
 #include "file_mode.h"
 
 #include "joint_location_type.h"
+#include "command_type.h"
 #include "movable_id.h"
 #include "static_object_id.h"
 
@@ -88,6 +89,8 @@ typedef struct WK_WAD WK_WAD;
 #include "polygon_interface.h"
 #include "mesh_interface.h"
 #include "joint_interface.h"
+#include "command_interface.h"
+#include "state_change_interface.h"
 #include "movable_interface.h"
 #include "static_object_interface.h"
 

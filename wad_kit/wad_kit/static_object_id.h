@@ -6,8 +6,10 @@
 //  Copyright © 2020 Eugene Lutz. All rights reserved.
 //
 
-#ifndef wad_kit_static_object_id_h
-#define wad_kit_static_object_id_h
+#ifndef wk_static_object_id_h
+#define wk_static_object_id_h
+
+#include "wad_kit.h"
 
 typedef enum STATIC_ID
 {
@@ -34,4 +36,4 @@ typedef enum STATIC_ID
 }
 STATIC_ID;
 
-#endif /* wad_kit_static_object_id_h */
+#endif /* wk_static_object_id_h */
