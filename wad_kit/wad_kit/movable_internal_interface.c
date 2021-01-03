@@ -73,7 +73,10 @@ void movableInitialize(MOVABLE* movable, RAW_MOVABLE* rawMovable, WK_WAD_LOAD_IN
 		RAW_ANIMATION* rawAnimation = &loadInfo->rawAnimations[rawMovable->animsIndex + animationIndex];
 		RAW_ANIMATION* nextRawAnimation = NULL;
 		// Find next animation to determine number of keyframes
-		if (rawMovable->animsIndex + animationIndex + 1 < numAnimations)
+		/*
+		 Fun story. Previously instead of using "loadInfo->numAnimations" in this condition I used by mistake just "numAnimations". So because of that the "nextRawAnimation" was always NULL. Thus, the function "animationInitialize" counted wrong the number of animation. In sum, application was 170Mb in RAM. Now, it's 28Mb.
+		 */
+		if (rawMovable->animsIndex + animationIndex + 1 < loadInfo->numAnimations)
 		{
 			nextRawAnimation = &loadInfo->rawAnimations[rawMovable->animsIndex + animationIndex + 1];
 		}

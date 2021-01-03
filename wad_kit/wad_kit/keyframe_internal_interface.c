@@ -15,13 +15,13 @@
 
 static void _keyframe_updateBoundingBox(KEYFRAME* keyframe)
 {
-	keyframe->boundingBoxStart = vector3fCreate(0, 0, 0);
-	keyframe->boundingBoxEnd = vector3fCreate(0, 0, 0);
+	//keyframe->boundingBoxStart = vector3fCreate(0, 0, 0);
+	//keyframe->boundingBoxEnd = vector3fCreate(0, 0, 0);
 }
 
 static void _keyframe_updateModelOffset(KEYFRAME* keyframe)
 {
-	keyframe->modelOffset = vector3fCreate(0, 0, 0);
+	//keyframe->modelOffset = vector3fCreate(0, 0, 0);
 }
 
 static void _keyframe_updateRotation(ROTATION* rotation)

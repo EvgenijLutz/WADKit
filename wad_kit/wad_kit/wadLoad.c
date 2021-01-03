@@ -1,5 +1,5 @@
 //
-//  wadCreateFromContentsOfResourceFile.c
+//  wadLoad.c
 //  wad_kit
 //
 //  Created by Евгений Лютц on 28.12.20.
@@ -18,11 +18,11 @@
 static void _wad_loadDataFromLoader(WK_WAD_LOAD_INFO* loadInfo)
 {
 	_Static_assert(sizeof(RAW_KEYFRAME) == 18, "Size of RAW_KEYFRAME has to be 18");
-	_Static_assert(sizeof(RAW_ANIMATION) == 40, "Size of RAW_ANIMATION has to be 40");
-	_Static_assert(sizeof(RAW_STATE_CHANGE) == 6, "Size of RAW_STATE_CHANGE has to be 6");
-	_Static_assert(sizeof(RAW_DISPATCH) == 8, "Size of RAW_DISPATCH has to be 8");
-	_Static_assert(sizeof(RAW_MOVABLE) == 18, "Size of RAW_MOVABLE has to be 18");
-	_Static_assert(sizeof(RAW_STATIC) == 32, "Size of RAW_STATIC has to be 32");
+	_Static_assert(sizeof(RAW_ANIMATION) == WAD_ANIMATION_SIZE, "Size of RAW_ANIMATION has to be 40");
+	_Static_assert(sizeof(RAW_STATE_CHANGE) == WAD_STATE_CHANGE_SIZE, "Size of RAW_STATE_CHANGE has to be 6");
+	_Static_assert(sizeof(RAW_DISPATCH) == WAD_DISPATCH_SIZE, "Size of RAW_DISPATCH has to be 8");
+	_Static_assert(sizeof(RAW_MOVABLE) == WAD_MOVABLE_SIZE, "Size of RAW_MOVABLE has to be 18");
+	_Static_assert(sizeof(RAW_STATIC) == WAD_STATIC_SIZE, "Size of RAW_STATIC has to be 32");
 	
 	char errorMessage[2048];
 	WK_WAD* wad = loadInfo->wad;
@@ -206,6 +206,28 @@ static void _wad_loadDataFromLoader(WK_WAD_LOAD_INFO* loadInfo)
 	}
 }
 
+WK_WAD* wadCreateFromContentsOfBuffer(WK_BUFFER* buffer, EXECUTE_RESULT* executeResult)
+{
+	assert(buffer);
+	
+	WK_WAD* wad = wadCreate();
+	
+	WK_WAD_LOAD_INFO loadInfo;
+	memset(&loadInfo, 0, sizeof(WK_WAD_LOAD_INFO));
+	loadInfo.wad = wad;
+	loadInfo.buffer = buffer;
+	loadInfo.executeResult = executeResult;
+	
+	_wad_loadDataFromLoader(&loadInfo);
+
+	if (loadInfo.meshDataOffsets)
+	{
+		free(loadInfo.meshDataOffsets);
+	}
+	
+	return wad;
+}
+
 WK_WAD* wadCreateFromContentsOfResourceFile(WK_SYSTEM* system, const char* name, EXECUTE_RESULT* executeResult)
 {
 	WK_STRING path;
@@ -238,20 +260,9 @@ WK_WAD* wadCreateFromContentsOfResourceFile(WK_SYSTEM* system, const char* name,
 		return NULL;
 	}
 	
-	WK_WAD* wad = wadCreate();
-	
-	WK_WAD_LOAD_INFO loadInfo;
-	memset(&loadInfo, 0, sizeof(WK_WAD_LOAD_INFO));
-	loadInfo.wad = wad;
-	loadInfo.buffer = &buffer;
-	loadInfo.executeResult = executeResult;
-	
 	bufferResetEditorPosition(&buffer);
-	_wad_loadDataFromLoader(&loadInfo);
+	WK_WAD* wad = wadCreateFromContentsOfBuffer(&buffer, executeResult);
 	bufferDeinitialize(&buffer);
-	if (loadInfo.meshDataOffsets) {
-		free(loadInfo.meshDataOffsets);
-	}
 	if (executeResultIsFailed(executeResult)) {
 		wadRelease(wad);
 		return NULL;

@@ -31,7 +31,7 @@
 		C91CAD22259B6B2700052A9F /* texture_sample_interface.c in Sources */ = {isa = PBXBuildFile; fileRef = C91CAD20259B6B2700052A9F /* texture_sample_interface.c */; };
 		C932788E259A56B700A94006 /* buffer_reader_interface.h in Headers */ = {isa = PBXBuildFile; fileRef = C932788C259A56B700A94006 /* buffer_reader_interface.h */; };
 		C932788F259A56B700A94006 /* buffer_reader_interface.c in Sources */ = {isa = PBXBuildFile; fileRef = C932788D259A56B700A94006 /* buffer_reader_interface.c */; };
-		C932789D259A6C3A00A94006 /* wadCreateFromContentsOfResourceFile.c in Sources */ = {isa = PBXBuildFile; fileRef = C932789C259A6C3A00A94006 /* wadCreateFromContentsOfResourceFile.c */; };
+		C932789D259A6C3A00A94006 /* wadLoad.c in Sources */ = {isa = PBXBuildFile; fileRef = C932789C259A6C3A00A94006 /* wadLoad.c */; };
 		C93278A5259B4F8C00A94006 /* vertex_interface.h in Headers */ = {isa = PBXBuildFile; fileRef = C93278A3259B4F8C00A94006 /* vertex_interface.h */; };
 		C93278A6259B4F8C00A94006 /* vertex_interface.c in Sources */ = {isa = PBXBuildFile; fileRef = C93278A4259B4F8C00A94006 /* vertex_interface.c */; };
 		C93278AB259B637F00A94006 /* polygon_interface.h in Headers */ = {isa = PBXBuildFile; fileRef = C93278A9259B637F00A94006 /* polygon_interface.h */; };
@@ -106,11 +106,10 @@
 		C91CAD1E259B6B1200052A9F /* texture_sample.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = texture_sample.h; sourceTree = "<group>"; };
 		C91CAD1F259B6B2700052A9F /* texture_sample_interface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = texture_sample_interface.h; sourceTree = "<group>"; };
 		C91CAD20259B6B2700052A9F /* texture_sample_interface.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = texture_sample_interface.c; sourceTree = "<group>"; };
-		C9209A0523A577AB0070EEB0 /* wad_loadFromWadData.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = wad_loadFromWadData.c; sourceTree = "<group>"; };
 		C932788B259A569F00A94006 /* buffer_reader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = buffer_reader.h; sourceTree = "<group>"; };
 		C932788C259A56B700A94006 /* buffer_reader_interface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = buffer_reader_interface.h; sourceTree = "<group>"; };
 		C932788D259A56B700A94006 /* buffer_reader_interface.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = buffer_reader_interface.c; sourceTree = "<group>"; };
-		C932789C259A6C3A00A94006 /* wadCreateFromContentsOfResourceFile.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = wadCreateFromContentsOfResourceFile.c; sourceTree = "<group>"; };
+		C932789C259A6C3A00A94006 /* wadLoad.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = wadLoad.c; sourceTree = "<group>"; };
 		C93278A1259A8C8E00A94006 /* vector2f.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = vector2f.h; sourceTree = "<group>"; };
 		C93278A3259B4F8C00A94006 /* vertex_interface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = vertex_interface.h; sourceTree = "<group>"; };
 		C93278A4259B4F8C00A94006 /* vertex_interface.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = vertex_interface.c; sourceTree = "<group>"; };
@@ -383,8 +382,7 @@
 				C940EDA82398CE5D0007A0D9 /* wad_interface.c */,
 				C90B1065259E1115000A6358 /* wad_private_interface.h */,
 				C90B1066259E1115000A6358 /* wad_private_interface.c */,
-				C932789C259A6C3A00A94006 /* wadCreateFromContentsOfResourceFile.c */,
-				C9209A0523A577AB0070EEB0 /* wad_loadFromWadData.c */,
+				C932789C259A6C3A00A94006 /* wadLoad.c */,
 				C98AFF1B239DDE6700CDC67A /* wad_generateWadData.c */,
 			);
 			name = wad;
@@ -617,7 +615,7 @@
 				C941D8AA239D73C200F9D0CC /* execute_result.c in Sources */,
 				C9BE3B25248BEB3600C430A1 /* movable_movableIdGetName.c in Sources */,
 				C9BE3B23248BE46700C430A1 /* movable_interface.c in Sources */,
-				C932789D259A6C3A00A94006 /* wadCreateFromContentsOfResourceFile.c in Sources */,
+				C932789D259A6C3A00A94006 /* wadLoad.c in Sources */,
 				C90B103F259D2D51000A6358 /* texture_page_private_interface.c in Sources */,
 				C9716640259BB94B00FCD1FA /* movable_internal_interface.c in Sources */,
 				C90B1068259E1115000A6358 /* wad_private_interface.c in Sources */,

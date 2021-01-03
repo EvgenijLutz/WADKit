@@ -14,6 +14,7 @@
 WK_WAD* wadCreate(void);
 void wadRelease(WK_WAD* wad);
 
+WK_WAD* wadCreateFromContentsOfBuffer(WK_BUFFER* buffer, EXECUTE_RESULT* executeResult);
 WK_WAD* wadCreateFromContentsOfResourceFile(WK_SYSTEM* system, const char* name, EXECUTE_RESULT* executeResult);
 
 unsigned int wadGetVersion(WK_WAD* wad);

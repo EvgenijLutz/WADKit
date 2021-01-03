@@ -29,24 +29,28 @@ void animationInitialize(ANIMATION* animation, MOVABLE* movable, RAW_MOVABLE* ra
 	animation->unknown1 = rawAnimation->unknown1;
 	animation->unknown2 = rawAnimation->unknown2;
 	animation->nextAnimation = rawAnimation->nextAnimation - rawMovable->animsIndex;
+	assert(rawAnimation->nextAnimation >= rawMovable->animsIndex);
 	
 	// TODO: understand this shit
 	animation->nextAnimationFrame = rawAnimation->frameIn;
 	/*if (animation->nextAnimation < loadInfo->numAnimations)
 	{
 		RAW_ANIMATION* nextDefaultAnimation = &loadInfo->rawAnimations[rawAnimation->nextAnimation];
-		int a = animation->nextAnimationFrame - nextDefaultAnimation->frameStart;
-		if (a < 0)
+		if (rawAnimation->frameIn < nextDefaultAnimation->frameStart)
 		{
-			int c = nextDefaultAnimation->frameStart - animation->nextAnimationFrame;
-			int d = nextDefaultAnimation->keyframeSize;
-			a = 0;
+			if (nextDefaultAnimation->keyframeSize == 0)
+			{
+				assert(0);
+			}
+			assert(0);
 		}
-		animation->nextAnimationFrame = a;
+		animation->nextAnimationFrame = rawAnimation->frameIn - nextDefaultAnimation->frameStart;
 	}
-	else {
+	else
+	{
 		// WAD is just a little corrupted
 		animation->nextAnimationFrame = 0;
+		assert(0);
 	}*/
 	
 	arrayInitializeWithCapacityIncrement(&animation->stateChanges, sizeof(STATE_CHANGE), 8);
