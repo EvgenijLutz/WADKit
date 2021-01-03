@@ -27,6 +27,8 @@ extern "C" {
 typedef struct EXECUTE_RESULT EXECUTE_RESULT;
 
 typedef struct WK_BUFFER WK_BUFFER;
+typedef struct DATA_BLOCK DATA_BLOCK;
+typedef struct DATA_ALLOCATOR DATA_ALLOCATOR;
 typedef struct WK_STRING WK_STRING;
 typedef struct WK_ARRAY WK_ARRAY;
 
@@ -61,6 +63,7 @@ typedef struct WK_WAD WK_WAD;
 
 #include "execute_result.h"
 #include "buffer.h"
+#include "data_block_item.h"
 #include "buffer_reader.h"
 #include "string.h"
 #include "array.h"
@@ -73,6 +76,7 @@ typedef struct WK_WAD WK_WAD;
 
 #include "buffer_interface.h"
 #include "buffer_reader_interface.h"
+#include "data_allocator_interface.h"
 #include "string_interface.h"
 #include "array_interface.h"
 

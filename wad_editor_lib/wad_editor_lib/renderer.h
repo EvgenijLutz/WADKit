@@ -9,10 +9,7 @@
 #ifndef wad_editor_lib__renderer_h
 #define wad_editor_lib__renderer_h
 
-#include "wad_kit_link.h"
-#include "renderer_functions.h"
-
-typedef struct RESOURCE_STORAGE RESOURCE_STORAGE;
+#include "wad_editor_lib.h"
 
 typedef struct RENDERER
 {

@@ -11,13 +11,13 @@
 
 #include "private_interface.h"
 
-typedef struct __attribute__((__packed__)) ROTATION
+typedef struct /*__attribute__((__packed__))*/ ROTATION
 {
 	unsigned short rotx;
 	unsigned short roty;
 	unsigned short rotz;
 	
-	vector3f rotation;
+	quaternionf rotation;
 }
 ROTATION;
 

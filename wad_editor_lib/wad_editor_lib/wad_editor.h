@@ -9,12 +9,7 @@
 #ifndef wad_editor_lib__wad_editor_h
 #define wad_editor_lib__wad_editor_h
 
-#include "wad_kit_link.h"
-
-typedef struct RESOURCE_STORAGE RESOURCE_STORAGE;
-typedef struct WAD_EDITOR_ITEM WAD_EDITOR_ITEM;
-typedef struct WAD_EDITOR_VIEWPORT_DELEGATE WAD_EDITOR_VIEWPORT_DELEGATE;
-typedef struct WAD_EDITOR_VIEWPORT WAD_EDITOR_VIEWPORT;
+#include "wad_editor_lib.h"
 
 typedef struct WAD_EDITOR
 {

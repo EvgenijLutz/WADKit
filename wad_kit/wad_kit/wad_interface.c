@@ -15,6 +15,9 @@ WK_WAD* wadCreate(void)
 	memset(wad, 0, sizeof(WK_WAD));
 	wad->version = 129;
 	
+	wad->animationAllocator = dataAllocatorCreate(sizeof(ANIMATION), 128);
+	wad->keyframeAllocator = dataAllocatorCreate(sizeof(KEYFRAME), 1024);
+	
 	arrayInitializeWithCapacityIncrement(&wad->texturePages, sizeof(TEXTURE_PAGE), 16);
 	arrayInitializeWithCapacityIncrement(&wad->textureSamples, sizeof(TEXTURE_SAMPLE), 256);
 	arrayInitializeWithCapacityIncrement(&wad->meshes, sizeof(MESH), 128);
@@ -60,7 +63,11 @@ void wadRelease(WK_WAD* wad)
 		texturePageDeinitialize(texturePage);
 	}
 	arrayDeinitialize(&wad->texturePages);
+	
+	dataAllocatorRelease(wad->keyframeAllocator);
+	dataAllocatorRelease(wad->animationAllocator);
 
+	debug_memset(wad, 0, sizeof(WK_WAD));
 	free(wad);
 }
 

@@ -14,20 +14,37 @@ JOINT_LOCATION_TYPE jointGetLocationType(JOINT* joint)
 	return joint->opCode;
 }
 
-int jointGetOffsetX(JOINT* joint)
+int jointGetRawOffsetX(JOINT* joint)
 {
 	assert(joint);
 	return joint->dx;
 }
 
-int jointGetOffsetY(JOINT* joint)
+int jointGetRawOffsetY(JOINT* joint)
 {
 	assert(joint);
 	return joint->dy;
 }
 
-int jointGetOffsetZ(JOINT* joint)
+int jointGetRawOffsetZ(JOINT* joint)
 {
 	assert(joint);
 	return joint->dz;
+}
+
+vector3f jointGetOffset(JOINT* joint)
+{
+	assert(joint);
+	return joint->offset;
+}
+
+
+void jointSetOffset(JOINT* joint, vector3f offset)
+{
+	assert(joint);
+	
+	joint->offset = offset;
+	joint->dx = (int)(offset.x * JOINT_COORDINATE_MULTIPLIER);
+	joint->dy = (int)(offset.y * JOINT_COORDINATE_MULTIPLIER);
+	joint->dz = (int)(offset.z * JOINT_COORDINATE_MULTIPLIER);
 }

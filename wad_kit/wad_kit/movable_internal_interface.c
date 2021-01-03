@@ -22,7 +22,7 @@ void movableInitialize(MOVABLE* movable, RAW_MOVABLE* rawMovable, WK_WAD_LOAD_IN
 	movable->numReferences = 0;
 	movable->movableId = (MOVABLE_ID)rawMovable->objectId;
 	arrayInitializeWithCapacityIncrement(&movable->joints, sizeof(JOINT), 4);
-	arrayInitializeWithCapacityIncrement(&movable->animations, sizeof(ANIMATION), 16);
+	arrayInitializeWithAllocator(&movable->animations, wad->animationAllocator);
 	
 	unsigned short numPointers = rawMovable->numPointers;
 	unsigned short meshPointersStart = rawMovable->pointersIndex;

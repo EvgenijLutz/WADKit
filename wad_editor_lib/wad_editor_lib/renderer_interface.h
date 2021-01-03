@@ -9,11 +9,7 @@
 #ifndef wad_editor_lib__renderer_interface_h
 #define wad_editor_lib__renderer_interface_h
 
-#include "wad_kit_link.h"
-#include "renderer_functions.h"
-
-typedef struct RENDERER RENDERER;
-typedef struct RESOURCE_STORAGE RESOURCE_STORAGE;
+#include "wad_editor_lib.h"
 
 RENDERER* rendererCreate(RESOURCE_STORAGE* resourceStorage, RENDERER_DELEGATE_DRAW_MESH_FUNC drawMeshFunc, RENDERER_DELEGATE_DRAW_DUMMY_CUBE_FUNC drawDummyCubeFunc, void* userInfo);
 void rendererRelease(RENDERER* renderer);

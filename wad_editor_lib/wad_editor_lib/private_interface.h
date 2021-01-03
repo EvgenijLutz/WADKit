@@ -10,16 +10,15 @@
 #define private_interface_h
 
 #include "wad_editor_lib.h"
+#include "../../wad_kit/wad_kit/private_common.h"
 
 // MARK: - Declarations
 
 // MARK: - Structures
 
-// MARK: - Private interface
+#include "texture2d.h"
+#include "graphics_device.h"
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <assert.h>
-#include <string.h>
+// MARK: - Private interface
 
 #endif /* private_interface_h */

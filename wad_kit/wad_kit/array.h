@@ -11,22 +11,18 @@
 
 #include "wad_kit.h"
 
-typedef struct WK_ARRAY_ITEM
-{
-	void* data;
-}
-WK_ARRAY_ITEM;
-
 /*!
- Yaaay, reinvention on the wheel
+ @abstract
+ Dynamic array.
+ @discussion
+ Yaaay, reinvention on the wheel.
  */
 typedef struct WK_ARRAY
 {
-	unsigned int capacity;
 	unsigned int length;
-	unsigned int itemSize;
-	unsigned int capacityIncrement;
-	WK_ARRAY_ITEM* items;
+	int allocatorIsReferenced;
+	DATA_BLOCK_ITEM* elements;
+	DATA_ALLOCATOR* allocator;
 }
 WK_ARRAY;
 

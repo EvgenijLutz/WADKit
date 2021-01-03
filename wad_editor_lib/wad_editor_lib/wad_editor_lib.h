@@ -15,18 +15,46 @@
 extern "C" {
 #endif
 
-#include "resource_storage_functions.h"
-#include "resource_storage_interface.h"
+#include "../../wad_kit/wad_kit/wad_kit.h"
 
-#include "renderer_functions.h"
-#include "renderer_interface.h"
+// MARK: - Enumerations
 
 #include "we_mouse_key.h"
 #include "we_modifier_key.h"
 #include "wad_editor_viewport_camera_mode.h"
-#include "wad_editor_viewport_interface.h"
-
 #include "wad_editor_item_type.h"
+
+// MARK: - Type declarations
+
+typedef struct TEXTURE2D TEXTURE2D;
+typedef struct GRAPHICS_DEVICE GRAPHICS_DEVICE;
+
+typedef struct RENDERER RENDERER;
+typedef struct RESOURCE_STORAGE RESOURCE_STORAGE;
+typedef struct WAD_EDITOR WAD_EDITOR;
+typedef struct WAD_EDITOR_ITEM WAD_EDITOR_ITEM;
+typedef struct WAD_EDITOR_VIEWPORT WAD_EDITOR_VIEWPORT;
+typedef struct WAD_EDITOR_VIEWPORT_DELEGATE WAD_EDITOR_VIEWPORT_DELEGATE;
+
+// MARK: - Function declarations
+
+#include "graphics_device_functions.h"
+
+#include "resource_storage_functions.h"
+#include "renderer_functions.h"
+
+// MARK: - Public structures
+
+#include "wad_editor_item_data.h"
+
+// MARK: - Public interface
+
+#include "texture2d_interface.h"
+#include "graphics_device_interface.h"
+
+#include "resource_storage_interface.h"
+#include "renderer_interface.h"
+#include "wad_editor_viewport_interface.h"
 #include "wad_editor_item_interface.h"
 #include "wad_editor_interface.h"
 

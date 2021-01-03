@@ -12,8 +12,11 @@
 #include "wad_kit.h"
 
 JOINT_LOCATION_TYPE jointGetLocationType(JOINT* joint);
-int jointGetOffsetX(JOINT* joint);
-int jointGetOffsetY(JOINT* joint);
-int jointGetOffsetZ(JOINT* joint);
+int jointGetRawOffsetX(JOINT* joint);
+int jointGetRawOffsetY(JOINT* joint);
+int jointGetRawOffsetZ(JOINT* joint);
+vector3f jointGetOffset(JOINT* joint);
+
+void jointSetOffset(JOINT* joint, vector3f offset);
 
 #endif /* wad_kit_joint_interface_h */

@@ -34,11 +34,12 @@
 	_system = systemCreateDefaultIfAvailable();
 	if (!_system)
 	{
-		[self _showErrorAndDieWithMessage:@"Cannot initialize WAD Kits essential components to work 😢"];
+		[self _showErrorAndDieWithMessage:@"Cannot initialize WAD Kit's essential components to work 😢"];
 		return;
 	}
 	
 	EXECUTE_RESULT executeResult;
+	GRAPHICS_DEVICE* device = graphicsDeviceCreateDefault();
 	WK_WAD* wad = wadCreateFromContentsOfResourceFile(_system, "tut1", &executeResult);
 	if (executeResultIsFailed(&executeResult)) {
 		systemRelease(_system);
@@ -46,7 +47,18 @@
 		[self _showErrorAndDieWithMessage:message];
 		return;
 	}
+	
+	if (wadGetNumTexturePages(wad) > 1)
+	{
+		TEXTURE_PAGE* page = wadGetTexturePage(wad, 1);
+		const void* data = texturePageGetData(page);
+		TEXTURE2D* texture = graphicsDeviceCreateTexture2d(device, WK_TEXTURE_PAGE_WIDTH, WK_TEXTURE_PAGE_HEIGHT, WK_TEXTURE_PAGE_NUM_COMPONENTS, data);
+		
+		texture2dRelease(texture);
+	}
+	
 	wadRelease(wad);
+	graphicsDeviceRelease(device);
 	
 	_device = MTLCreateSystemDefaultDevice();
 	[_window initializeWithMetalDevice:_device];

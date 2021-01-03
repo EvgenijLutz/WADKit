@@ -78,4 +78,3 @@ void stringSetString(WK_STRING* string, WK_STRING* source)
 	assert(source);
 	stringSetData(string, source->data);
 }
-

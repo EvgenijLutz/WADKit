@@ -9,11 +9,7 @@
 #ifndef wad_editor_lib__wad_editor_item_h
 #define wad_editor_lib__wad_editor_item_h
 
-#include "wad_kit_link.h"
-#include "wad_editor_item_type.h"
-#include "wad_editor_item_data.h"
-
-typedef struct WAD_EDITOR_ITEM WAD_EDITOR_ITEM;
+#include "wad_editor_lib.h"
 
 typedef struct WAD_EDITOR_ITEM
 {

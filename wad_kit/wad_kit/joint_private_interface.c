@@ -8,11 +8,6 @@
 
 #include "private_interface.h"
 
-static void _joint_updateOffset(JOINT* joint)
-{
-	//
-}
-
 void jointInitialize(JOINT* joint, MOVABLE* movable, MESH* mesh, WK_WAD_LOAD_INFO* loadInfo)
 {
 	assert(joint);
@@ -39,11 +34,20 @@ void jointInitialize(JOINT* joint, MOVABLE* movable, MESH* mesh, WK_WAD_LOAD_INF
 	joint->dz = bufferReadUInt32(buffer, executeResult);
 	if (executeResultIsFailed(executeResult)) { return; }
 	
-	_joint_updateOffset(joint);
+	jointUpdateOffset(joint);
 }
 
 void jointDeinitialize(JOINT* joint)
 {
 	assert(joint);
 	joint->mesh->numReferences--;
+}
+
+
+void jointUpdateOffset(JOINT* joint)
+{
+	const float x = (float)joint->dx / JOINT_COORDINATE_MULTIPLIER;
+	const float y = (float)joint->dy / JOINT_COORDINATE_MULTIPLIER;
+	const float z = (float)joint->dz / JOINT_COORDINATE_MULTIPLIER;
+	joint->offset = vector3fCreate(x, y, z);
 }

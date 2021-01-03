@@ -9,7 +9,7 @@
 #ifndef wad_editor_lib__wad_editor_item_data_h
 #define wad_editor_lib__wad_editor_item_data_h
 
-#include "wad_kit_link.h"
+#include "wad_editor_lib.h"
 
 typedef union WAD_EDITOR_ITEM_DATA
 {

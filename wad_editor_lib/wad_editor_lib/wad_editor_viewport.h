@@ -9,14 +9,7 @@
 #ifndef wad_editor_lib__wad_editor_viewport_h
 #define wad_editor_lib__wad_editor_viewport_h
 
-#include "wad_kit_link.h"
-#include "we_mouse_key.h"
-#include "we_modifier_key.h"
-#include "wad_editor_viewport_camera_mode.h"
-
-typedef struct WAD_EDITOR WAD_EDITOR;
-typedef struct WAD_EDITOR_VIEWPORT_DELEGATE WAD_EDITOR_VIEWPORT_DELEGATE;
-typedef struct RENDERER RENDERER;
+#include "wad_editor_lib.h"
 
 typedef struct WAD_EDITOR_VIEWPORT
 {

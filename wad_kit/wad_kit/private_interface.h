@@ -10,12 +10,14 @@
 #define wk_private_interface_h
 
 #include "wad_kit.h"
+#include "private_common.h"
 
 // MARK: - Declarations
 
 // MARK: - Structures
 
 #include "system.h"
+#include "data_allocator.h"
 #include "file_reader.h"
 
 #include "texture_page.h"
@@ -35,20 +37,16 @@
 
 // MARK: - Private interface
 
+#include "data_allocator_private_interface.h"
 #include "texture_page_private_interface.h"
 #include "texture_sample_private_interface.h"
 #include "joint_private_interface.h"
 #include "command_private_interface.h"
 #include "state_change_private_interface.h"
 #include "keyframe_internal_interface.h"
-#include "animation_internal_interface.h"
+#include "animation_private_interface.h"
 #include "movable_internal_interface.h"
 #include "static_object_private_interface.h"
 #include "wad_private_interface.h"
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <assert.h>
-#include <string.h>
 
 #endif /* wk_private_interface_h */

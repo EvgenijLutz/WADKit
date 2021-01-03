@@ -9,8 +9,7 @@
 #ifndef resource_storage_interface_h
 #define resource_storage_interface_h
 
-#include "wad_kit_link.h"
-#include "resource_storage_functions.h"
+#include "wad_editor_lib.h"
 
 typedef struct RESOURCE_STORAGE RESOURCE_STORAGE;
 

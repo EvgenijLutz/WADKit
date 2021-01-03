@@ -1,5 +1,5 @@
 //
-//  animation_internal_interface.c
+//  animation_private_interface.c
 //  wad_kit
 //
 //  Created by Евгений Лютц on 29.12.20.
@@ -16,13 +16,14 @@ void animationInitialize(ANIMATION* animation, MOVABLE* movable, RAW_MOVABLE* ra
 	// nextRawAnimation is nullable
 	assert(loadInfo);
 	
-	//WK_WAD* wad = loadInfo->wad;
+	WK_WAD* wad = loadInfo->wad;
 	WK_BUFFER* buffer = loadInfo->buffer;
 	EXECUTE_RESULT* executeResult = loadInfo->executeResult;
 	
 	animation->movable = movable;
 	animation->stateId = rawAnimation->stateId;
-	arrayInitializeWithCapacityIncrement(&animation->keyframes, sizeof(KEYFRAME), 64);
+	//arrayInitializeWithCapacityIncrement(&animation->keyframes, sizeof(KEYFRAME), 64);
+	arrayInitializeWithAllocator(&animation->keyframes, wad->keyframeAllocator);
 	animation->frameDuration = rawAnimation->frameDuration;
 	animation->moveSpeed = rawAnimation->speed;
 	animation->moveAcceleration = rawAnimation->acceleration;

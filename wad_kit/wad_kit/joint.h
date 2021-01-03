@@ -29,6 +29,8 @@ typedef struct JOINT
 	int dx;
 	int dy;
 	int dz;
+	
+	vector3f offset;
 }
 JOINT;
 

@@ -69,6 +69,16 @@ typedef struct WK_WAD
 	unsigned int version;
 	
 	/*!
+	 @b WK_ANIMATION structure allocator. Used in the @b WK_MOVABLE.animations structure.
+	 */
+	DATA_ALLOCATOR* animationAllocator;
+	
+	/*!
+	 @b WK_KEYFRAME structure allocator. Used in the @b WK_ANIMATION.keyframes structure.
+	 */
+	DATA_ALLOCATOR* keyframeAllocator;
+	
+	/*!
 	 Array of @b TEXTURE_PAGE elements.
 	 */
 	WK_ARRAY texturePages;
