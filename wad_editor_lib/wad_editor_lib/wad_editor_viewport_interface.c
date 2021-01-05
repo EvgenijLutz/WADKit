@@ -6,10 +6,7 @@
 //  Copyright © 2020 Eugene Lutz. All rights reserved.
 //
 
-#include "wad_editor_viewport_interface.h"
-#include "wad_editor_viewport_delegate.h"
-#include "wad_editor_viewport.h"
-#include "common.h"
+#include "private_interface.h"
 
 // MARK: - Private interface
 

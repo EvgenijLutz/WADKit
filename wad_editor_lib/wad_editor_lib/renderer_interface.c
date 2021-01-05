@@ -6,9 +6,7 @@
 //  Copyright © 2020 Eugene Lutz. All rights reserved.
 //
 
-#include "renderer_interface.h"
-#include "renderer.h"
-#include "common.h"
+#include "private_interface.h"
 
 RENDERER* rendererCreate(RESOURCE_STORAGE* resourceStorage, RENDERER_DELEGATE_DRAW_MESH_FUNC drawMeshFunc, RENDERER_DELEGATE_DRAW_DUMMY_CUBE_FUNC drawDummyCubeFunc, void* userInfo)
 {

@@ -41,8 +41,6 @@
 
 @implementation MainWindow
 {
-	id<MTLDevice> _device;
-	
 	NSArray<NSString*>* outlineViewSections;
 	WKOutlineDataSource* outlineDataSource;
 	
@@ -70,11 +68,9 @@
 	NSView* rightSidebarView;
 }
 
-- (void)initializeWithMetalDevice:(id<MTLDevice>)metalDevice
+- (void)initializeInterface
 {
-	_device = metalDevice;
-	
-	if (!_device)
+	/*if (!_device)
 	{
 		NSArray* subviews = self.contentView.subviews.copy;
 		for (NSView* view in subviews)
@@ -103,7 +99,7 @@
 		[text.trailingAnchor constraintLessThanOrEqualToAnchor:self.contentView.trailingAnchor].active = YES;
 		
 		return;
-	}
+	}*/
 	
 	// TODO: uncomment
 	//[self _setupDynamicUserInterface];
@@ -260,8 +256,8 @@
 	NSRect viewportRect = NSMakeRect(0.0f, 0.0f, 10.0f, 10.0f);
 	NSView* editorViewportView = [[NSView alloc] initWithFrame:viewportRect];
 	editorViewportView.wantsLayer = YES;
-	//editorViewportView.layer.backgroundColor = NSColor.blackColor.CGColor;
-	editorViewportView.layer.backgroundColor = NSColor.grayColor.CGColor;
+	editorViewportView.layer.backgroundColor = NSColor.blackColor.CGColor;
+	//editorViewportView.layer.backgroundColor = NSColor.grayColor.CGColor;
 	
 	/*editorViewportView.viewport = mainViewport;
 	editorViewportView.delegate = wkViewDelegate;

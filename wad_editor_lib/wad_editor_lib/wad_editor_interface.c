@@ -6,16 +6,7 @@
 //  Copyright © 2020 Eugene Lutz. All rights reserved.
 //
 
-#include "wad_editor_interface.h"
-#include "wad_editor_viewport_delegate_interface.h"
-#include "wad_editor_viewport_interface.h"
-#include "wad_editor_item_private_interface.h"
-#include "wad_editor_item_interface.h"
-#include "wad_editor.h"
-#include "resource_storage_interface.h"
-#include "renderer_interface.h"
-#include "common.h"
-#include <stdio.h>
+#include "private_interface.h"
 
 // MARK: - Viewport delegate implementations
 

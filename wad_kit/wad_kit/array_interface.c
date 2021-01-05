@@ -130,6 +130,7 @@ void arrayRemoveItem(WK_ARRAY* array, void* item)
 {
 	unsigned int itemIndex = arrayGetItemIndex(array, item);
 	arrayRemoveItemByIndex(array, itemIndex);
+	debug_memset(item, 0, array->allocator->itemSize);
 }
 
 void arrayClear(WK_ARRAY* array)

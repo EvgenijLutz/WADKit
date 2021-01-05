@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface MainWindow : NSWindow<NSOutlineViewDataSource, NSOutlineViewDelegate, NSSplitViewDelegate>
 
-- (void)initializeWithMetalDevice:(id<MTLDevice>)metalDevice;
+- (void)initializeInterface;
 
 @end
 

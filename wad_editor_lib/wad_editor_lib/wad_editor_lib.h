@@ -19,6 +19,9 @@ extern "C" {
 
 // MARK: - Enumerations
 
+#include "pixel_format.h"
+#include "graphics_buffer_option.h"
+#include "texture_usage.h"
 #include "we_mouse_key.h"
 #include "we_modifier_key.h"
 #include "wad_editor_viewport_camera_mode.h"
@@ -27,6 +30,11 @@ extern "C" {
 // MARK: - Type declarations
 
 typedef struct TEXTURE2D TEXTURE2D;
+typedef struct GRAPHICS_BUFFER GRAPHICS_BUFFER;
+/// Device pipeline, reusable resource
+typedef struct COMMAND_QUEUE COMMAND_QUEUE;
+typedef struct COMMAND_BUFFER COMMAND_BUFFER;
+typedef struct BLIT_COMMAND_ENCODER BLIT_COMMAND_ENCODER;
 typedef struct GRAPHICS_DEVICE GRAPHICS_DEVICE;
 
 typedef struct RENDERER RENDERER;
@@ -50,10 +58,15 @@ typedef struct WAD_EDITOR_VIEWPORT_DELEGATE WAD_EDITOR_VIEWPORT_DELEGATE;
 // MARK: - Public interface
 
 #include "texture2d_interface.h"
+#include "graphics_buffer_interface.h"
+#include "command_queue_interface.h"
+#include "command_buffer_interface.h"
+#include "blit_command_encoder_interface.h"
 #include "graphics_device_interface.h"
 
 #include "resource_storage_interface.h"
 #include "renderer_interface.h"
+#include "wad_editor_viewport_delegate_interface.h"
 #include "wad_editor_viewport_interface.h"
 #include "wad_editor_item_interface.h"
 #include "wad_editor_interface.h"

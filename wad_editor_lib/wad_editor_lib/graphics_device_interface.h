@@ -17,7 +17,10 @@ void graphicsDeviceRelease(GRAPHICS_DEVICE* graphicsDevice);
 const char* graphicsDeviceGetName(GRAPHICS_DEVICE* graphicsDevice);
 void* graphicsDeviceGetUserInfo(GRAPHICS_DEVICE* graphicsDevice);
 
-TEXTURE2D* graphicsDeviceCreateTexture2d(GRAPHICS_DEVICE* device, unsigned int width, unsigned int height, unsigned int numComponents, const void* data);
-void graphicsDeviceReleaseTexture2d(GRAPHICS_DEVICE* device, TEXTURE2D* texture);
+TEXTURE2D* graphicsDeviceCreateTexture2d(GRAPHICS_DEVICE* device, unsigned int width, unsigned int height, unsigned int numComponents, TEXTURE_USAGE usage, const void* data);
+
+GRAPHICS_BUFFER* graphicsDeviceCreateBuffer(GRAPHICS_DEVICE* device, unsigned int length, GRAPHICS_BUFFER_OPTION option);
+
+COMMAND_QUEUE* graphicsDeviceCreateCommandQueue(GRAPHICS_DEVICE* device);
 
 #endif /* graphics_device_interface_h */

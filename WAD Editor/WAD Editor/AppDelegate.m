@@ -10,6 +10,11 @@
 #import "MainWindow.h"
 @import Metal;
 
+static void _commandBuffer_completion(COMMAND_BUFFER* commandBuffer, void* userInfo)
+{
+	NSLog(@"Completion handler called");
+}
+
 @interface AppDelegate ()
 @property (weak) IBOutlet MainWindow* window;
 @end
@@ -17,7 +22,6 @@
 @implementation AppDelegate
 {
 	WK_SYSTEM* _system;
-	id<MTLDevice> _device;
 }
 
 - (void)_showErrorAndDieWithMessage:(NSString*)message
@@ -38,30 +42,71 @@
 		return;
 	}
 	
+	
+	// Some test code, remove in future
+	
 	EXECUTE_RESULT executeResult;
 	GRAPHICS_DEVICE* device = graphicsDeviceCreateDefault();
 	WK_WAD* wad = wadCreateFromContentsOfResourceFile(_system, "tut1", &executeResult);
-	if (executeResultIsFailed(&executeResult)) {
+	if (executeResultIsFailed(&executeResult))
+	{
 		systemRelease(_system);
 		NSString* message = [NSString stringWithFormat:@"Could not load WAD file: %s", executeResult.message];
 		[self _showErrorAndDieWithMessage:message];
 		return;
 	}
 	
-	if (wadGetNumTexturePages(wad) > 1)
+	if (wadGetNumTexturePages(wad) > 2)
 	{
-		TEXTURE_PAGE* page = wadGetTexturePage(wad, 1);
+		TEXTURE_PAGE* page = wadGetTexturePage(wad, 2);
 		const void* data = texturePageGetData(page);
-		TEXTURE2D* texture = graphicsDeviceCreateTexture2d(device, WK_TEXTURE_PAGE_WIDTH, WK_TEXTURE_PAGE_HEIGHT, WK_TEXTURE_PAGE_NUM_COMPONENTS, data);
+		TEXTURE2D* texture = graphicsDeviceCreateTexture2d(device, WK_TEXTURE_PAGE_WIDTH, WK_TEXTURE_PAGE_HEIGHT, WK_TEXTURE_PAGE_NUM_COMPONENTS, TEXTURE_USAGE_SHADER_READ, data);
 		
 		texture2dRelease(texture);
 	}
 	
+	const unsigned long numElements = 1024;
+	const unsigned long size = sizeof(vector3f) * numElements;
+	
+	GRAPHICS_BUFFER* sourceBuffer = graphicsDeviceCreateBuffer(device, size, GRAPHICS_BUFFER_OPTION_CPU_READ_WRITE);
+	vector3f* data = graphicsBufferGetDataToCPUWrite(sourceBuffer);
+	for (unsigned long i = 0; i < numElements; i++)
+	{
+		data[i].x = (float)numElements * 0.005 * sinf((float)i / (float)numElements);
+		data[i].y = (float)numElements * 0.005 * cosf((float)i / (float)numElements);
+		data[i].z = sinf(data[i].x) * cosf(data[i].y);
+	}
+	
+	GRAPHICS_BUFFER* destinationBuffer = graphicsDeviceCreateBuffer(device, size, GRAPHICS_BUFFER_OPTION_GPU_ONLY);
+	
+	COMMAND_QUEUE* commandQueue = graphicsDeviceCreateCommandQueue(device);
+	
+	COMMAND_BUFFER* commandBuffer = commandQueueCreateCommandBuffer(commandQueue);
+	commandBufferAddCompletionHandler(commandBuffer, _commandBuffer_completion, commandBuffer);
+	
+	
+	BLIT_COMMAND_ENCODER* blitCommandEncoder = commandBufferStartBlitCommandEncoder(commandBuffer);
+	blitCommandEncoderScheduleCopyFromBufferToBuffer(blitCommandEncoder, sourceBuffer, 0, destinationBuffer, 0, size);
+	blitCommandEncoderEndEncoding(blitCommandEncoder);
+	
+	
+	commandBufferCommit(commandBuffer);
+	NSLog(@"Scheduled");
+	commandBufferWaitUntilCompleted(commandBuffer);
+	NSLog(@"Finished");
+	commandBufferRelease(commandBuffer);
+	
+	commandQueueRelease(commandQueue);
+	
+	graphicsBufferRelease(destinationBuffer);
+	graphicsBufferRelease(sourceBuffer);
+	
 	wadRelease(wad);
 	graphicsDeviceRelease(device);
 	
-	_device = MTLCreateSystemDefaultDevice();
-	[_window initializeWithMetalDevice:_device];
+	
+	
+	[_window initializeInterface];
 }
 
 + (WK_SYSTEM*)system
@@ -75,11 +120,10 @@
 {
 	NSLog(@"Bye 👋");
 	
-	if (_system) {
+	if (_system)
+	{
 		systemRelease(_system);
 	}
-	
-	_device = nil;
 }
 
 

@@ -17,6 +17,7 @@ typedef struct TEXTURE2D
 	
 	unsigned int width;
 	unsigned int height;
+	TEXTURE_USAGE usage;
 	
 	void* textureId;
 }

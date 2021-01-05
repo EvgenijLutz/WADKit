@@ -6,9 +6,7 @@
 //  Copyright © 2020 Eugene Lutz. All rights reserved.
 //
 
-#include "resource_storage_interface.h"
-#include "resource_storage.h"
-#include "common.h"
+#include "private_interface.h"
 
 RESOURCE_STORAGE* resourceStorageCreate(RESOURCE_STORAGE_DELEGATE_BEGIN_UPLOAD_DATA_FUNC beginUploadDataFunc, RESOURCE_STORAGE_DELEGATE_FINISH_UPLOAD_DATA_FUNC finishUploadDataFunc, RESOURCE_STORAGE_DELEGATE_CREATE_TEXTURE_FUNC createTextureFunc, RESOURCE_STORAGE_DELEGATE_CREATE_MESH_FUNC createMeshFunc, void* userInfo)
 {
