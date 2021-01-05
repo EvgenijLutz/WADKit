@@ -8,8 +8,8 @@
 
 @import Metal;
 
+#include "wad_editor_lib_apple.h"
 #include "private_interface.h"
-#include "apple_graphics_device.h"
 
 /*
  Toll-Free Bridged Types:
@@ -184,16 +184,23 @@ static void _metal_commandBufferAddCompletion(COMMAND_BUFFER* commandBuffer, COM
 	}];
 }
 
-static void _metal_commandBufferWaitUntilCompleted(COMMAND_BUFFER* commandBuffer)
+static void _metal_commandBufferPresentDrawable(COMMAND_BUFFER* commandBuffer, GRAPHICS_DRAWABLE* graphicsDrawable)
 {
 	id<MTLCommandBuffer> metalCommandBuffer = (__bridge id<MTLCommandBuffer>)commandBuffer->commandBufferId;
-	[metalCommandBuffer waitUntilCompleted];
+	id<MTLDrawable> metalDrawable = (__bridge id<MTLDrawable>)graphicsDrawable->drawableId;
+	[metalCommandBuffer presentDrawable:metalDrawable];
 }
 
 static void _metal_commandBufferCommit(COMMAND_BUFFER* commandBuffer)
 {
 	id<MTLCommandBuffer> metalCommandBuffer = (__bridge id<MTLCommandBuffer>)commandBuffer->commandBufferId;
 	[metalCommandBuffer commit];
+}
+
+static void _metal_commandBufferWaitUntilCompleted(COMMAND_BUFFER* commandBuffer)
+{
+	id<MTLCommandBuffer> metalCommandBuffer = (__bridge id<MTLCommandBuffer>)commandBuffer->commandBufferId;
+	[metalCommandBuffer waitUntilCompleted];
 }
 
 
@@ -225,9 +232,34 @@ static void _metal_blitCommandEncoderCopyFromBufferToBuffer(BLIT_COMMAND_ENCODER
 }
 
 
+// MARK: - Metal render command encoder
+
+void _metal_commandBufferTestFunction___DO_NOT_CALL_THIS_FUNCTION___(COMMAND_BUFFER* commandBuffer)
+{
+	id<MTLCommandBuffer> metalCommandBuffer = (__bridge id<MTLCommandBuffer>)commandBuffer->commandBufferId;
+	
+	MTLRenderPipelineDescriptor* renderPipelineDescriptor = [[MTLRenderPipelineDescriptor alloc] init];
+	renderPipelineDescriptor.colorAttachments[0].blendingEnabled = YES;
+	NSError* error = nil;
+	id<MTLDevice> device = metalCommandBuffer.device;
+	id<MTLRenderPipelineState> renderPipelineState = [device newRenderPipelineStateWithDescriptor:renderPipelineDescriptor error:&error];
+	
+	MTLRenderPassDescriptor* descriptor = [[MTLRenderPassDescriptor alloc] init];
+	
+	id<MTLRenderCommandEncoder> encoder = [metalCommandBuffer renderCommandEncoderWithDescriptor:descriptor];
+	[encoder setRenderPipelineState:renderPipelineState];
+}
+
+/*static void* _metal_commandBufferStartRenderCommandEncoder(COMMAND_BUFFER* commandBuffer)
+{
+	id<MTLCommandBuffer> metalCommandBuffer = (__bridge id<MTLCommandBuffer>)commandBuffer->commandBufferId;
+	return NULL;
+}*/
+
+
 // MARK: - Metal device interface
 
-GRAPHICS_DEVICE* apple_createDefaultGraphicsDevice(void)
+GRAPHICS_DEVICE* graphicsDeviceCreateDefaultMetalDevice(void)
 {
 	id<MTLDevice> metalDevice = MTLCreateSystemDefaultDevice();
 	assert(metalDevice);
@@ -236,6 +268,7 @@ GRAPHICS_DEVICE* apple_createDefaultGraphicsDevice(void)
 	stringInitialize(&device->name, metalDevice.name.UTF8String);
 	device->createdByDefault = 1;
 	
+	arrayInitialize(&device->textures, sizeof(TEXTURE2D));
 	arrayInitialize(&device->buffers, sizeof(GRAPHICS_BUFFER));
 	arrayInitialize(&device->commandBuffers, sizeof(COMMAND_BUFFER));
 	arrayInitialize(&device->blitCommandEncoders, sizeof(BLIT_COMMAND_ENCODER));
@@ -255,8 +288,9 @@ GRAPHICS_DEVICE* apple_createDefaultGraphicsDevice(void)
 	device->commandQueueReleaseCommandBufferFunc = _metal_commandQueueReleaseCommandBuffer;
 	
 	device->commandBufferAddCompletionFunc = _metal_commandBufferAddCompletion;
-	device->commandBufferWaitUntilCompletedFunc = _metal_commandBufferWaitUntilCompleted;
+	device->commandBufferPresentDrawableFunc = _metal_commandBufferPresentDrawable;
 	device->commandBufferCommitFunc = _metal_commandBufferCommit;
+	device->commandBufferWaitUntilCompletedFunc = _metal_commandBufferWaitUntilCompleted;
 	
 	device->commandBufferStartBlitCommandEncoderFunc = _metal_commandBufferStartBlitCommandEncoder;
 	device->blitCommandEncoderEndEncodingFunc = _metal_blitCommandEncoderEndEncoding;
@@ -267,7 +301,7 @@ GRAPHICS_DEVICE* apple_createDefaultGraphicsDevice(void)
 	return device;
 }
 
-void apple_releaseDefaultGraphicsDevice(GRAPHICS_DEVICE* graphicsDevice)
+void graphicsDeviceReleaseDefaultMetalDevice(GRAPHICS_DEVICE* graphicsDevice)
 {
 	assert(graphicsDevice);
 	
@@ -282,6 +316,9 @@ void apple_releaseDefaultGraphicsDevice(GRAPHICS_DEVICE* graphicsDevice)
 	
 	assert(graphicsDevice->buffers.length == 0);
 	arrayDeinitialize(&graphicsDevice->buffers);
+	
+	assert(graphicsDevice->textures.length == 0);
+	arrayDeinitialize(&graphicsDevice->textures);
 	
 	stringDeinitialize(&graphicsDevice->name);
 	

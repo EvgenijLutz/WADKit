@@ -8,14 +8,10 @@
 
 #include "private_interface.h"
 
-#if defined(__APPLE__) && __APPLE__
-#include "apple_graphics_device.h"
-#endif
-
-GRAPHICS_DEVICE* graphicsDeviceCreateDefault(void)
+/*GRAPHICS_DEVICE* graphicsDeviceCreateDefault(void)
 {
 #if defined(__APPLE__) && __APPLE__
-	return apple_createDefaultGraphicsDevice();
+	return graphicsDeviceCreateDefaultMetalDevice();
 #else
 	return NULL;
 #endif
@@ -26,11 +22,11 @@ void graphicsDeviceRelease(GRAPHICS_DEVICE* graphicsDevice)
 	assert(graphicsDevice);
 	
 #if defined(__APPLE__) && __APPLE__
-	apple_releaseDefaultGraphicsDevice(graphicsDevice);
+	graphicsDeviceReleaseDefaultMetalDevice(graphicsDevice);
 #else
 	//
 #endif
-}
+}*/
 
 
 const char* graphicsDeviceGetName(GRAPHICS_DEVICE* graphicsDevice)
@@ -54,10 +50,11 @@ TEXTURE2D* graphicsDeviceCreateTexture2d(GRAPHICS_DEVICE* device, unsigned int w
 	void* textureId = device->createTexture2dFunc(device, width, height, numComponents, usage, data);
 	assert(textureId);
 	
-	TEXTURE2D* texture = malloc(sizeof(TEXTURE2D));
+	TEXTURE2D* texture = arrayAddItem(&device->textures);
 	texture->device = device;
 	texture->width = width;
 	texture->height = height;
+	texture->isReceivedOutside = 0;
 	texture->textureId = textureId;
 	
 	return texture;

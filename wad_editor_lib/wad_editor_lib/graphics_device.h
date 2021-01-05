@@ -15,6 +15,7 @@ typedef struct GRAPHICS_DEVICE
 {
 	WK_STRING name;
 	
+	WK_ARRAY textures;
 	WK_ARRAY buffers;
 	WK_ARRAY commandBuffers;
 	WK_ARRAY blitCommandEncoders;
@@ -34,8 +35,9 @@ typedef struct GRAPHICS_DEVICE
 	COMMAND_QUEUE_RELEASE_COMMAND_BUFFER_FUNC commandQueueReleaseCommandBufferFunc;
 	
 	COMMAND_BUFFER_ADD_COMPLETION_FUNC commandBufferAddCompletionFunc;
-	COMMAND_BUFFER_WAIT_UNTIL_COMPLETED_FUNC commandBufferWaitUntilCompletedFunc;
+	COMMAND_BUFFER_SCHEDULE_PRESENT_DRAWABLE_FUNC commandBufferPresentDrawableFunc;
 	COMMAND_BUFFER_COMMIT_FUNC commandBufferCommitFunc;
+	COMMAND_BUFFER_WAIT_UNTIL_COMPLETED_FUNC commandBufferWaitUntilCompletedFunc;
 	
 	COMMAND_BUFFER_START_BLIT_COMMAND_ENCODER_FUNC commandBufferStartBlitCommandEncoderFunc;
 	BLIT_COMMAND_ENCODER_END_ENCODING_FUNC blitCommandEncoderEndEncodingFunc;

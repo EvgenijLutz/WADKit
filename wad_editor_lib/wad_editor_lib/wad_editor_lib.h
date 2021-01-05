@@ -35,6 +35,12 @@ typedef struct GRAPHICS_BUFFER GRAPHICS_BUFFER;
 typedef struct COMMAND_QUEUE COMMAND_QUEUE;
 typedef struct COMMAND_BUFFER COMMAND_BUFFER;
 typedef struct BLIT_COMMAND_ENCODER BLIT_COMMAND_ENCODER;
+typedef struct RENDER_SETTINGS RENDER_SETTINGS;
+typedef struct DEPTH_STENCIL_STATE DEPTH_STENCIL_STATE;
+typedef struct RENDER_STATE RENDER_STATE;
+typedef struct RENDER_COMMAND_ENCODER RENDER_COMMAND_ENCODER;
+typedef struct GRAPHICS_VIEW GRAPHICS_VIEW;
+typedef struct GRAPHICS_DRAWABLE GRAPHICS_DRAWABLE;
 typedef struct GRAPHICS_DEVICE GRAPHICS_DEVICE;
 
 typedef struct RENDERER RENDERER;
@@ -46,6 +52,7 @@ typedef struct WAD_EDITOR_VIEWPORT_DELEGATE WAD_EDITOR_VIEWPORT_DELEGATE;
 
 // MARK: - Function declarations
 
+#include "graphics_view_functions.h"
 #include "graphics_device_functions.h"
 
 #include "resource_storage_functions.h"
@@ -62,6 +69,9 @@ typedef struct WAD_EDITOR_VIEWPORT_DELEGATE WAD_EDITOR_VIEWPORT_DELEGATE;
 #include "command_queue_interface.h"
 #include "command_buffer_interface.h"
 #include "blit_command_encoder_interface.h"
+#include "render_command_encoder_interface.h"
+#include "graphics_view_interface.h"
+#include "graphics_drawable_interface.h"
 #include "graphics_device_interface.h"
 
 #include "resource_storage_interface.h"

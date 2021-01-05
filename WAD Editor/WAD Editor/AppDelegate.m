@@ -22,6 +22,7 @@ static void _commandBuffer_completion(COMMAND_BUFFER* commandBuffer, void* userI
 @implementation AppDelegate
 {
 	WK_SYSTEM* _system;
+	GRAPHICS_DEVICE* _graphicsDevice;
 }
 
 - (void)_showErrorAndDieWithMessage:(NSString*)message
@@ -42,11 +43,16 @@ static void _commandBuffer_completion(COMMAND_BUFFER* commandBuffer, void* userI
 		return;
 	}
 	
+	_graphicsDevice = graphicsDeviceCreateDefaultMetalDevice();
+	if (!_graphicsDevice)
+	{
+		[self _showErrorAndDieWithMessage:@"Cannot initialize graphics device to render WAD data 😢"];
+		return;
+	}
 	
 	// Some test code, remove in future
 	
 	EXECUTE_RESULT executeResult;
-	GRAPHICS_DEVICE* device = graphicsDeviceCreateDefault();
 	WK_WAD* wad = wadCreateFromContentsOfResourceFile(_system, "tut1", &executeResult);
 	if (executeResultIsFailed(&executeResult))
 	{
@@ -60,15 +66,16 @@ static void _commandBuffer_completion(COMMAND_BUFFER* commandBuffer, void* userI
 	{
 		TEXTURE_PAGE* page = wadGetTexturePage(wad, 2);
 		const void* data = texturePageGetData(page);
-		TEXTURE2D* texture = graphicsDeviceCreateTexture2d(device, WK_TEXTURE_PAGE_WIDTH, WK_TEXTURE_PAGE_HEIGHT, WK_TEXTURE_PAGE_NUM_COMPONENTS, TEXTURE_USAGE_SHADER_READ, data);
+		TEXTURE2D* texture = graphicsDeviceCreateTexture2d(_graphicsDevice, WK_TEXTURE_PAGE_WIDTH, WK_TEXTURE_PAGE_HEIGHT, WK_TEXTURE_PAGE_NUM_COMPONENTS, TEXTURE_USAGE_SHADER_READ, data);
 		
 		texture2dRelease(texture);
+		texture = NULL;
 	}
 	
 	const unsigned long numElements = 1024;
 	const unsigned long size = sizeof(vector3f) * numElements;
 	
-	GRAPHICS_BUFFER* sourceBuffer = graphicsDeviceCreateBuffer(device, size, GRAPHICS_BUFFER_OPTION_CPU_READ_WRITE);
+	GRAPHICS_BUFFER* sourceBuffer = graphicsDeviceCreateBuffer(_graphicsDevice, size, GRAPHICS_BUFFER_OPTION_CPU_READ_WRITE);
 	vector3f* data = graphicsBufferGetDataToCPUWrite(sourceBuffer);
 	for (unsigned long i = 0; i < numElements; i++)
 	{
@@ -77,9 +84,9 @@ static void _commandBuffer_completion(COMMAND_BUFFER* commandBuffer, void* userI
 		data[i].z = sinf(data[i].x) * cosf(data[i].y);
 	}
 	
-	GRAPHICS_BUFFER* destinationBuffer = graphicsDeviceCreateBuffer(device, size, GRAPHICS_BUFFER_OPTION_GPU_ONLY);
+	GRAPHICS_BUFFER* destinationBuffer = graphicsDeviceCreateBuffer(_graphicsDevice, size, GRAPHICS_BUFFER_OPTION_GPU_ONLY);
 	
-	COMMAND_QUEUE* commandQueue = graphicsDeviceCreateCommandQueue(device);
+	COMMAND_QUEUE* commandQueue = graphicsDeviceCreateCommandQueue(_graphicsDevice);
 	
 	COMMAND_BUFFER* commandBuffer = commandQueueCreateCommandBuffer(commandQueue);
 	commandBufferAddCompletionHandler(commandBuffer, _commandBuffer_completion, commandBuffer);
@@ -102,7 +109,6 @@ static void _commandBuffer_completion(COMMAND_BUFFER* commandBuffer, void* userI
 	graphicsBufferRelease(sourceBuffer);
 	
 	wadRelease(wad);
-	graphicsDeviceRelease(device);
 	
 	
 	
@@ -115,10 +121,21 @@ static void _commandBuffer_completion(COMMAND_BUFFER* commandBuffer, void* userI
 	return appDelegate->_system;
 }
 
++ (GRAPHICS_DEVICE*)graphicsDevice
+{
+	AppDelegate* appDelegate = (AppDelegate*)NSApplication.sharedApplication.delegate;
+	return appDelegate->_graphicsDevice;
+}
+
 
 - (void)applicationWillTerminate:(NSNotification*)aNotification
 {
 	NSLog(@"Bye 👋");
+	
+	if (_graphicsDevice)
+	{
+		graphicsDeviceReleaseDefaultMetalDevice(_graphicsDevice);
+	}
 	
 	if (_system)
 	{

@@ -9,9 +9,9 @@
 #ifndef apple_graphics_device_h
 #define apple_graphics_device_h
 
-#include "private_interface.h"
+#include "wad_editor_lib_apple.h"
 
-GRAPHICS_DEVICE* apple_createDefaultGraphicsDevice(void);
-void apple_releaseDefaultGraphicsDevice(GRAPHICS_DEVICE* graphicsDevice);
+GRAPHICS_DEVICE* graphicsDeviceCreateDefaultMetalDevice(void);
+void graphicsDeviceReleaseDefaultMetalDevice(GRAPHICS_DEVICE* graphicsDevice);
 
 #endif /* apple_graphics_device_h */

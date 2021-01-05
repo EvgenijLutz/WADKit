@@ -11,5 +11,9 @@
 void texture2dRelease(TEXTURE2D* texture)
 {
 	assert(texture);
-	graphicsDeviceReleaseTexture2d(texture->device, texture);
+	
+	GRAPHICS_DEVICE* device = texture->device;
+	device->releaseTexture2dFunc(device, texture->textureId);
+	debug_memset(texture, 0, sizeof(TEXTURE2D));
+	arrayRemoveItem(&device->textures, texture);
 }

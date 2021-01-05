@@ -11,8 +11,6 @@
 
 #include "private_interface.h"
 
-void graphicsDeviceReleaseTexture2d(GRAPHICS_DEVICE* device, TEXTURE2D* texture);
-
 void graphicsDeviceReleaseCommandQueue(GRAPHICS_DEVICE* device, COMMAND_QUEUE* commandQueue);
 
 #endif /* graphics_device_private_interface_h */

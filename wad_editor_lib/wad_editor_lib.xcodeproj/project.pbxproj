@@ -7,8 +7,22 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C907E15D25A4E03A00CC240E /* graphics_view_interface.h in Headers */ = {isa = PBXBuildFile; fileRef = C907E15B25A4E03A00CC240E /* graphics_view_interface.h */; };
+		C907E15E25A4E03A00CC240E /* graphics_view_interface.c in Sources */ = {isa = PBXBuildFile; fileRef = C907E15C25A4E03A00CC240E /* graphics_view_interface.c */; };
+		C907E16B25A4E16B00CC240E /* graphics_drawable_interface.h in Headers */ = {isa = PBXBuildFile; fileRef = C907E16925A4E16B00CC240E /* graphics_drawable_interface.h */; };
+		C907E16C25A4E16B00CC240E /* graphics_drawable_interface.c in Sources */ = {isa = PBXBuildFile; fileRef = C907E16A25A4E16B00CC240E /* graphics_drawable_interface.c */; };
+		C907E17325A4FF6000CC240E /* GraphicsView.h in Headers */ = {isa = PBXBuildFile; fileRef = C907E17125A4FF6000CC240E /* GraphicsView.h */; };
+		C907E17425A4FF6000CC240E /* GraphicsView.m in Sources */ = {isa = PBXBuildFile; fileRef = C907E17225A4FF6000CC240E /* GraphicsView.m */; };
 		C9112CFC2498CC47000264A5 /* wad_editor_item_interface.h in Headers */ = {isa = PBXBuildFile; fileRef = C9112CFA2498CC47000264A5 /* wad_editor_item_interface.h */; };
 		C9112CFD2498CC47000264A5 /* wad_editor_item_interface.c in Sources */ = {isa = PBXBuildFile; fileRef = C9112CFB2498CC47000264A5 /* wad_editor_item_interface.c */; };
+		C917908325A51E0600A24CA5 /* render_command_encoder_interface.h in Headers */ = {isa = PBXBuildFile; fileRef = C917908125A51E0600A24CA5 /* render_command_encoder_interface.h */; };
+		C917908425A51E0600A24CA5 /* render_command_encoder_interface.c in Sources */ = {isa = PBXBuildFile; fileRef = C917908225A51E0600A24CA5 /* render_command_encoder_interface.c */; };
+		C917909025A52B6700A24CA5 /* render_state_interface.h in Headers */ = {isa = PBXBuildFile; fileRef = C917908E25A52B6700A24CA5 /* render_state_interface.h */; };
+		C917909125A52B6700A24CA5 /* render_state_interface.c in Sources */ = {isa = PBXBuildFile; fileRef = C917908F25A52B6700A24CA5 /* render_state_interface.c */; };
+		C917909625A52B7B00A24CA5 /* depth_stencil_state_interface.h in Headers */ = {isa = PBXBuildFile; fileRef = C917909425A52B7B00A24CA5 /* depth_stencil_state_interface.h */; };
+		C917909725A52B7B00A24CA5 /* depth_stencil_state_interface.c in Sources */ = {isa = PBXBuildFile; fileRef = C917909525A52B7B00A24CA5 /* depth_stencil_state_interface.c */; };
+		C917909B25A52B9200A24CA5 /* render_settings_interface.h in Headers */ = {isa = PBXBuildFile; fileRef = C917909925A52B9200A24CA5 /* render_settings_interface.h */; };
+		C917909C25A52B9200A24CA5 /* render_settings_interface.c in Sources */ = {isa = PBXBuildFile; fileRef = C917909A25A52B9200A24CA5 /* render_settings_interface.c */; };
 		C9349FA3248CF46A0044565D /* wad_editor_interface.h in Headers */ = {isa = PBXBuildFile; fileRef = C9349FA1248CF46A0044565D /* wad_editor_interface.h */; };
 		C9349FA4248CF46A0044565D /* wad_editor_interface.c in Sources */ = {isa = PBXBuildFile; fileRef = C9349FA2248CF46A0044565D /* wad_editor_interface.c */; };
 		C9349FAF248CFB850044565D /* renderer_interface.h in Headers */ = {isa = PBXBuildFile; fileRef = C9349FAD248CFB850044565D /* renderer_interface.h */; };
@@ -37,12 +51,34 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C907E15A25A4E02400CC240E /* graphics_view.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = graphics_view.h; sourceTree = "<group>"; };
+		C907E15B25A4E03A00CC240E /* graphics_view_interface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = graphics_view_interface.h; sourceTree = "<group>"; };
+		C907E15C25A4E03A00CC240E /* graphics_view_interface.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = graphics_view_interface.c; sourceTree = "<group>"; };
+		C907E16825A4E15600CC240E /* graphics_drawable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = graphics_drawable.h; sourceTree = "<group>"; };
+		C907E16925A4E16B00CC240E /* graphics_drawable_interface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = graphics_drawable_interface.h; sourceTree = "<group>"; };
+		C907E16A25A4E16B00CC240E /* graphics_drawable_interface.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = graphics_drawable_interface.c; sourceTree = "<group>"; };
+		C907E16E25A4EAA700CC240E /* graphics_view_functions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = graphics_view_functions.h; sourceTree = "<group>"; };
+		C907E17125A4FF6000CC240E /* GraphicsView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GraphicsView.h; sourceTree = "<group>"; };
+		C907E17225A4FF6000CC240E /* GraphicsView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GraphicsView.m; sourceTree = "<group>"; };
 		C9112CF82498A86C000264A5 /* wad_editor_item_type.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wad_editor_item_type.h; sourceTree = "<group>"; };
 		C9112CF92498C34C000264A5 /* wad_editor_item.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wad_editor_item.h; sourceTree = "<group>"; };
 		C9112CFA2498CC47000264A5 /* wad_editor_item_interface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wad_editor_item_interface.h; sourceTree = "<group>"; };
 		C9112CFB2498CC47000264A5 /* wad_editor_item_interface.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = wad_editor_item_interface.c; sourceTree = "<group>"; };
 		C9112CFE2498CC59000264A5 /* wad_editor_item_private_interface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wad_editor_item_private_interface.h; sourceTree = "<group>"; };
 		C9112CFF2498E002000264A5 /* wad_editor_item_data.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wad_editor_item_data.h; sourceTree = "<group>"; };
+		C917907C25A4FFED00A24CA5 /* wad_editor_lib_apple.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wad_editor_lib_apple.h; sourceTree = "<group>"; };
+		C917908025A51DF100A24CA5 /* render_command_encoder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = render_command_encoder.h; sourceTree = "<group>"; };
+		C917908125A51E0600A24CA5 /* render_command_encoder_interface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = render_command_encoder_interface.h; sourceTree = "<group>"; };
+		C917908225A51E0600A24CA5 /* render_command_encoder_interface.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = render_command_encoder_interface.c; sourceTree = "<group>"; };
+		C917908B25A527F800A24CA5 /* render_settings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = render_settings.h; sourceTree = "<group>"; };
+		C917908C25A5280D00A24CA5 /* depth_stencil_state.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = depth_stencil_state.h; sourceTree = "<group>"; };
+		C917908D25A5283300A24CA5 /* render_state.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = render_state.h; sourceTree = "<group>"; };
+		C917908E25A52B6700A24CA5 /* render_state_interface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = render_state_interface.h; sourceTree = "<group>"; };
+		C917908F25A52B6700A24CA5 /* render_state_interface.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = render_state_interface.c; sourceTree = "<group>"; };
+		C917909425A52B7B00A24CA5 /* depth_stencil_state_interface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = depth_stencil_state_interface.h; sourceTree = "<group>"; };
+		C917909525A52B7B00A24CA5 /* depth_stencil_state_interface.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = depth_stencil_state_interface.c; sourceTree = "<group>"; };
+		C917909925A52B9200A24CA5 /* render_settings_interface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = render_settings_interface.h; sourceTree = "<group>"; };
+		C917909A25A52B9200A24CA5 /* render_settings_interface.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = render_settings_interface.c; sourceTree = "<group>"; };
 		C9327889259A4D7100A94006 /* private_interface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = private_interface.h; sourceTree = "<group>"; };
 		C9349F95248CF3110044565D /* libwad_editor_lib_macos.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libwad_editor_lib_macos.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9349F9D248CF3460044565D /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
@@ -109,6 +145,77 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C907E15725A4DF5300CC240E /* View */ = {
+			isa = PBXGroup;
+			children = (
+				C907E16E25A4EAA700CC240E /* graphics_view_functions.h */,
+				C907E15A25A4E02400CC240E /* graphics_view.h */,
+				C907E15B25A4E03A00CC240E /* graphics_view_interface.h */,
+				C907E15C25A4E03A00CC240E /* graphics_view_interface.c */,
+				C907E17025A4FF3C00CC240E /* Apple */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		C907E16625A4E13C00CC240E /* Drawable */ = {
+			isa = PBXGroup;
+			children = (
+				C907E16825A4E15600CC240E /* graphics_drawable.h */,
+				C907E16925A4E16B00CC240E /* graphics_drawable_interface.h */,
+				C907E16A25A4E16B00CC240E /* graphics_drawable_interface.c */,
+			);
+			name = Drawable;
+			sourceTree = "<group>";
+		};
+		C907E17025A4FF3C00CC240E /* Apple */ = {
+			isa = PBXGroup;
+			children = (
+				C907E17125A4FF6000CC240E /* GraphicsView.h */,
+				C907E17225A4FF6000CC240E /* GraphicsView.m */,
+			);
+			name = Apple;
+			sourceTree = "<group>";
+		};
+		C917907F25A51D5800A24CA5 /* Render command encoder */ = {
+			isa = PBXGroup;
+			children = (
+				C917908025A51DF100A24CA5 /* render_command_encoder.h */,
+				C917908125A51E0600A24CA5 /* render_command_encoder_interface.h */,
+				C917908225A51E0600A24CA5 /* render_command_encoder_interface.c */,
+			);
+			name = "Render command encoder";
+			sourceTree = "<group>";
+		};
+		C917908625A520B100A24CA5 /* Render state */ = {
+			isa = PBXGroup;
+			children = (
+				C917908D25A5283300A24CA5 /* render_state.h */,
+				C917908E25A52B6700A24CA5 /* render_state_interface.h */,
+				C917908F25A52B6700A24CA5 /* render_state_interface.c */,
+			);
+			name = "Render state";
+			sourceTree = "<group>";
+		};
+		C917908725A520C500A24CA5 /* Render settings */ = {
+			isa = PBXGroup;
+			children = (
+				C917908B25A527F800A24CA5 /* render_settings.h */,
+				C917909925A52B9200A24CA5 /* render_settings_interface.h */,
+				C917909A25A52B9200A24CA5 /* render_settings_interface.c */,
+			);
+			name = "Render settings";
+			sourceTree = "<group>";
+		};
+		C917908925A5231200A24CA5 /* Depth stencil state */ = {
+			isa = PBXGroup;
+			children = (
+				C917908C25A5280D00A24CA5 /* depth_stencil_state.h */,
+				C917909425A52B7B00A24CA5 /* depth_stencil_state_interface.h */,
+				C917909525A52B7B00A24CA5 /* depth_stencil_state_interface.c */,
+			);
+			name = "Depth stencil state";
+			sourceTree = "<group>";
+		};
 		C9327883259A38B000A94006 /* Graphics */ = {
 			isa = PBXGroup;
 			children = (
@@ -117,6 +224,12 @@
 				C97D52E025A2860E00073422 /* Command queue */,
 				C97D52EE25A31E0400073422 /* Command buffer */,
 				C97D52FA25A3599A00073422 /* Blit command encoder */,
+				C917908725A520C500A24CA5 /* Render settings */,
+				C917908925A5231200A24CA5 /* Depth stencil state */,
+				C917908625A520B100A24CA5 /* Render state */,
+				C917907F25A51D5800A24CA5 /* Render command encoder */,
+				C907E15725A4DF5300CC240E /* View */,
+				C907E16625A4E13C00CC240E /* Drawable */,
 				C97D52B425A1EE1200073422 /* Device */,
 			);
 			name = Graphics;
@@ -143,6 +256,7 @@
 			isa = PBXGroup;
 			children = (
 				C9349F9E248CF3FB0044565D /* wad_editor_lib.h */,
+				C917907C25A4FFED00A24CA5 /* wad_editor_lib_apple.h */,
 				C9327889259A4D7100A94006 /* private_interface.h */,
 				C9327883259A38B000A94006 /* Graphics */,
 				C9349FB1248CFC390044565D /* Resource storage */,
@@ -294,16 +408,23 @@
 			buildActionMask = 2147483647;
 			files = (
 				C97D52FE25A359BD00073422 /* blit_command_encoder_interface.h in Headers */,
+				C907E17325A4FF6000CC240E /* GraphicsView.h in Headers */,
+				C907E16B25A4E16B00CC240E /* graphics_drawable_interface.h in Headers */,
 				C97D52EB25A3190C00073422 /* graphics_device_private_interface.h in Headers */,
 				C97D52DA25A25CB100073422 /* graphics_buffer_interface.h in Headers */,
 				C9D59DE824B1C0F80048F2CA /* resource_storage_interface.h in Headers */,
 				C97D52E425A2863300073422 /* command_queue_interface.h in Headers */,
 				C97D52F225A31F3100073422 /* command_buffer_interface.h in Headers */,
 				C9D59DF724B1CA900048F2CA /* wad_editor_viewport_delegate_interface.h in Headers */,
+				C917908325A51E0600A24CA5 /* render_command_encoder_interface.h in Headers */,
 				C9349FA3248CF46A0044565D /* wad_editor_interface.h in Headers */,
+				C917909625A52B7B00A24CA5 /* depth_stencil_state_interface.h in Headers */,
 				C97D52F725A32C6300073422 /* command_queue_private_interface.h in Headers */,
+				C917909025A52B6700A24CA5 /* render_state_interface.h in Headers */,
 				C9112CFC2498CC47000264A5 /* wad_editor_item_interface.h in Headers */,
 				C9453C942495579900604E60 /* wad_editor_viewport_interface.h in Headers */,
+				C907E15D25A4E03A00CC240E /* graphics_view_interface.h in Headers */,
+				C917909B25A52B9200A24CA5 /* render_settings_interface.h in Headers */,
 				C9349FAF248CFB850044565D /* renderer_interface.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -369,7 +490,12 @@
 				C97D52E525A2863300073422 /* command_queue_interface.c in Sources */,
 				C97D52FF25A359BD00073422 /* blit_command_encoder_interface.c in Sources */,
 				C9D59DF824B1CA900048F2CA /* wad_editor_viewport_delegate_interface.c in Sources */,
+				C917908425A51E0600A24CA5 /* render_command_encoder_interface.c in Sources */,
+				C917909725A52B7B00A24CA5 /* depth_stencil_state_interface.c in Sources */,
+				C917909125A52B6700A24CA5 /* render_state_interface.c in Sources */,
 				C97D52D125A1F8BF00073422 /* texture2d_interface.c in Sources */,
+				C917909C25A52B9200A24CA5 /* render_settings_interface.c in Sources */,
+				C907E15E25A4E03A00CC240E /* graphics_view_interface.c in Sources */,
 				C9D59DE924B1C0F80048F2CA /* resource_storage_interface.c in Sources */,
 				C9112CFD2498CC47000264A5 /* wad_editor_item_interface.c in Sources */,
 				C97D52EC25A3190C00073422 /* graphics_device_private_interface.c in Sources */,
@@ -379,7 +505,9 @@
 				C9349FB0248CFB850044565D /* renderer_interface.c in Sources */,
 				C9453C952495579900604E60 /* wad_editor_viewport_interface.c in Sources */,
 				C9349FA4248CF46A0044565D /* wad_editor_interface.c in Sources */,
+				C907E16C25A4E16B00CC240E /* graphics_drawable_interface.c in Sources */,
 				C97D52F825A32C6300073422 /* command_queue_private_interface.c in Sources */,
+				C907E17425A4FF6000CC240E /* GraphicsView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

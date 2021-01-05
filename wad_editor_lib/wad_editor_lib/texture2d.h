@@ -19,6 +19,8 @@ typedef struct TEXTURE2D
 	unsigned int height;
 	TEXTURE_USAGE usage;
 	
+	/// It means that it's not created manually, but, for example, received from system.
+	int isReceivedOutside;
 	void* textureId;
 }
 TEXTURE2D;

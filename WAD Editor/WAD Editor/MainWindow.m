@@ -12,6 +12,7 @@
 #import "WKOutlineDataSource.h"
 #import "WadItemsDataSource.h"
 #include "wad_editor_lib_link.h"
+#import "AppDelegate.h"
 
 #define SECTION_INDEX_TEXTURE_PAGE	(0)
 #define SECTION_INDEX_MESH			(1)
@@ -107,7 +108,15 @@
 
 - (void)dealloc
 {
+	NSLog(@"Window is deinitializing");
 }
+
+- (void)close
+{
+	NSLog(@"Window is closing");
+	[super close];
+}
+
 
 - (void)nextObject:(id)sender
 {
@@ -254,9 +263,12 @@
 - (void)_setupTopCenterViewport
 {
 	NSRect viewportRect = NSMakeRect(0.0f, 0.0f, 10.0f, 10.0f);
-	NSView* editorViewportView = [[NSView alloc] initWithFrame:viewportRect];
-	editorViewportView.wantsLayer = YES;
-	editorViewportView.layer.backgroundColor = NSColor.blackColor.CGColor;
+	GRAPHICS_DEVICE* graphicsDevice = AppDelegate.graphicsDevice;
+	GraphicsView* editorViewportView = [[GraphicsView alloc] initWithFrame:viewportRect graphicsDevice:graphicsDevice];
+	
+	//NSView* editorViewportView = [[NSView alloc] initWithFrame:viewportRect];
+	//editorViewportView.wantsLayer = YES;
+	//editorViewportView.layer.backgroundColor = NSColor.blackColor.CGColor;
 	//editorViewportView.layer.backgroundColor = NSColor.grayColor.CGColor;
 	
 	/*editorViewportView.viewport = mainViewport;

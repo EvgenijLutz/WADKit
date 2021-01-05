@@ -11,8 +11,8 @@
 
 #include "wad_editor_lib.h"
 
-GRAPHICS_DEVICE* graphicsDeviceCreateDefault(void);
-void graphicsDeviceRelease(GRAPHICS_DEVICE* graphicsDevice);
+//GRAPHICS_DEVICE* graphicsDeviceCreateDefault(/*callbacks etc...*/);
+//void graphicsDeviceRelease(GRAPHICS_DEVICE* graphicsDevice);
 
 const char* graphicsDeviceGetName(GRAPHICS_DEVICE* graphicsDevice);
 void* graphicsDeviceGetUserInfo(GRAPHICS_DEVICE* graphicsDevice);

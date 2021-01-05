@@ -9,6 +9,6 @@
 #ifndef wad_editor_lib_link_h
 #define wad_editor_lib_link_h
 
-#include "../../wad_editor_lib/wad_editor_lib/wad_editor_lib.h"
+#include "../../wad_editor_lib/wad_editor_lib/wad_editor_lib_apple.h"
 
 #endif /* wad_editor_lib_link_h */
