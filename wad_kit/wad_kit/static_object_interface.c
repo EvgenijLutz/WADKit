@@ -8,7 +8,7 @@
 
 #include "private_interface.h"
 
-char* staticIdNames[] =
+static char* _staticId_fabulousNames[] =
 {
 	"Plant 0", "Plant 1", "Plant 2", "Plant 3", "Plant 4",
 	"Plant 5", "Plant 6", "Plant 7", "Plant 8", "Plant 9",
@@ -29,6 +29,28 @@ char* staticIdNames[] =
 	"Shatter 5", "Shatter 6", "Shatter 7", "Shatter 8", "Shatter 9",
 };
 
+static char* _staticId_terribleNames[] =
+{
+	"PLANT0", "PLANT1", "PLANT2", "PLANT3", "PLANT4",
+	"PLANT5", "PLANT6", "PLANT7", "PLANT8", "PLANT9",
+	
+	"FURNITURE0", "FURNITURE1", "FURNITURE2", "FURNITURE3", "FURNITURE4",
+	"FURNITURE5", "FURNITURE6", "FURNITURE7", "FURNITURE8", "FURNITURE9",
+	
+	"ROCK0", "ROCK1", "ROCK2", "ROCK3", "ROCK4",
+	"ROCK5", "ROCK6", "ROCK7", "ROCK8", "ROCK9",
+	
+	"ARCHITECTURE0", "ARCHITECTURE1", "ARCHITECTURE2", "ARCHITECTURE3",
+	"ARCHITECTURE4", "ARCHITECTURE5", "ARCHITECTURE6", "ARCHITECTURE7",
+	"ARCHITECTURE8", "ARCHITECTURE9",
+	
+	"DEBRIS0", "DEBRIS1", "DEBRIS2", "DEBRIS3", "DEBRIS4",
+	"DEBRIS5", "DEBRIS6", "DEBRIS7", "DEBRIS8", "DEBRIS9",
+	
+	"SHATTER0", "SHATTER1", "SHATTER2", "SHATTER3", "SHATTER4",
+	"SHATTER5", "SHATTER6", "SHATTER7", "SHATTER8", "SHATTER9",
+};
+
 
 STATIC_ID staticGetId(STATIC* staticObject)
 {
@@ -42,8 +64,17 @@ MESH* staticGetMesh(STATIC* staticObject)
 	return staticObject->mesh;
 }
 
-const char* staticIdGetName(STATIC_ID staticId)
+const char* staticIdGetFabulousName(STATIC_ID staticId)
 {
 	assert(staticId >= STATIC_ID_PLANT0 && staticId < STATIC_ID_NUMBER_STATIC_OBJECTS);
-	return staticIdNames[staticId];
+	return _staticId_fabulousNames[staticId];
+}
+
+const char* staticIdGetTerribleName(STATIC_ID staticId)
+{
+	// Your makeup is terrible
+	// But I love anyway
+	
+	assert(staticId >= STATIC_ID_PLANT0 && staticId < STATIC_ID_NUMBER_STATIC_OBJECTS);
+	return _staticId_terribleNames[staticId];
 }

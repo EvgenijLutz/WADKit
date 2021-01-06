@@ -49,3 +49,9 @@ void systemGetPathForResourceWithName(WK_SYSTEM* system, WK_STRING* outPath, con
 	
 	system->getResourceFilePathFunc(system, outPath, name, type, executeResult);
 }
+
+double systemGetCurrentTime(WK_SYSTEM* system)
+{
+	assert(system);
+	return system->getCurrentTimeFunc();
+}

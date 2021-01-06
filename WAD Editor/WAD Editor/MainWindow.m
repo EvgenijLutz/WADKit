@@ -7,9 +7,9 @@
 //
 
 #import "MainWindow.h"
-#include "wad_editor_lib_link.h"
 #import "AppDelegate.h"
 #import "ItemList.h"
+#include "wad_editor_lib_link.h"
 
 #define SECTION_INDEX_TEXTURE_PAGE	(0)
 #define SECTION_INDEX_MESH			(1)
@@ -17,8 +17,8 @@
 #define SECTION_INDEX_STATIC		(4)
 
 
-#define MAIN_SPLIT_VIEW_ITEM_0_MIN_WIDTH	(100.0f)
-#define MAIN_SPLIT_VIEW_ITEM_0_MAX_WIDTH	(230.0f)
+#define MAIN_SPLIT_VIEW_ITEM_0_MIN_WIDTH	(130.0f)
+#define MAIN_SPLIT_VIEW_ITEM_0_MAX_WIDTH	(250.0f)
 
 #define MAIN_SPLIT_VIEW_ITEM_1_MIN_WIDTH	(50.0f)
 
@@ -39,14 +39,10 @@
 
 @implementation MainWindow
 {
-	NSArray<NSString*>* outlineViewSections;
-	
 	NSSplitView* mainSplitView;
-	
 	
 	// Left sidebar
 	ItemList* leftSidebarView;
-	
 	
 	// Center view
 	NSSplitView* centerSplitView;
@@ -54,13 +50,15 @@
 	// Top center view
 	NSSplitView* topCenterSplitView;
 	NSView* topCenterLeftSidebarView;
+	GraphicsView* editorViewportView;
 	
 	// Bottom center view
 	NSView* bottomCenterView;
 	
-	
 	// Right sidebar
 	NSView* rightSidebarView;
+	
+	WAD_EDITOR* wadEditor;
 }
 
 - (void)initializeInterface
@@ -103,6 +101,11 @@
 - (void)dealloc
 {
 	NSLog(@"Window is deinitializing");
+	
+	if (wadEditor)
+	{
+		wadEditorRelease(wadEditor);
+	}
 }
 
 - (void)close
@@ -117,6 +120,7 @@
 	/*
 	[editor selectNextObject];
 	*/
+	wadEditorLoadWad(wadEditor, "TODO: implement. tut1");
 }
 
 - (void)previousObject:(id)sender
@@ -139,6 +143,13 @@
 	
 	// 2. Create main split view, it horizontally divides window view into three columns
 	[self _initializeMainSplitView];
+	
+	// 3. Initialize editor
+	WK_SYSTEM* system = AppDelegate.system;
+	GRAPHICS_VIEW* graphicsView = editorViewportView.graphicsView;
+	WE_LIST* wadContentsList = leftSidebarView.list;
+	wadEditor = wadEditorCreate(system, wadContentsList, graphicsView);
+	wadEditorLoadWad(wadEditor, "TODO: implement. tut1");
 }
 
 - (void)_initializeMainSplitView
@@ -218,20 +229,7 @@
 {
 	NSRect viewportRect = NSMakeRect(0.0f, 0.0f, 10.0f, 10.0f);
 	GRAPHICS_DEVICE* graphicsDevice = AppDelegate.graphicsDevice;
-	GraphicsView* editorViewportView = [[GraphicsView alloc] initWithFrame:viewportRect graphicsDevice:graphicsDevice];
-	
-	//NSView* editorViewportView = [[NSView alloc] initWithFrame:viewportRect];
-	//editorViewportView.wantsLayer = YES;
-	//editorViewportView.layer.backgroundColor = NSColor.blackColor.CGColor;
-	//editorViewportView.layer.backgroundColor = NSColor.grayColor.CGColor;
-	
-	/*editorViewportView.viewport = mainViewport;
-	editorViewportView.delegate = wkViewDelegate;
-	
-	editorViewportView.colorPixelFormat = MTLPixelFormatBGRA8Unorm;
-	editorViewportView.depthStencilPixelFormat = MTLPixelFormatDepth32Float_Stencil8;
-	editorViewportView.colorspace = CGColorSpaceCreateWithName(kCGColorSpaceDisplayP3);
-	editorViewportView.clearColor = MTLClearColorMake(0.1, 0.1, 0.1, 1.0);*/
+	editorViewportView = [[GraphicsView alloc] initWithFrame:viewportRect graphicsDevice:graphicsDevice];
 	
 	[topCenterSplitView addArrangedSubview:editorViewportView];
 }
@@ -288,27 +286,21 @@
 
 - (CGFloat)splitView:(NSSplitView*)splitView constrainMaxCoordinate:(CGFloat)proposedMaximumPosition ofSubviewAt:(NSInteger)dividerIndex
 {
-	if (splitView == mainSplitView)
-	{
-		switch (dividerIndex)
-		{
+	if (splitView == mainSplitView) {
+		switch (dividerIndex) {
 			case 0: return MAIN_SPLIT_VIEW_ITEM_0_MAX_WIDTH;
 			case 1: return mainSplitView.frame.size.width - MAIN_SPLIT_VIEW_ITEM_2_MIN_WIDTH;
 			default: break;
 		}
 	}
-	else if (splitView == centerSplitView)
-	{
-		switch (dividerIndex)
-		{
+	else if (splitView == centerSplitView) {
+		switch (dividerIndex) {
 			case 0: return mainSplitView.frame.size.height - CENTER_SPLIT_VIEW_ITEM_1_MIN_HEIGHT;
 			default: break;
 		}
 	}
-	else if (splitView == topCenterSplitView)
-	{
-		switch (dividerIndex)
-		{
+	else if (splitView == topCenterSplitView) {
+		switch (dividerIndex) {
 			case 0: return LEFT_TOOLBAR_WIDTH;
 			default: break;
 		}

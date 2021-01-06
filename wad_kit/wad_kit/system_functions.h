@@ -25,4 +25,13 @@ typedef unsigned short (* WK_FILE_READER_READ_UINT16_FUNC)(WK_FILE_READER* reade
 typedef int (* WK_FILE_READER_READ_INT32_FUNC)(WK_FILE_READER* reader, void* fileId, EXECUTE_RESULT* executeResult);
 typedef unsigned int (* WK_FILE_READER_READ_UINT32_FUNC)(WK_FILE_READER* reader, void* fileId, EXECUTE_RESULT* executeResult);
 
+
+typedef double (* WK_SYSTEM_GET_CURRENT_TIME_FUNC)(void);
+
+
+typedef void* (* WK_SYSTEM_CREATE_SEMAPHORE_FUNC)(WK_SYSTEM* system, int value, void* userInfo);
+typedef void (* WK_SEMAPHORE_RELEASE_FUNC)(WK_SYSTEM* system, void* semaphoreId, void* userInfo);
+typedef void (* WK_SEMAPHORE_ENTER_FUNC)(WK_SYSTEM* system, void* semaphoreId, void* userInfo);
+typedef void (* WK_SEMAPHORE_LEAVE_FUNC)(WK_SYSTEM* system, void* semaphoreId, void* userInfo);
+
 #endif /* system_functions_h */

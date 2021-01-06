@@ -12,7 +12,8 @@ WE_LIST* listCreate(WE_LIST_DELEGATE* delegate)
 {
 	WE_LIST* list = malloc(sizeof(WE_LIST));
 	list->delegate = *delegate;
-	list->subscriber = NULL;
+	debug_memset(&list->subscriber, 0, sizeof(WE_LIST_SUBSCRIBER));
+	list->hasSubscriber = 0;
 	
 	list->itemAllocator = dataAllocatorCreate(sizeof(WE_LIST_ITEM), 512);
 	listItemInitialize(&list->rootItem, list, NULL, 0, NULL, "Root");
@@ -37,8 +38,8 @@ void listSubscribe(WE_LIST* list, WE_LIST_SUBSCRIBER* subscriber)
 	assert(list);
 	assert(subscriber);
 	
-	// TODO: implement
-	assert(0);
+	list->subscriber = *subscriber;
+	list->hasSubscriber = 1;
 }
 
 

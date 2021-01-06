@@ -16,8 +16,9 @@
 
 // MARK: - Structures
 
-#include "system.h"
 #include "data_allocator.h"
+#include "system.h"
+#include "semaphore.h"
 #include "file_reader.h"
 
 #include "texture_page.h"

@@ -16,4 +16,6 @@ void systemRelease(WK_SYSTEM* system);
 
 void systemGetPathForResourceWithName(WK_SYSTEM* system, WK_STRING* outPath, const char* name, const char* type, EXECUTE_RESULT* executeResult);
 
+double systemGetCurrentTime(WK_SYSTEM* system);
+
 #endif /* system_interface_h */

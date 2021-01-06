@@ -14,6 +14,7 @@
 STATIC_ID staticGetId(STATIC* staticObject);
 MESH* staticGetMesh(STATIC* staticObject);
 
-const char* staticIdGetName(STATIC_ID staticId);
+const char* staticIdGetFabulousName(STATIC_ID staticId);
+const char* staticIdGetTerribleName(STATIC_ID staticId);
 
 #endif /* static_object_interface_h */

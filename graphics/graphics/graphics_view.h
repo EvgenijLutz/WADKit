@@ -30,7 +30,9 @@ typedef struct GRAPHICS_VIEW
 	WK_ARRAY drawables;
 	
 	// TODO: INPUT_RESPONDER
-	// TODO: create delegate to catch resize and draw events for editor?
+	
+	int hasSubscriber;
+	GRAPHICS_VIEW_SUBSCRIBER subscriber;
 }
 GRAPHICS_VIEW;
 

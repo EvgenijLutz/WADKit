@@ -22,6 +22,8 @@ GRAPHICS_VIEW* graphicsViewCreate(GRAPHICS_VIEW_GET_CURRENT_DRAWABLE_FUNC getCur
 	view->userInfo = userInfo;
 	view->device = graphicsDevice;
 	arrayInitialize(&view->drawables, sizeof(GRAPHICS_DRAWABLE));
+	view->hasSubscriber = 0;
+	debug_memset(&view->subscriber, 0, sizeof(GRAPHICS_VIEW_SUBSCRIBER));
 	
 	return view;
 }
@@ -44,12 +46,28 @@ void graphicsViewSetSize(GRAPHICS_VIEW* graphicsView, float width, float height)
 	graphicsView->width = width;
 	graphicsView->height = height;
 	
-	//
+	if (graphicsView->hasSubscriber)
+	{
+		graphicsView->subscriber.sizeChangedFunc(graphicsView, width, height, graphicsView->subscriber.userInfo);
+	}
 }
 
 void graphicsViewDraw(GRAPHICS_VIEW* graphicsView)
 {
-	//
+	if (graphicsView->hasSubscriber)
+	{
+		graphicsView->subscriber.updateFunc(graphicsView, graphicsView->subscriber.userInfo);
+	}
+}
+
+
+void graphicsViewSubscribe(GRAPHICS_VIEW* graphicsView, GRAPHICS_VIEW_SUBSCRIBER* subscriber)
+{
+	assert(graphicsView);
+	assert(subscriber);
+	
+	graphicsView->hasSubscriber = 1;
+	graphicsView->subscriber = *subscriber;
 }
 
 

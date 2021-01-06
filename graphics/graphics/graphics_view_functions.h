@@ -17,4 +17,15 @@ typedef void (* GRAPHICS_DRAWABLE_RETURN_FUNC)(GRAPHICS_DRAWABLE* graphicsDrawab
 typedef void* (* GRAPHICS_DRAWABLE_GET_TEXTURE_FUNC)(GRAPHICS_DRAWABLE* graphicsDrawable);
 typedef void (* GRAPHICS_DRAWABLE_RETURN_TEXTURE_FUNC)(GRAPHICS_DRAWABLE* graphicsDrawable, TEXTURE2D* texture);
 
+
+typedef void (* GRAPHICS_VIEW_SIZE_CHANGED_FUNC)(GRAPHICS_VIEW* graphicsView, float width, float height, void* userInfo);
+typedef void (* GRAPHICS_VIEW_UPDATE_FUNC)(GRAPHICS_VIEW* graphicsView, void* userInfo);
+typedef struct GRAPHICS_VIEW_SUBSCRIBER
+{
+	GRAPHICS_VIEW_SIZE_CHANGED_FUNC sizeChangedFunc;
+	GRAPHICS_VIEW_UPDATE_FUNC updateFunc;
+	void* userInfo;
+}
+GRAPHICS_VIEW_SUBSCRIBER;
+
 #endif /* graphics_view_functions_h */

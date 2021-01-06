@@ -19,8 +19,15 @@ typedef struct WAD_EDITOR
 	WK_WAD* wad;
 	int hasChanges;
 	
+	WE_LIST* wadContentsList;
 	GRAPHICS_VIEW* outputView;
+	
 	GRAPHICS_DEVICE* device;
+	COMMAND_QUEUE* commandQueue;
+	COMMAND_BUFFER* commandBuffer;
+	
+	WK_SEMAPHORE* accessSemaphore;
+	double lastUpdateTime;
 	
 	// TODO: undo/redo buffer
 }

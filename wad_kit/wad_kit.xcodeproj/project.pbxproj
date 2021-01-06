@@ -11,6 +11,8 @@
 		C90527272599F2D800CBD62C /* system_interface.c in Sources */ = {isa = PBXBuildFile; fileRef = C90527252599F2D800CBD62C /* system_interface.c */; };
 		C905273B2599FC5800CBD62C /* file_reader_interface.h in Headers */ = {isa = PBXBuildFile; fileRef = C90527392599FC5800CBD62C /* file_reader_interface.h */; };
 		C905273C2599FC5800CBD62C /* file_reader_interface.c in Sources */ = {isa = PBXBuildFile; fileRef = C905273A2599FC5800CBD62C /* file_reader_interface.c */; };
+		C908A14925A66C0E009A554D /* semaphore_interface.h in Headers */ = {isa = PBXBuildFile; fileRef = C908A14725A66C0E009A554D /* semaphore_interface.h */; };
+		C908A14A25A66C0E009A554D /* semaphore_interface.c in Sources */ = {isa = PBXBuildFile; fileRef = C908A14825A66C0E009A554D /* semaphore_interface.c */; };
 		C90B103E259D2D51000A6358 /* texture_page_private_interface.h in Headers */ = {isa = PBXBuildFile; fileRef = C90B103C259D2D51000A6358 /* texture_page_private_interface.h */; };
 		C90B103F259D2D51000A6358 /* texture_page_private_interface.c in Sources */ = {isa = PBXBuildFile; fileRef = C90B103D259D2D51000A6358 /* texture_page_private_interface.c */; };
 		C90B1043259D2DC0000A6358 /* texture_sample_private_interface.h in Headers */ = {isa = PBXBuildFile; fileRef = C90B1041259D2DC0000A6358 /* texture_sample_private_interface.h */; };
@@ -84,6 +86,9 @@
 		C90527382599FB3700CBD62C /* file_mode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = file_mode.h; sourceTree = "<group>"; };
 		C90527392599FC5800CBD62C /* file_reader_interface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = file_reader_interface.h; sourceTree = "<group>"; };
 		C905273A2599FC5800CBD62C /* file_reader_interface.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = file_reader_interface.c; sourceTree = "<group>"; };
+		C908A14625A66BFE009A554D /* semaphore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = semaphore.h; sourceTree = "<group>"; };
+		C908A14725A66C0E009A554D /* semaphore_interface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = semaphore_interface.h; sourceTree = "<group>"; };
+		C908A14825A66C0E009A554D /* semaphore_interface.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = semaphore_interface.c; sourceTree = "<group>"; };
 		C90B103C259D2D51000A6358 /* texture_page_private_interface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = texture_page_private_interface.h; sourceTree = "<group>"; };
 		C90B103D259D2D51000A6358 /* texture_page_private_interface.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = texture_page_private_interface.c; sourceTree = "<group>"; };
 		C90B1041259D2DC0000A6358 /* texture_sample_private_interface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = texture_sample_private_interface.h; sourceTree = "<group>"; };
@@ -205,6 +210,16 @@
 			name = IO;
 			sourceTree = "<group>";
 		};
+		C908A14525A66BE5009A554D /* Semaphore */ = {
+			isa = PBXGroup;
+			children = (
+				C908A14625A66BFE009A554D /* semaphore.h */,
+				C908A14725A66C0E009A554D /* semaphore_interface.h */,
+				C908A14825A66C0E009A554D /* semaphore_interface.c */,
+			);
+			name = Semaphore;
+			sourceTree = "<group>";
+		};
 		C90B1046259D3480000A6358 /* Command */ = {
 			isa = PBXGroup;
 			children = (
@@ -306,6 +321,7 @@
 				C9B3A5992599FF8C008FF2A6 /* String */,
 				C9C6DF21259A05FE00EE2A3B /* Array */,
 				C9349FA9248CFA4B0044565D /* System */,
+				C908A14525A66BE5009A554D /* Semaphore */,
 				C90527362599FB1500CBD62C /* IO */,
 				C9BE3B32248C3A0A00C430A1 /* Math */,
 				C9924940248598A5004511F5 /* Primitives */,
@@ -525,6 +541,7 @@
 				C9C73F5723A6A7ED00FBB723 /* mesh.h in Headers */,
 				C90B103E259D2D51000A6358 /* texture_page_private_interface.h in Headers */,
 				C90B1062259E0D8B000A6358 /* static_object_private_interface.h in Headers */,
+				C908A14925A66C0E009A554D /* semaphore_interface.h in Headers */,
 				C9716646259BD62200FCD1FA /* joint_private_interface.h in Headers */,
 				C93278AB259B637F00A94006 /* polygon_interface.h in Headers */,
 				C9DACB3E259CC4B4000D1999 /* keyframe_internal_interface.h in Headers */,
@@ -633,6 +650,7 @@
 				C9DACB3F259CC4B4000D1999 /* keyframe_internal_interface.c in Sources */,
 				C90B104B259D3498000A6358 /* command_interface.c in Sources */,
 				C971664C259BDC0000FCD1FA /* animation_private_interface.c in Sources */,
+				C908A14A25A66C0E009A554D /* semaphore_interface.c in Sources */,
 				C90B1059259DD41E000A6358 /* state_change_interface.c in Sources */,
 				C9BE3B30248C1ACD00C430A1 /* joint_interface.c in Sources */,
 				C9D59E0824B239B90048F2CA /* texture_page_interface.c in Sources */,

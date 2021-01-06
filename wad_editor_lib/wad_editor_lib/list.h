@@ -14,7 +14,8 @@
 typedef struct WE_LIST
 {
 	WE_LIST_DELEGATE delegate;
-	WE_LIST_SUBSCRIBER* subscriber;
+	WE_LIST_SUBSCRIBER subscriber;
+	int hasSubscriber;
 	
 	DATA_ALLOCATOR* itemAllocator;
 	WE_LIST_ITEM rootItem;

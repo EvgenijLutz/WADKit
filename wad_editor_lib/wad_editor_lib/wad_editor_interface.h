@@ -11,9 +11,11 @@
 
 #include "wad_editor_lib.h"
 
-WAD_EDITOR* wadEditorCreate(WK_SYSTEM* system, GRAPHICS_VIEW* outputView);
+WAD_EDITOR* wadEditorCreate(WK_SYSTEM* system, WE_LIST* wadContentsList, GRAPHICS_VIEW* outputView);
 void wadEditorRelease(WAD_EDITOR* wadEditor);
 
-void wadEditorUpdateState(WAD_EDITOR* wadEditor, double timeElapsed);
+void wadEditorLoadWad(WAD_EDITOR* editor, const char* filePath);
+
+void wadEditorRender(WAD_EDITOR* wadEditor);
 
 #endif /* wad_editor_lib__wad_editor_interface_h */

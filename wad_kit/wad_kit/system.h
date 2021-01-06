@@ -16,6 +16,11 @@ typedef struct WK_SYSTEM
 	int createdDefault;
 	WK_SYSTEM_GET_RESOURCE_FILE_PATH_FUNC getResourceFilePathFunc;
 	
+	WK_SYSTEM_CREATE_SEMAPHORE_FUNC createSemaphoreFunc;
+	WK_SEMAPHORE_RELEASE_FUNC releaseSemaphoreFunc;
+	WK_SEMAPHORE_ENTER_FUNC semaphoreEnterFunc;
+	WK_SEMAPHORE_LEAVE_FUNC semaphoreLeaveFunc;
+	
 	WK_SYSTEM_OPEN_FILE_READER_FUNC openFileReaderFunc;
 	WK_SYSTEM_CLOSE_FILE_READER_FUNC closeFileReaderFunc;
 	WK_FILE_READER_GET_FILE_SIZE_FUNC fileReaderGetFileSizeFunc;
@@ -27,6 +32,8 @@ typedef struct WK_SYSTEM
 	WK_FILE_READER_READ_UINT16_FUNC fileReaderReadUInt16Func;
 	WK_FILE_READER_READ_INT32_FUNC fileReaderReadInt32Func;
 	WK_FILE_READER_READ_UINT32_FUNC fileReaderReadUInt32Func;
+	
+	WK_SYSTEM_GET_CURRENT_TIME_FUNC getCurrentTimeFunc;
 	
 	void* userInfo;
 }

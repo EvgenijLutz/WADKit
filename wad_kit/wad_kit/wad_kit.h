@@ -33,6 +33,7 @@ typedef struct WK_STRING WK_STRING;
 typedef struct WK_ARRAY WK_ARRAY;
 
 typedef struct WK_SYSTEM WK_SYSTEM;
+typedef struct WK_SEMAPHORE WK_SEMAPHORE;
 typedef struct WK_FILE_READER WK_FILE_READER;
 
 typedef struct TEXTURE_PAGE TEXTURE_PAGE;
@@ -81,6 +82,7 @@ typedef struct WK_WAD WK_WAD;
 #include "array_interface.h"
 
 #include "system_interface.h"
+#include "semaphore_interface.h"
 #include "file_reader_interface.h"
 
 #include "vector2f_interface.h"

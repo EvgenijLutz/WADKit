@@ -7,8 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <QuartzCore/QuartzCore.h>
 #include "private_interface.h"
 
+// MARK: - File paths
 
 static void _systemApple_getResourceFilePath(WK_SYSTEM* system, WK_STRING* outPath, const char* name, const char* type, EXECUTE_RESULT* executeResult)
 {
@@ -20,6 +22,36 @@ static void _systemApple_getResourceFilePath(WK_SYSTEM* system, WK_STRING* outPa
 	executeResultSetSucceeded(executeResult);
 }
 
+
+// MARK: - Semaphore
+
+static void* _systemApple_createSemaphore(WK_SYSTEM* system, int value, void* userInfo)
+{
+	dispatch_semaphore_t semaphore = dispatch_semaphore_create(value);
+	void* semaphoreId = (__bridge_retained void*)semaphore;
+	return semaphoreId;
+}
+
+static void _systemApple_releaseSemaphore(WK_SYSTEM* system, void* semaphoreId, void* userInfo)
+{
+	dispatch_semaphore_t semaphore = (__bridge_transfer dispatch_semaphore_t)semaphoreId;
+	semaphore = nil;
+}
+
+static void _systemApple_semaphoreEnter(WK_SYSTEM* system, void* semaphoreId, void* userInfo)
+{
+	dispatch_semaphore_t semaphore = (__bridge dispatch_semaphore_t)semaphoreId;
+	dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
+}
+
+static void _systemApple_semaphoreLeave(WK_SYSTEM* system, void* semaphoreId, void* userInfo)
+{
+	dispatch_semaphore_t semaphore = (__bridge dispatch_semaphore_t)semaphoreId;
+	dispatch_semaphore_signal(semaphore);
+}
+
+
+// MARK: - IO
 
 static void* _systemApple_openReader(WK_SYSTEM* system, const char* path, WK_FILE_MODE readMode, EXECUTE_RESULT* executeResult)
 {
@@ -217,11 +249,29 @@ static unsigned int _systemApple_fileReaderReadUInt32(WK_FILE_READER* reader, vo
 }
 
 
+// MARK: - Timing
+
+static double _systemApple_getCurrentTime()
+{
+	return (double)CACurrentMediaTime();
+}
+
+
+// MARK: - Threading
+
+
+// MARK: - System implementation for Apple platforms
+
 WK_SYSTEM* systemCreateDefaultApple(void)
 {
 	WK_SYSTEM* system = malloc(sizeof(WK_SYSTEM));
 	system->createdDefault = 1;
 	system->getResourceFilePathFunc = _systemApple_getResourceFilePath;
+	
+	system->createSemaphoreFunc = _systemApple_createSemaphore;
+	system->releaseSemaphoreFunc = _systemApple_releaseSemaphore;
+	system->semaphoreEnterFunc = _systemApple_semaphoreEnter;
+	system->semaphoreLeaveFunc = _systemApple_semaphoreLeave;
 	
 	system->openFileReaderFunc = _systemApple_openReader;
 	system->closeFileReaderFunc = _systemApple_closeReader;
@@ -234,6 +284,8 @@ WK_SYSTEM* systemCreateDefaultApple(void)
 	system->fileReaderReadUInt16Func = _systemApple_fileReaderReadUInt16;
 	system->fileReaderReadInt32Func = _systemApple_fileReaderReadInt32;
 	system->fileReaderReadUInt32Func = _systemApple_fileReaderReadUInt32;
+	
+	system->getCurrentTimeFunc = _systemApple_getCurrentTime;
 	
 	return system;
 }
