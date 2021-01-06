@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface WadItem : NSObject
 
-@property (nonatomic) WAD_EDITOR_ITEM* item;
+//@property (nonatomic) WAD_EDITOR_ITEM* item;
 @property (nonatomic) NSString* title;
 
 @end

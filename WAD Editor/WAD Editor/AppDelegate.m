@@ -66,7 +66,7 @@ static void _commandBuffer_completion(COMMAND_BUFFER* commandBuffer, void* userI
 	{
 		TEXTURE_PAGE* page = wadGetTexturePage(wad, 2);
 		const void* data = texturePageGetData(page);
-		TEXTURE2D* texture = graphicsDeviceCreateTexture2d(_graphicsDevice, WK_TEXTURE_PAGE_WIDTH, WK_TEXTURE_PAGE_HEIGHT, WK_TEXTURE_PAGE_NUM_COMPONENTS, TEXTURE_USAGE_SHADER_READ, data);
+		TEXTURE2D* texture = graphicsDeviceCreateTexture2dWithData(_graphicsDevice, WK_TEXTURE_PAGE_WIDTH, WK_TEXTURE_PAGE_HEIGHT, WK_TEXTURE_PAGE_NUM_COMPONENTS, TEXTURE_USAGE_SHADER_READ, data);
 		
 		texture2dRelease(texture);
 		texture = NULL;

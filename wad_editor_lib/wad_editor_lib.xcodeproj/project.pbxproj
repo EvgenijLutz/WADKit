@@ -7,78 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		C907E15D25A4E03A00CC240E /* graphics_view_interface.h in Headers */ = {isa = PBXBuildFile; fileRef = C907E15B25A4E03A00CC240E /* graphics_view_interface.h */; };
-		C907E15E25A4E03A00CC240E /* graphics_view_interface.c in Sources */ = {isa = PBXBuildFile; fileRef = C907E15C25A4E03A00CC240E /* graphics_view_interface.c */; };
-		C907E16B25A4E16B00CC240E /* graphics_drawable_interface.h in Headers */ = {isa = PBXBuildFile; fileRef = C907E16925A4E16B00CC240E /* graphics_drawable_interface.h */; };
-		C907E16C25A4E16B00CC240E /* graphics_drawable_interface.c in Sources */ = {isa = PBXBuildFile; fileRef = C907E16A25A4E16B00CC240E /* graphics_drawable_interface.c */; };
-		C907E17325A4FF6000CC240E /* GraphicsView.h in Headers */ = {isa = PBXBuildFile; fileRef = C907E17125A4FF6000CC240E /* GraphicsView.h */; };
-		C907E17425A4FF6000CC240E /* GraphicsView.m in Sources */ = {isa = PBXBuildFile; fileRef = C907E17225A4FF6000CC240E /* GraphicsView.m */; };
-		C9112CFC2498CC47000264A5 /* wad_editor_item_interface.h in Headers */ = {isa = PBXBuildFile; fileRef = C9112CFA2498CC47000264A5 /* wad_editor_item_interface.h */; };
-		C9112CFD2498CC47000264A5 /* wad_editor_item_interface.c in Sources */ = {isa = PBXBuildFile; fileRef = C9112CFB2498CC47000264A5 /* wad_editor_item_interface.c */; };
-		C917908325A51E0600A24CA5 /* render_command_encoder_interface.h in Headers */ = {isa = PBXBuildFile; fileRef = C917908125A51E0600A24CA5 /* render_command_encoder_interface.h */; };
-		C917908425A51E0600A24CA5 /* render_command_encoder_interface.c in Sources */ = {isa = PBXBuildFile; fileRef = C917908225A51E0600A24CA5 /* render_command_encoder_interface.c */; };
-		C917909025A52B6700A24CA5 /* render_state_interface.h in Headers */ = {isa = PBXBuildFile; fileRef = C917908E25A52B6700A24CA5 /* render_state_interface.h */; };
-		C917909125A52B6700A24CA5 /* render_state_interface.c in Sources */ = {isa = PBXBuildFile; fileRef = C917908F25A52B6700A24CA5 /* render_state_interface.c */; };
-		C917909625A52B7B00A24CA5 /* depth_stencil_state_interface.h in Headers */ = {isa = PBXBuildFile; fileRef = C917909425A52B7B00A24CA5 /* depth_stencil_state_interface.h */; };
-		C917909725A52B7B00A24CA5 /* depth_stencil_state_interface.c in Sources */ = {isa = PBXBuildFile; fileRef = C917909525A52B7B00A24CA5 /* depth_stencil_state_interface.c */; };
-		C917909B25A52B9200A24CA5 /* render_settings_interface.h in Headers */ = {isa = PBXBuildFile; fileRef = C917909925A52B9200A24CA5 /* render_settings_interface.h */; };
-		C917909C25A52B9200A24CA5 /* render_settings_interface.c in Sources */ = {isa = PBXBuildFile; fileRef = C917909A25A52B9200A24CA5 /* render_settings_interface.c */; };
 		C9349FA3248CF46A0044565D /* wad_editor_interface.h in Headers */ = {isa = PBXBuildFile; fileRef = C9349FA1248CF46A0044565D /* wad_editor_interface.h */; };
 		C9349FA4248CF46A0044565D /* wad_editor_interface.c in Sources */ = {isa = PBXBuildFile; fileRef = C9349FA2248CF46A0044565D /* wad_editor_interface.c */; };
-		C9349FAF248CFB850044565D /* renderer_interface.h in Headers */ = {isa = PBXBuildFile; fileRef = C9349FAD248CFB850044565D /* renderer_interface.h */; };
-		C9349FB0248CFB850044565D /* renderer_interface.c in Sources */ = {isa = PBXBuildFile; fileRef = C9349FAE248CFB850044565D /* renderer_interface.c */; };
-		C9453C942495579900604E60 /* wad_editor_viewport_interface.h in Headers */ = {isa = PBXBuildFile; fileRef = C9453C922495579900604E60 /* wad_editor_viewport_interface.h */; };
-		C9453C952495579900604E60 /* wad_editor_viewport_interface.c in Sources */ = {isa = PBXBuildFile; fileRef = C9453C932495579900604E60 /* wad_editor_viewport_interface.c */; };
-		C97D52B825A1EE3C00073422 /* graphics_device_interface.c in Sources */ = {isa = PBXBuildFile; fileRef = C97D52B725A1EE3000073422 /* graphics_device_interface.c */; };
-		C97D52CA25A1F23700073422 /* apple_graphics_device.m in Sources */ = {isa = PBXBuildFile; fileRef = C97D52C925A1F23300073422 /* apple_graphics_device.m */; };
-		C97D52D125A1F8BF00073422 /* texture2d_interface.c in Sources */ = {isa = PBXBuildFile; fileRef = C97D52D025A1F8BC00073422 /* texture2d_interface.c */; };
-		C97D52DA25A25CB100073422 /* graphics_buffer_interface.h in Headers */ = {isa = PBXBuildFile; fileRef = C97D52D825A25CB100073422 /* graphics_buffer_interface.h */; };
-		C97D52DB25A25CB100073422 /* graphics_buffer_interface.c in Sources */ = {isa = PBXBuildFile; fileRef = C97D52D925A25CB100073422 /* graphics_buffer_interface.c */; };
-		C97D52E425A2863300073422 /* command_queue_interface.h in Headers */ = {isa = PBXBuildFile; fileRef = C97D52E225A2863300073422 /* command_queue_interface.h */; };
-		C97D52E525A2863300073422 /* command_queue_interface.c in Sources */ = {isa = PBXBuildFile; fileRef = C97D52E325A2863300073422 /* command_queue_interface.c */; };
-		C97D52EB25A3190C00073422 /* graphics_device_private_interface.h in Headers */ = {isa = PBXBuildFile; fileRef = C97D52E925A3190C00073422 /* graphics_device_private_interface.h */; };
-		C97D52EC25A3190C00073422 /* graphics_device_private_interface.c in Sources */ = {isa = PBXBuildFile; fileRef = C97D52EA25A3190C00073422 /* graphics_device_private_interface.c */; };
-		C97D52F225A31F3100073422 /* command_buffer_interface.h in Headers */ = {isa = PBXBuildFile; fileRef = C97D52F025A31F3100073422 /* command_buffer_interface.h */; };
-		C97D52F325A31F3100073422 /* command_buffer_interface.c in Sources */ = {isa = PBXBuildFile; fileRef = C97D52F125A31F3100073422 /* command_buffer_interface.c */; };
-		C97D52F725A32C6300073422 /* command_queue_private_interface.h in Headers */ = {isa = PBXBuildFile; fileRef = C97D52F525A32C6300073422 /* command_queue_private_interface.h */; };
-		C97D52F825A32C6300073422 /* command_queue_private_interface.c in Sources */ = {isa = PBXBuildFile; fileRef = C97D52F625A32C6300073422 /* command_queue_private_interface.c */; };
-		C97D52FE25A359BD00073422 /* blit_command_encoder_interface.h in Headers */ = {isa = PBXBuildFile; fileRef = C97D52FC25A359BD00073422 /* blit_command_encoder_interface.h */; };
-		C97D52FF25A359BD00073422 /* blit_command_encoder_interface.c in Sources */ = {isa = PBXBuildFile; fileRef = C97D52FD25A359BD00073422 /* blit_command_encoder_interface.c */; };
-		C9D59DE824B1C0F80048F2CA /* resource_storage_interface.h in Headers */ = {isa = PBXBuildFile; fileRef = C9D59DE624B1C0F80048F2CA /* resource_storage_interface.h */; };
-		C9D59DE924B1C0F80048F2CA /* resource_storage_interface.c in Sources */ = {isa = PBXBuildFile; fileRef = C9D59DE724B1C0F80048F2CA /* resource_storage_interface.c */; };
-		C9D59DF724B1CA900048F2CA /* wad_editor_viewport_delegate_interface.h in Headers */ = {isa = PBXBuildFile; fileRef = C9D59DF524B1CA900048F2CA /* wad_editor_viewport_delegate_interface.h */; };
-		C9D59DF824B1CA900048F2CA /* wad_editor_viewport_delegate_interface.c in Sources */ = {isa = PBXBuildFile; fileRef = C9D59DF624B1CA900048F2CA /* wad_editor_viewport_delegate_interface.c */; };
+		C9D3234125A5E991004204D8 /* list_interface.h in Headers */ = {isa = PBXBuildFile; fileRef = C9D3233F25A5E991004204D8 /* list_interface.h */; };
+		C9D3234225A5E991004204D8 /* list_interface.c in Sources */ = {isa = PBXBuildFile; fileRef = C9D3234025A5E991004204D8 /* list_interface.c */; };
+		C9D3234925A5EA21004204D8 /* list_item_interface.h in Headers */ = {isa = PBXBuildFile; fileRef = C9D3234725A5EA21004204D8 /* list_item_interface.h */; };
+		C9D3234A25A5EA21004204D8 /* list_item_interface.c in Sources */ = {isa = PBXBuildFile; fileRef = C9D3234825A5EA21004204D8 /* list_item_interface.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		C907E15A25A4E02400CC240E /* graphics_view.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = graphics_view.h; sourceTree = "<group>"; };
-		C907E15B25A4E03A00CC240E /* graphics_view_interface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = graphics_view_interface.h; sourceTree = "<group>"; };
-		C907E15C25A4E03A00CC240E /* graphics_view_interface.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = graphics_view_interface.c; sourceTree = "<group>"; };
-		C907E16825A4E15600CC240E /* graphics_drawable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = graphics_drawable.h; sourceTree = "<group>"; };
-		C907E16925A4E16B00CC240E /* graphics_drawable_interface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = graphics_drawable_interface.h; sourceTree = "<group>"; };
-		C907E16A25A4E16B00CC240E /* graphics_drawable_interface.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = graphics_drawable_interface.c; sourceTree = "<group>"; };
-		C907E16E25A4EAA700CC240E /* graphics_view_functions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = graphics_view_functions.h; sourceTree = "<group>"; };
-		C907E17125A4FF6000CC240E /* GraphicsView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GraphicsView.h; sourceTree = "<group>"; };
-		C907E17225A4FF6000CC240E /* GraphicsView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GraphicsView.m; sourceTree = "<group>"; };
-		C9112CF82498A86C000264A5 /* wad_editor_item_type.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wad_editor_item_type.h; sourceTree = "<group>"; };
-		C9112CF92498C34C000264A5 /* wad_editor_item.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wad_editor_item.h; sourceTree = "<group>"; };
-		C9112CFA2498CC47000264A5 /* wad_editor_item_interface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wad_editor_item_interface.h; sourceTree = "<group>"; };
-		C9112CFB2498CC47000264A5 /* wad_editor_item_interface.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = wad_editor_item_interface.c; sourceTree = "<group>"; };
-		C9112CFE2498CC59000264A5 /* wad_editor_item_private_interface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wad_editor_item_private_interface.h; sourceTree = "<group>"; };
-		C9112CFF2498E002000264A5 /* wad_editor_item_data.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wad_editor_item_data.h; sourceTree = "<group>"; };
-		C917907C25A4FFED00A24CA5 /* wad_editor_lib_apple.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wad_editor_lib_apple.h; sourceTree = "<group>"; };
-		C917908025A51DF100A24CA5 /* render_command_encoder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = render_command_encoder.h; sourceTree = "<group>"; };
-		C917908125A51E0600A24CA5 /* render_command_encoder_interface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = render_command_encoder_interface.h; sourceTree = "<group>"; };
-		C917908225A51E0600A24CA5 /* render_command_encoder_interface.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = render_command_encoder_interface.c; sourceTree = "<group>"; };
-		C917908B25A527F800A24CA5 /* render_settings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = render_settings.h; sourceTree = "<group>"; };
-		C917908C25A5280D00A24CA5 /* depth_stencil_state.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = depth_stencil_state.h; sourceTree = "<group>"; };
-		C917908D25A5283300A24CA5 /* render_state.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = render_state.h; sourceTree = "<group>"; };
-		C917908E25A52B6700A24CA5 /* render_state_interface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = render_state_interface.h; sourceTree = "<group>"; };
-		C917908F25A52B6700A24CA5 /* render_state_interface.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = render_state_interface.c; sourceTree = "<group>"; };
-		C917909425A52B7B00A24CA5 /* depth_stencil_state_interface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = depth_stencil_state_interface.h; sourceTree = "<group>"; };
-		C917909525A52B7B00A24CA5 /* depth_stencil_state_interface.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = depth_stencil_state_interface.c; sourceTree = "<group>"; };
-		C917909925A52B9200A24CA5 /* render_settings_interface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = render_settings_interface.h; sourceTree = "<group>"; };
-		C917909A25A52B9200A24CA5 /* render_settings_interface.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = render_settings_interface.c; sourceTree = "<group>"; };
 		C9327889259A4D7100A94006 /* private_interface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = private_interface.h; sourceTree = "<group>"; };
 		C9349F95248CF3110044565D /* libwad_editor_lib_macos.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libwad_editor_lib_macos.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9349F9D248CF3460044565D /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
@@ -86,52 +23,13 @@
 		C9349FA0248CF45A0044565D /* wad_editor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wad_editor.h; sourceTree = "<group>"; };
 		C9349FA1248CF46A0044565D /* wad_editor_interface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wad_editor_interface.h; sourceTree = "<group>"; };
 		C9349FA2248CF46A0044565D /* wad_editor_interface.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = wad_editor_interface.c; sourceTree = "<group>"; };
-		C9349FAC248CFB720044565D /* renderer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = renderer.h; sourceTree = "<group>"; };
-		C9349FAD248CFB850044565D /* renderer_interface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = renderer_interface.h; sourceTree = "<group>"; };
-		C9349FAE248CFB850044565D /* renderer_interface.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = renderer_interface.c; sourceTree = "<group>"; };
-		C9349FB2248CFC4A0044565D /* resource_storage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = resource_storage.h; sourceTree = "<group>"; };
-		C9453C8E249534AA00604E60 /* renderer_functions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = renderer_functions.h; sourceTree = "<group>"; };
-		C9453C90249544B400604E60 /* wad_editor_viewport.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wad_editor_viewport.h; sourceTree = "<group>"; };
-		C9453C922495579900604E60 /* wad_editor_viewport_interface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wad_editor_viewport_interface.h; sourceTree = "<group>"; };
-		C9453C932495579900604E60 /* wad_editor_viewport_interface.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = wad_editor_viewport_interface.c; sourceTree = "<group>"; };
-		C97D52B525A1EE2100073422 /* graphics_device.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = graphics_device.h; sourceTree = "<group>"; };
-		C97D52B625A1EE3000073422 /* graphics_device_interface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = graphics_device_interface.h; sourceTree = "<group>"; };
-		C97D52B725A1EE3000073422 /* graphics_device_interface.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = graphics_device_interface.c; sourceTree = "<group>"; };
-		C97D52C825A1F22A00073422 /* apple_graphics_device.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = apple_graphics_device.h; sourceTree = "<group>"; };
-		C97D52C925A1F23300073422 /* apple_graphics_device.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = apple_graphics_device.m; sourceTree = "<group>"; };
-		C97D52CC25A1F77200073422 /* graphics_device_functions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = graphics_device_functions.h; sourceTree = "<group>"; };
-		C97D52CE25A1F8B200073422 /* texture2d.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = texture2d.h; sourceTree = "<group>"; };
-		C97D52CF25A1F8BC00073422 /* texture2d_interface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = texture2d_interface.h; sourceTree = "<group>"; };
-		C97D52D025A1F8BC00073422 /* texture2d_interface.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = texture2d_interface.c; sourceTree = "<group>"; };
-		C97D52D325A23F2000073422 /* texture_usage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = texture_usage.h; sourceTree = "<group>"; };
-		C97D52D525A242FF00073422 /* pixel_format.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = pixel_format.h; sourceTree = "<group>"; };
-		C97D52D725A25CA200073422 /* graphics_buffer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = graphics_buffer.h; sourceTree = "<group>"; };
-		C97D52D825A25CB100073422 /* graphics_buffer_interface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = graphics_buffer_interface.h; sourceTree = "<group>"; };
-		C97D52D925A25CB100073422 /* graphics_buffer_interface.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = graphics_buffer_interface.c; sourceTree = "<group>"; };
-		C97D52DD25A2605600073422 /* graphics_buffer_option.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = graphics_buffer_option.h; sourceTree = "<group>"; };
-		C97D52E125A2862400073422 /* command_queue.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = command_queue.h; sourceTree = "<group>"; };
-		C97D52E225A2863300073422 /* command_queue_interface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = command_queue_interface.h; sourceTree = "<group>"; };
-		C97D52E325A2863300073422 /* command_queue_interface.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = command_queue_interface.c; sourceTree = "<group>"; };
-		C97D52E925A3190C00073422 /* graphics_device_private_interface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = graphics_device_private_interface.h; sourceTree = "<group>"; };
-		C97D52EA25A3190C00073422 /* graphics_device_private_interface.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = graphics_device_private_interface.c; sourceTree = "<group>"; };
-		C97D52EF25A31F1900073422 /* command_buffer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = command_buffer.h; sourceTree = "<group>"; };
-		C97D52F025A31F3100073422 /* command_buffer_interface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = command_buffer_interface.h; sourceTree = "<group>"; };
-		C97D52F125A31F3100073422 /* command_buffer_interface.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = command_buffer_interface.c; sourceTree = "<group>"; };
-		C97D52F525A32C6300073422 /* command_queue_private_interface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = command_queue_private_interface.h; sourceTree = "<group>"; };
-		C97D52F625A32C6300073422 /* command_queue_private_interface.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = command_queue_private_interface.c; sourceTree = "<group>"; };
-		C97D52FB25A359AF00073422 /* blit_command_encoder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = blit_command_encoder.h; sourceTree = "<group>"; };
-		C97D52FC25A359BD00073422 /* blit_command_encoder_interface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = blit_command_encoder_interface.h; sourceTree = "<group>"; };
-		C97D52FD25A359BD00073422 /* blit_command_encoder_interface.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = blit_command_encoder_interface.c; sourceTree = "<group>"; };
-		C9D59DE624B1C0F80048F2CA /* resource_storage_interface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = resource_storage_interface.h; sourceTree = "<group>"; };
-		C9D59DE724B1C0F80048F2CA /* resource_storage_interface.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = resource_storage_interface.c; sourceTree = "<group>"; };
-		C9D59DF324B1CA760048F2CA /* wad_editor_viewport_delegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wad_editor_viewport_delegate.h; sourceTree = "<group>"; };
-		C9D59DF424B1CA820048F2CA /* wad_editor_viewport_delegate_functions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wad_editor_viewport_delegate_functions.h; sourceTree = "<group>"; };
-		C9D59DF524B1CA900048F2CA /* wad_editor_viewport_delegate_interface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wad_editor_viewport_delegate_interface.h; sourceTree = "<group>"; };
-		C9D59DF624B1CA900048F2CA /* wad_editor_viewport_delegate_interface.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = wad_editor_viewport_delegate_interface.c; sourceTree = "<group>"; };
-		C9D59DF924B1CB770048F2CA /* we_mouse_key.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = we_mouse_key.h; sourceTree = "<group>"; };
-		C9D59DFF24B1F5D00048F2CA /* resource_storage_functions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = resource_storage_functions.h; sourceTree = "<group>"; };
-		C9FD83A424B30F4400C3D7CC /* we_modifier_key.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = we_modifier_key.h; sourceTree = "<group>"; };
-		C9FD83A524B315C900C3D7CC /* wad_editor_viewport_camera_mode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wad_editor_viewport_camera_mode.h; sourceTree = "<group>"; };
+		C9D3233E25A5E983004204D8 /* list.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = list.h; sourceTree = "<group>"; };
+		C9D3233F25A5E991004204D8 /* list_interface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = list_interface.h; sourceTree = "<group>"; };
+		C9D3234025A5E991004204D8 /* list_interface.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = list_interface.c; sourceTree = "<group>"; };
+		C9D3234625A5EA16004204D8 /* list_item.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = list_item.h; sourceTree = "<group>"; };
+		C9D3234725A5EA21004204D8 /* list_item_interface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = list_item_interface.h; sourceTree = "<group>"; };
+		C9D3234825A5EA21004204D8 /* list_item_interface.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = list_item_interface.c; sourceTree = "<group>"; };
+		C9D3234D25A5F2C7004204D8 /* list_functions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = list_functions.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -145,96 +43,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		C907E15725A4DF5300CC240E /* View */ = {
-			isa = PBXGroup;
-			children = (
-				C907E16E25A4EAA700CC240E /* graphics_view_functions.h */,
-				C907E15A25A4E02400CC240E /* graphics_view.h */,
-				C907E15B25A4E03A00CC240E /* graphics_view_interface.h */,
-				C907E15C25A4E03A00CC240E /* graphics_view_interface.c */,
-				C907E17025A4FF3C00CC240E /* Apple */,
-			);
-			name = View;
-			sourceTree = "<group>";
-		};
-		C907E16625A4E13C00CC240E /* Drawable */ = {
-			isa = PBXGroup;
-			children = (
-				C907E16825A4E15600CC240E /* graphics_drawable.h */,
-				C907E16925A4E16B00CC240E /* graphics_drawable_interface.h */,
-				C907E16A25A4E16B00CC240E /* graphics_drawable_interface.c */,
-			);
-			name = Drawable;
-			sourceTree = "<group>";
-		};
-		C907E17025A4FF3C00CC240E /* Apple */ = {
-			isa = PBXGroup;
-			children = (
-				C907E17125A4FF6000CC240E /* GraphicsView.h */,
-				C907E17225A4FF6000CC240E /* GraphicsView.m */,
-			);
-			name = Apple;
-			sourceTree = "<group>";
-		};
-		C917907F25A51D5800A24CA5 /* Render command encoder */ = {
-			isa = PBXGroup;
-			children = (
-				C917908025A51DF100A24CA5 /* render_command_encoder.h */,
-				C917908125A51E0600A24CA5 /* render_command_encoder_interface.h */,
-				C917908225A51E0600A24CA5 /* render_command_encoder_interface.c */,
-			);
-			name = "Render command encoder";
-			sourceTree = "<group>";
-		};
-		C917908625A520B100A24CA5 /* Render state */ = {
-			isa = PBXGroup;
-			children = (
-				C917908D25A5283300A24CA5 /* render_state.h */,
-				C917908E25A52B6700A24CA5 /* render_state_interface.h */,
-				C917908F25A52B6700A24CA5 /* render_state_interface.c */,
-			);
-			name = "Render state";
-			sourceTree = "<group>";
-		};
-		C917908725A520C500A24CA5 /* Render settings */ = {
-			isa = PBXGroup;
-			children = (
-				C917908B25A527F800A24CA5 /* render_settings.h */,
-				C917909925A52B9200A24CA5 /* render_settings_interface.h */,
-				C917909A25A52B9200A24CA5 /* render_settings_interface.c */,
-			);
-			name = "Render settings";
-			sourceTree = "<group>";
-		};
-		C917908925A5231200A24CA5 /* Depth stencil state */ = {
-			isa = PBXGroup;
-			children = (
-				C917908C25A5280D00A24CA5 /* depth_stencil_state.h */,
-				C917909425A52B7B00A24CA5 /* depth_stencil_state_interface.h */,
-				C917909525A52B7B00A24CA5 /* depth_stencil_state_interface.c */,
-			);
-			name = "Depth stencil state";
-			sourceTree = "<group>";
-		};
-		C9327883259A38B000A94006 /* Graphics */ = {
-			isa = PBXGroup;
-			children = (
-				C97D52CD25A1F8A400073422 /* Texture2d */,
-				C97D52D625A25C5500073422 /* Graphics buffer */,
-				C97D52E025A2860E00073422 /* Command queue */,
-				C97D52EE25A31E0400073422 /* Command buffer */,
-				C97D52FA25A3599A00073422 /* Blit command encoder */,
-				C917908725A520C500A24CA5 /* Render settings */,
-				C917908925A5231200A24CA5 /* Depth stencil state */,
-				C917908625A520B100A24CA5 /* Render state */,
-				C917907F25A51D5800A24CA5 /* Render command encoder */,
-				C907E15725A4DF5300CC240E /* View */,
-				C907E16625A4E13C00CC240E /* Drawable */,
-				C97D52B425A1EE1200073422 /* Device */,
-			);
-			name = Graphics;
-			sourceTree = "<group>";
-		};
 		C9349F8C248CF3110044565D = {
 			isa = PBXGroup;
 			children = (
@@ -256,12 +64,8 @@
 			isa = PBXGroup;
 			children = (
 				C9349F9E248CF3FB0044565D /* wad_editor_lib.h */,
-				C917907C25A4FFED00A24CA5 /* wad_editor_lib_apple.h */,
 				C9327889259A4D7100A94006 /* private_interface.h */,
-				C9327883259A38B000A94006 /* Graphics */,
-				C9349FB1248CFC390044565D /* Resource storage */,
-				C9349FAB248CFB5F0044565D /* Renderer */,
-				C9453C8F2495440E00604E60 /* Editor viewport */,
+				C9D3233D25A5E95F004204D8 /* List */,
 				C9349FAA248CFAA80044565D /* Editor */,
 			);
 			path = wad_editor_lib;
@@ -270,12 +74,6 @@
 		C9349FAA248CFAA80044565D /* Editor */ = {
 			isa = PBXGroup;
 			children = (
-				C9112CF82498A86C000264A5 /* wad_editor_item_type.h */,
-				C9112CFF2498E002000264A5 /* wad_editor_item_data.h */,
-				C9112CF92498C34C000264A5 /* wad_editor_item.h */,
-				C9112CFA2498CC47000264A5 /* wad_editor_item_interface.h */,
-				C9112CFE2498CC59000264A5 /* wad_editor_item_private_interface.h */,
-				C9112CFB2498CC47000264A5 /* wad_editor_item_interface.c */,
 				C9349FA0248CF45A0044565D /* wad_editor.h */,
 				C9349FA1248CF46A0044565D /* wad_editor_interface.h */,
 				C9349FA2248CF46A0044565D /* wad_editor_interface.c */,
@@ -283,121 +81,26 @@
 			name = Editor;
 			sourceTree = "<group>";
 		};
-		C9349FAB248CFB5F0044565D /* Renderer */ = {
+		C9D3233D25A5E95F004204D8 /* List */ = {
 			isa = PBXGroup;
 			children = (
-				C9453C8E249534AA00604E60 /* renderer_functions.h */,
-				C9349FAC248CFB720044565D /* renderer.h */,
-				C9349FAD248CFB850044565D /* renderer_interface.h */,
-				C9349FAE248CFB850044565D /* renderer_interface.c */,
+				C9D3234525A5EA0E004204D8 /* Item */,
+				C9D3234D25A5F2C7004204D8 /* list_functions.h */,
+				C9D3233E25A5E983004204D8 /* list.h */,
+				C9D3233F25A5E991004204D8 /* list_interface.h */,
+				C9D3234025A5E991004204D8 /* list_interface.c */,
 			);
-			name = Renderer;
+			name = List;
 			sourceTree = "<group>";
 		};
-		C9349FB1248CFC390044565D /* Resource storage */ = {
+		C9D3234525A5EA0E004204D8 /* Item */ = {
 			isa = PBXGroup;
 			children = (
-				C9D59DFF24B1F5D00048F2CA /* resource_storage_functions.h */,
-				C9349FB2248CFC4A0044565D /* resource_storage.h */,
-				C9D59DE624B1C0F80048F2CA /* resource_storage_interface.h */,
-				C9D59DE724B1C0F80048F2CA /* resource_storage_interface.c */,
+				C9D3234625A5EA16004204D8 /* list_item.h */,
+				C9D3234725A5EA21004204D8 /* list_item_interface.h */,
+				C9D3234825A5EA21004204D8 /* list_item_interface.c */,
 			);
-			name = "Resource storage";
-			sourceTree = "<group>";
-		};
-		C9453C8F2495440E00604E60 /* Editor viewport */ = {
-			isa = PBXGroup;
-			children = (
-				C9D59DF924B1CB770048F2CA /* we_mouse_key.h */,
-				C9FD83A424B30F4400C3D7CC /* we_modifier_key.h */,
-				C9D59DF424B1CA820048F2CA /* wad_editor_viewport_delegate_functions.h */,
-				C9D59DF324B1CA760048F2CA /* wad_editor_viewport_delegate.h */,
-				C9D59DF524B1CA900048F2CA /* wad_editor_viewport_delegate_interface.h */,
-				C9D59DF624B1CA900048F2CA /* wad_editor_viewport_delegate_interface.c */,
-				C9FD83A524B315C900C3D7CC /* wad_editor_viewport_camera_mode.h */,
-				C9453C90249544B400604E60 /* wad_editor_viewport.h */,
-				C9453C922495579900604E60 /* wad_editor_viewport_interface.h */,
-				C9453C932495579900604E60 /* wad_editor_viewport_interface.c */,
-			);
-			name = "Editor viewport";
-			sourceTree = "<group>";
-		};
-		C97D52B425A1EE1200073422 /* Device */ = {
-			isa = PBXGroup;
-			children = (
-				C97D52CC25A1F77200073422 /* graphics_device_functions.h */,
-				C97D52B525A1EE2100073422 /* graphics_device.h */,
-				C97D52B625A1EE3000073422 /* graphics_device_interface.h */,
-				C97D52B725A1EE3000073422 /* graphics_device_interface.c */,
-				C97D52E925A3190C00073422 /* graphics_device_private_interface.h */,
-				C97D52EA25A3190C00073422 /* graphics_device_private_interface.c */,
-				C97D52C725A1F21200073422 /* Apple */,
-			);
-			name = Device;
-			sourceTree = "<group>";
-		};
-		C97D52C725A1F21200073422 /* Apple */ = {
-			isa = PBXGroup;
-			children = (
-				C97D52C825A1F22A00073422 /* apple_graphics_device.h */,
-				C97D52C925A1F23300073422 /* apple_graphics_device.m */,
-			);
-			name = Apple;
-			sourceTree = "<group>";
-		};
-		C97D52CD25A1F8A400073422 /* Texture2d */ = {
-			isa = PBXGroup;
-			children = (
-				C97D52D525A242FF00073422 /* pixel_format.h */,
-				C97D52D325A23F2000073422 /* texture_usage.h */,
-				C97D52CE25A1F8B200073422 /* texture2d.h */,
-				C97D52CF25A1F8BC00073422 /* texture2d_interface.h */,
-				C97D52D025A1F8BC00073422 /* texture2d_interface.c */,
-			);
-			name = Texture2d;
-			sourceTree = "<group>";
-		};
-		C97D52D625A25C5500073422 /* Graphics buffer */ = {
-			isa = PBXGroup;
-			children = (
-				C97D52DD25A2605600073422 /* graphics_buffer_option.h */,
-				C97D52D725A25CA200073422 /* graphics_buffer.h */,
-				C97D52D825A25CB100073422 /* graphics_buffer_interface.h */,
-				C97D52D925A25CB100073422 /* graphics_buffer_interface.c */,
-			);
-			name = "Graphics buffer";
-			sourceTree = "<group>";
-		};
-		C97D52E025A2860E00073422 /* Command queue */ = {
-			isa = PBXGroup;
-			children = (
-				C97D52E125A2862400073422 /* command_queue.h */,
-				C97D52E225A2863300073422 /* command_queue_interface.h */,
-				C97D52E325A2863300073422 /* command_queue_interface.c */,
-				C97D52F525A32C6300073422 /* command_queue_private_interface.h */,
-				C97D52F625A32C6300073422 /* command_queue_private_interface.c */,
-			);
-			name = "Command queue";
-			sourceTree = "<group>";
-		};
-		C97D52EE25A31E0400073422 /* Command buffer */ = {
-			isa = PBXGroup;
-			children = (
-				C97D52EF25A31F1900073422 /* command_buffer.h */,
-				C97D52F025A31F3100073422 /* command_buffer_interface.h */,
-				C97D52F125A31F3100073422 /* command_buffer_interface.c */,
-			);
-			name = "Command buffer";
-			sourceTree = "<group>";
-		};
-		C97D52FA25A3599A00073422 /* Blit command encoder */ = {
-			isa = PBXGroup;
-			children = (
-				C97D52FB25A359AF00073422 /* blit_command_encoder.h */,
-				C97D52FC25A359BD00073422 /* blit_command_encoder_interface.h */,
-				C97D52FD25A359BD00073422 /* blit_command_encoder_interface.c */,
-			);
-			name = "Blit command encoder";
+			name = Item;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -407,25 +110,9 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C97D52FE25A359BD00073422 /* blit_command_encoder_interface.h in Headers */,
-				C907E17325A4FF6000CC240E /* GraphicsView.h in Headers */,
-				C907E16B25A4E16B00CC240E /* graphics_drawable_interface.h in Headers */,
-				C97D52EB25A3190C00073422 /* graphics_device_private_interface.h in Headers */,
-				C97D52DA25A25CB100073422 /* graphics_buffer_interface.h in Headers */,
-				C9D59DE824B1C0F80048F2CA /* resource_storage_interface.h in Headers */,
-				C97D52E425A2863300073422 /* command_queue_interface.h in Headers */,
-				C97D52F225A31F3100073422 /* command_buffer_interface.h in Headers */,
-				C9D59DF724B1CA900048F2CA /* wad_editor_viewport_delegate_interface.h in Headers */,
-				C917908325A51E0600A24CA5 /* render_command_encoder_interface.h in Headers */,
+				C9D3234125A5E991004204D8 /* list_interface.h in Headers */,
+				C9D3234925A5EA21004204D8 /* list_item_interface.h in Headers */,
 				C9349FA3248CF46A0044565D /* wad_editor_interface.h in Headers */,
-				C917909625A52B7B00A24CA5 /* depth_stencil_state_interface.h in Headers */,
-				C97D52F725A32C6300073422 /* command_queue_private_interface.h in Headers */,
-				C917909025A52B6700A24CA5 /* render_state_interface.h in Headers */,
-				C9112CFC2498CC47000264A5 /* wad_editor_item_interface.h in Headers */,
-				C9453C942495579900604E60 /* wad_editor_viewport_interface.h in Headers */,
-				C907E15D25A4E03A00CC240E /* graphics_view_interface.h in Headers */,
-				C917909B25A52B9200A24CA5 /* render_settings_interface.h in Headers */,
-				C9349FAF248CFB850044565D /* renderer_interface.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -486,28 +173,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C97D52DB25A25CB100073422 /* graphics_buffer_interface.c in Sources */,
-				C97D52E525A2863300073422 /* command_queue_interface.c in Sources */,
-				C97D52FF25A359BD00073422 /* blit_command_encoder_interface.c in Sources */,
-				C9D59DF824B1CA900048F2CA /* wad_editor_viewport_delegate_interface.c in Sources */,
-				C917908425A51E0600A24CA5 /* render_command_encoder_interface.c in Sources */,
-				C917909725A52B7B00A24CA5 /* depth_stencil_state_interface.c in Sources */,
-				C917909125A52B6700A24CA5 /* render_state_interface.c in Sources */,
-				C97D52D125A1F8BF00073422 /* texture2d_interface.c in Sources */,
-				C917909C25A52B9200A24CA5 /* render_settings_interface.c in Sources */,
-				C907E15E25A4E03A00CC240E /* graphics_view_interface.c in Sources */,
-				C9D59DE924B1C0F80048F2CA /* resource_storage_interface.c in Sources */,
-				C9112CFD2498CC47000264A5 /* wad_editor_item_interface.c in Sources */,
-				C97D52EC25A3190C00073422 /* graphics_device_private_interface.c in Sources */,
-				C97D52F325A31F3100073422 /* command_buffer_interface.c in Sources */,
-				C97D52CA25A1F23700073422 /* apple_graphics_device.m in Sources */,
-				C97D52B825A1EE3C00073422 /* graphics_device_interface.c in Sources */,
-				C9349FB0248CFB850044565D /* renderer_interface.c in Sources */,
-				C9453C952495579900604E60 /* wad_editor_viewport_interface.c in Sources */,
 				C9349FA4248CF46A0044565D /* wad_editor_interface.c in Sources */,
-				C907E16C25A4E16B00CC240E /* graphics_drawable_interface.c in Sources */,
-				C97D52F825A32C6300073422 /* command_queue_private_interface.c in Sources */,
-				C907E17425A4FF6000CC240E /* GraphicsView.m in Sources */,
+				C9D3234A25A5EA21004204D8 /* list_item_interface.c in Sources */,
+				C9D3234225A5E991004204D8 /* list_interface.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

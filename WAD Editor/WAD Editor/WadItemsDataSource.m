@@ -13,7 +13,7 @@
 @implementation WadItemsDataSource
 {
 	WAD_EDITOR* editor;
-	WAD_EDITOR_ITEM* rootItem;
+	//WAD_EDITOR_ITEM* rootItem;
 	
 	NSMutableArray<WadItem*>* items;
 }
@@ -24,7 +24,7 @@
 	if (self)
 	{
 		editor = wadEditor;
-		rootItem = wadEditorGetRootItem(editor);
+		//rootItem = wadEditorGetRootItem(editor);
 		
 		items = [[NSMutableArray alloc] initWithCapacity:1024];
 	}
@@ -34,62 +34,64 @@
 // Number of children
 - (NSInteger)outlineView:(NSOutlineView*)outlineView numberOfChildrenOfItem:(id)item
 {
-	if (item == nil)
-	{
-		return (NSInteger)wadEditorGetNumChildrenInItem(editor, WAD_EDITOR_ITEM_TYPE_ROOT, 0);
-	}
-	
-	assert([item isKindOfClass:WadItem.class]);
-	WadItem* wadItem = (WadItem*)item;
-	
-	return wadEditorItemGetNumChildren(wadItem.item);
+	return 0;
+//	if (item == nil)
+//	{
+//		return (NSInteger)wadEditorGetNumChildrenInItem(editor, WAD_EDITOR_ITEM_TYPE_ROOT, 0);
+//	}
+//
+//	assert([item isKindOfClass:WadItem.class]);
+//	WadItem* wadItem = (WadItem*)item;
+//
+//	return wadEditorItemGetNumChildren(wadItem.item);
 }
 
 // Item for child
 - (id)outlineView:(NSOutlineView*)outlineView child:(NSInteger)index ofItem:(id)item
 {
-	unsigned int childIndex= (unsigned int)index;
-	
-	if (item == nil)
-	{
-		WAD_EDITOR_ITEM* wadEditorItem = wadEditorItemGetChild(rootItem, childIndex);
-		
-		const char* sectionName = wadEditorItemGetName(wadEditorItem);
-		NSString* title = [NSString stringWithUTF8String:sectionName];
-		
-		WadItem* item = [[WadItem alloc] init];
-		item.item = wadEditorItem;
-		item.title = title;
-		
-		return item;
-	}
-	
-	assert([item isKindOfClass:WadItem.class]);
-	WadItem* wadItem = (WadItem*)item;
-
-	WAD_EDITOR_ITEM* child = wadEditorItemGetChild(wadItem.item, childIndex);
-	const char* name = wadEditorItemGetName(child);
-	
-	WadItem* childItem = [[WadItem alloc] init];
-	childItem.item = child;
-	childItem.title = [NSString stringWithUTF8String:name];
-	return childItem;
+	return nil;
+//	unsigned int childIndex= (unsigned int)index;
+//
+//	if (item == nil)
+//	{
+//		WAD_EDITOR_ITEM* wadEditorItem = wadEditorItemGetChild(rootItem, childIndex);
+//
+//		const char* sectionName = wadEditorItemGetName(wadEditorItem);
+//		NSString* title = [NSString stringWithUTF8String:sectionName];
+//
+//		WadItem* item = [[WadItem alloc] init];
+//		item.item = wadEditorItem;
+//		item.title = title;
+//
+//		return item;
+//	}
+//
+//	assert([item isKindOfClass:WadItem.class]);
+//	WadItem* wadItem = (WadItem*)item;
+//
+//	WAD_EDITOR_ITEM* child = wadEditorItemGetChild(wadItem.item, childIndex);
+//	const char* name = wadEditorItemGetName(child);
+//
+//	WadItem* childItem = [[WadItem alloc] init];
+//	childItem.item = child;
+//	childItem.title = [NSString stringWithUTF8String:name];
+//	return childItem;
 }
 
 // Is expandable
 - (BOOL)outlineView:(NSOutlineView*)outlineView isItemExpandable:(id)item
 {
-	if (item == nil)
-	{
-		return YES;
-	}
-	
-	assert([item isKindOfClass:WadItem.class]);
-	WadItem* wadItem = (WadItem*)item;
-	if (wadEditorItemGetNumChildren(wadItem.item) > 0)
-	{
-		return YES;
-	}
+//	if (item == nil)
+//	{
+//		return YES;
+//	}
+//
+//	assert([item isKindOfClass:WadItem.class]);
+//	WadItem* wadItem = (WadItem*)item;
+//	if (wadEditorItemGetNumChildren(wadItem.item) > 0)
+//	{
+//		return YES;
+//	}
 	
 	return NO;
 }
@@ -125,22 +127,22 @@
 
 - (void)outlineViewSelectionDidChange:(NSNotification*)notification
 {
-	if (![notification.object isKindOfClass:NSOutlineView.class])
-	{
-		return;
-	}
-	
-	NSOutlineView* outlineView = (NSOutlineView*)notification.object;
-	NSInteger selectedRowIndex = outlineView.selectedRow;
-	id outlineItem = [outlineView itemAtRow:selectedRowIndex];
-	if (![outlineItem isKindOfClass:WadItem.class])
-	{
-		return;
-	}
-	
-	WadItem* wadItem = (WadItem*)outlineItem;
-	WAD_EDITOR_ITEM* wadEditorItem = wadItem.item;
-	wadEditorSelectItem(editor, wadEditorItem);
+//	if (![notification.object isKindOfClass:NSOutlineView.class])
+//	{
+//		return;
+//	}
+//
+//	NSOutlineView* outlineView = (NSOutlineView*)notification.object;
+//	NSInteger selectedRowIndex = outlineView.selectedRow;
+//	id outlineItem = [outlineView itemAtRow:selectedRowIndex];
+//	if (![outlineItem isKindOfClass:WadItem.class])
+//	{
+//		return;
+//	}
+//
+//	WadItem* wadItem = (WadItem*)outlineItem;
+//	WAD_EDITOR_ITEM* wadEditorItem = wadItem.item;
+//	wadEditorSelectItem(editor, wadEditorItem);
 }
 
 /*- (void)outlineView:(NSOutlineView*)outlineView didRemoveRowView:(NSTableRowView*)rowView forRow:(NSInteger)row

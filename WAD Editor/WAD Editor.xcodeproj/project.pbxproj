@@ -26,6 +26,7 @@
 		C9BE100523A73434000E25FC /* MetalPerformanceShaders.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9BE100223A73434000E25FC /* MetalPerformanceShaders.framework */; };
 		C9BE100623A73434000E25FC /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9BE100323A73434000E25FC /* MetalKit.framework */; };
 		C9BE100923A761D1000E25FC /* MainWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = C9BE100823A761D1000E25FC /* MainWindow.m */; };
+		C9D3233925A5E87F004204D8 /* libgraphics_macOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C9D3233825A5E87F004204D8 /* libgraphics_macOS.a */; };
 		C9E2BE88247D695C006FF2AE /* tut1.raw in Resources */ = {isa = PBXBuildFile; fileRef = C9E2BE7F247D695C006FF2AE /* tut1.raw */; };
 		C9E2BE89247D695C006FF2AE /* tut1.TOM in Resources */ = {isa = PBXBuildFile; fileRef = C9E2BE80247D695C006FF2AE /* tut1.TOM */; };
 		C9E2BE8A247D695C006FF2AE /* tut1.sfx in Resources */ = {isa = PBXBuildFile; fileRef = C9E2BE81247D695C006FF2AE /* tut1.sfx */; };
@@ -91,6 +92,7 @@
 		C9BE100323A73434000E25FC /* MetalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalKit.framework; path = System/Library/Frameworks/MetalKit.framework; sourceTree = SDKROOT; };
 		C9BE100723A761D1000E25FC /* MainWindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MainWindow.h; sourceTree = "<group>"; };
 		C9BE100823A761D1000E25FC /* MainWindow.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MainWindow.m; sourceTree = "<group>"; };
+		C9D3233825A5E87F004204D8 /* libgraphics_macOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libgraphics_macOS.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9E2BE7F247D695C006FF2AE /* tut1.raw */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = tut1.raw; sourceTree = "<group>"; };
 		C9E2BE80247D695C006FF2AE /* tut1.TOM */ = {isa = PBXFileReference; lastKnownFileType = file; path = tut1.TOM; sourceTree = "<group>"; };
 		C9E2BE81247D695C006FF2AE /* tut1.sfx */ = {isa = PBXFileReference; lastKnownFileType = file; path = tut1.sfx; sourceTree = "<group>"; };
@@ -111,6 +113,7 @@
 				C9BE100623A73434000E25FC /* MetalKit.framework in Frameworks */,
 				C9349FA8248CF5420044565D /* libwad_editor_lib_macos.a in Frameworks */,
 				C9BE100523A73434000E25FC /* MetalPerformanceShaders.framework in Frameworks */,
+				C9D3233925A5E87F004204D8 /* libgraphics_macOS.a in Frameworks */,
 				C9BE100023A7341E000E25FC /* libwad_kit.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -221,6 +224,7 @@
 		C9BE0FFE23A7341E000E25FC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C9D3233825A5E87F004204D8 /* libgraphics_macOS.a */,
 				C905272A2599F7E200CBD62C /* libc++.tbd */,
 				C9349FA7248CF5420044565D /* libwad_editor_lib_macos.a */,
 				C9BE100123A73434000E25FC /* Metal.framework */,

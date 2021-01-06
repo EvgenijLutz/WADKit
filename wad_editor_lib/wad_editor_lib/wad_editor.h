@@ -13,22 +13,14 @@
 
 typedef struct WAD_EDITOR
 {
-	RESOURCE_STORAGE* resourceStorage;
+	WK_SYSTEM* system;
 	
-	char* filePath;
+	WK_STRING* openedWadPath;
 	WK_WAD* wad;
+	int hasChanges;
 	
-	WAD_EDITOR_ITEM* rootItem;
-	WAD_EDITOR_ITEM* texturePagesItem;
-	WAD_EDITOR_ITEM* meshesItem;
-	WAD_EDITOR_ITEM* skeletonsItem;
-	WAD_EDITOR_ITEM* movablesItem;
-	WAD_EDITOR_ITEM* staticsItem;
-	
-	WAD_EDITOR_ITEM* selectedItem;
-	
-	WAD_EDITOR_VIEWPORT_DELEGATE* meshViewportDelegate;
-	WAD_EDITOR_VIEWPORT* mainViewport;
+	GRAPHICS_VIEW* outputView;
+	GRAPHICS_DEVICE* device;
 	
 	// TODO: undo/redo buffer
 }
