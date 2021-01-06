@@ -13,7 +13,8 @@
 
 typedef struct WE_LIST
 {
-	void* userInfo;
+	WE_LIST_DELEGATE delegate;
+	WE_LIST_SUBSCRIBER* subscriber;
 	
 	DATA_ALLOCATOR* itemAllocator;
 	WE_LIST_ITEM rootItem;

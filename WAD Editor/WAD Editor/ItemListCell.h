@@ -1,5 +1,5 @@
 //
-//  ItemListView.h
+//  ItemListCell.h
 //  WAD Editor
 //
 //  Created by Евгений Лютц on 13.06.20.
@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface ItemListView : NSView
+@interface ItemListCell : NSTableCellView//NSView
 
 - (void)setText:(NSString*)text;
 

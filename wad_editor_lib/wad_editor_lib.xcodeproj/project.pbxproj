@@ -13,6 +13,8 @@
 		C9D3234225A5E991004204D8 /* list_interface.c in Sources */ = {isa = PBXBuildFile; fileRef = C9D3234025A5E991004204D8 /* list_interface.c */; };
 		C9D3234925A5EA21004204D8 /* list_item_interface.h in Headers */ = {isa = PBXBuildFile; fileRef = C9D3234725A5EA21004204D8 /* list_item_interface.h */; };
 		C9D3234A25A5EA21004204D8 /* list_item_interface.c in Sources */ = {isa = PBXBuildFile; fileRef = C9D3234825A5EA21004204D8 /* list_item_interface.c */; };
+		C9DE1C3F25A601150034544F /* list_item_private_interface.h in Headers */ = {isa = PBXBuildFile; fileRef = C9DE1C3D25A601150034544F /* list_item_private_interface.h */; };
+		C9DE1C4025A601150034544F /* list_item_private_interface.c in Sources */ = {isa = PBXBuildFile; fileRef = C9DE1C3E25A601150034544F /* list_item_private_interface.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +32,8 @@
 		C9D3234725A5EA21004204D8 /* list_item_interface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = list_item_interface.h; sourceTree = "<group>"; };
 		C9D3234825A5EA21004204D8 /* list_item_interface.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = list_item_interface.c; sourceTree = "<group>"; };
 		C9D3234D25A5F2C7004204D8 /* list_functions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = list_functions.h; sourceTree = "<group>"; };
+		C9DE1C3D25A601150034544F /* list_item_private_interface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = list_item_private_interface.h; sourceTree = "<group>"; };
+		C9DE1C3E25A601150034544F /* list_item_private_interface.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = list_item_private_interface.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +103,8 @@
 				C9D3234625A5EA16004204D8 /* list_item.h */,
 				C9D3234725A5EA21004204D8 /* list_item_interface.h */,
 				C9D3234825A5EA21004204D8 /* list_item_interface.c */,
+				C9DE1C3D25A601150034544F /* list_item_private_interface.h */,
+				C9DE1C3E25A601150034544F /* list_item_private_interface.c */,
 			);
 			name = Item;
 			sourceTree = "<group>";
@@ -113,6 +119,7 @@
 				C9D3234125A5E991004204D8 /* list_interface.h in Headers */,
 				C9D3234925A5EA21004204D8 /* list_item_interface.h in Headers */,
 				C9349FA3248CF46A0044565D /* wad_editor_interface.h in Headers */,
+				C9DE1C3F25A601150034544F /* list_item_private_interface.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -175,6 +182,7 @@
 			files = (
 				C9349FA4248CF46A0044565D /* wad_editor_interface.c in Sources */,
 				C9D3234A25A5EA21004204D8 /* list_item_interface.c in Sources */,
+				C9DE1C4025A601150034544F /* list_item_private_interface.c in Sources */,
 				C9D3234225A5E991004204D8 /* list_interface.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

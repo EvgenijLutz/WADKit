@@ -11,11 +11,16 @@
 
 #include "wad_editor_lib.h"
 
+WE_LIST_ITEM* listItemGetParent(WE_LIST_ITEM* listItem);
 unsigned long listItemGetFlags(WE_LIST_ITEM* listItem);
 void* listItemGetData(WE_LIST_ITEM* listItem);
 const char* listItemGetTitle(WE_LIST_ITEM* listItem);
+unsigned int listItemGetIndex(WE_LIST_ITEM* listItem);
 
-WE_LIST_ITEM* listItemAddChild(WE_LIST_ITEM* listItem, unsigned long flags, void* data, const char* name);
+unsigned int listItemGetNumberOfChildren(WE_LIST_ITEM* listItem);
+WE_LIST_ITEM* listItemGetChild(WE_LIST_ITEM* listItem, unsigned int itemIndex);
+WE_LIST_ITEM* listItemAddChild(WE_LIST_ITEM* listItem, unsigned long flags, void* data, const char* title);
 void listItemRemoveChild(WE_LIST_ITEM* listItem, WE_LIST_ITEM* child);
+void listItemClearChildren(WE_LIST_ITEM* listItem);
 
 #endif /* list_item_interface_h */

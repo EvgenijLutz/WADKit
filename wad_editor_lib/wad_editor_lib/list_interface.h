@@ -11,9 +11,13 @@
 
 #include "wad_editor_lib.h"
 
-WE_LIST* listCreate(void);
+WE_LIST* listCreate(WE_LIST_DELEGATE* delegate);
 void listRelease(WE_LIST* list);
 
+void listSubscribe(WE_LIST* list, WE_LIST_SUBSCRIBER* subscriber);
+
 WE_LIST_ITEM* listGetRootItem(WE_LIST* list);
+
+void listClear(WE_LIST* list);
 
 #endif /* list_interface_h */

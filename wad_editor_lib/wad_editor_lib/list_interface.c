@@ -7,3 +7,50 @@
 //
 
 #include "private_interface.h"
+
+WE_LIST* listCreate(WE_LIST_DELEGATE* delegate)
+{
+	WE_LIST* list = malloc(sizeof(WE_LIST));
+	list->delegate = *delegate;
+	list->subscriber = NULL;
+	
+	list->itemAllocator = dataAllocatorCreate(sizeof(WE_LIST_ITEM), 512);
+	listItemInitialize(&list->rootItem, list, NULL, 0, NULL, "Root");
+	
+	return list;
+}
+
+void listRelease(WE_LIST* list)
+{
+	assert(list);
+	
+	listItemDeinitialize(&list->rootItem);
+	dataAllocatorRelease(list->itemAllocator);
+	
+	debug_memset(list, 0, sizeof(WE_LIST));
+	free(list);
+}
+
+
+void listSubscribe(WE_LIST* list, WE_LIST_SUBSCRIBER* subscriber)
+{
+	assert(list);
+	assert(subscriber);
+	
+	// TODO: implement
+	assert(0);
+}
+
+
+WE_LIST_ITEM* listGetRootItem(WE_LIST* list)
+{
+	assert(list);
+	return &list->rootItem;
+}
+
+
+void listClear(WE_LIST* list)
+{
+	assert(list);
+	listItemClearChildren(&list->rootItem);
+}

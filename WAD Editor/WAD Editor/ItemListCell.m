@@ -1,16 +1,16 @@
 //
-//  WKOutlineCellView.m
+//  ItemListCell.m
 //  WAD Editor
 //
-//  Created by Евгений Лютц on 05.06.20.
+//  Created by Евгений Лютц on 13.06.20.
 //  Copyright © 2020 Eugene Lutz. All rights reserved.
 //
 
-#import "WKOutlineCellView.h"
+#import "ItemListCell.h"
 
-@implementation WKOutlineCellView
+@implementation ItemListCell
 {
-	//NSTextField* strongTextField;
+	NSTextField* _customText;
 }
 
 - (instancetype)init
@@ -24,6 +24,7 @@
 		_customText.editable = NO;
 		_customText.bezeled = NO;
 		_customText.lineBreakMode = NSLineBreakByTruncatingMiddle;
+		_customText.backgroundColor = NSColor.redColor;
 		
 		[self addSubview:_customText];
 		
@@ -33,6 +34,12 @@
 		[_customText.trailingAnchor constraintEqualToAnchor:_customText.superview.trailingAnchor].active = YES;
 	}
 	return self;
+}
+
+- (void)setText:(NSString*)text
+{
+	_customText.stringValue = text;
+	[_customText sizeToFit];
 }
 
 @end

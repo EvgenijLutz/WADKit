@@ -7,12 +7,9 @@
 //
 
 #import "MainWindow.h"
-#import "WKOutlineCellView.h"
-#import "WKOutlineItem.h"
-#import "WKOutlineDataSource.h"
-#import "WadItemsDataSource.h"
 #include "wad_editor_lib_link.h"
 #import "AppDelegate.h"
+#import "ItemList.h"
 
 #define SECTION_INDEX_TEXTURE_PAGE	(0)
 #define SECTION_INDEX_MESH			(1)
@@ -43,15 +40,12 @@
 @implementation MainWindow
 {
 	NSArray<NSString*>* outlineViewSections;
-	WKOutlineDataSource* outlineDataSource;
 	
 	NSSplitView* mainSplitView;
 	
 	
 	// Left sidebar
-	NSView* leftSidebarView;
-	WadItemsDataSource* wadItemsDataSource;
-	NSOutlineView* outline;
+	ItemList* leftSidebarView;
 	
 	
 	// Center view
@@ -103,7 +97,7 @@
 	}*/
 	
 	// TODO: uncomment
-	//[self _setupDynamicUserInterface];
+	[self _setupDynamicUserInterface];
 }
 
 - (void)dealloc
@@ -176,48 +170,8 @@
 {
 	NSRect sidebarRect = NSMakeRect(0.0f, 0.0f, 160.0f, 10.0f);
 	
-	leftSidebarView = [[NSView alloc] initWithFrame:sidebarRect];
+	leftSidebarView = [[ItemList alloc] initWithFrame:sidebarRect];
 	[mainSplitView addArrangedSubview:leftSidebarView];
-	
-	NSScrollView* scrollView = [[NSScrollView alloc] initWithFrame:sidebarRect];
-	scrollView.hasVerticalScroller = YES;
-	scrollView.hasHorizontalScroller = YES;
-	scrollView.drawsBackground = NO;
-	[leftSidebarView addSubview:scrollView];
-	scrollView.translatesAutoresizingMaskIntoConstraints = NO;
-	[scrollView.leadingAnchor constraintEqualToAnchor:leftSidebarView.leadingAnchor].active = YES;
-	[scrollView.topAnchor constraintEqualToAnchor:leftSidebarView.topAnchor].active = YES;
-	[scrollView.trailingAnchor constraintEqualToAnchor:leftSidebarView.trailingAnchor].active = YES;
-	[scrollView.bottomAnchor constraintEqualToAnchor:leftSidebarView.bottomAnchor].active = YES;
-	
-	NSClipView* clipView = [[NSClipView alloc] initWithFrame:sidebarRect];
-	clipView.autoresizesSubviews = YES;
-	clipView.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable;
-	clipView.drawsBackground = NO;
-	scrollView.contentView = clipView;
-	
-	outline = [[NSOutlineView alloc] initWithFrame:sidebarRect];
-	outline.floatsGroupRows = NO;
-	outline.indentationMarkerFollowsCell = YES;
-	outline.headerView = nil;
-	outline.focusRingType = NSFocusRingTypeNone;
-	outline.selectionHighlightStyle = NSTableViewSelectionHighlightStyleSourceList;
-	
-	//wadItemsDataSource = [[WadItemsDataSource alloc] initWithEditor:wadEditor];
-	wadItemsDataSource = nil;
-	outline.dataSource = wadItemsDataSource;
-	outline.delegate = wadItemsDataSource;
-	
-	clipView.documentView = outline;
-	
-	NSTableColumn* column = [[NSTableColumn alloc] initWithIdentifier:@"OutlineColumnIdentifier"];
-	column.title = @"Column";
-	column.width = sidebarRect.size.width;
-	column.headerCell.stringValue = @"Some string value";
-	column.headerCell.font = [NSFont systemFontOfSize:NSFont.smallSystemFontSize weight:NSFontWeightBold];
-	
-	[outline addTableColumn:column];
-	[outline setOutlineTableColumn:column];
 }
 
 

@@ -8,12 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		C9349FA8248CF5420044565D /* libwad_editor_lib_macos.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C9349FA7248CF5420044565D /* libwad_editor_lib_macos.a */; };
-		C9453C892495023600604E60 /* WadItemsDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = C9453C882495023600604E60 /* WadItemsDataSource.m */; };
-		C9453C8D2495068200604E60 /* WadItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = C9453C8C2495068200604E60 /* WadItemView.m */; };
-		C97A41212498191C0031ACD3 /* WadItem.m in Sources */ = {isa = PBXBuildFile; fileRef = C97A41202498191C0031ACD3 /* WadItem.m */; };
-		C9B6FAD6248A9739006DBCA7 /* WKOutlineCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = C9B6FAD5248A9739006DBCA7 /* WKOutlineCellView.m */; };
-		C9B6FADA248AB06E006DBCA7 /* WKOutlineDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = C9B6FAD9248AB06E006DBCA7 /* WKOutlineDataSource.m */; };
-		C9B6FADD248AB0F0006DBCA7 /* WKOutlineItem.m in Sources */ = {isa = PBXBuildFile; fileRef = C9B6FADC248AB0F0006DBCA7 /* WKOutlineItem.m */; };
+		C9453C8D2495068200604E60 /* ItemListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C9453C8C2495068200604E60 /* ItemListCell.m */; };
 		C9BC729523AD560100EFE0D7 /* Window.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9BC729423AD560100EFE0D7 /* Window.xib */; };
 		C9BE0FD323A733E3000E25FC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C9BE0FD223A733E3000E25FC /* AppDelegate.m */; };
 		C9BE0FD523A733E7000E25FC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C9BE0FD423A733E7000E25FC /* Assets.xcassets */; };
@@ -27,6 +22,7 @@
 		C9BE100623A73434000E25FC /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9BE100323A73434000E25FC /* MetalKit.framework */; };
 		C9BE100923A761D1000E25FC /* MainWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = C9BE100823A761D1000E25FC /* MainWindow.m */; };
 		C9D3233925A5E87F004204D8 /* libgraphics_macOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C9D3233825A5E87F004204D8 /* libgraphics_macOS.a */; };
+		C9DE1C4425A608E90034544F /* ItemListValue.m in Sources */ = {isa = PBXBuildFile; fileRef = C9DE1C4325A608E90034544F /* ItemListValue.m */; };
 		C9E2BE88247D695C006FF2AE /* tut1.raw in Resources */ = {isa = PBXBuildFile; fileRef = C9E2BE7F247D695C006FF2AE /* tut1.raw */; };
 		C9E2BE89247D695C006FF2AE /* tut1.TOM in Resources */ = {isa = PBXBuildFile; fileRef = C9E2BE80247D695C006FF2AE /* tut1.TOM */; };
 		C9E2BE8A247D695C006FF2AE /* tut1.sfx in Resources */ = {isa = PBXBuildFile; fileRef = C9E2BE81247D695C006FF2AE /* tut1.sfx */; };
@@ -36,6 +32,7 @@
 		C9E2BE8E247D695C006FF2AE /* tut1.sam in Resources */ = {isa = PBXBuildFile; fileRef = C9E2BE85247D695C006FF2AE /* tut1.sam */; };
 		C9E2BE8F247D695C006FF2AE /* tut1.SWD in Resources */ = {isa = PBXBuildFile; fileRef = C9E2BE86247D695C006FF2AE /* tut1.SWD */; };
 		C9E2BE90247D695C006FF2AE /* tut1.CD in Resources */ = {isa = PBXBuildFile; fileRef = C9E2BE87247D695C006FF2AE /* tut1.CD */; };
+		C9E6972D25A5FB4C001667A2 /* ItemList.m in Sources */ = {isa = PBXBuildFile; fileRef = C9E6972C25A5FB4C001667A2 /* ItemList.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,19 +55,9 @@
 /* Begin PBXFileReference section */
 		C905272A2599F7E200CBD62C /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		C9349FA7248CF5420044565D /* libwad_editor_lib_macos.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libwad_editor_lib_macos.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		C9453C872495023600604E60 /* WadItemsDataSource.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WadItemsDataSource.h; sourceTree = "<group>"; };
-		C9453C882495023600604E60 /* WadItemsDataSource.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WadItemsDataSource.m; sourceTree = "<group>"; };
-		C9453C8B2495068200604E60 /* WadItemView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WadItemView.h; sourceTree = "<group>"; };
-		C9453C8C2495068200604E60 /* WadItemView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WadItemView.m; sourceTree = "<group>"; };
-		C97A411F2498191C0031ACD3 /* WadItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WadItem.h; sourceTree = "<group>"; };
-		C97A41202498191C0031ACD3 /* WadItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WadItem.m; sourceTree = "<group>"; };
+		C9453C8B2495068200604E60 /* ItemListCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ItemListCell.h; sourceTree = "<group>"; };
+		C9453C8C2495068200604E60 /* ItemListCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ItemListCell.m; sourceTree = "<group>"; };
 		C97D12C62494C040005EAC04 /* wad_editor_lib_link.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wad_editor_lib_link.h; sourceTree = "<group>"; };
-		C9B6FAD4248A9739006DBCA7 /* WKOutlineCellView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WKOutlineCellView.h; sourceTree = "<group>"; };
-		C9B6FAD5248A9739006DBCA7 /* WKOutlineCellView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WKOutlineCellView.m; sourceTree = "<group>"; };
-		C9B6FAD8248AB06E006DBCA7 /* WKOutlineDataSource.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WKOutlineDataSource.h; sourceTree = "<group>"; };
-		C9B6FAD9248AB06E006DBCA7 /* WKOutlineDataSource.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WKOutlineDataSource.m; sourceTree = "<group>"; };
-		C9B6FADB248AB0F0006DBCA7 /* WKOutlineItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WKOutlineItem.h; sourceTree = "<group>"; };
-		C9B6FADC248AB0F0006DBCA7 /* WKOutlineItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WKOutlineItem.m; sourceTree = "<group>"; };
 		C9BC729423AD560100EFE0D7 /* Window.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Window.xib; sourceTree = "<group>"; };
 		C9BE0FCE23A733E3000E25FC /* WAD Editor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "WAD Editor.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9BE0FD123A733E3000E25FC /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -93,6 +80,8 @@
 		C9BE100723A761D1000E25FC /* MainWindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MainWindow.h; sourceTree = "<group>"; };
 		C9BE100823A761D1000E25FC /* MainWindow.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MainWindow.m; sourceTree = "<group>"; };
 		C9D3233825A5E87F004204D8 /* libgraphics_macOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libgraphics_macOS.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		C9DE1C4225A608E90034544F /* ItemListValue.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ItemListValue.h; sourceTree = "<group>"; };
+		C9DE1C4325A608E90034544F /* ItemListValue.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ItemListValue.m; sourceTree = "<group>"; };
 		C9E2BE7F247D695C006FF2AE /* tut1.raw */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = tut1.raw; sourceTree = "<group>"; };
 		C9E2BE80247D695C006FF2AE /* tut1.TOM */ = {isa = PBXFileReference; lastKnownFileType = file; path = tut1.TOM; sourceTree = "<group>"; };
 		C9E2BE81247D695C006FF2AE /* tut1.sfx */ = {isa = PBXFileReference; lastKnownFileType = file; path = tut1.sfx; sourceTree = "<group>"; };
@@ -102,6 +91,8 @@
 		C9E2BE85247D695C006FF2AE /* tut1.sam */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = tut1.sam; sourceTree = "<group>"; };
 		C9E2BE86247D695C006FF2AE /* tut1.SWD */ = {isa = PBXFileReference; lastKnownFileType = file; path = tut1.SWD; sourceTree = "<group>"; };
 		C9E2BE87247D695C006FF2AE /* tut1.CD */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = tut1.CD; sourceTree = "<group>"; };
+		C9E6972B25A5FB4C001667A2 /* ItemList.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ItemList.h; sourceTree = "<group>"; };
+		C9E6972C25A5FB4C001667A2 /* ItemList.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ItemList.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -135,29 +126,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		C9453C8A2495023C00604E60 /* Wad items data source */ = {
+		C9453C8A2495023C00604E60 /* List items data source */ = {
 			isa = PBXGroup;
 			children = (
-				C97A411F2498191C0031ACD3 /* WadItem.h */,
-				C97A41202498191C0031ACD3 /* WadItem.m */,
-				C9453C8B2495068200604E60 /* WadItemView.h */,
-				C9453C8C2495068200604E60 /* WadItemView.m */,
-				C9453C872495023600604E60 /* WadItemsDataSource.h */,
-				C9453C882495023600604E60 /* WadItemsDataSource.m */,
+				C9DE1C4225A608E90034544F /* ItemListValue.h */,
+				C9DE1C4325A608E90034544F /* ItemListValue.m */,
+				C9453C8B2495068200604E60 /* ItemListCell.h */,
+				C9453C8C2495068200604E60 /* ItemListCell.m */,
+				C9E6972B25A5FB4C001667A2 /* ItemList.h */,
+				C9E6972C25A5FB4C001667A2 /* ItemList.m */,
 			);
-			name = "Wad items data source";
+			name = "List items data source";
 			sourceTree = "<group>";
 		};
 		C9B6FAD3248A96E1006DBCA7 /* UI */ = {
 			isa = PBXGroup;
 			children = (
-				C9453C8A2495023C00604E60 /* Wad items data source */,
-				C9B6FAD4248A9739006DBCA7 /* WKOutlineCellView.h */,
-				C9B6FAD5248A9739006DBCA7 /* WKOutlineCellView.m */,
-				C9B6FADB248AB0F0006DBCA7 /* WKOutlineItem.h */,
-				C9B6FADC248AB0F0006DBCA7 /* WKOutlineItem.m */,
-				C9B6FAD8248AB06E006DBCA7 /* WKOutlineDataSource.h */,
-				C9B6FAD9248AB06E006DBCA7 /* WKOutlineDataSource.m */,
+				C9453C8A2495023C00604E60 /* List items data source */,
 				C9BE100723A761D1000E25FC /* MainWindow.h */,
 				C9BE100823A761D1000E25FC /* MainWindow.m */,
 			);
@@ -390,15 +375,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C9B6FAD6248A9739006DBCA7 /* WKOutlineCellView.m in Sources */,
-				C9B6FADD248AB0F0006DBCA7 /* WKOutlineItem.m in Sources */,
+				C9DE1C4425A608E90034544F /* ItemListValue.m in Sources */,
 				C9BE0FDB23A733E7000E25FC /* main.m in Sources */,
-				C9453C8D2495068200604E60 /* WadItemView.m in Sources */,
+				C9E6972D25A5FB4C001667A2 /* ItemList.m in Sources */,
+				C9453C8D2495068200604E60 /* ItemListCell.m in Sources */,
 				C9BE0FD323A733E3000E25FC /* AppDelegate.m in Sources */,
 				C9BE100923A761D1000E25FC /* MainWindow.m in Sources */,
-				C97A41212498191C0031ACD3 /* WadItem.m in Sources */,
-				C9453C892495023600604E60 /* WadItemsDataSource.m in Sources */,
-				C9B6FADA248AB06E006DBCA7 /* WKOutlineDataSource.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -22,4 +22,6 @@
 
 // MARK: - Private interface
 
+#include "list_item_private_interface.h"
+
 #endif /* private_interface_h */
