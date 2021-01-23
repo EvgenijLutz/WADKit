@@ -68,14 +68,16 @@ typedef struct WK_WAD
 {
 	unsigned int version;
 	
-	/*!
-	 @b WK_ANIMATION structure allocator. Used in the @b WK_MOVABLE.animations structure.
-	 */
+	/// @b WK_RAW_VERTEX structure allocator. Used in the @b WK_MESH.vertices structure.
+	DATA_ALLOCATOR* rawVertexAllocator;
+	
+	/// @b WK_RAW_POLYGON structure allocator. Used in the @b WK_MESH.polygons structure.
+	DATA_ALLOCATOR* rawPolygonAllocator;
+	
+	/// @b WK_ANIMATION structure allocator. Used in the @b WK_MOVABLE.animations structure.
 	DATA_ALLOCATOR* animationAllocator;
 	
-	/*!
-	 @b WK_KEYFRAME structure allocator. Used in the @b WK_ANIMATION.keyframes structure.
-	 */
+	/// @b WK_KEYFRAME structure allocator. Used in the @b WK_ANIMATION.keyframes structure.
 	DATA_ALLOCATOR* keyframeAllocator;
 	
 	/*!

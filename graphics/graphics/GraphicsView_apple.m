@@ -6,7 +6,7 @@
 //  Copyright © 2021 Eugene Lutz. All rights reserved.
 //
 
-#import "GraphicsView.h"
+#import "GraphicsView_apple.h"
 #import "private_interface.h"
 
 // MARK: - Private interface - GRAPHICS_VIEW callbacks
@@ -51,19 +51,20 @@ static void _metalGraphicsView_returnTexture(GRAPHICS_DRAWABLE* graphicsDrawable
 	id<MTLDevice> _metalDevice;
 }
 
-- (instancetype)initWithFrame:(NSRect)frame graphicsDevice:(GRAPHICS_DEVICE*)graphicsDevice
+- (instancetype)initWithFrame:(NSRect)frame graphicsDevice:(GraphicsDevice*)graphicsDevice
 {
 	self = [super init];
 	if (self)
 	{
-		_metalDevice = (__bridge id<MTLDevice>)graphicsDevice->userInfo;
+		_metalDevice = graphicsDevice.metalDevice;
 		_graphicsDevice = graphicsDevice;
-		_graphicsView = graphicsViewCreate(_metalGraphicsView_getCurrentDrawable, _metalGraphicsView_returnDrawable, _metalGraphicsView_getTexture, _metalGraphicsView_returnTexture, (__bridge void*)self, (float)frame.size.width, (float)frame.size.height, graphicsDevice);
+		_graphicsView = graphicsViewCreate(_metalGraphicsView_getCurrentDrawable, _metalGraphicsView_returnDrawable, _metalGraphicsView_getTexture, _metalGraphicsView_returnTexture, (__bridge void*)self, (float)frame.size.width, (float)frame.size.height, graphicsDevice.graphicsDevice);
 		
-		self.colorPixelFormat = MTLPixelFormatBGRA8Unorm;
-		self.depthStencilPixelFormat = MTLPixelFormatDepth32Float_Stencil8;
+		self.device = graphicsDevice.metalDevice;
+		self.colorPixelFormat = graphicsDevice.defaultRenderColorPixelFormat;
+		self.depthStencilPixelFormat = graphicsDevice.defaultDepthStencilPixelFormat;
 		self.colorspace = CGColorSpaceCreateWithName(kCGColorSpaceDisplayP3);
-		self.clearColor = MTLClearColorMake(0.1, 0.1, 0.1, 1.0);
+		self.clearColor = graphicsDevice.defaultRenderClearColor;
 		self.delegate = self;
 	}
 	return self;

@@ -13,9 +13,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface GraphicsView : MTKView<MTKViewDelegate>
 
-- (instancetype)initWithFrame:(NSRect)frame graphicsDevice:(GRAPHICS_DEVICE*)graphicsDevice;
+- (instancetype)initWithFrame:(NSRect)frame graphicsDevice:(GraphicsDevice*)graphicsDevice;
 
-@property (nonatomic, readonly) GRAPHICS_DEVICE* graphicsDevice;
+@property (nonatomic, readonly, weak) GraphicsDevice* graphicsDevice;
 @property (nonatomic, readonly) GRAPHICS_VIEW* graphicsView;
 
 @end

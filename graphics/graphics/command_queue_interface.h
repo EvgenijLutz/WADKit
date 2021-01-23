@@ -11,8 +11,7 @@
 
 #include "graphics.h"
 
+COMMAND_QUEUE* graphicsDeviceCreateCommandQueue(GRAPHICS_DEVICE* device);
 void commandQueueRelease(COMMAND_QUEUE* commandQueue);
-
-COMMAND_BUFFER* commandQueueCreateCommandBuffer(COMMAND_QUEUE* commandQueue);
 
 #endif /* command_queue_interface_h */

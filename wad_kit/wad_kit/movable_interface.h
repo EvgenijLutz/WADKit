@@ -12,9 +12,11 @@
 #include "wad_kit.h"
 
 MOVABLE_ID movableGetId(MOVABLE* movable);
-const char* movableIdGetName(MOVABLE_ID movableId);
+const char* movableIdGetTerribleName(MOVABLE_ID movableId);
 
 MESH* movableGetRootMesh(MOVABLE* movable);
+unsigned int movableGetNumJoints(MOVABLE* movable);
+JOINT* movableGetJoint(MOVABLE* movable, unsigned int jointIndex);
 
 unsigned int movableGetNumAnimations(MOVABLE* movable);
 ANIMATION* movableGetAnimation(MOVABLE* movable, unsigned int animationIndex);

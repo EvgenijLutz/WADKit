@@ -17,6 +17,8 @@ void* listItemGetData(WE_LIST_ITEM* listItem);
 const char* listItemGetTitle(WE_LIST_ITEM* listItem);
 unsigned int listItemGetIndex(WE_LIST_ITEM* listItem);
 
+void listItemSelect(WE_LIST_ITEM* listItem);
+
 unsigned int listItemGetNumberOfChildren(WE_LIST_ITEM* listItem);
 WE_LIST_ITEM* listItemGetChild(WE_LIST_ITEM* listItem, unsigned int itemIndex);
 WE_LIST_ITEM* listItemAddChild(WE_LIST_ITEM* listItem, unsigned long flags, void* data, const char* title);

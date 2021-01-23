@@ -8,6 +8,19 @@
 
 #include "private_interface.h"
 
+COMMAND_QUEUE* graphicsDeviceCreateCommandQueue(GRAPHICS_DEVICE* device)
+{
+	assert(device);
+	
+	void* commandQueueId = device->createCommandQueueFunc(device);
+	assert(commandQueueId);
+	
+	COMMAND_QUEUE* commandQueue = arrayAddItem(&device->commandQueues);
+	commandQueue->device = device;
+	commandQueue->commandQueueId = commandQueueId;
+	return commandQueue;
+}
+
 void commandQueueRelease(COMMAND_QUEUE* commandQueue)
 {
 	assert(commandQueue);
@@ -16,18 +29,4 @@ void commandQueueRelease(COMMAND_QUEUE* commandQueue)
 	device->releaseCommandQueueFunc(device, commandQueue);
 	debug_memset(commandQueue, 0, sizeof(COMMAND_QUEUE));
 	arrayRemoveItem(&device->commandQueues, commandQueue);
-}
-
-
-COMMAND_BUFFER* commandQueueCreateCommandBuffer(COMMAND_QUEUE* commandQueue)
-{
-	assert(commandQueue);
-	assert(commandQueue->device);
-	
-	GRAPHICS_DEVICE* device = commandQueue->device;
-	void* commandBufferId = device->commandQueueCreateCommandBufferFunc(commandQueue);
-	COMMAND_BUFFER* commandBuffer = arrayAddItem(&device->commandBuffers);
-	commandBuffer->commandQueue = commandQueue;
-	commandBuffer->commandBufferId = commandBufferId;
-	return commandBuffer;
 }

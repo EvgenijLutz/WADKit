@@ -228,7 +228,7 @@
 - (void)_setupTopCenterViewport
 {
 	NSRect viewportRect = NSMakeRect(0.0f, 0.0f, 10.0f, 10.0f);
-	GRAPHICS_DEVICE* graphicsDevice = AppDelegate.graphicsDevice;
+	GraphicsDevice* graphicsDevice = AppDelegate.graphicsDevice;
 	editorViewportView = [[GraphicsView alloc] initWithFrame:viewportRect graphicsDevice:graphicsDevice];
 	
 	[topCenterSplitView addArrangedSubview:editorViewportView];

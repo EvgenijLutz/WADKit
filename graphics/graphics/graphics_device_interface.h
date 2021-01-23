@@ -17,10 +17,4 @@
 const char* graphicsDeviceGetName(GRAPHICS_DEVICE* graphicsDevice);
 void* graphicsDeviceGetUserInfo(GRAPHICS_DEVICE* graphicsDevice);
 
-TEXTURE2D* graphicsDeviceCreateTexture2dWithData(GRAPHICS_DEVICE* device, unsigned int width, unsigned int height, unsigned int numComponents, TEXTURE_USAGE usage, const void* data);
-
-GRAPHICS_BUFFER* graphicsDeviceCreateBuffer(GRAPHICS_DEVICE* device, unsigned int length, GRAPHICS_BUFFER_OPTION option);
-
-COMMAND_QUEUE* graphicsDeviceCreateCommandQueue(GRAPHICS_DEVICE* device);
-
 #endif /* graphics_device_interface_h */

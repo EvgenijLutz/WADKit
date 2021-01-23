@@ -23,4 +23,7 @@ GRAPHICS_DEVICE* graphicsViewGetDevice(GRAPHICS_VIEW* graphicsView);
 /// Result can be @b null if there is no currently available drawable to render to. You should return the drawable ( function @b graphicsDrawableReturn ) when you will not need it, typically when rendering to it is complete.
 GRAPHICS_DRAWABLE* graphicsViewRequestCurrentDrawable(GRAPHICS_VIEW* graphicsView);
 
+float graphicsViewGetWidth(GRAPHICS_VIEW* graphicsView);
+float graphicsViewGetHeight(GRAPHICS_VIEW* graphicsView);
+
 #endif /* graphics_view_interface_h */

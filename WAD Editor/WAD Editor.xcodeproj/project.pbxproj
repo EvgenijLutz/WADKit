@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C920D4DF25BC2B4000E473DE /* libgraphics_macos.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C920D4DE25BC2B4000E473DE /* libgraphics_macos.a */; };
+		C920D54025BC737D00E473DE /* default.metallib in Resources */ = {isa = PBXBuildFile; fileRef = C920D53F25BC737D00E473DE /* default.metallib */; };
 		C9349FA8248CF5420044565D /* libwad_editor_lib_macos.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C9349FA7248CF5420044565D /* libwad_editor_lib_macos.a */; };
 		C9453C8D2495068200604E60 /* ItemListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C9453C8C2495068200604E60 /* ItemListCell.m */; };
 		C9BC729523AD560100EFE0D7 /* Window.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9BC729423AD560100EFE0D7 /* Window.xib */; };
@@ -21,7 +23,6 @@
 		C9BE100523A73434000E25FC /* MetalPerformanceShaders.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9BE100223A73434000E25FC /* MetalPerformanceShaders.framework */; };
 		C9BE100623A73434000E25FC /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9BE100323A73434000E25FC /* MetalKit.framework */; };
 		C9BE100923A761D1000E25FC /* MainWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = C9BE100823A761D1000E25FC /* MainWindow.m */; };
-		C9D3233925A5E87F004204D8 /* libgraphics_macOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C9D3233825A5E87F004204D8 /* libgraphics_macOS.a */; };
 		C9DE1C4425A608E90034544F /* ItemListValue.m in Sources */ = {isa = PBXBuildFile; fileRef = C9DE1C4325A608E90034544F /* ItemListValue.m */; };
 		C9E2BE88247D695C006FF2AE /* tut1.raw in Resources */ = {isa = PBXBuildFile; fileRef = C9E2BE7F247D695C006FF2AE /* tut1.raw */; };
 		C9E2BE89247D695C006FF2AE /* tut1.TOM in Resources */ = {isa = PBXBuildFile; fileRef = C9E2BE80247D695C006FF2AE /* tut1.TOM */; };
@@ -54,6 +55,8 @@
 
 /* Begin PBXFileReference section */
 		C905272A2599F7E200CBD62C /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
+		C920D4DE25BC2B4000E473DE /* libgraphics_macos.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libgraphics_macos.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		C920D53F25BC737D00E473DE /* default.metallib */ = {isa = PBXFileReference; lastKnownFileType = "archive.metal-library"; path = default.metallib; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9349FA7248CF5420044565D /* libwad_editor_lib_macos.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libwad_editor_lib_macos.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9453C8B2495068200604E60 /* ItemListCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ItemListCell.h; sourceTree = "<group>"; };
 		C9453C8C2495068200604E60 /* ItemListCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ItemListCell.m; sourceTree = "<group>"; };
@@ -104,7 +107,7 @@
 				C9BE100623A73434000E25FC /* MetalKit.framework in Frameworks */,
 				C9349FA8248CF5420044565D /* libwad_editor_lib_macos.a in Frameworks */,
 				C9BE100523A73434000E25FC /* MetalPerformanceShaders.framework in Frameworks */,
-				C9D3233925A5E87F004204D8 /* libgraphics_macOS.a in Frameworks */,
+				C920D4DF25BC2B4000E473DE /* libgraphics_macos.a in Frameworks */,
 				C9BE100023A7341E000E25FC /* libwad_kit.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -209,6 +212,7 @@
 		C9BE0FFE23A7341E000E25FC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C920D4DE25BC2B4000E473DE /* libgraphics_macos.a */,
 				C9D3233825A5E87F004204D8 /* libgraphics_macOS.a */,
 				C905272A2599F7E200CBD62C /* libc++.tbd */,
 				C9349FA7248CF5420044565D /* libwad_editor_lib_macos.a */,
@@ -223,6 +227,7 @@
 		C9E2BE7E247D690D006FF2AE /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				C920D53F25BC737D00E473DE /* default.metallib */,
 				C9E2BE87247D695C006FF2AE /* tut1.CD */,
 				C9E2BE83247D695C006FF2AE /* tut1.lar */,
 				C9E2BE7F247D695C006FF2AE /* tut1.raw */,
@@ -348,6 +353,7 @@
 				C9E2BE90247D695C006FF2AE /* tut1.CD in Resources */,
 				C9E2BE8D247D695C006FF2AE /* tut1.WAD in Resources */,
 				C9BE0FD823A733E7000E25FC /* MainMenu.xib in Resources */,
+				C920D54025BC737D00E473DE /* default.metallib in Resources */,
 				C9E2BE88247D695C006FF2AE /* tut1.raw in Resources */,
 				C9E2BE8F247D695C006FF2AE /* tut1.SWD in Resources */,
 				C9BC729523AD560100EFE0D7 /* Window.xib in Resources */,
@@ -544,6 +550,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = 7N525N28LV;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = "WAD Editor/Info.plist";
@@ -564,6 +571,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = 7N525N28LV;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = "WAD Editor/Info.plist";

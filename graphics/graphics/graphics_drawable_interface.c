@@ -20,8 +20,8 @@ void graphicsDrawableReturn(GRAPHICS_DRAWABLE* graphicsDrawable)
 	}
 	
 	graphicsDrawable->graphicsView->returnDrawableFunc(graphicsDrawable);
-	debug_memset(graphicsDrawable, 0, sizeof(GRAPHICS_DRAWABLE));
 	arrayRemoveItem(&graphicsDrawable->graphicsView->drawables, graphicsDrawable);
+	//debug_memset(graphicsDrawable, 0, sizeof(GRAPHICS_DRAWABLE));
 }
 
 TEXTURE2D* graphicsDrawableGetTexture(GRAPHICS_DRAWABLE* graphicsDrawable)

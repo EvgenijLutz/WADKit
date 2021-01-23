@@ -16,18 +16,21 @@ typedef struct GRAPHICS_DEVICE
 	WK_STRING name;
 	
 	WK_ARRAY textures;
-	WK_ARRAY buffers;
+	WK_ARRAY meshes;
+	WK_ARRAY meshUniforms;
 	WK_ARRAY commandQueues;
 	WK_ARRAY commandBuffers;
-	WK_ARRAY blitCommandEncoders;
+	WK_ARRAY renderCommandEncoders;
 	
 	GRAPHICS_DEVICE_CREATE_TEXTURE2D_WITH_DATA_FUNC createTexture2dWithDataFunc;
 	GRAPHICS_DEVICE_RELEASE_TEXTURE2D_FUNC releaseTexture2dFunc;
 	
-	GRAPHICS_DEVICE_CREATE_BUFFER_FUNC createBufferFunc;
-	GRAPHICS_BUFFER_RELEASE_FUNC graphicsBufferReleaseFunc;
-	GRAPHICS_BUFFER_SET_LABEL_FUNC graphicsBufferSetLabelFunc;
-	GRAPHICS_BUFFER_GET_DATA_TO_CPU_WRITE_FUNC graphicsBufferGetDataToCPUWriteFunc;
+	GRAPHICS_DEVICE_CREATE_MESH_FUNC createMeshFunc;
+	GRAPHICS_MESH_RELEASE_FUNC releaseMeshFunc;
+	
+	GRAPHICS_DEVICE_CREATE_MESH_UNIFORMS_FUNC createMeshUniformsFunc;
+	GRAPHICS_MESH_UNIFORMS_RELEASE_FUNC meshUniformsReleaseFunc;
+	GRAPHICS_MESH_UNIFORMS_SET_DATA_FUNC meshUniformsSetDataFunc;
 	
 	GRAPHICS_DEVICE_CREATE_COMMAND_QUEUE_FUNC createCommandQueueFunc;
 	GRAPHICS_DEVICE_RELEASE_COMMAND_QUEUE_FUNC releaseCommandQueueFunc;
@@ -40,11 +43,10 @@ typedef struct GRAPHICS_DEVICE
 	COMMAND_BUFFER_COMMIT_FUNC commandBufferCommitFunc;
 	COMMAND_BUFFER_WAIT_UNTIL_COMPLETED_FUNC commandBufferWaitUntilCompletedFunc;
 	
-	COMMAND_BUFFER_START_BLIT_COMMAND_ENCODER_FUNC commandBufferStartBlitCommandEncoderFunc;
-	BLIT_COMMAND_ENCODER_END_ENCODING_FUNC blitCommandEncoderEndEncodingFunc;
-	BLIT_COMMAND_ENCODER_COPY_FROM_BUFFER_TO_BUFFER_FUNC blitCommandEncoderCopyFromBufferToBuffer;
+	COMMAND_BUFFER_START_RENDER_COMMAND_ENCODER_FUNC commandBufferStartRenderCommandEncoderFunc;
+	RENDER_COMMAND_ENCODER_END_ENCODING_FUNC renderCommandEncoderEndEncodingFunc;
+	RENDER_COMMAND_ENCODER_RENDER_TEXTURED_MESH_FUNC renderCommandEncoderRenderTexturedMeshFunc;
 	
-	int createdByDefault;
 	void* userInfo;
 }
 GRAPHICS_DEVICE;

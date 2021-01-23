@@ -8,24 +8,31 @@
 
 #include "private_interface.h"
 
+COMMAND_BUFFER* commandQueueCreateCommandBuffer(COMMAND_QUEUE* commandQueue)
+{
+	assert(commandQueue);
+	assert(commandQueue->device);
+	
+	GRAPHICS_DEVICE* device = commandQueue->device;
+	void* commandBufferId = device->commandQueueCreateCommandBufferFunc(commandQueue);
+	COMMAND_BUFFER* commandBuffer = arrayAddItem(&device->commandBuffers);
+	commandBuffer->commandQueue = commandQueue;
+	commandBuffer->commandBufferId = commandBufferId;
+	return commandBuffer;
+}
+
 void commandBufferRelease(COMMAND_BUFFER* commandBuffer)
 {
 	assert(commandBuffer);
 	commandQueueReleaseCommandBuffer(commandBuffer->commandQueue, commandBuffer);
 }
 
-
-BLIT_COMMAND_ENCODER* commandBufferStartBlitCommandEncoder(COMMAND_BUFFER* commandBuffer)
+void commandBufferScheduleDisplayDrawable(COMMAND_BUFFER* commandBuffer, GRAPHICS_DRAWABLE* drawable)
 {
 	assert(commandBuffer);
+	assert(drawable);
 	
-	GRAPHICS_DEVICE* device = commandBuffer->commandQueue->device;
-	void* blitCommandEncoderId = device->commandBufferStartBlitCommandEncoderFunc(commandBuffer);
-	
-	BLIT_COMMAND_ENCODER* encoder = arrayAddItem(&device->blitCommandEncoders);
-	encoder->commandBuffer = commandBuffer;
-	encoder->blitCommandEncoderId = blitCommandEncoderId;
-	return encoder;
+	commandBuffer->commandQueue->device->commandBufferPresentDrawableFunc(commandBuffer, drawable);
 }
 
 

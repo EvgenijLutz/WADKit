@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "C90583C325A5D764000C515B"
-               BuildableName = "libgraphics_macOS.a"
+               BuildableName = "libgraphics_macos.a"
                BlueprintName = "graphics macOS"
                ReferencedContainer = "container:graphics.xcodeproj">
             </BuildableReference>
@@ -51,7 +51,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "C90583C325A5D764000C515B"
-            BuildableName = "libgraphics_macOS.a"
+            BuildableName = "libgraphics_macos.a"
             BlueprintName = "graphics macOS"
             ReferencedContainer = "container:graphics.xcodeproj">
          </BuildableReference>

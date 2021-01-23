@@ -11,9 +11,34 @@
 
 #include "private_interface.h"
 
+/*typedef struct WK_TEXTURE WK_TEXTURE;
+typedef struct WK_MESH_EXTENSION WK_MESH_EXTENSION;
+
+typedef struct WK_SUBMESH_EXTENSION
+{
+	WK_MESH_EXTENSION* meshExtension;
+	
+	WK_TEXTURE* texture;
+	WK_ARRAY vertices;
+	WK_ARRAY polygons;
+}
+WK_SUBMESH_EXTENSION;
+
+typedef struct WK_MESH_EXTENSION
+{
+	MESH* mesh;
+	
+	vector3f sphereLocation;
+	float sphereRadius;
+	
+	WK_ARRAY submeshes;
+}
+WK_MESH_EXTENSION;*/
+
 typedef struct MESH
 {
 	WK_WAD* wad;
+	//WK_MESH_EXTENSION* extension;
 	unsigned long numReferences;
 	
 	short cx;
@@ -28,14 +53,10 @@ typedef struct MESH
 	
 	int usesNormals;
 	
-	/*!
-	 Array of @b VERTEX elements.
-	 */
+	/// Array of @b VERTEX elements.
 	WK_ARRAY vertices;
 	
-	/*!
-	 Array of @b POLYGON elements.
-	 */
+	/// Array of @b POLYGON elements.
 	WK_ARRAY polygons;
 }
 MESH;

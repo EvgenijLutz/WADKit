@@ -19,6 +19,8 @@ typedef struct WE_LIST
 	
 	DATA_ALLOCATOR* itemAllocator;
 	WE_LIST_ITEM rootItem;
+	
+	WE_LIST_ITEM* selectedItem;
 }
 WE_LIST;
 

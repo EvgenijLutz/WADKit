@@ -18,6 +18,8 @@ WE_LIST* listCreate(WE_LIST_DELEGATE* delegate)
 	list->itemAllocator = dataAllocatorCreate(sizeof(WE_LIST_ITEM), 512);
 	listItemInitialize(&list->rootItem, list, NULL, 0, NULL, "Root");
 	
+	list->selectedItem = NULL;
+	
 	return list;
 }
 
@@ -40,6 +42,30 @@ void listSubscribe(WE_LIST* list, WE_LIST_SUBSCRIBER* subscriber)
 	
 	list->subscriber = *subscriber;
 	list->hasSubscriber = 1;
+}
+
+void listSelectItem(WE_LIST* list, WE_LIST_ITEM* item)
+{
+	assert(list);
+	
+	if (list->selectedItem)
+	{
+		WE_LIST_ITEM* lastSelectedItem = list->selectedItem;
+		list->selectedItem = NULL;
+		if (list->hasSubscriber)
+		{
+			list->subscriber.itemDeselectedFunc(list, lastSelectedItem, list->subscriber.userInfo);
+		}
+	}
+	
+	if (item)
+	{
+		list->selectedItem = item;
+		if (list->hasSubscriber)
+		{
+			list->subscriber.itemSelectedFunc(list, item, list->subscriber.userInfo);
+		}
+	}
 }
 
 

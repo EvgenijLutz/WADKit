@@ -24,10 +24,14 @@ typedef struct WAD_EDITOR
 	
 	GRAPHICS_DEVICE* device;
 	COMMAND_QUEUE* commandQueue;
-	COMMAND_BUFFER* commandBuffer;
 	
 	WK_SEMAPHORE* accessSemaphore;
 	double lastUpdateTime;
+	
+	MESH* selectedMesh;
+	
+	GRAPHICS_MESH_UNIFORMS* testMeshUniforms;
+	GRAPHICS_MESH* testMesh;
 	
 	// TODO: undo/redo buffer
 }

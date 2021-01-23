@@ -8,7 +8,7 @@
 
 #include "private_interface.h"
 
-char* movableNames[] =
+char* _movable_terribleNames[] =
 {
 	"LARA",
 	
@@ -530,11 +530,11 @@ char* movableNames[] =
 	"NUMBER_OBJECTS"
 };
 
-const char* movableIdGetName(MOVABLE_ID movableId)
+const char* movableIdGetTerribleName(MOVABLE_ID movableId)
 {
 	if (movableId >= MOVABLE_ID_LARA && movableId < MOVABLE_ID_NUMBER_OBJECTS)
 	{
-		return movableNames[movableId];
+		return _movable_terribleNames[movableId];
 	}
 	
 	return "Unknown";

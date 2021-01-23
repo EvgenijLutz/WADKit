@@ -45,6 +45,13 @@ unsigned int listItemGetIndex(WE_LIST_ITEM* listItem)
 }
 
 
+void listItemSelect(WE_LIST_ITEM* listItem)
+{
+	assert(listItem);
+	listSelectItem(listItem->list, listItem);
+}
+
+
 unsigned int listItemGetNumberOfChildren(WE_LIST_ITEM* listItem)
 {
 	assert(listItem);

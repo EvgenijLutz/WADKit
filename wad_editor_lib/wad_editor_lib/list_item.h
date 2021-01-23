@@ -16,6 +16,8 @@ typedef struct WE_LIST_ITEM
 	WE_LIST* list;
 	WE_LIST_ITEM* parent;
 	
+	int selected;
+	
 	unsigned long flags;
 	void* data;
 	WK_STRING title;

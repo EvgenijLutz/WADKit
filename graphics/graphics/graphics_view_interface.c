@@ -94,3 +94,16 @@ GRAPHICS_DRAWABLE* graphicsViewRequestCurrentDrawable(GRAPHICS_VIEW* graphicsVie
 	
 	return drawable;
 }
+
+
+float graphicsViewGetWidth(GRAPHICS_VIEW* graphicsView)
+{
+	assert(graphicsView);
+	return graphicsView->width;
+}
+
+float graphicsViewGetHeight(GRAPHICS_VIEW* graphicsView)
+{
+	assert(graphicsView);
+	return graphicsView->height;
+}

@@ -11,9 +11,10 @@
 
 #include "graphics.h"
 
+COMMAND_BUFFER* commandQueueCreateCommandBuffer(COMMAND_QUEUE* commandQueue);
 void commandBufferRelease(COMMAND_BUFFER* commandBuffer);
 
-BLIT_COMMAND_ENCODER* commandBufferStartBlitCommandEncoder(COMMAND_BUFFER* commandBuffer);
+void commandBufferScheduleDisplayDrawable(COMMAND_BUFFER* commandBuffer, GRAPHICS_DRAWABLE* drawable);
 
 void commandBufferAddCompletionHandler(COMMAND_BUFFER* commandBuffer, COMMAND_BUFFER_COMPLETION_FUNC completionHandler, void* userInfo);
 void commandBufferWaitUntilCompleted(COMMAND_BUFFER* commandBuffer);

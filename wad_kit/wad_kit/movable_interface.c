@@ -22,6 +22,18 @@ MESH* movableGetRootMesh(MOVABLE* movable)
 	return movable->rootMesh;
 }
 
+unsigned int movableGetNumJoints(MOVABLE* movable)
+{
+	assert(movable);
+	return movable->joints.length;
+}
+
+JOINT* movableGetJoint(MOVABLE* movable, unsigned int jointIndex)
+{
+	assert(movable);
+	return arrayGetItem(&movable->joints, jointIndex);
+}
+
 
 unsigned int movableGetNumAnimations(MOVABLE* movable)
 {

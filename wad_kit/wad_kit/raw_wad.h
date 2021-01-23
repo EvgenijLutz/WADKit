@@ -9,6 +9,8 @@
 #ifndef wad_kit_raw_wad_h
 #define wad_kit_raw_wad_h
 
+#include "private_interface.h"
+
 typedef struct __attribute__((__packed__)) RAW_ANIMATION
 {
 	uint32_t keyframeOffset;

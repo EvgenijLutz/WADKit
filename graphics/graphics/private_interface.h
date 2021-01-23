@@ -17,13 +17,9 @@
 // MARK: - Structures
 
 #include "texture2d.h"
-#include "graphics_buffer.h"
+#include "graphics_mesh.h"
 #include "command_queue.h"
 #include "command_buffer.h"
-#include "blit_command_encoder.h"
-#include "render_settings.h"
-#include "depth_stencil_state.h"
-#include "render_state.h"
 #include "render_command_encoder.h"
 #include "graphics_view.h"
 #include "graphics_drawable.h"

@@ -11,4 +11,8 @@
 
 #include "graphics.h"
 
+RENDER_COMMAND_ENCODER* commandBufferStartRenderCommandEncoder(COMMAND_BUFFER* commandBuffer, GRAPHICS_VIEW* graphicsView);
+void renderCommandEncoderFinishEncoding(RENDER_COMMAND_ENCODER* renderCommandEncoder);
+void renderCommandEncoderScheduleDrawMesh(RENDER_COMMAND_ENCODER* encoder, GRAPHICS_MESH* mesh, GRAPHICS_MESH_UNIFORMS* uniforms);
+
 #endif /* render_command_encoder_interface_h */

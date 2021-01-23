@@ -20,8 +20,10 @@ void meshInitializeFromBuffer(MESH* mesh, WK_WAD* wad, WK_BUFFER* buffer, EXECUT
 	
 	mesh->wad = wad;
 	mesh->numReferences = 0;
-	arrayInitializeWithCapacityIncrement(&mesh->vertices, sizeof(VERTEX), 64);
-	arrayInitializeWithCapacityIncrement(&mesh->polygons, sizeof(POLYGON), 32);
+	//arrayInitializeWithCapacityIncrement(&mesh->vertices, sizeof(VERTEX), 64);
+	//arrayInitializeWithCapacityIncrement(&mesh->polygons, sizeof(POLYGON), 32);
+	arrayInitializeWithAllocator(&mesh->vertices, wad->rawVertexAllocator);
+	arrayInitializeWithAllocator(&mesh->polygons, wad->rawPolygonAllocator);
 	
 	// MARK: Read mesh bounding sphere info
 	

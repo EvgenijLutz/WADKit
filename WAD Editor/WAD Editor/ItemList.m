@@ -202,22 +202,22 @@ static void _itemList_itemWillBeRemoved(WE_LIST* list, WE_LIST_ITEM* item, void*
 
 - (void)outlineViewSelectionDidChange:(NSNotification*)notification
 {
-//	if (![notification.object isKindOfClass:NSOutlineView.class])
-//	{
-//		return;
-//	}
-//
-//	NSOutlineView* outlineView = (NSOutlineView*)notification.object;
-//	NSInteger selectedRowIndex = outlineView.selectedRow;
-//	id outlineItem = [outlineView itemAtRow:selectedRowIndex];
-//	if (![outlineItem isKindOfClass:WadItem.class])
-//	{
-//		return;
-//	}
-//
-//	WadItem* wadItem = (WadItem*)outlineItem;
-//	WAD_EDITOR_ITEM* wadEditorItem = wadItem.item;
-//	wadEditorSelectItem(editor, wadEditorItem);
+	if (![notification.object isKindOfClass:NSOutlineView.class])
+	{
+		return;
+	}
+
+	NSOutlineView* outlineView = (NSOutlineView*)notification.object;
+	NSInteger selectedRowIndex = outlineView.selectedRow;
+	id outlineItem = [outlineView itemAtRow:selectedRowIndex];
+	if (![outlineItem isKindOfClass:ItemListValue.class])
+	{
+		return;
+	}
+
+	ItemListValue* value = (ItemListValue*)outlineItem;
+	WE_LIST_ITEM* item = value.item;
+	listItemSelect(item);
 }
 
 /*- (void)outlineView:(NSOutlineView*)outlineView didRemoveRowView:(NSTableRowView*)rowView forRow:(NSInteger)row

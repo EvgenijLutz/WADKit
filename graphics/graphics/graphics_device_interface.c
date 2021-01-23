@@ -8,27 +8,6 @@
 
 #include "private_interface.h"
 
-/*GRAPHICS_DEVICE* graphicsDeviceCreateDefault(void)
-{
-#if defined(__APPLE__) && __APPLE__
-	return graphicsDeviceCreateDefaultMetalDevice();
-#else
-	return NULL;
-#endif
-}
-
-void graphicsDeviceRelease(GRAPHICS_DEVICE* graphicsDevice)
-{
-	assert(graphicsDevice);
-	
-#if defined(__APPLE__) && __APPLE__
-	graphicsDeviceReleaseDefaultMetalDevice(graphicsDevice);
-#else
-	//
-#endif
-}*/
-
-
 const char* graphicsDeviceGetName(GRAPHICS_DEVICE* graphicsDevice)
 {
 	assert(graphicsDevice);
@@ -39,51 +18,4 @@ void* graphicsDeviceGetUserInfo(GRAPHICS_DEVICE* graphicsDevice)
 {
 	assert(graphicsDevice);
 	return graphicsDevice->userInfo;
-}
-
-
-TEXTURE2D* graphicsDeviceCreateTexture2dWithData(GRAPHICS_DEVICE* device, unsigned int width, unsigned int height, unsigned int numComponents, TEXTURE_USAGE usage, const void* data)
-{
-	assert(device);
-	assert(data);
-	
-	void* textureId = device->createTexture2dWithDataFunc(device, width, height, numComponents, usage, data);
-	assert(textureId);
-	
-	TEXTURE2D* texture = arrayAddItem(&device->textures);
-	texture->device = device;
-	texture->width = width;
-	texture->height = height;
-	texture->isReceivedOutside = 0;
-	texture->textureId = textureId;
-	
-	return texture;
-}
-
-GRAPHICS_BUFFER* graphicsDeviceCreateBuffer(GRAPHICS_DEVICE* device, unsigned int length, GRAPHICS_BUFFER_OPTION option)
-{
-	assert(device);
-	
-	void* bufferId = device->createBufferFunc(device, length, option);
-	assert(bufferId);
-	
-	GRAPHICS_BUFFER* buffer = arrayAddItem(&device->buffers);
-	buffer->device = device;
-	buffer->length = length;
-	buffer->option = option;
-	buffer->bufferId = bufferId;
-	return buffer;
-}
-
-COMMAND_QUEUE* graphicsDeviceCreateCommandQueue(GRAPHICS_DEVICE* device)
-{
-	assert(device);
-	
-	void* commandQueueId = device->createCommandQueueFunc(device);
-	assert(commandQueueId);
-	
-	COMMAND_QUEUE* commandQueue = arrayAddItem(&device->commandQueues);
-	commandQueue->device = device;
-	commandQueue->commandQueueId = commandQueueId;
-	return commandQueue;
 }

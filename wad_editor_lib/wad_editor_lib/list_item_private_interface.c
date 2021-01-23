@@ -14,6 +14,7 @@ void listItemInitialize(WE_LIST_ITEM* item, WE_LIST* list, WE_LIST_ITEM* parent,
 	
 	item->list = list;
 	item->parent = parent;
+	item->selected = 0;
 	item->flags = flags;
 	item->data = data;
 	stringInitialize(&item->title, title);

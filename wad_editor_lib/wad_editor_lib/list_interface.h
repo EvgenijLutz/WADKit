@@ -15,6 +15,7 @@ WE_LIST* listCreate(WE_LIST_DELEGATE* delegate);
 void listRelease(WE_LIST* list);
 
 void listSubscribe(WE_LIST* list, WE_LIST_SUBSCRIBER* subscriber);
+void listSelectItem(WE_LIST* list, WE_LIST_ITEM* item);
 
 WE_LIST_ITEM* listGetRootItem(WE_LIST* list);
 

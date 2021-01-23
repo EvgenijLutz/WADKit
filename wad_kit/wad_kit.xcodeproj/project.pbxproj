@@ -47,7 +47,6 @@
 		C971664B259BDC0000FCD1FA /* animation_private_interface.h in Headers */ = {isa = PBXBuildFile; fileRef = C9716649259BDC0000FCD1FA /* animation_private_interface.h */; };
 		C971664C259BDC0000FCD1FA /* animation_private_interface.c in Sources */ = {isa = PBXBuildFile; fileRef = C971664A259BDC0000FCD1FA /* animation_private_interface.c */; };
 		C97D52A325A1DDAA00073422 /* data_allocator_interface.c in Sources */ = {isa = PBXBuildFile; fileRef = C97D529E25A1DDAA00073422 /* data_allocator_interface.c */; };
-		C97D52C425A1F17900073422 /* wad_kit.h in Headers */ = {isa = PBXBuildFile; fileRef = C9C73F4C23A686E800FBB723 /* wad_kit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C9B3A59E2599FFF7008FF2A6 /* string_interface.c in Sources */ = {isa = PBXBuildFile; fileRef = C9B3A59C2599FFF7008FF2A6 /* string_interface.c */; };
 		C9BE3B22248BE46700C430A1 /* movable_interface.h in Headers */ = {isa = PBXBuildFile; fileRef = C9BE3B20248BE46700C430A1 /* movable_interface.h */; };
 		C9BE3B23248BE46700C430A1 /* movable_interface.c in Sources */ = {isa = PBXBuildFile; fileRef = C9BE3B21248BE46700C430A1 /* movable_interface.c */; };
@@ -270,6 +269,26 @@
 			name = Joint;
 			sourceTree = "<group>";
 		};
+		C92739B825A71922001C373E /* Vertex */ = {
+			isa = PBXGroup;
+			children = (
+				C9924941248599CA004511F5 /* vertex.h */,
+				C93278A3259B4F8C00A94006 /* vertex_interface.h */,
+				C93278A4259B4F8C00A94006 /* vertex_interface.c */,
+			);
+			name = Vertex;
+			sourceTree = "<group>";
+		};
+		C92739B925A7192D001C373E /* Polygon */ = {
+			isa = PBXGroup;
+			children = (
+				C992494224859B80004511F5 /* polygon.h */,
+				C93278A9259B637F00A94006 /* polygon_interface.h */,
+				C93278AA259B637F00A94006 /* polygon_interface.c */,
+			);
+			name = Polygon;
+			sourceTree = "<group>";
+		};
 		C932788A259A4D8B00A94006 /* Execute result */ = {
 			isa = PBXGroup;
 			children = (
@@ -324,9 +343,9 @@
 				C908A14525A66BE5009A554D /* Semaphore */,
 				C90527362599FB1500CBD62C /* IO */,
 				C9BE3B32248C3A0A00C430A1 /* Math */,
-				C9924940248598A5004511F5 /* Primitives */,
 				C94F564C248647ED0089C915 /* Texture page */,
 				C91CAD1D259B6B0000052A9F /* Texture sample */,
+				C9924940248598A5004511F5 /* Primitives */,
 				C992493F248596D5004511F5 /* Mesh */,
 				C94F56492486470C0089C915 /* Movable */,
 				C94F56452486447B0089C915 /* Static */,
@@ -424,12 +443,8 @@
 		C9924940248598A5004511F5 /* Primitives */ = {
 			isa = PBXGroup;
 			children = (
-				C9924941248599CA004511F5 /* vertex.h */,
-				C93278A3259B4F8C00A94006 /* vertex_interface.h */,
-				C93278A4259B4F8C00A94006 /* vertex_interface.c */,
-				C992494224859B80004511F5 /* polygon.h */,
-				C93278A9259B637F00A94006 /* polygon_interface.h */,
-				C93278AA259B637F00A94006 /* polygon_interface.c */,
+				C92739B825A71922001C373E /* Vertex */,
+				C92739B925A7192D001C373E /* Polygon */,
 			);
 			name = Primitives;
 			sourceTree = "<group>";
@@ -564,7 +579,6 @@
 				C971663F259BB94B00FCD1FA /* movable_internal_interface.h in Headers */,
 				C9C73F5323A6A63B00FBB723 /* static_object_interface.h in Headers */,
 				C90B1067259E1115000A6358 /* wad_private_interface.h in Headers */,
-				C97D52C425A1F17900073422 /* wad_kit.h in Headers */,
 				C9C73F5B23A6A7F900FBB723 /* mesh_interface.h in Headers */,
 				C90B104A259D3498000A6358 /* command_interface.h in Headers */,
 				C9BE3B2F248C1ACD00C430A1 /* joint_interface.h in Headers */,
