@@ -71,6 +71,8 @@
 		C9DACB35259CA46B000D1999 /* vector3f_interface.c in Sources */ = {isa = PBXBuildFile; fileRef = C9DACB33259CA46B000D1999 /* vector3f_interface.c */; };
 		C9DACB3E259CC4B4000D1999 /* keyframe_internal_interface.h in Headers */ = {isa = PBXBuildFile; fileRef = C9DACB3C259CC4B3000D1999 /* keyframe_internal_interface.h */; };
 		C9DACB3F259CC4B4000D1999 /* keyframe_internal_interface.c in Sources */ = {isa = PBXBuildFile; fileRef = C9DACB3D259CC4B4000D1999 /* keyframe_internal_interface.c */; };
+		C9F4880325BDE4FF00AB4946 /* animation_interface.c in Sources */ = {isa = PBXBuildFile; fileRef = C9F4880125BDE4FF00AB4946 /* animation_interface.c */; };
+		C9F4880925BDE78F00AB4946 /* keyframe_interface.c in Sources */ = {isa = PBXBuildFile; fileRef = C9F4880725BDE78F00AB4946 /* keyframe_interface.c */; };
 		C9FC535A259A256A008E1901 /* buffer_interface.h in Headers */ = {isa = PBXBuildFile; fileRef = C9FC5358259A256A008E1901 /* buffer_interface.h */; };
 		C9FC535B259A256A008E1901 /* buffer_interface.c in Sources */ = {isa = PBXBuildFile; fileRef = C9FC5359259A256A008E1901 /* buffer_interface.c */; };
 /* End PBXBuildFile section */
@@ -182,6 +184,10 @@
 		C9DACB3D259CC4B4000D1999 /* keyframe_internal_interface.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = keyframe_internal_interface.c; sourceTree = "<group>"; };
 		C9F01BC82398F63500E31FAB /* execute_result.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = execute_result.h; sourceTree = "<group>"; };
 		C9F01BC92398F63500E31FAB /* execute_result.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = execute_result.c; sourceTree = "<group>"; };
+		C9F4880025BDE4FF00AB4946 /* animation_interface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = animation_interface.h; sourceTree = "<group>"; };
+		C9F4880125BDE4FF00AB4946 /* animation_interface.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = animation_interface.c; sourceTree = "<group>"; };
+		C9F4880625BDE78F00AB4946 /* keyframe_interface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = keyframe_interface.h; sourceTree = "<group>"; };
+		C9F4880725BDE78F00AB4946 /* keyframe_interface.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = keyframe_interface.c; sourceTree = "<group>"; };
 		C9FC5357259A255F008E1901 /* buffer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = buffer.h; sourceTree = "<group>"; };
 		C9FC5358259A256A008E1901 /* buffer_interface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = buffer_interface.h; sourceTree = "<group>"; };
 		C9FC5359259A256A008E1901 /* buffer_interface.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = buffer_interface.c; sourceTree = "<group>"; };
@@ -397,6 +403,8 @@
 				C90B1046259D3480000A6358 /* Command */,
 				C90B1054259DD3F1000A6358 /* State change */,
 				C94F564B2486477C0089C915 /* animation.h */,
+				C9F4880025BDE4FF00AB4946 /* animation_interface.h */,
+				C9F4880125BDE4FF00AB4946 /* animation_interface.c */,
 				C9716649259BDC0000FCD1FA /* animation_private_interface.h */,
 				C971664A259BDC0000FCD1FA /* animation_private_interface.c */,
 			);
@@ -514,6 +522,8 @@
 			isa = PBXGroup;
 			children = (
 				C9DACB3B259CC4A3000D1999 /* keyframe.h */,
+				C9F4880625BDE78F00AB4946 /* keyframe_interface.h */,
+				C9F4880725BDE78F00AB4946 /* keyframe_interface.c */,
 				C9DACB3C259CC4B3000D1999 /* keyframe_internal_interface.h */,
 				C9DACB3D259CC4B4000D1999 /* keyframe_internal_interface.c */,
 			);
@@ -646,6 +656,7 @@
 				C9716647259BD62200FCD1FA /* joint_private_interface.c in Sources */,
 				C90B105E259DD455000A6358 /* state_change_private_interface.c in Sources */,
 				C9D59DF224B1C1760048F2CA /* wk_math_functions.c in Sources */,
+				C9F4880325BDE4FF00AB4946 /* animation_interface.c in Sources */,
 				C90B1050259D34A7000A6358 /* command_private_interface.c in Sources */,
 				C90B1044259D2DC0000A6358 /* texture_sample_private_interface.c in Sources */,
 				C9C73F5C23A6A7F900FBB723 /* mesh_interface.c in Sources */,
@@ -664,6 +675,7 @@
 				C9DACB3F259CC4B4000D1999 /* keyframe_internal_interface.c in Sources */,
 				C90B104B259D3498000A6358 /* command_interface.c in Sources */,
 				C971664C259BDC0000FCD1FA /* animation_private_interface.c in Sources */,
+				C9F4880925BDE78F00AB4946 /* keyframe_interface.c in Sources */,
 				C908A14A25A66C0E009A554D /* semaphore_interface.c in Sources */,
 				C90B1059259DD41E000A6358 /* state_change_interface.c in Sources */,
 				C9BE3B30248C1ACD00C430A1 /* joint_interface.c in Sources */,

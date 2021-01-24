@@ -15,6 +15,8 @@
 
 static inline vector3f vector3fCreate(float x, float y, float z) { return simd_make_float3(x, y, z); }
 static inline vector3f vector3fNormalize(vector3f vector) { return simd_normalize(vector); }
+static inline vector3f vector3fSum(vector3f vector1, vector3f vector2) { return vector1 + vector2; }
+static inline vector3f vector3fMulFloat(vector3f vector, float value) { return vector * value; }
 
 #else
 

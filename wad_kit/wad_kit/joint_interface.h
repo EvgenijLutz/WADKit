@@ -11,6 +11,7 @@
 
 #include "wad_kit.h"
 
+MESH* jointGetMesh(JOINT* joint);
 JOINT_LOCATION_TYPE jointGetLocationType(JOINT* joint);
 int jointGetRawOffsetX(JOINT* joint);
 int jointGetRawOffsetY(JOINT* joint);

@@ -85,6 +85,44 @@ simd_float4x4 matrix4fLookAt_rightHand(vector_float3 eye, vector_float3 target, 
 	}};
 }
 
+matrix4f matrix4fFromQuaternion(quaternionf quaternion)
+{
+	float xx = quaternion.vector.x * quaternion.vector.x;
+	float xy = quaternion.vector.x * quaternion.vector.y;
+	float xz = quaternion.vector.x * quaternion.vector.z;
+	float xw = quaternion.vector.x * quaternion.vector.w;
+	float yy = quaternion.vector.y * quaternion.vector.y;
+	float yz = quaternion.vector.y * quaternion.vector.z;
+	float yw = quaternion.vector.y * quaternion.vector.w;
+	float zz = quaternion.vector.z * quaternion.vector.z;
+	float zw = quaternion.vector.z * quaternion.vector.w;
+
+	// indices are m<column><row>
+	float m00 = 1 - 2 * (yy + zz);
+	float m10 = 2 * (xy - zw);
+	float m20 = 2 * (xz + yw);
+
+	float m01 = 2 * (xy + zw);
+	float m11 = 1 - 2 * (xx + zz);
+	float m21 = 2 * (yz - xw);
+
+	float m02 = 2 * (xz - yw);
+	float m12 = 2 * (yz + xw);
+	float m22 = 1 - 2 * (xx + yy);
+
+	/*matrix_float4x4 matrix = matrix_make_rows(m00, m10, m20, 0,
+											  m01, m11, m21, 0,
+											  m02, m12, m22, 0,
+												0,   0,   0, 1);
+	return matrix;*/
+	
+	return (matrix_float4x4){ {
+			{ m00, m01, m02, 0 },     // each line here provides column data
+			{ m10, m11, m12, 0 },
+			{ m20, m21, m22, 0 },
+			{ 0, 0, 0, 1 } } };
+}
+
 #else // IF !__APPLE__
 
 #error Math is not implemented for this system

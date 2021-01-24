@@ -49,5 +49,5 @@ void jointUpdateOffset(JOINT* joint)
 	const float x = (float)joint->dx / JOINT_COORDINATE_MULTIPLIER;
 	const float y = (float)joint->dy / JOINT_COORDINATE_MULTIPLIER;
 	const float z = (float)joint->dz / JOINT_COORDINATE_MULTIPLIER;
-	joint->offset = vector3fCreate(x, y, z);
+	joint->offset = vector3fCreate(-x, -y, z);
 }

@@ -10,9 +10,9 @@
 
 static void _vertex_updatePosition(VERTEX* vertex)
 {
-	float x = ((double)vertex->vx) / 1024.0;
-	float y = ((double)vertex->vy) / 1024.0;
-	float z = ((double)vertex->vz) / 1024.0;
+	float x = vertex->vx / 1024.0;
+	float y = vertex->vy / 1024.0;
+	float z = vertex->vz / 1024.0;
 	vertex->position = vector3fCreate(-x, -y, z);
 }
 

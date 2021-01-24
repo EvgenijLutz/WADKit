@@ -15,6 +15,11 @@ COMMAND_BUFFER* commandQueueCreateCommandBuffer(COMMAND_QUEUE* commandQueue)
 	
 	GRAPHICS_DEVICE* device = commandQueue->device;
 	void* commandBufferId = device->commandQueueCreateCommandBufferFunc(commandQueue);
+	if (commandBufferId == NULL)
+	{
+		return NULL;
+	}
+	
 	COMMAND_BUFFER* commandBuffer = arrayAddItem(&device->commandBuffers);
 	commandBuffer->commandQueue = commandQueue;
 	commandBuffer->commandBufferId = commandBufferId;

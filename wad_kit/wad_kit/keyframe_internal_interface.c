@@ -24,9 +24,61 @@ static void _keyframe_updateModelOffset(KEYFRAME* keyframe)
 	//keyframe->modelOffset = vector3fCreate(0, 0, 0);
 }
 
+static quaternionf _keyframe_quatfFromEuler(vector3f euler)
+{
+	float cx = cosf(euler.x / 2.f);
+	float cy = cosf(euler.y / 2.f);
+	float cz = cosf(euler.z / 2.f);
+	float sx = sinf(euler.x / 2.f);
+	float sy = sinf(euler.y / 2.f);
+	float sz = sinf(euler.z / 2.f);
+	
+	quaternionf q;
+	q.vector.w = cx * cy * cz + sx * sy * sz;
+	q.vector.x = sx * cy * cz - cx * sy * sz;
+	q.vector.y = cx * sy * cz + sx * cy * sz;
+	q.vector.z = cx * cy * sz - sx * sy * cz;
+	
+	return q;
+}
+
 static void _keyframe_updateRotation(ROTATION* rotation)
 {
 	//rotation->rotation = vector3fCreate(0, 0, 0);
+	
+	float x = M_PI * 2 * (float)rotation->rotx / 1024.0f;
+	float y = M_PI * 2 * (float)rotation->roty / 1024.0f;
+	float z = M_PI * 2 * (float)rotation->rotz / 1024.0f;
+//	vector3f euler = vector3fCreate(-x, -y, z);
+//
+//	float cx = cosf(euler.x / 2.f);
+//	float cy = cosf(euler.y / 2.f);
+//	float cz = cosf(euler.z / 2.f);
+//	float sx = sinf(euler.x / 2.f);
+//	float sy = sinf(euler.y / 2.f);
+//	float sz = sinf(euler.z / 2.f);
+//
+//	quaternionf q;
+//	q.vector.w = cx * cy * cz + sx * sy * sz;
+//	q.vector.x = sx * cy * cz - cx * sy * sz;
+//	q.vector.y = cx * sy * cz + sx * cy * sz;
+//	q.vector.z = cx * cy * sz - sx * sy * cz;
+//
+//	rotation->rotation = q;
+	
+	vector3f eulerX = vector3fCreate(-x,  0, 0);
+	quaternionf qx = _keyframe_quatfFromEuler(eulerX);
+	
+	vector3f eulerY = vector3fCreate( 0, -y, 0);
+	quaternionf qy = _keyframe_quatfFromEuler(eulerY);
+	
+	vector3f eulerZ = vector3fCreate( 0,  0, z);
+	quaternionf qz = _keyframe_quatfFromEuler(eulerZ);
+	
+	quaternionf q = simd_mul(qx, qz);
+	q = simd_mul(qy, q);
+	
+	rotation->rotation = q;
 }
 
 void keyframeInitialize(KEYFRAME* keyframe, ANIMATION* animation, RAW_ANIMATION* rawAnimation, WK_WAD_LOAD_INFO* loadInfo)

@@ -42,6 +42,7 @@ typedef struct VERTEX VERTEX;
 typedef struct POLYGON POLYGON;
 typedef struct MESH MESH;
 typedef struct JOINT JOINT;
+typedef struct KEYFRAME KEYFRAME;
 typedef struct ANIMATION ANIMATION;
 typedef struct MOVABLE MOVABLE;
 typedef struct STATIC STATIC;
@@ -97,6 +98,8 @@ typedef struct WK_WAD WK_WAD;
 #include "joint_interface.h"
 #include "command_interface.h"
 #include "state_change_interface.h"
+#include "keyframe_interface.h"
+#include "animation_interface.h"
 #include "movable_interface.h"
 #include "static_object_interface.h"
 

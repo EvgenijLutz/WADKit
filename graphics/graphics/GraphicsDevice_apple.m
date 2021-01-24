@@ -184,6 +184,7 @@ static void _metal_releaseCommandQueue(GRAPHICS_DEVICE* device, COMMAND_QUEUE* c
 static void* _metal_commandQueueCreateCommandBuffer(COMMAND_QUEUE* commandQueue)
 {
 	id<MTLCommandQueue> metalCommandQueue = (__bridge id<MTLCommandQueue>)commandQueue->commandQueueId;
+	assert(metalCommandQueue);
 	id<MTLCommandBuffer> metalCommandBuffer = [metalCommandQueue commandBuffer];
 	void* commandBufferId = (__bridge_retained void*)metalCommandBuffer;
 	return commandBufferId;

@@ -8,6 +8,12 @@
 
 #include "private_interface.h"
 
+MESH* jointGetMesh(JOINT* joint)
+{
+	assert(joint);
+	return joint->mesh;
+}
+
 JOINT_LOCATION_TYPE jointGetLocationType(JOINT* joint)
 {
 	assert(joint);
@@ -44,7 +50,7 @@ void jointSetOffset(JOINT* joint, vector3f offset)
 	assert(joint);
 	
 	joint->offset = offset;
-	joint->dx = (int)(offset.x * JOINT_COORDINATE_MULTIPLIER);
-	joint->dy = (int)(offset.y * JOINT_COORDINATE_MULTIPLIER);
+	joint->dx = -(int)(offset.x * JOINT_COORDINATE_MULTIPLIER);
+	joint->dy = -(int)(offset.y * JOINT_COORDINATE_MULTIPLIER);
 	joint->dz = (int)(offset.z * JOINT_COORDINATE_MULTIPLIER);
 }

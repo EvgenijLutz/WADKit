@@ -17,4 +17,6 @@ matrix4f matrix4fRotation(float radians, vector3f axis);
 matrix4f matrix4fPerspectiveRightHand(float fovyRadians, float aspectRatio, float frustumNearZ, float frustumFarZ);
 matrix4f matrix4fLookAt_rightHand(vector3f eye, vector3f target, vector3f up);
 
+matrix4f matrix4fFromQuaternion(quaternionf quaternion);
+
 #endif /* wk_math_functions_h */

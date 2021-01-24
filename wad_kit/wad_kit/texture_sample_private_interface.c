@@ -29,6 +29,28 @@ static void _textureSample_calculateUVData(TEXTURE_SAMPLE* textureSample)
 		textureSample->uvLocation.y += textureSample->uvSize.y;
 		textureSample->uvSize.y = -textureSample->uvSize.y;
 	}
+	
+	// Add a very-very tiny micro little inset in a uv square to avoid texture seams
+	// Offset 1/20 of a pixel
+	const float tinyOffset = 1.0f / 256.0f / 20.0f;
+	
+	if (textureSample->uvSize.x < 0) {
+		textureSample->uvLocation.x -= tinyOffset;
+		textureSample->uvSize.x += tinyOffset * 2.0f;
+	}
+	else {
+		textureSample->uvLocation.x += tinyOffset;
+		textureSample->uvSize.x -= tinyOffset * 2.0f;
+	}
+	
+	if (textureSample->uvSize.y < 0) {
+		textureSample->uvLocation.y -= tinyOffset;
+		textureSample->uvSize.y += tinyOffset * 2.0f;
+	}
+	else {
+		textureSample->uvLocation.y += tinyOffset;
+		textureSample->uvSize.y -= tinyOffset * 2.0f;
+	}
 }
 
 void textureSampleInitializeFromBuffer(TEXTURE_SAMPLE* textureSample, WK_WAD* wad, WK_BUFFER* buffer, EXECUTE_RESULT* executeResult)
