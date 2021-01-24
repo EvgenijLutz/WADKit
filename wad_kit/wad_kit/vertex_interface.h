@@ -16,4 +16,6 @@ void vertexSetRawPosition(VERTEX* vertex, short vx, short vy, short vz);
 void vertexSetRawNormal(VERTEX* vertex, short nx, short ny, short nz);
 void vertexSetRawShade(VERTEX* vertex, short shade);
 
+vector3f vertexGetPosition(VERTEX* vertex);
+
 #endif /* vertex_interface_h */

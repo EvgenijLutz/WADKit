@@ -74,3 +74,53 @@ void polygonInitializeRawFromBuffer(POLYGON* polygon, MESH* mesh, WK_BUFFER* buf
 	
 	executeResultSetSucceeded(executeResult);
 }
+
+
+int polygonIsTriangle(POLYGON* polygon)
+{
+	assert(polygon);
+	return polygon->isTriangle;
+}
+
+VERTEX* polygonGetVertex1(POLYGON* polygon)
+{
+	assert(polygon);
+	return arrayGetItem(&polygon->mesh->vertices, polygon->v1);
+}
+
+VERTEX* polygonGetVertex2(POLYGON* polygon)
+{
+	assert(polygon);
+	return arrayGetItem(&polygon->mesh->vertices, polygon->v2);
+}
+
+VERTEX* polygonGetVertex3(POLYGON* polygon)
+{
+	assert(polygon);
+	return arrayGetItem(&polygon->mesh->vertices, polygon->v3);
+}
+
+VERTEX* polygonGetVertex4(POLYGON* polygon)
+{
+	assert(polygon);
+	return arrayGetItem(&polygon->mesh->vertices, polygon->v4);
+}
+
+
+TEXTURE_SAMPLE* polygonGetTextureSample(POLYGON* polygon)
+{
+	assert(polygon);
+	return arrayGetItem(&polygon->mesh->wad->textureSamples, polygon->textureSampleIndex);
+}
+
+unsigned short polygonGetTextureSampleShape(POLYGON* polygon)
+{
+	assert(polygon);
+	return polygon->textureSampleShape;
+}
+
+unsigned short polygonIsFlipped(POLYGON* polygon)
+{
+	assert(polygon);
+	return polygon->flipped;
+}

@@ -149,9 +149,9 @@ void dataAllocatorReset(DATA_ALLOCATOR* allocator)
 		DATA_BLOCK* dataBlock = &((DATA_BLOCK*)container->data)[i];
 		dataBlock->firstAvailableItem = 0;
 		memset(dataBlock->engagedItems, 0, sizeof(char) * allocator->dataBlockCapacity);
-		debug_memset(dataBlock->data, 0, allocator->itemSize * allocator->dataBlockCapacity);
+		//debug_memset(dataBlock->data, 0, allocator->itemSize * allocator->dataBlockCapacity);
 	}
 	allocator->dataBlocksContainer.firstAvailableItem = 0;
 	memset(container->engagedItems, 0, sizeof(char) * allocator->numDataBlocks);
-	debug_memset(container->dataBlocks, 0, sizeof(DATA_BLOCK) * allocator->numDataBlocks);
+	//debug_memset(container->dataBlocks, 0, sizeof(DATA_BLOCK) * allocator->numDataBlocks);
 }

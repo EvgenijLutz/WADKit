@@ -13,4 +13,14 @@
 
 void polygonInitializeRawFromBuffer(POLYGON* polygon, MESH* mesh, WK_BUFFER* buffer, EXECUTE_RESULT* executeResult);
 
+int polygonIsTriangle(POLYGON* polygon);
+VERTEX* polygonGetVertex1(POLYGON* polygon);
+VERTEX* polygonGetVertex2(POLYGON* polygon);
+VERTEX* polygonGetVertex3(POLYGON* polygon);
+VERTEX* polygonGetVertex4(POLYGON* polygon);
+
+TEXTURE_SAMPLE* polygonGetTextureSample(POLYGON* polygon);
+unsigned short polygonGetTextureSampleShape(POLYGON* polygon);
+unsigned short polygonIsFlipped(POLYGON* polygon);
+
 #endif /* polygon_interface_h */

@@ -23,8 +23,8 @@ typedef struct VERTEX
 	
 	short shade;
 	
-	//vector3f position;
-	//vector3f nornal;
+	vector3f position;
+	vector3f normal;
 }
 VERTEX;
 

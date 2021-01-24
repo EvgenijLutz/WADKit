@@ -26,6 +26,6 @@ void meshSetRawVertexNormal(MESH* mesh, unsigned int vertexIndex, short nx, shor
 void meshSetRawVertexShade(MESH* mesh, unsigned int vertexIndex, short shade);
 
 unsigned int meshGetNumPolygons(MESH* mesh);
-POLYGON meshGetPolygon(MESH* mesh, unsigned int polygonIndex);
+POLYGON* meshGetPolygon(MESH* mesh, unsigned int polygonIndex);
 
 #endif /* mesh_interface_h */

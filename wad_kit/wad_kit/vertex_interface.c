@@ -10,16 +10,18 @@
 
 static void _vertex_updatePosition(VERTEX* vertex)
 {
-	//
+	float x = ((double)vertex->vx) / 1024.0;
+	float y = ((double)vertex->vy) / 1024.0;
+	float z = ((double)vertex->vz) / 1024.0;
+	vertex->position = vector3fCreate(-x, -y, z);
 }
 
 static void _vertex_updateNormal(VERTEX* vertex)
 {
-	//
-	
-	/*mesh->vertices[normalIndex].nx /= 16300;
-	mesh->vertices[normalIndex].ny /= 16300;
-	mesh->vertices[normalIndex].nz /= 16300;*/
+	float x = ((double)vertex->nx) / 16300.0;
+	float y = ((double)vertex->ny) / 16300.0;
+	float z = ((double)vertex->nz) / 16300.0;
+	vertex->normal = vector3fNormalize(vector3fCreate(-x, -y, z));
 }
 
 static void _vertex_updateShade(VERTEX* vertex)
@@ -73,4 +75,11 @@ void vertexSetRawShade(VERTEX* vertex, short shade)
 	
 	vertex->shade = shade;
 	_vertex_updateShade(vertex);
+}
+
+
+vector3f vertexGetPosition(VERTEX* vertex)
+{
+	assert(vertex);
+	return vertex->position;
 }

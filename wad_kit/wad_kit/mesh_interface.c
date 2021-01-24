@@ -207,8 +207,8 @@ unsigned int meshGetNumPolygons(MESH* mesh)
 	return mesh->polygons.length;
 }
 
-POLYGON meshGetPolygon(MESH* mesh, unsigned int polygonIndex)
+POLYGON* meshGetPolygon(MESH* mesh, unsigned int polygonIndex)
 {
 	assert(mesh);
-	return *(POLYGON*)arrayGetItem(&mesh->polygons, polygonIndex);
+	return arrayGetItem(&mesh->polygons, polygonIndex);
 }

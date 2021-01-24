@@ -14,6 +14,7 @@
 #if defined(__APPLE__) && __APPLE__
 
 static inline vector3f vector3fCreate(float x, float y, float z) { return simd_make_float3(x, y, z); }
+static inline vector3f vector3fNormalize(vector3f vector) { return simd_normalize(vector); }
 
 #else
 

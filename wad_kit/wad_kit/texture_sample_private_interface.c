@@ -20,12 +20,12 @@ static void _textureSample_calculateUVData(TEXTURE_SAMPLE* textureSample)
 	textureSample->uvSize.x = (float)(textureSample->addW + 1) * coefficientX;
 	textureSample->uvSize.y = (float)(textureSample->addH + 1) * coefficientY;
 	
-	if (textureSample->flipX) {
+	if (!textureSample->flipX) {
 		textureSample->uvLocation.x += textureSample->uvSize.x;
 		textureSample->uvSize.x = -textureSample->uvSize.x;
 	}
 	
-	if (textureSample->flipY) {
+	if (!textureSample->flipY) {
 		textureSample->uvLocation.y += textureSample->uvSize.y;
 		textureSample->uvSize.y = -textureSample->uvSize.y;
 	}
