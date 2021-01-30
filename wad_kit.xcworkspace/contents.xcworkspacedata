@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:../Foundation/Foundation.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:wad_kit/wad_kit.xcodeproj">
    </FileRef>
    <FileRef

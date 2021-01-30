@@ -15,7 +15,7 @@
 typedef struct WK_WAD_LOAD_INFO
 {
 	WK_WAD* wad;
-	WK_BUFFER* buffer;
+	BUFFER_READER* buffer;
 	EXECUTE_RESULT* executeResult;
 	
 	unsigned int numMeshPointers;
@@ -81,19 +81,19 @@ typedef struct WK_WAD
 	DATA_ALLOCATOR* keyframeAllocator;
 	
 	/*!
-	 Array of @b TEXTURE_PAGE elements.
+	 Array of @b WK_TEXTURE_PAGE elements.
 	 */
-	WK_ARRAY texturePages;
+	MAGIC_ARRAY texturePages;
 	
 	/*!
-	 Array of @b TEXTURE_SAMPLE elements.
+	 Array of @b WK_TEXTURE_SAMPLE elements.
 	 */
-	WK_ARRAY textureSamples;
+	MAGIC_ARRAY textureSamples;
 	
 	/*!
-	 Array of @b WK_ARRAY elements.
+	 Array of @b MAGIC_ARRAY elements.
 	 */
-	WK_ARRAY meshes;
+	MAGIC_ARRAY meshes;
 	
 	/*!
 	 Array of @b SKELETON elements.
@@ -101,17 +101,17 @@ typedef struct WK_WAD
 	 If not, then move each skeleton instance to related movable.
 	 No, we will not doing it, it's just a headache.
 	 */
-	//WK_ARRAY skeletons;
+	//MAGIC_ARRAY skeletons;
 	
 	/*!
 	 Array of @b MOVABLE elements.
 	 */
-	WK_ARRAY movables;
+	MAGIC_ARRAY movables;
 	
 	/*!
 	 Array of @b STATIC elements.
 	 */
-	WK_ARRAY statics;
+	MAGIC_ARRAY statics;
 }
 WK_WAD;
 

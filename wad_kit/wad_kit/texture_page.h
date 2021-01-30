@@ -11,7 +11,7 @@
 
 #include "wad_kit.h"
 
-typedef struct TEXTURE_PAGE
+typedef struct WK_TEXTURE_PAGE
 {
 	WK_WAD* wad;
 	unsigned long numReferences;
@@ -21,6 +21,6 @@ typedef struct TEXTURE_PAGE
 	 */
 	unsigned char* data;
 }
-TEXTURE_PAGE;
+WK_TEXTURE_PAGE;
 
 #endif /* wad_kit_texture_page_h */

@@ -7,33 +7,34 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		C9349FA3248CF46A0044565D /* wad_editor_interface.h in Headers */ = {isa = PBXBuildFile; fileRef = C9349FA1248CF46A0044565D /* wad_editor_interface.h */; };
-		C9349FA4248CF46A0044565D /* wad_editor_interface.c in Sources */ = {isa = PBXBuildFile; fileRef = C9349FA2248CF46A0044565D /* wad_editor_interface.c */; };
+		C92383E225BF835100F5B7EB /* animation_editor.c in Sources */ = {isa = PBXBuildFile; fileRef = C92383E025BF835100F5B7EB /* animation_editor.c */; };
+		C9349FA4248CF46A0044565D /* wad_editor.c in Sources */ = {isa = PBXBuildFile; fileRef = C9349FA2248CF46A0044565D /* wad_editor.c */; };
 		C9D3234125A5E991004204D8 /* list_interface.h in Headers */ = {isa = PBXBuildFile; fileRef = C9D3233F25A5E991004204D8 /* list_interface.h */; };
-		C9D3234225A5E991004204D8 /* list_interface.c in Sources */ = {isa = PBXBuildFile; fileRef = C9D3234025A5E991004204D8 /* list_interface.c */; };
+		C9D3234225A5E991004204D8 /* list.c in Sources */ = {isa = PBXBuildFile; fileRef = C9D3234025A5E991004204D8 /* list.c */; };
 		C9D3234925A5EA21004204D8 /* list_item_interface.h in Headers */ = {isa = PBXBuildFile; fileRef = C9D3234725A5EA21004204D8 /* list_item_interface.h */; };
-		C9D3234A25A5EA21004204D8 /* list_item_interface.c in Sources */ = {isa = PBXBuildFile; fileRef = C9D3234825A5EA21004204D8 /* list_item_interface.c */; };
 		C9DE1C3F25A601150034544F /* list_item_private_interface.h in Headers */ = {isa = PBXBuildFile; fileRef = C9DE1C3D25A601150034544F /* list_item_private_interface.h */; };
-		C9DE1C4025A601150034544F /* list_item_private_interface.c in Sources */ = {isa = PBXBuildFile; fileRef = C9DE1C3E25A601150034544F /* list_item_private_interface.c */; };
+		C9DE1C4025A601150034544F /* list_item.c in Sources */ = {isa = PBXBuildFile; fileRef = C9DE1C3E25A601150034544F /* list_item.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C92383DE25BF833F00F5B7EB /* animation_editor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = animation_editor.h; sourceTree = "<group>"; };
+		C92383DF25BF835100F5B7EB /* animation_editor_private_interface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = animation_editor_private_interface.h; sourceTree = "<group>"; };
+		C92383E025BF835100F5B7EB /* animation_editor.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = animation_editor.c; sourceTree = "<group>"; };
 		C9327889259A4D7100A94006 /* private_interface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = private_interface.h; sourceTree = "<group>"; };
 		C9349F95248CF3110044565D /* libwad_editor_lib_macos.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libwad_editor_lib_macos.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9349F9D248CF3460044565D /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		C9349F9E248CF3FB0044565D /* wad_editor_lib.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wad_editor_lib.h; sourceTree = "<group>"; };
 		C9349FA0248CF45A0044565D /* wad_editor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wad_editor.h; sourceTree = "<group>"; };
 		C9349FA1248CF46A0044565D /* wad_editor_interface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wad_editor_interface.h; sourceTree = "<group>"; };
-		C9349FA2248CF46A0044565D /* wad_editor_interface.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = wad_editor_interface.c; sourceTree = "<group>"; };
+		C9349FA2248CF46A0044565D /* wad_editor.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = wad_editor.c; sourceTree = "<group>"; };
 		C9D3233E25A5E983004204D8 /* list.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = list.h; sourceTree = "<group>"; };
 		C9D3233F25A5E991004204D8 /* list_interface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = list_interface.h; sourceTree = "<group>"; };
-		C9D3234025A5E991004204D8 /* list_interface.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = list_interface.c; sourceTree = "<group>"; };
+		C9D3234025A5E991004204D8 /* list.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = list.c; sourceTree = "<group>"; };
 		C9D3234625A5EA16004204D8 /* list_item.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = list_item.h; sourceTree = "<group>"; };
 		C9D3234725A5EA21004204D8 /* list_item_interface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = list_item_interface.h; sourceTree = "<group>"; };
-		C9D3234825A5EA21004204D8 /* list_item_interface.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = list_item_interface.c; sourceTree = "<group>"; };
 		C9D3234D25A5F2C7004204D8 /* list_functions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = list_functions.h; sourceTree = "<group>"; };
 		C9DE1C3D25A601150034544F /* list_item_private_interface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = list_item_private_interface.h; sourceTree = "<group>"; };
-		C9DE1C3E25A601150034544F /* list_item_private_interface.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = list_item_private_interface.c; sourceTree = "<group>"; };
+		C9DE1C3E25A601150034544F /* list_item.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = list_item.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -47,6 +48,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C92383DD25BF832500F5B7EB /* Animation editor */ = {
+			isa = PBXGroup;
+			children = (
+				C92383DE25BF833F00F5B7EB /* animation_editor.h */,
+				C92383DF25BF835100F5B7EB /* animation_editor_private_interface.h */,
+				C92383E025BF835100F5B7EB /* animation_editor.c */,
+			);
+			name = "Animation editor";
+			sourceTree = "<group>";
+		};
 		C9349F8C248CF3110044565D = {
 			isa = PBXGroup;
 			children = (
@@ -70,6 +81,7 @@
 				C9349F9E248CF3FB0044565D /* wad_editor_lib.h */,
 				C9327889259A4D7100A94006 /* private_interface.h */,
 				C9D3233D25A5E95F004204D8 /* List */,
+				C92383DD25BF832500F5B7EB /* Animation editor */,
 				C9349FAA248CFAA80044565D /* Editor */,
 			);
 			path = wad_editor_lib;
@@ -80,7 +92,7 @@
 			children = (
 				C9349FA0248CF45A0044565D /* wad_editor.h */,
 				C9349FA1248CF46A0044565D /* wad_editor_interface.h */,
-				C9349FA2248CF46A0044565D /* wad_editor_interface.c */,
+				C9349FA2248CF46A0044565D /* wad_editor.c */,
 			);
 			name = Editor;
 			sourceTree = "<group>";
@@ -92,7 +104,7 @@
 				C9D3234D25A5F2C7004204D8 /* list_functions.h */,
 				C9D3233E25A5E983004204D8 /* list.h */,
 				C9D3233F25A5E991004204D8 /* list_interface.h */,
-				C9D3234025A5E991004204D8 /* list_interface.c */,
+				C9D3234025A5E991004204D8 /* list.c */,
 			);
 			name = List;
 			sourceTree = "<group>";
@@ -101,10 +113,9 @@
 			isa = PBXGroup;
 			children = (
 				C9D3234625A5EA16004204D8 /* list_item.h */,
-				C9D3234725A5EA21004204D8 /* list_item_interface.h */,
-				C9D3234825A5EA21004204D8 /* list_item_interface.c */,
 				C9DE1C3D25A601150034544F /* list_item_private_interface.h */,
-				C9DE1C3E25A601150034544F /* list_item_private_interface.c */,
+				C9D3234725A5EA21004204D8 /* list_item_interface.h */,
+				C9DE1C3E25A601150034544F /* list_item.c */,
 			);
 			name = Item;
 			sourceTree = "<group>";
@@ -118,7 +129,6 @@
 			files = (
 				C9D3234125A5E991004204D8 /* list_interface.h in Headers */,
 				C9D3234925A5EA21004204D8 /* list_item_interface.h in Headers */,
-				C9349FA3248CF46A0044565D /* wad_editor_interface.h in Headers */,
 				C9DE1C3F25A601150034544F /* list_item_private_interface.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -180,10 +190,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C9349FA4248CF46A0044565D /* wad_editor_interface.c in Sources */,
-				C9D3234A25A5EA21004204D8 /* list_item_interface.c in Sources */,
-				C9DE1C4025A601150034544F /* list_item_private_interface.c in Sources */,
-				C9D3234225A5E991004204D8 /* list_interface.c in Sources */,
+				C9349FA4248CF46A0044565D /* wad_editor.c in Sources */,
+				C9DE1C4025A601150034544F /* list_item.c in Sources */,
+				C9D3234225A5E991004204D8 /* list.c in Sources */,
+				C92383E225BF835100F5B7EB /* animation_editor.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -307,6 +317,7 @@
 				EXECUTABLE_PREFIX = lib;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				STRIP_INSTALLED_PRODUCT = YES;
 			};
 			name = Debug;
 		};
@@ -318,6 +329,7 @@
 				EXECUTABLE_PREFIX = lib;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				STRIP_INSTALLED_PRODUCT = NO;
 			};
 			name = Release;
 		};

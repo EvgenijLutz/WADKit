@@ -11,7 +11,7 @@
 
 #include "wad_kit.h"
 
-unsigned long texturePageGetNumReferences(TEXTURE_PAGE* texturePage);
-unsigned char* texturePageGetData(TEXTURE_PAGE* texturePage);
+unsigned long texturePageGetNumReferences(WK_TEXTURE_PAGE* texturePage);
+unsigned char* texturePageGetData(WK_TEXTURE_PAGE* texturePage);
 
 #endif /* texture_page_interface_h */

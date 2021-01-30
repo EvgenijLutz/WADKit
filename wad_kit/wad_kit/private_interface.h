@@ -10,16 +10,11 @@
 #define wk_private_interface_h
 
 #include "wad_kit.h"
-#include "private_common.h"
+#include "../../../Foundation/Foundation/private_common.h"
 
 // MARK: - Declarations
 
 // MARK: - Structures
-
-#include "data_allocator.h"
-#include "system.h"
-#include "semaphore.h"
-#include "file_reader.h"
 
 #include "texture_page.h"
 #include "texture_sample.h"
@@ -38,7 +33,6 @@
 
 // MARK: - Private interface
 
-#include "data_allocator_private_interface.h"
 #include "texture_page_private_interface.h"
 #include "texture_sample_private_interface.h"
 #include "joint_private_interface.h"

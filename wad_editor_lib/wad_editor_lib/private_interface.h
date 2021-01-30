@@ -10,18 +10,27 @@
 #define private_interface_h
 
 #include "wad_editor_lib.h"
-#include "../../wad_kit/wad_kit/private_common.h"
+#include "../../../Foundation/Foundation/private_common.h"
 
 // MARK: - Declarations
+
+typedef struct TEXTURE_DATA TEXTURE_DATA;
+typedef struct MESH_DATA MESH_DATA;
+typedef struct MOVABLE_DATA MOVABLE_DATA;
+typedef struct ANIMATION_DATA ANIMATION_DATA;
+typedef struct STATIC_DATA STATIC_DATA;
+typedef struct ANIMATION_EDITOR ANIMATION_EDITOR;
 
 // MARK: - Structures
 
 #include "list_item.h"
 #include "list.h"
+#include "animation_editor.h"
 #include "wad_editor.h"
 
 // MARK: - Private interface
 
 #include "list_item_private_interface.h"
+#include "animation_editor_private_interface.h"
 
 #endif /* private_interface_h */

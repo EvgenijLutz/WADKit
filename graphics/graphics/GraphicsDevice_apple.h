@@ -6,15 +6,16 @@
 //
 
 @import Metal;
-#import "graphics_apple.h"
+#include "graphics_apple.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 __attribute__((objc_direct_members))
 @interface GraphicsDevice : NSObject
 
-- (instancetype)initWithMetalDevice:(id<MTLDevice>)metalDevice;
+- (instancetype)initWithSystem:(SYSTEM*)system metalDevice:(id<MTLDevice>)metalDevice;
 
+@property (nonatomic, readonly) SYSTEM* system;
 @property (nonatomic, readonly) id<MTLDevice> metalDevice;
 @property (nonatomic, readonly) GRAPHICS_DEVICE* graphicsDevice;
 

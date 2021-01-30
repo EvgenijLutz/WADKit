@@ -7,10 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		C920D4DF25BC2B4000E473DE /* libgraphics_macos.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C920D4DE25BC2B4000E473DE /* libgraphics_macos.a */; };
-		C920D54025BC737D00E473DE /* default.metallib in Resources */ = {isa = PBXBuildFile; fileRef = C920D53F25BC737D00E473DE /* default.metallib */; };
-		C9349FA8248CF5420044565D /* libwad_editor_lib_macos.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C9349FA7248CF5420044565D /* libwad_editor_lib_macos.a */; };
+		C92383EF25BF8B0300F5B7EB /* 1-tutorial.wad in Resources */ = {isa = PBXBuildFile; fileRef = C92383EE25BF8B0300F5B7EB /* 1-tutorial.wad */; };
 		C9453C8D2495068200604E60 /* ItemListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C9453C8C2495068200604E60 /* ItemListCell.m */; };
+		C971E91125C57575006B7C5A /* libwad_editor_lib_macos.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C971E91025C57575006B7C5A /* libwad_editor_lib_macos.a */; };
+		C971E9C125C5813D006B7C5A /* libgraphics_macos.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C971E9C025C5813D006B7C5A /* libgraphics_macos.a */; };
+		C971EA5525C5BF49006B7C5A /* WKGraphicsResources.bundle in Embed PlugIns */ = {isa = PBXBuildFile; fileRef = C971EA5425C5BF49006B7C5A /* WKGraphicsResources.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		C971EA5925C5BF5C006B7C5A /* WKGraphicsResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C971EA5425C5BF49006B7C5A /* WKGraphicsResources.bundle */; };
+		C9B09CAB25C5E5B400A38E97 /* libfoundation_macos.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C9B09CAA25C5E5B400A38E97 /* libfoundation_macos.a */; };
 		C9BC729523AD560100EFE0D7 /* Window.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9BC729423AD560100EFE0D7 /* Window.xib */; };
 		C9BE0FD323A733E3000E25FC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C9BE0FD223A733E3000E25FC /* AppDelegate.m */; };
 		C9BE0FD523A733E7000E25FC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C9BE0FD423A733E7000E25FC /* Assets.xcassets */; };
@@ -53,14 +56,30 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		C971EA4125C5B992006B7C5A /* Embed PlugIns */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				C971EA5525C5BF49006B7C5A /* WKGraphicsResources.bundle in Embed PlugIns */,
+			);
+			name = "Embed PlugIns";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
-		C905272A2599F7E200CBD62C /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		C920D4DE25BC2B4000E473DE /* libgraphics_macos.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libgraphics_macos.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		C920D53F25BC737D00E473DE /* default.metallib */ = {isa = PBXFileReference; lastKnownFileType = "archive.metal-library"; path = default.metallib; sourceTree = BUILT_PRODUCTS_DIR; };
-		C9349FA7248CF5420044565D /* libwad_editor_lib_macos.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libwad_editor_lib_macos.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		C92383EE25BF8B0300F5B7EB /* 1-tutorial.wad */ = {isa = PBXFileReference; lastKnownFileType = file; path = "1-tutorial.wad"; sourceTree = "<group>"; };
 		C9453C8B2495068200604E60 /* ItemListCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ItemListCell.h; sourceTree = "<group>"; };
 		C9453C8C2495068200604E60 /* ItemListCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ItemListCell.m; sourceTree = "<group>"; };
+		C971E91025C57575006B7C5A /* libwad_editor_lib_macos.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libwad_editor_lib_macos.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		C971E9C025C5813D006B7C5A /* libgraphics_macos.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libgraphics_macos.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		C971EA5425C5BF49006B7C5A /* WKGraphicsResources.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = WKGraphicsResources.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		C97D12C62494C040005EAC04 /* wad_editor_lib_link.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wad_editor_lib_link.h; sourceTree = "<group>"; };
+		C9B09CAA25C5E5B400A38E97 /* libfoundation_macos.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libfoundation_macos.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9BC729423AD560100EFE0D7 /* Window.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Window.xib; sourceTree = "<group>"; };
 		C9BE0FCE23A733E3000E25FC /* WAD Editor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "WAD Editor.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9BE0FD123A733E3000E25FC /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -82,7 +101,6 @@
 		C9BE100323A73434000E25FC /* MetalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalKit.framework; path = System/Library/Frameworks/MetalKit.framework; sourceTree = SDKROOT; };
 		C9BE100723A761D1000E25FC /* MainWindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MainWindow.h; sourceTree = "<group>"; };
 		C9BE100823A761D1000E25FC /* MainWindow.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MainWindow.m; sourceTree = "<group>"; };
-		C9D3233825A5E87F004204D8 /* libgraphics_macOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libgraphics_macOS.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9DE1C4225A608E90034544F /* ItemListValue.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ItemListValue.h; sourceTree = "<group>"; };
 		C9DE1C4325A608E90034544F /* ItemListValue.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ItemListValue.m; sourceTree = "<group>"; };
 		C9E2BE7F247D695C006FF2AE /* tut1.raw */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = tut1.raw; sourceTree = "<group>"; };
@@ -105,9 +123,10 @@
 			files = (
 				C9BE100423A73434000E25FC /* Metal.framework in Frameworks */,
 				C9BE100623A73434000E25FC /* MetalKit.framework in Frameworks */,
-				C9349FA8248CF5420044565D /* libwad_editor_lib_macos.a in Frameworks */,
 				C9BE100523A73434000E25FC /* MetalPerformanceShaders.framework in Frameworks */,
-				C920D4DF25BC2B4000E473DE /* libgraphics_macos.a in Frameworks */,
+				C9B09CAB25C5E5B400A38E97 /* libfoundation_macos.a in Frameworks */,
+				C971E91125C57575006B7C5A /* libwad_editor_lib_macos.a in Frameworks */,
+				C971E9C125C5813D006B7C5A /* libgraphics_macos.a in Frameworks */,
 				C9BE100023A7341E000E25FC /* libwad_kit.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -212,14 +231,15 @@
 		C9BE0FFE23A7341E000E25FC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C9B09CAA25C5E5B400A38E97 /* libfoundation_macos.a */,
+				C9BE0FFF23A7341E000E25FC /* libwad_kit.a */,
+				C971E9C025C5813D006B7C5A /* libgraphics_macos.a */,
+				C971EA5425C5BF49006B7C5A /* WKGraphicsResources.bundle */,
 				C920D4DE25BC2B4000E473DE /* libgraphics_macos.a */,
-				C9D3233825A5E87F004204D8 /* libgraphics_macOS.a */,
-				C905272A2599F7E200CBD62C /* libc++.tbd */,
-				C9349FA7248CF5420044565D /* libwad_editor_lib_macos.a */,
+				C971E91025C57575006B7C5A /* libwad_editor_lib_macos.a */,
 				C9BE100123A73434000E25FC /* Metal.framework */,
 				C9BE100323A73434000E25FC /* MetalKit.framework */,
 				C9BE100223A73434000E25FC /* MetalPerformanceShaders.framework */,
-				C9BE0FFF23A7341E000E25FC /* libwad_kit.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -227,7 +247,6 @@
 		C9E2BE7E247D690D006FF2AE /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				C920D53F25BC737D00E473DE /* default.metallib */,
 				C9E2BE87247D695C006FF2AE /* tut1.CD */,
 				C9E2BE83247D695C006FF2AE /* tut1.lar */,
 				C9E2BE7F247D695C006FF2AE /* tut1.raw */,
@@ -237,6 +256,7 @@
 				C9E2BE80247D695C006FF2AE /* tut1.TOM */,
 				C9E2BE84247D695C006FF2AE /* tut1.WAD */,
 				C9E2BE82247D695C006FF2AE /* tut1.WAS */,
+				C92383EE25BF8B0300F5B7EB /* 1-tutorial.wad */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -251,6 +271,7 @@
 				C9BE0FCA23A733E3000E25FC /* Sources */,
 				C9BE0FCB23A733E3000E25FC /* Frameworks */,
 				C9BE0FCC23A733E3000E25FC /* Resources */,
+				C971EA4125C5B992006B7C5A /* Embed PlugIns */,
 			);
 			buildRules = (
 			);
@@ -344,6 +365,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C971EA5925C5BF5C006B7C5A /* WKGraphicsResources.bundle in Resources */,
 				C9E2BE8B247D695C006FF2AE /* tut1.WAS in Resources */,
 				C9BE0FD523A733E7000E25FC /* Assets.xcassets in Resources */,
 				C9E2BE8A247D695C006FF2AE /* tut1.sfx in Resources */,
@@ -353,9 +375,9 @@
 				C9E2BE90247D695C006FF2AE /* tut1.CD in Resources */,
 				C9E2BE8D247D695C006FF2AE /* tut1.WAD in Resources */,
 				C9BE0FD823A733E7000E25FC /* MainMenu.xib in Resources */,
-				C920D54025BC737D00E473DE /* default.metallib in Resources */,
 				C9E2BE88247D695C006FF2AE /* tut1.raw in Resources */,
 				C9E2BE8F247D695C006FF2AE /* tut1.SWD in Resources */,
+				C92383EF25BF8B0300F5B7EB /* 1-tutorial.wad in Resources */,
 				C9BC729523AD560100EFE0D7 /* Window.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -553,13 +575,16 @@
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = 7N525N28LV;
 				ENABLE_HARDENED_RUNTIME = YES;
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "WAD Editor/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Eugene-Lutz.WAD-Editor";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRIP_INSTALLED_PRODUCT = YES;
 			};
 			name = Debug;
 		};
@@ -574,13 +599,16 @@
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = 7N525N28LV;
 				ENABLE_HARDENED_RUNTIME = YES;
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "WAD Editor/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Eugene-Lutz.WAD-Editor";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRIP_INSTALLED_PRODUCT = YES;
 			};
 			name = Release;
 		};

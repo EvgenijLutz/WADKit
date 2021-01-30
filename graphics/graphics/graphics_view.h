@@ -27,7 +27,7 @@ typedef struct GRAPHICS_VIEW
 	GRAPHICS_DEVICE* device;
 	
 	/// Array of @b GRAPHICS_DRAWABLE objects.
-	WK_ARRAY drawables;
+	MAGIC_ARRAY drawables;
 	
 	// TODO: INPUT_RESPONDER
 	

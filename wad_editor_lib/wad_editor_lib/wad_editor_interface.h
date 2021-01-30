@@ -11,7 +11,7 @@
 
 #include "wad_editor_lib.h"
 
-WAD_EDITOR* wadEditorCreate(WK_SYSTEM* system, WE_LIST* wadContentsList, GRAPHICS_VIEW* outputView);
+WAD_EDITOR* wadEditorCreate(SYSTEM* system, WE_LIST* wadContentsList, GRAPHICS_VIEW* outputView);
 void wadEditorRelease(WAD_EDITOR* wadEditor);
 
 void wadEditorLoadWad(WAD_EDITOR* editor, const char* filePath);

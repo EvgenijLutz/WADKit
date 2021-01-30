@@ -17,7 +17,8 @@ typedef struct /*__attribute__((__packed__))*/ ROTATION
 	unsigned short roty;
 	unsigned short rotz;
 	
-	quaternionf rotation;
+	vector3f eulerRotation;
+	quaternionf quaternionRotation;
 }
 ROTATION;
 

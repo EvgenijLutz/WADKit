@@ -54,10 +54,10 @@ typedef struct MESH
 	int usesNormals;
 	
 	/// Array of @b VERTEX elements.
-	WK_ARRAY vertices;
+	MAGIC_ARRAY vertices;
 	
 	/// Array of @b POLYGON elements.
-	WK_ARRAY polygons;
+	MAGIC_ARRAY polygons;
 }
 MESH;
 

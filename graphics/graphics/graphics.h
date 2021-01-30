@@ -11,11 +11,11 @@
 
 // Public WAD editor interface
 
+#include "../../wad_kit/wad_kit/wad_kit.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-#include "../../wad_kit/wad_kit/wad_kit.h"
 
 // MARK: - Enumerations
 
@@ -25,6 +25,9 @@ extern "C" {
 // MARK: - Type declarations
 
 typedef struct TEXTURE2D TEXTURE2D;
+typedef struct BUFFER_SWITCH_SUBSCRIBER BUFFER_SWITCH_SUBSCRIBER;
+typedef struct BUFFER_SWITCH BUFFER_SWITCH;
+typedef struct GRAPHICS_BUFFER GRAPHICS_BUFFER;
 typedef struct GRAPHICS_MESH_UNIFORMS GRAPHICS_MESH_UNIFORMS;
 typedef struct GRAPHICS_MESH GRAPHICS_MESH;
 /// Device pipeline, reusable resource
@@ -37,6 +40,7 @@ typedef struct GRAPHICS_DEVICE GRAPHICS_DEVICE;
 
 // MARK: - Public structures
 
+#include "buffer_switch_subscriber.h"
 #include "graphics_vertex.h"
 #include "graphics_mesh_uniforms_data.h"
 
@@ -48,6 +52,8 @@ typedef struct GRAPHICS_DEVICE GRAPHICS_DEVICE;
 // MARK: - Public interface
 
 #include "texture2d_interface.h"
+#include "buffer_switch_interface.h"
+#include "graphics_buffer_interface.h"
 #include "graphics_mesh_interface.h"
 #include "command_queue_interface.h"
 #include "command_buffer_interface.h"

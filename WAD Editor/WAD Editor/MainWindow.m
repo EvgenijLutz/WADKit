@@ -145,7 +145,7 @@
 	[self _initializeMainSplitView];
 	
 	// 3. Initialize editor
-	WK_SYSTEM* system = AppDelegate.system;
+	SYSTEM* system = AppDelegate.system;
 	GRAPHICS_VIEW* graphicsView = editorViewportView.graphicsView;
 	WE_LIST* wadContentsList = leftSidebarView.list;
 	wadEditor = wadEditorCreate(system, wadContentsList, graphicsView);

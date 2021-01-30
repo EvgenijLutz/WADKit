@@ -11,6 +11,8 @@
 
 /* * * Public WADKit interface * * */
 
+#include "../../../Foundation/Foundation/foundation.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -24,20 +26,8 @@ extern "C" {
 
 // MARK: - Declarations
 
-typedef struct EXECUTE_RESULT EXECUTE_RESULT;
-
-typedef struct WK_BUFFER WK_BUFFER;
-typedef struct DATA_BLOCK DATA_BLOCK;
-typedef struct DATA_ALLOCATOR DATA_ALLOCATOR;
-typedef struct WK_STRING WK_STRING;
-typedef struct WK_ARRAY WK_ARRAY;
-
-typedef struct WK_SYSTEM WK_SYSTEM;
-typedef struct WK_SEMAPHORE WK_SEMAPHORE;
-typedef struct WK_FILE_READER WK_FILE_READER;
-
-typedef struct TEXTURE_PAGE TEXTURE_PAGE;
-typedef struct TEXTURE_SAMPLE TEXTURE_SAMPLE;
+typedef struct WK_TEXTURE_PAGE WK_TEXTURE_PAGE;
+typedef struct WK_TEXTURE_SAMPLE WK_TEXTURE_SAMPLE;
 typedef struct VERTEX VERTEX;
 typedef struct POLYGON POLYGON;
 typedef struct MESH MESH;
@@ -50,8 +40,6 @@ typedef struct WK_WAD WK_WAD;
 
 // MARK: - Enumerations
 
-#include "file_mode.h"
-
 #include "joint_location_type.h"
 #include "command_type.h"
 #include "movable_id.h"
@@ -59,36 +47,11 @@ typedef struct WK_WAD WK_WAD;
 
 // MARK: - Callbacks
 
-#include "system_functions.h"
 
 // MARK: - Structures
 
-#include "execute_result.h"
-#include "buffer.h"
-#include "data_block_item.h"
-#include "buffer_reader.h"
-#include "string.h"
-#include "array.h"
-
-#include "vector2f.h"
-#include "vector3f.h"
-#include "wk_math.h"
 
 // MARK: - Public interface
-
-#include "buffer_interface.h"
-#include "buffer_reader_interface.h"
-#include "data_allocator_interface.h"
-#include "string_interface.h"
-#include "array_interface.h"
-
-#include "system_interface.h"
-#include "semaphore_interface.h"
-#include "file_reader_interface.h"
-
-#include "vector2f_interface.h"
-#include "vector3f_interface.h"
-#include "wk_math_functions.h"
 
 #include "texture_page_interface.h"
 #include "texture_sample_interface.h"

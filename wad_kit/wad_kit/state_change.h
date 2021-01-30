@@ -28,7 +28,7 @@ typedef struct STATE_CHANGE
 	/*!
 	 @b DISPATCH array.
 	 */
-	WK_ARRAY dispatches;
+	MAGIC_ARRAY dispatches;
 }
 STATE_CHANGE;
 

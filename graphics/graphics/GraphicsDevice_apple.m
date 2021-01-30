@@ -6,7 +6,7 @@
 //
 
 #import "GraphicsDevice_apple.h"
-#import "private_interface.h"
+#include "private_interface.h"
 
 // MARK: - Private interface
 
@@ -271,26 +271,34 @@ static void _metal_renderCommandEncoderRenderMesh(RENDER_COMMAND_ENCODER* render
 
 @implementation GraphicsDevice
 
-- (instancetype)initWithMetalDevice:(id<MTLDevice>)metalDevice
+- (instancetype)initWithSystem:(SYSTEM*)system metalDevice:(id<MTLDevice>)metalDevice
 {
 	self = [super init];
 	if (self)
 	{
+		_system = system;
 		_metalDevice = metalDevice;
 		
-		id<MTLLibrary> library = [metalDevice newDefaultLibrary];
+		NSString* bundlePath = [NSBundle.mainBundle pathForResource:@"WKGraphicsResources" ofType:@"bundle"];
+		NSBundle* bundle = [[NSBundle alloc] initWithPath:bundlePath];
+		//id<MTLLibrary> library = [metalDevice newDefaultLibrary];
+		id<MTLLibrary> library = [metalDevice newDefaultLibraryWithBundle:bundle error:nil];
 		assert(library);
 		
 		// MARK: GRAPHICS_DEVICE implementation
 		_graphicsDevice = malloc(sizeof(GRAPHICS_DEVICE));
-		stringInitialize(&_graphicsDevice->name, metalDevice.name.UTF8String);
+		stringInitializeWithUTF8String(&_graphicsDevice->name, metalDevice.name.UTF8String);
+		
+		_graphicsDevice->system = system;
+		_graphicsDevice->accessSemaphore = systemCreateSemaphore(system, 1);
 
-		arrayInitialize(&_graphicsDevice->textures, sizeof(TEXTURE2D));
-		arrayInitialize(&_graphicsDevice->meshes, sizeof(GRAPHICS_MESH));
-		arrayInitialize(&_graphicsDevice->meshUniforms, sizeof(GRAPHICS_MESH_UNIFORMS));
-		arrayInitialize(&_graphicsDevice->commandQueues, sizeof(COMMAND_QUEUE));
-		arrayInitialize(&_graphicsDevice->commandBuffers, sizeof(COMMAND_BUFFER));
-		arrayInitialize(&_graphicsDevice->renderCommandEncoders, sizeof(RENDER_COMMAND_ENCODER));
+		magicArrayInitialize(&_graphicsDevice->textures, MAGIC_ARRAY_ITEM_DISTRIBUTION_DONT_CARE, sizeof(TEXTURE2D), 8);
+		magicArrayInitialize(&_graphicsDevice->meshes, MAGIC_ARRAY_ITEM_DISTRIBUTION_DONT_CARE, sizeof(GRAPHICS_MESH), 8);
+		magicArrayInitialize(&_graphicsDevice->meshUniforms, MAGIC_ARRAY_ITEM_DISTRIBUTION_DONT_CARE, sizeof(GRAPHICS_MESH_UNIFORMS), 8);
+		magicArrayInitialize(&_graphicsDevice->commandQueues, MAGIC_ARRAY_ITEM_DISTRIBUTION_DONT_CARE, sizeof(COMMAND_QUEUE), 8);
+		//magicArrayInitialize(&_graphicsDevice->commandBuffers, MAGIC_ARRAY_ITEM_DISTRIBUTION_DONT_CARE, sizeof(COMMAND_BUFFER), 8);
+		magicArrayInitialize(&_graphicsDevice->commandBuffers, MAGIC_ARRAY_ITEM_DISTRIBUTION_DONT_CARE, sizeof(COMMAND_BUFFER), 1);
+		magicArrayInitialize(&_graphicsDevice->renderCommandEncoders, MAGIC_ARRAY_ITEM_DISTRIBUTION_DONT_CARE, sizeof(RENDER_COMMAND_ENCODER), 8);
 		
 		_graphicsDevice->createTexture2dWithDataFunc = _metal_createTexture2dWithData;
 		_graphicsDevice->releaseTexture2dFunc = _metal_releaseTexture2d;
@@ -369,22 +377,24 @@ static void _metal_renderCommandEncoderRenderMesh(RENDER_COMMAND_ENCODER* render
 - (void)dealloc
 {
 	assert(_graphicsDevice->renderCommandEncoders.length == 0);
-	arrayDeinitialize(&_graphicsDevice->renderCommandEncoders);
+	magicArrayDeinitialize(&_graphicsDevice->renderCommandEncoders);
 	
 	assert(_graphicsDevice->commandBuffers.length == 0);
-	arrayDeinitialize(&_graphicsDevice->commandBuffers);
+	magicArrayDeinitialize(&_graphicsDevice->commandBuffers);
 	
 	assert(_graphicsDevice->commandQueues.length == 0);
-	arrayDeinitialize(&_graphicsDevice->commandQueues);
+	magicArrayDeinitialize(&_graphicsDevice->commandQueues);
 	
 	assert(_graphicsDevice->meshUniforms.length == 0);
-	arrayDeinitialize(&_graphicsDevice->meshUniforms);
+	magicArrayDeinitialize(&_graphicsDevice->meshUniforms);
 	
 	assert(_graphicsDevice->meshes.length == 0);
-	arrayDeinitialize(&_graphicsDevice->meshes);
+	magicArrayDeinitialize(&_graphicsDevice->meshes);
 	
 	assert(_graphicsDevice->textures.length == 0);
-	arrayDeinitialize(&_graphicsDevice->textures);
+	magicArrayDeinitialize(&_graphicsDevice->textures);
+	
+	semaphoreRelease(_graphicsDevice->accessSemaphore);
 	
 	stringDeinitialize(&_graphicsDevice->name);
 	

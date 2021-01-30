@@ -13,14 +13,17 @@
 
 typedef struct GRAPHICS_DEVICE
 {
-	WK_STRING name;
+	STRING name;
 	
-	WK_ARRAY textures;
-	WK_ARRAY meshes;
-	WK_ARRAY meshUniforms;
-	WK_ARRAY commandQueues;
-	WK_ARRAY commandBuffers;
-	WK_ARRAY renderCommandEncoders;
+	SYSTEM* system;
+	SEMAPHORE* accessSemaphore;
+	
+	MAGIC_ARRAY textures;
+	MAGIC_ARRAY meshes;
+	MAGIC_ARRAY meshUniforms;
+	MAGIC_ARRAY commandQueues;
+	MAGIC_ARRAY commandBuffers;
+	MAGIC_ARRAY renderCommandEncoders;
 	
 	GRAPHICS_DEVICE_CREATE_TEXTURE2D_WITH_DATA_FUNC createTexture2dWithDataFunc;
 	GRAPHICS_DEVICE_RELEASE_TEXTURE2D_FUNC releaseTexture2dFunc;

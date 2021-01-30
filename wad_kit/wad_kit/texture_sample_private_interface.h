@@ -11,7 +11,7 @@
 
 #include "private_interface.h"
 
-void textureSampleInitializeFromBuffer(TEXTURE_SAMPLE* textureSample, WK_WAD* wad, WK_BUFFER* buffer, EXECUTE_RESULT* executeResult);
-void textureSampleDeinitialize(TEXTURE_SAMPLE* textureSample);
+void textureSampleInitializeFromBuffer(WK_TEXTURE_SAMPLE* textureSample, WK_WAD* wad, BUFFER_READER* buffer, EXECUTE_RESULT* executeResult);
+void textureSampleDeinitialize(WK_TEXTURE_SAMPLE* textureSample);
 
 #endif /* texture_sample_private_interface_h */

@@ -20,7 +20,7 @@ typedef struct ANIMATION
 	/*!
 	 @b KEYFRAME array.
 	 */
-	WK_ARRAY keyframes;
+	MAGIC_ARRAY keyframes;
 	
 	unsigned char frameDuration;
 	short unknown1;
@@ -38,12 +38,12 @@ typedef struct ANIMATION
 	/*!
 	 Array of @b STATE_CHANGE elements.
 	 */
-	WK_ARRAY stateChanges;
+	MAGIC_ARRAY stateChanges;
 	
 	/*!
 	 Array of @b COMMAND elements.
 	 */
-	WK_ARRAY commands;
+	MAGIC_ARRAY commands;
 }
 ANIMATION;
 

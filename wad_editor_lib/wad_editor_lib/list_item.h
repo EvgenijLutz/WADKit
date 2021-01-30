@@ -20,9 +20,9 @@ typedef struct WE_LIST_ITEM
 	
 	unsigned long flags;
 	void* data;
-	WK_STRING title;
+	STRING title;
 	
-	WK_ARRAY children;
+	MAGIC_ARRAY children;
 }
 WE_LIST_ITEM;
 

@@ -16,7 +16,7 @@
 
 @implementation AppDelegate
 {
-	WK_SYSTEM* _system;
+	SYSTEM* _system;
 	GraphicsDevice* _graphicsDevice;
 }
 
@@ -44,12 +44,12 @@
 		[self _showErrorAndDieWithMessage:@"Cannot initialize graphics device to render WAD data 😢"];
 		return;
 	}
-	_graphicsDevice = [[GraphicsDevice alloc] initWithMetalDevice:metalDevice];
+	_graphicsDevice = [[GraphicsDevice alloc] initWithSystem:_system metalDevice:metalDevice];
 	
 	[_window initializeInterface];
 }
 
-+ (WK_SYSTEM*)system
++ (SYSTEM*)system
 {
 	AppDelegate* appDelegate = (AppDelegate*)NSApplication.sharedApplication.delegate;
 	return appDelegate->_system;

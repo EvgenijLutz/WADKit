@@ -11,14 +11,14 @@
 
 #include "wad_kit.h"
 
-unsigned char textureSampleGetX(TEXTURE_SAMPLE* textureSample);
-unsigned char textureSampleGetY(TEXTURE_SAMPLE* textureSample);
-unsigned char textureSampleGetAddX(TEXTURE_SAMPLE* textureSample);
-unsigned char textureSampleGetAddY(TEXTURE_SAMPLE* textureSample);
-char textureSampleGetFlipX(TEXTURE_SAMPLE* textureSample);
-char textureSampleGetFlipY(TEXTURE_SAMPLE* textureSample);
-TEXTURE_PAGE* textureSampleGetTexturePage(TEXTURE_SAMPLE* textureSample);
-vector2f textureSampleGetUVLocation(TEXTURE_SAMPLE* textureSample);
-vector2f textureSampleGetUVSize(TEXTURE_SAMPLE* textureSample);
+unsigned char textureSampleGetX(WK_TEXTURE_SAMPLE* textureSample);
+unsigned char textureSampleGetY(WK_TEXTURE_SAMPLE* textureSample);
+unsigned char textureSampleGetAddX(WK_TEXTURE_SAMPLE* textureSample);
+unsigned char textureSampleGetAddY(WK_TEXTURE_SAMPLE* textureSample);
+char textureSampleGetFlipX(WK_TEXTURE_SAMPLE* textureSample);
+char textureSampleGetFlipY(WK_TEXTURE_SAMPLE* textureSample);
+WK_TEXTURE_PAGE* textureSampleGetTexturePage(WK_TEXTURE_SAMPLE* textureSample);
+vector2f textureSampleGetUVLocation(WK_TEXTURE_SAMPLE* textureSample);
+vector2f textureSampleGetUVSize(WK_TEXTURE_SAMPLE* textureSample);
 
 #endif /* texture_sample_interface_h */

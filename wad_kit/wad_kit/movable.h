@@ -23,12 +23,12 @@ typedef struct MOVABLE
 	/*!
 	 Collection of @b JOINT objects, where other meshes are located.
 	 */
-	WK_ARRAY joints;
+	MAGIC_ARRAY joints;
 	
 	/*!
 	 Collection of @b ANIMATION objects.
 	 */
-	WK_ARRAY animations;
+	MAGIC_ARRAY animations;
 }
 MOVABLE;
 

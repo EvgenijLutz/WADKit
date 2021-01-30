@@ -11,10 +11,10 @@
 
 #include "private_interface.h"
 
-typedef struct TEXTURE_SAMPLE
+typedef struct WK_TEXTURE_SAMPLE
 {
 	WK_WAD* wad;
-	TEXTURE_PAGE* page;
+	WK_TEXTURE_PAGE* page;
 	unsigned long numReferences;
 	
 	unsigned char x;
@@ -34,6 +34,6 @@ typedef struct TEXTURE_SAMPLE
 	 */
 	vector2f uvSize;
 }
-TEXTURE_SAMPLE;
+WK_TEXTURE_SAMPLE;
 
 #endif /* texture_sample_h */

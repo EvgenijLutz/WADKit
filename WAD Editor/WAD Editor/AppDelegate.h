@@ -11,7 +11,7 @@
 
 @interface AppDelegate : NSObject <NSApplicationDelegate>
 
-+ (WK_SYSTEM*)system;
++ (SYSTEM*)system;
 + (GraphicsDevice*)graphicsDevice;
 
 @end

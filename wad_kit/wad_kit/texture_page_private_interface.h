@@ -11,9 +11,9 @@
 
 #include "texture_page_private_interface.h"
 
-void texturePageInitializeFromBuffer(TEXTURE_PAGE* texturePage, WK_WAD* wad, WK_BUFFER* buffer, EXECUTE_RESULT* executeResult);
-void texturePageInitializeEmpty(TEXTURE_PAGE* texturePage, WK_WAD* wad);
-void texturePageInitializeWithData(TEXTURE_PAGE* texturePage, WK_WAD* wad, const char* data);
-void texturePageDeinitialize(TEXTURE_PAGE* texturePage);
+void texturePageInitializeFromBuffer(WK_TEXTURE_PAGE* texturePage, WK_WAD* wad, BUFFER_READER* buffer, EXECUTE_RESULT* executeResult);
+void texturePageInitializeEmpty(WK_TEXTURE_PAGE* texturePage, WK_WAD* wad);
+void texturePageInitializeWithData(WK_TEXTURE_PAGE* texturePage, WK_WAD* wad, const char* data);
+void texturePageDeinitialize(WK_TEXTURE_PAGE* texturePage);
 
 #endif /* texture_page_private_interface_h */

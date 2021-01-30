@@ -10,13 +10,15 @@
 #define private_interface_h
 
 #include "graphics.h"
-#include "../../wad_kit/wad_kit/private_common.h"
+#include "../../../Foundation/Foundation/private_common.h"
 
 // MARK: - Declarations
 
 // MARK: - Structures
 
 #include "texture2d.h"
+#include "buffer_switch.h"
+#include "graphics_buffer.h"
 #include "graphics_mesh.h"
 #include "command_queue.h"
 #include "command_buffer.h"

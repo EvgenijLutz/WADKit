@@ -11,7 +11,7 @@
 
 #include "wad_kit.h"
 
-void meshInitializeFromBuffer(MESH* mesh, WK_WAD* wad, WK_BUFFER* buffer, EXECUTE_RESULT* executeResult);
+void meshInitializeFromBuffer(MESH* mesh, WK_WAD* wad, BUFFER_READER* buffer, EXECUTE_RESULT* executeResult);
 void meshDeinitialize(MESH* mesh);
 
 WK_WAD* meshGetWad(MESH* mesh);
