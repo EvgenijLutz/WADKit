@@ -12,14 +12,13 @@
 // MARK: graphics.h extension for Apple platforms
 
 @class GraphicsView;
+@class GraphicsBufferItem;
 @class GraphicsBuffer;
-@class GraphicsMesh;
 @class GraphicsDevice;
 
 #include "graphics.h"
 #import "GraphicsView_apple.h"
 #import "GraphicsBuffer_apple.h"
-#import "GraphicsMesh_apple.h"
 #import "GraphicsDevice_apple.h"
 
 #endif /* graphics_apple_h */

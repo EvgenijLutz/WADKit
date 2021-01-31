@@ -13,7 +13,7 @@
 
 typedef struct TEXTURE2D
 {
-	GRAPHICS_DEVICE* device;
+	GR_DEVICE* device;
 	
 	unsigned int width;
 	unsigned int height;

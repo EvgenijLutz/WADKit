@@ -21,7 +21,7 @@ typedef struct TEXTURE_DATA
 {
 	WK_TEXTURE_PAGE* page;
 	TEXTURE2D* texture;
-	GRAPHICS_MESH* mesh;
+	GR_BUFFER* vertexBuffer;
 }
 TEXTURE_DATA;
 
@@ -29,20 +29,21 @@ typedef struct SUBMESH_DATA
 {
 	WK_TEXTURE_PAGE* page;
 	TEXTURE2D* texture;
-	GRAPHICS_MESH* mesh;
+	GR_BUFFER* vertexBuffer;
+	unsigned int numVertices;
 }
 SUBMESH_DATA;
 
 typedef struct MESH_DATA
 {
-	MESH* mesh;
+	WK_MESH* mesh;
 	MAGIC_ARRAY submeshes;
 }
 MESH_DATA;
 
 typedef struct MOVABLE_JOINT_DATA
 {
-	JOINT* joint;
+	WK_JOINT* joint;
 	MESH_DATA* mesh;
 	MESH_DATA* lataSkinJointMesh;
 }
@@ -50,7 +51,7 @@ MOVABLE_JOINT_DATA;
 
 typedef struct MOVABLE_DATA
 {
-	MOVABLE* movable;
+	WK_MOVABLE* movable;
 	MESH_DATA* rootMesh;
 	MAGIC_ARRAY jointedMeshes;
 }
@@ -59,7 +60,7 @@ MOVABLE_DATA;
 typedef struct ANIMATION_DATA
 {
 	MOVABLE_DATA* movable;
-	ANIMATION* animation;
+	WK_ANIMATION* animation;
 }
 ANIMATION_DATA;
 
@@ -96,7 +97,7 @@ static void _wadItemsList_itemSelected(WE_LIST* list, WE_LIST_ITEM* item, void* 
 		editor->selectedMovable = item->data;
 		editor->numTranslations = 0;
 		
-		MOVABLE* movable = editor->selectedMovable->movable;
+		WK_MOVABLE* movable = editor->selectedMovable->movable;
 		if (movableGetNumAnimations(movable))
 		{
 			editor->selectedAnimation = movableGetAnimation(movable, 0);
@@ -181,7 +182,7 @@ static TEXTURE2D* _wadEditor_getTextureForTexturePage(WAD_EDITOR* editor, WK_TEX
 }
 
 
-static MESH_DATA* _wadEditor_getMeshDataForMesh(WAD_EDITOR* editor, MESH* mesh)
+static MESH_DATA* _wadEditor_getMeshDataForMesh(WAD_EDITOR* editor, WK_MESH* mesh)
 {
 	for (unsigned int i = 0; i < editor->meshes.length; i++)
 	{
@@ -252,7 +253,7 @@ WAD_EDITOR* wadEditorCreate(SYSTEM* system, WE_LIST* wadContentsList, GRAPHICS_V
 	{
 		TRANSFORM_DATA* translation = &wadEditor->transforms[i];
 		translation->modelMatrix = matrix4fIdentity();
-		translation->uniforms = graphicsDeviceCreateMeshUniforms(wadEditor->device);
+		translation->transformUniforms = graphicsDeviceCreateMeshUniformsBuffer(wadEditor->device);
 	}
 	
 	wadEditor->selectedAnimation = NULL;
@@ -261,6 +262,8 @@ WAD_EDITOR* wadEditorCreate(SYSTEM* system, WE_LIST* wadContentsList, GRAPHICS_V
 	wadEditor->useInterpolation = 1;
 	wadEditor->useQuaternionRotations = 1;
 	
+	wadEditor->viewportUniforms = graphicsDeviceCreateViewportUniformsBuffer(wadEditor->device);
+	
 	return wadEditor;
 }
 
@@ -268,10 +271,13 @@ void wadEditorRelease(WAD_EDITOR* wadEditor)
 {
 	assert(wadEditor);
 	
+	graphicsBufferRelease(wadEditor->viewportUniforms);
+	
 	for (unsigned int i = 0; i < wadEditor->translationsCapacity; i++)
 	{
 		TRANSFORM_DATA* translation = &wadEditor->transforms[i];
-		graphicsMeshUniformsRelease(translation->uniforms);
+		//graphicsMeshUniformsRelease(translation->uniforms);
+		graphicsBufferRelease(translation->transformUniforms);
 	}
 	free(wadEditor->transforms);
 	
@@ -341,7 +347,8 @@ void wadEditorLoadWad(WAD_EDITOR* editor, const char* filePath)
 			for (unsigned int j = 0; j < meshData->submeshes.length; j++)
 			{
 				SUBMESH_DATA* submesh = magicArrayGetItem(&meshData->submeshes, j);
-				graphicsMeshRelease(submesh->mesh);
+				//graphicsMeshRelease(submesh->mesh);
+				graphicsBufferRelease(submesh->vertexBuffer);
 			}
 			magicArrayDeinitialize(&meshData->submeshes);
 		}
@@ -351,7 +358,8 @@ void wadEditorLoadWad(WAD_EDITOR* editor, const char* filePath)
 		for (unsigned int i = 0; i < editor->textures.length; i++)
 		{
 			TEXTURE_DATA* link = magicArrayGetItem(&editor->textures, i);
-			graphicsMeshRelease(link->mesh);
+			//graphicsMeshRelease(link->mesh);
+			graphicsBufferRelease(link->vertexBuffer);
 			texture2dRelease(link->texture);
 		}
 		magicArrayClear(&editor->textures);
@@ -383,20 +391,20 @@ void wadEditorLoadWad(WAD_EDITOR* editor, const char* filePath)
 		WK_TEXTURE_PAGE* texturePage = wadGetTexturePage(editor->wad, i);
 		TEXTURE2D* texture = graphicsDeviceCreateTexture2dWithData(editor->device, 256, 256, 3, TEXTURE_USAGE_SHADER_READ, texturePageGetData(texturePage));
 		
-		GRAPHICS_VERTEX vertices[] = {
-			{ .position=vector3fCreate(-0.5, -0.5, 0.0), .uv=vector2fCreate(0.0, 1.0), .weights={ 1.0, 0.0 } },
-			{ .position=vector3fCreate( 0.5, -0.5, 0.0), .uv=vector2fCreate(1.0, 1.0), .weights={ 1.0, 0.0 } },
-			{ .position=vector3fCreate( 0.5,  0.5, 0.0), .uv=vector2fCreate(1.0, 0.0), .weights={ 1.0, 0.0 } },
+		GR_T_VERTEX vertices[] = {
+			{ .position=vector3fCreate(-0.5, -0.5, 0.0), .uv=vector2fCreate(0.0, 1.0)/*,.weights={ 1.0, 0.0 }*/},
+			{ .position=vector3fCreate( 0.5, -0.5, 0.0), .uv=vector2fCreate(1.0, 1.0)/*,.weights={ 1.0, 0.0 }*/},
+			{ .position=vector3fCreate( 0.5,  0.5, 0.0), .uv=vector2fCreate(1.0, 0.0)/*,.weights={ 1.0, 0.0 }*/},
 			
-			{ .position=vector3fCreate( 0.5,  0.5, 0.0), .uv=vector2fCreate(1.0, 0.0), .weights={ 1.0, 0.0 } },
-			{ .position=vector3fCreate(-0.5,  0.5, 0.0), .uv=vector2fCreate(0.0, 0.0), .weights={ 1.0, 0.0 } },
-			{ .position=vector3fCreate(-0.5, -0.5, 0.0), .uv=vector2fCreate(0.0, 1.0), .weights={ 1.0, 0.0 } }
+			{ .position=vector3fCreate( 0.5,  0.5, 0.0), .uv=vector2fCreate(1.0, 0.0)/*,.weights={ 1.0, 0.0 }*/},
+			{ .position=vector3fCreate(-0.5,  0.5, 0.0), .uv=vector2fCreate(0.0, 0.0)/*,.weights={ 1.0, 0.0 }*/},
+			{ .position=vector3fCreate(-0.5, -0.5, 0.0), .uv=vector2fCreate(0.0, 1.0)/*,.weights={ 1.0, 0.0 }*/}
 		};
 		
 		TEXTURE_DATA* textureLink = magicArrayAddItem(&editor->textures);
 		textureLink->page = texturePage;
 		textureLink->texture = texture;
-		textureLink->mesh = graphicsDeviceCreateMesh(editor->device, vertices, 6, texture);
+		textureLink->vertexBuffer = graphicsDeviceCreateVertexBuffer(editor->device, editor->commandQueue, vertices, 6);
 		
 		sprintf(title, "Texture page #%u", i);
 		listItemAddChild(item, LI_FLAG_TEXTURE, textureLink, title);
@@ -412,7 +420,7 @@ void wadEditorLoadWad(WAD_EDITOR* editor, const char* filePath)
 		TEXTURE2D* texture;
 		unsigned int numVertices;
 		unsigned int verticesCapacity;
-		GRAPHICS_VERTEX* vertices;
+		GR_T_VERTEX* vertices;
 	}
 	TEMP_SUBMESH;
 	unsigned int numTempSubmeshes = 0;
@@ -425,12 +433,12 @@ void wadEditorLoadWad(WAD_EDITOR* editor, const char* filePath)
 		tempSubmesh->texture = NULL;
 		tempSubmesh->numVertices = 0;
 		tempSubmesh->verticesCapacity = 6;
-		tempSubmesh->vertices = malloc(sizeof(GRAPHICS_VERTEX) * tempSubmesh->verticesCapacity);
+		tempSubmesh->vertices = malloc(sizeof(GR_T_VERTEX) * tempSubmesh->verticesCapacity);
 	}
 	
 	for (unsigned int meshIndex = 0; meshIndex < length; meshIndex++)
 	{
-		MESH* mesh = wadGetMesh(editor->wad, meshIndex);
+		WK_MESH* mesh = wadGetMesh(editor->wad, meshIndex);
 		unsigned int numPolygons = meshGetNumPolygons(mesh);
 		
 		// Clear tempSubmeshes
@@ -443,7 +451,7 @@ void wadEditorLoadWad(WAD_EDITOR* editor, const char* filePath)
 		
 		for (unsigned int polygonIndex = 0; polygonIndex < numPolygons; polygonIndex++)
 		{
-			POLYGON* polygon = meshGetPolygon(mesh, polygonIndex);
+			WK_POLYGON* polygon = meshGetPolygon(mesh, polygonIndex);
 			WK_TEXTURE_SAMPLE* textureSample = polygonGetTextureSample(polygon);
 			
 			// Find submesh, to which current textureSample belongs
@@ -474,7 +482,7 @@ void wadEditorLoadWad(WAD_EDITOR* editor, const char* filePath)
 					currentTempSubmesh->page = NULL;
 					currentTempSubmesh->numVertices = 0;
 					currentTempSubmesh->verticesCapacity = 6;
-					currentTempSubmesh->vertices = malloc(sizeof(GRAPHICS_VERTEX) * currentTempSubmesh->verticesCapacity);
+					currentTempSubmesh->vertices = malloc(sizeof(GR_T_VERTEX) * currentTempSubmesh->verticesCapacity);
 					assert(currentTempSubmesh->vertices);
 				}
 				
@@ -488,7 +496,7 @@ void wadEditorLoadWad(WAD_EDITOR* editor, const char* filePath)
 			while (tempSubmesh->numVertices + 6 > tempSubmesh->verticesCapacity)
 			{
 				tempSubmesh->verticesCapacity += 6;
-				tempSubmesh->vertices = realloc(tempSubmesh->vertices, sizeof(GRAPHICS_VERTEX) * tempSubmesh->verticesCapacity);
+				tempSubmesh->vertices = realloc(tempSubmesh->vertices, sizeof(GR_T_VERTEX) * tempSubmesh->verticesCapacity);
 				assert(tempSubmesh->vertices);
 			}
 			
@@ -552,9 +560,9 @@ void wadEditorLoadWad(WAD_EDITOR* editor, const char* filePath)
 				uv4 = uvD;
 			}
 			
-			VERTEX* v1 = polygonGetVertex1(polygon);
-			VERTEX* v2 = polygonGetVertex2(polygon);
-			VERTEX* v3 = polygonGetVertex3(polygon);
+			WK_VERTEX* v1 = polygonGetVertex1(polygon);
+			WK_VERTEX* v2 = polygonGetVertex2(polygon);
+			WK_VERTEX* v3 = polygonGetVertex3(polygon);
 						
 			tempSubmesh->vertices[tempSubmesh->numVertices + 0].position = vertexGetPosition(v1);
 			tempSubmesh->vertices[tempSubmesh->numVertices + 0].uv = uv1;
@@ -569,7 +577,7 @@ void wadEditorLoadWad(WAD_EDITOR* editor, const char* filePath)
 			
 			if (!polygonIsTriangle(polygon))
 			{
-				VERTEX* v4 = polygonGetVertex4(polygon);
+				WK_VERTEX* v4 = polygonGetVertex4(polygon);
 				
 				tempSubmesh->vertices[tempSubmesh->numVertices + 0].position = vertexGetPosition(v1);
 				tempSubmesh->vertices[tempSubmesh->numVertices + 0].uv = uv1;
@@ -594,16 +602,17 @@ void wadEditorLoadWad(WAD_EDITOR* editor, const char* filePath)
 		{
 			TEMP_SUBMESH* currentTempSubmesh = &tempSubmeshes[k];
 			assert(currentTempSubmesh->numVertices);
-			for (unsigned int l = 0; l < currentTempSubmesh->numVertices; l++)
+			/*for (unsigned int l = 0; l < currentTempSubmesh->numVertices; l++)
 			{
 				currentTempSubmesh->vertices[l].weights[0] = 1.0f;
 				currentTempSubmesh->vertices[l].weights[1] = 0.0f;
-			}
+			}*/
 			
 			SUBMESH_DATA* submesh = magicArrayAddItem(&meshData->submeshes);
 			submesh->page = currentTempSubmesh->page;
 			submesh->texture = currentTempSubmesh->texture;
-			submesh->mesh = graphicsDeviceCreateMesh(editor->device, currentTempSubmesh->vertices, currentTempSubmesh->numVertices, currentTempSubmesh->texture);
+			submesh->vertexBuffer = graphicsDeviceCreateVertexBuffer(editor->device, editor->commandQueue, currentTempSubmesh->vertices, currentTempSubmesh->numVertices);
+			submesh->numVertices = currentTempSubmesh->numVertices;
 		}
 		
 		sprintf(title, "Mesh #%u", meshIndex);
@@ -620,7 +629,7 @@ void wadEditorLoadWad(WAD_EDITOR* editor, const char* filePath)
 	
 	
 	// Get placeholder null mesh used by ID_LARA, ID_PISTOLS_ANIM, etc
-	MESH* nullMesh = NULL;
+	WK_MESH* nullMesh = NULL;
 	if (wadGetNumMeshes(editor->wad))
 	{
 		nullMesh = wadGetMesh(editor->wad, 0);
@@ -631,16 +640,16 @@ void wadEditorLoadWad(WAD_EDITOR* editor, const char* filePath)
 	length = wadGetNumMovables(editor->wad);
 	for (unsigned int i = 0; i < length; i++)
 	{
-		MOVABLE* movable = wadGetMovableByIndex(editor->wad, i);
+		WK_MOVABLE* movable = wadGetMovableByIndex(editor->wad, i);
 		MOVABLE_ID movableId = movableGetId(movable);
 		const char* movableName = movableIdGetTerribleName(movableId);
 		MESH_DATA* rootMeshData = _wadEditor_getMeshDataForMesh(editor, movableGetRootMesh(movable));
 		if (rootMeshData->mesh == nullMesh)
 		{
-			MOVABLE* laraSkinMovable = wadGetMovableById(editor->wad, MOVABLE_ID_LARA_SKIN);
+			WK_MOVABLE* laraSkinMovable = wadGetMovableById(editor->wad, MOVABLE_ID_LARA_SKIN);
 			if (laraSkinMovable)
 			{
-				MESH* laraSkinRootMesh = movableGetRootMesh(laraSkinMovable);
+				WK_MESH* laraSkinRootMesh = movableGetRootMesh(laraSkinMovable);
 				rootMeshData = _wadEditor_getMeshDataForMesh(editor, laraSkinRootMesh);
 			}
 		}
@@ -657,11 +666,11 @@ void wadEditorLoadWad(WAD_EDITOR* editor, const char* filePath)
 		unsigned int numJoints = movableGetNumJoints(movable);
 		for (unsigned int j = 0; j < numJoints; j++)
 		{
-			JOINT* joint = movableGetJoint(movable, j);
-			MESH* mesh = jointGetMesh(joint);
+			WK_JOINT* joint = movableGetJoint(movable, j);
+			WK_MESH* mesh = jointGetMesh(joint);
 			if (mesh == nullMesh)
 			{
-				MOVABLE* laraSkinMovable = wadGetMovableById(editor->wad, MOVABLE_ID_LARA_SKIN);
+				WK_MOVABLE* laraSkinMovable = wadGetMovableById(editor->wad, MOVABLE_ID_LARA_SKIN);
 				if (laraSkinMovable)
 				{
 					unsigned int fixedJointIndex = j;
@@ -690,7 +699,7 @@ void wadEditorLoadWad(WAD_EDITOR* editor, const char* filePath)
 						fixedJointIndex = 0;
 					}
 					
-					JOINT* laraSkinJoint = movableGetJoint(laraSkinMovable, fixedJointIndex);
+					WK_JOINT* laraSkinJoint = movableGetJoint(laraSkinMovable, fixedJointIndex);
 					mesh = jointGetMesh(laraSkinJoint);
 				}
 			}
@@ -721,11 +730,11 @@ void wadEditorLoadWad(WAD_EDITOR* editor, const char* filePath)
 				movableId == MOVABLE_ID_TORCH_ANIM ||
 				movableId == MOVABLE_ID_FLARE_ANIM)
 			{
-				MOVABLE* laraSkinJoint = wadGetMovableById(editor->wad, MOVABLE_ID_LARA_SKIN_JOINTS);
+				WK_MOVABLE* laraSkinJoint = wadGetMovableById(editor->wad, MOVABLE_ID_LARA_SKIN_JOINTS);
 				if (laraSkinJoint)
 				{
-					JOINT* skinJoint = movableGetJoint(laraSkinJoint, j);
-					MESH* skinJointMesh = jointGetMesh(skinJoint);
+					WK_JOINT* skinJoint = movableGetJoint(laraSkinJoint, j);
+					WK_MESH* skinJointMesh = jointGetMesh(skinJoint);
 					jointData->lataSkinJointMesh = _wadEditor_getMeshDataForMesh(editor, skinJointMesh);
 				}
 			}
@@ -738,7 +747,7 @@ void wadEditorLoadWad(WAD_EDITOR* editor, const char* filePath)
 		unsigned int numAnimations = movableGetNumAnimations(movable);
 		for (unsigned int j = 0; j < numAnimations; j++)
 		{
-			ANIMATION* animation = movableGetAnimation(movable, j);
+			WK_ANIMATION* animation = movableGetAnimation(movable, j);
 			ANIMATION_DATA* animationData = magicArrayAddItem(&editor->animations);
 			animationData->movable = movableData;
 			animationData->animation = animation;
@@ -756,7 +765,7 @@ void wadEditorLoadWad(WAD_EDITOR* editor, const char* filePath)
 		STATIC_ID staticId = staticGetId(staticObject);
 		//const char* staticName = staticIdGetFabulousName(staticId);
 		const char* staticName = staticIdGetTerribleName(staticId);
-		MESH* staticMesh = staticGetMesh(staticObject);
+		WK_MESH* staticMesh = staticGetMesh(staticObject);
 		
 		STATIC_DATA* staticData = magicArrayAddItem(&editor->statics);
 		staticData->staticObject = staticObject;
@@ -768,7 +777,7 @@ void wadEditorLoadWad(WAD_EDITOR* editor, const char* filePath)
 	semaphoreLeave(editor->accessSemaphore);
 }
 
-static matrix4f _wadEditor_transform(WAD_EDITOR* wadEditor, KEYFRAME* firstKeyframe, KEYFRAME* secondKeyframe, int componentIndex, float keyframeInterpolationCoefficient, int calculateOffset)
+static matrix4f _wadEditor_transform(WAD_EDITOR* wadEditor, WK_KEYFRAME* firstKeyframe, WK_KEYFRAME* secondKeyframe, int componentIndex, float keyframeInterpolationCoefficient, int calculateOffset)
 {
 	matrix4f rotMat = matrix4fIdentity();
 	if (wadEditor->useInterpolation)
@@ -840,32 +849,33 @@ static void _wadEditor_updateState(WAD_EDITOR* wadEditor)
 	const float fovyRadians = 65.0 * (M_PI / 180.0f);
 	float aspect = graphicsViewGetWidth(wadEditor->outputView) / graphicsViewGetHeight(wadEditor->outputView);
 	
-	GRAPHICS_MESH_UNIFORMS_DATA data;
-	data.projection = matrix4fPerspectiveRightHand_MetalNDC(fovyRadians, aspect, 0.01f, 100.0f);
+	GR_VIEWPORT_UNIFORMS_DATA viewportUniformsData;
+	viewportUniformsData.projection = matrix4fPerspectiveRightHand_MetalNDC(fovyRadians, aspect, 0.01f, 100.0f);
+	viewportUniformsBufferSetData(wadEditor->viewportUniforms, &viewportUniformsData);
+	
+	GR_MESH_UNIFORM_DATA data;
 	data.ambient = vector3fCreate(1.0f, 1.0f, 1.0f);
 	if (wadEditor->selectedTexture)
 	{
-		data.modelView[0] = matrix4fMul(matrix4fTranslation(0.0f, 0.0f, -0.8f), matrix4fIdentity());
-		data.modelView[1] = matrix4fMul(matrix4fTranslation(0.0f, 0.0f, -0.8f), matrix4fIdentity());
+		data.modelView = matrix4fMul(matrix4fTranslation(0.0f, 0.0f, -0.8f), matrix4fIdentity());
 		
 		TRANSFORM_DATA* firstTranslation = &wadEditor->transforms[0];
-		graphicsMeshUniformsSetData(firstTranslation->uniforms, wadEditor->commandQueue, &data);
+		meshUniformsBufferSetData(firstTranslation->transformUniforms, &data);
 	}
 	else if (wadEditor->selectedMesh)
 	{
 		matrix4f viewMatrix = matrix4fTranslation(0.0f, 0.0f, -0.3f);
 		matrix4f rotationMatrix = matrix4fRotation(rotation, vector3fCreate(0.0f, 1.0f, 0.0f));
-		data.modelView[0] = matrix4fMul(viewMatrix, rotationMatrix);
-		data.modelView[1] = matrix4fMul(viewMatrix, rotationMatrix);
+		data.modelView = matrix4fMul(viewMatrix, rotationMatrix);
 		
 		TRANSFORM_DATA* firstTranslation = &wadEditor->transforms[0];
-		graphicsMeshUniformsSetData(firstTranslation->uniforms, wadEditor->commandQueue, &data);
+		meshUniformsBufferSetData(firstTranslation->transformUniforms, &data);
 	}
 	else if (wadEditor->selectedMovable)
 	{
 		// Calculate animation
-		KEYFRAME* keyframe = NULL;
-		KEYFRAME* nextKeyframe = NULL;
+		WK_KEYFRAME* keyframe = NULL;
+		WK_KEYFRAME* nextKeyframe = NULL;
 		float keyframeInterpolationCoefficient = 0.0f;
 		if (wadEditor->selectedAnimation)
 		{
@@ -895,8 +905,6 @@ static void _wadEditor_updateState(WAD_EDITOR* wadEditor)
 		}
 		
 		matrix4f viewRotationMatrix = matrix4fRotation(rotation, vector3fCreate(0.0f, 1.0f, 0.0f));
-		//viewRotationMatrix = matrix4f_identity;
-		//viewRotationMatrix = matrix4fRotation(M_PI_2, vector3fCreate(0.0f, 1.0f, 0.0f));
 		matrix4f viewTranslationMatrix = matrix4fTranslation(0.0f, 0.0f, -0.8f);
 		viewTranslationMatrix = matrix4fTranslation(0.0f, -0.4f, -0.8f);
 		matrix4f viewMatrix = matrix4fMul(viewTranslationMatrix, viewRotationMatrix);
@@ -911,9 +919,8 @@ static void _wadEditor_updateState(WAD_EDITOR* wadEditor)
 		{
 			firstTranslation->modelMatrix = _wadEditor_transform(wadEditor, keyframe, nextKeyframe, 0, keyframeInterpolationCoefficient, 1);
 		}
-		data.modelView[0] = matrix_multiply(viewMatrix, firstTranslation->modelMatrix);
-		data.modelView[1] = data.modelView[0];
-		graphicsMeshUniformsSetData(firstTranslation->uniforms, wadEditor->commandQueue, &data);
+		data.modelView = matrix_multiply(viewMatrix, firstTranslation->modelMatrix);
+		meshUniformsBufferSetData(firstTranslation->transformUniforms, &data);
 		
 		unsigned int transformIndex = 0;
 		
@@ -929,7 +936,7 @@ static void _wadEditor_updateState(WAD_EDITOR* wadEditor)
 			currentTransform->stackParentIndex = parentTransform->stackParentIndex;
 			
 			MOVABLE_JOINT_DATA* jointData = magicArrayGetItem(&selectedMovable->jointedMeshes, jointIndex);
-			JOINT* joint = jointData->joint;
+			WK_JOINT* joint = jointData->joint;
 			vector3f offset = jointGetOffset(joint);
 			matrix4f translationMatrix = matrix4fTranslation(offset.x, offset.y, offset.z);
 			
@@ -962,21 +969,18 @@ static void _wadEditor_updateState(WAD_EDITOR* wadEditor)
 			currentTransform->mesh = jointData->mesh;
 			currentTransform->skinJointMesh = jointData->lataSkinJointMesh;
 			currentTransform->modelMatrix = matrix_multiply(parentTransform->modelMatrix, translationMatrix);
-			data.modelView[0] = matrix_multiply(viewMatrix, currentTransform->modelMatrix);
-			data.modelView[1] = data.modelView[0];
-			
-			graphicsMeshUniformsSetData(currentTransform->uniforms, wadEditor->commandQueue, &data);
+			data.modelView = matrix_multiply(viewMatrix, currentTransform->modelMatrix);
+			meshUniformsBufferSetData(currentTransform->transformUniforms, &data);
 		}
 	}
 	else if (wadEditor->selectedStatic)
 	{
 		matrix4f viewMatrix = matrix4fTranslation(0.0f, -0.7f, -1.7f);
 		matrix4f rotationMatrix = matrix4fRotation(rotation, vector3fCreate(0.0f, 1.0f, 0.0f));
-		data.modelView[0] = matrix4fMul(viewMatrix, rotationMatrix);
-		data.modelView[1] = matrix4fMul(viewMatrix, rotationMatrix);
+		data.modelView = matrix4fMul(viewMatrix, rotationMatrix);
 		
 		TRANSFORM_DATA* firstTranslation = &wadEditor->transforms[0];
-		graphicsMeshUniformsSetData(firstTranslation->uniforms, wadEditor->commandQueue, &data);
+		meshUniformsBufferSetData(firstTranslation->transformUniforms, &data);
 	}
 	
 	wadEditor->lastUpdateTime = currentTime;
@@ -1005,12 +1009,14 @@ static void _wadEditor_render(WAD_EDITOR* wadEditor)
 	}
 	commandBufferAddCompletionHandler(commandBuffer, _wadEditor_commandBufferCompleted, drawable);
 	
+	graphicsDeviceScheduleUpdateBuffers(wadEditor->device, commandBuffer);
+	
 	RENDER_COMMAND_ENCODER* renderEncoder = commandBufferStartRenderCommandEncoder(commandBuffer, graphicsView);
 	
 	if (wadEditor->selectedTexture)
 	{
 		TRANSFORM_DATA* translation = &wadEditor->transforms[0];
-		renderCommandEncoderScheduleDrawMesh(renderEncoder, wadEditor->selectedTexture->mesh, translation->uniforms);
+		renderCommandEncoderScheduleDrawMesh(renderEncoder, wadEditor->selectedTexture->vertexBuffer, 6, wadEditor->selectedTexture->texture, translation->transformUniforms, wadEditor->viewportUniforms);
 	}
 	else
 	{
@@ -1020,7 +1026,7 @@ static void _wadEditor_render(WAD_EDITOR* wadEditor)
 			for (unsigned int j = 0; j < translation->mesh->submeshes.length; j++)
 			{
 				SUBMESH_DATA* submesh = magicArrayGetItem(&translation->mesh->submeshes, j);
-				renderCommandEncoderScheduleDrawMesh(renderEncoder, submesh->mesh, translation->uniforms);
+				renderCommandEncoderScheduleDrawMesh(renderEncoder, submesh->vertexBuffer, submesh->numVertices, submesh->texture, translation->transformUniforms, wadEditor->viewportUniforms);
 			}
 			
 			if (translation->skinJointMesh)
@@ -1028,7 +1034,7 @@ static void _wadEditor_render(WAD_EDITOR* wadEditor)
 				for (unsigned int j = 0; j < translation->skinJointMesh->submeshes.length; j++)
 				{
 					SUBMESH_DATA* submesh = magicArrayGetItem(&translation->skinJointMesh->submeshes, j);
-					renderCommandEncoderScheduleDrawMesh(renderEncoder, submesh->mesh, translation->uniforms);
+					renderCommandEncoderScheduleDrawMesh(renderEncoder, submesh->vertexBuffer, submesh->numVertices, submesh->texture, translation->transformUniforms, wadEditor->viewportUniforms);
 				}
 			}
 		}

@@ -10,7 +10,7 @@
 
 // MARK: - Private interface
 
-void animationInitialize(ANIMATION* animation, MOVABLE* movable, RAW_MOVABLE* rawMovable, RAW_ANIMATION* rawAnimation, RAW_ANIMATION* nextRawAnimation, WK_WAD_LOAD_INFO* loadInfo)
+void animationInitialize(WK_ANIMATION* animation, WK_MOVABLE* movable, RAW_MOVABLE* rawMovable, RAW_ANIMATION* rawAnimation, RAW_ANIMATION* nextRawAnimation, WK_WAD_LOAD_INFO* loadInfo)
 {
 	assert(animation);
 	assert(movable);
@@ -24,7 +24,7 @@ void animationInitialize(ANIMATION* animation, MOVABLE* movable, RAW_MOVABLE* ra
 	
 	animation->movable = movable;
 	animation->stateId = rawAnimation->stateId;
-	//magicArrayInitialize(&animation->keyframes, sizeof(KEYFRAME), 64);
+	//magicArrayInitialize(&animation->keyframes, sizeof(WK_KEYFRAME), 64);
 	magicArrayInitializeWithAllocator(&animation->keyframes, wad->keyframeAllocator);
 	animation->frameDuration = rawAnimation->frameDuration;
 	animation->moveSpeed = rawAnimation->speed;
@@ -56,8 +56,8 @@ void animationInitialize(ANIMATION* animation, MOVABLE* movable, RAW_MOVABLE* ra
 		assert(0);
 	}*/
 	
-	magicArrayInitialize(&animation->stateChanges, MAGIC_ARRAY_ITEM_DISTRIBUTION_DONT_CARE, sizeof(STATE_CHANGE), 8);
-	magicArrayInitialize(&animation->commands, MAGIC_ARRAY_ITEM_DISTRIBUTION_DONT_CARE, sizeof(COMMAND), 8);
+	magicArrayInitialize(&animation->stateChanges, MAGIC_ARRAY_ITEM_DISTRIBUTION_DONT_CARE, sizeof(WK_STATE_CHANGE), 8);
+	magicArrayInitialize(&animation->commands, MAGIC_ARRAY_ITEM_DISTRIBUTION_DONT_CARE, sizeof(WK_COMMAND), 8);
 	
 	// MARK: Read keyframes
 	if (rawAnimation->keyframeSize > 0)
@@ -76,7 +76,7 @@ void animationInitialize(ANIMATION* animation, MOVABLE* movable, RAW_MOVABLE* ra
 		{
 			bufferReaderSetEditorPosition(buffer, loadInfo->keyframesDataLocation + rawAnimation->keyframeOffset + keyframeIndex * rawAnimation->keyframeSize * 2);
 			
-			KEYFRAME* keyframe = magicArrayAddItem(&animation->keyframes);
+			WK_KEYFRAME* keyframe = magicArrayAddItem(&animation->keyframes);
 			keyframeInitialize(keyframe, animation, rawAnimation, loadInfo);
 			if (executeResultIsFailed(executeResult)) { return; }
 		}
@@ -86,7 +86,7 @@ void animationInitialize(ANIMATION* animation, MOVABLE* movable, RAW_MOVABLE* ra
 	bufferReaderSetEditorPosition(buffer, loadInfo->commandsDataLocation + rawAnimation->commandOffsets * 2);
 	for (unsigned int i = 0; i < rawAnimation->numCommands; i++)
 	{
-		COMMAND* command = magicArrayAddItem(&animation->commands);
+		WK_COMMAND* command = magicArrayAddItem(&animation->commands);
 		commandInitialize(command, animation, loadInfo);
 		if (executeResultIsFailed(executeResult)) { return; }
 	}
@@ -95,7 +95,7 @@ void animationInitialize(ANIMATION* animation, MOVABLE* movable, RAW_MOVABLE* ra
 	for (unsigned int i = 0; i < rawAnimation->numStateChanges; i++)
 	{
 		RAW_STATE_CHANGE* rawStateChange = &loadInfo->rawStateChanges[rawAnimation->changesIndex + i];
-		STATE_CHANGE* stateChange = magicArrayAddItem(&animation->stateChanges);
+		WK_STATE_CHANGE* stateChange = magicArrayAddItem(&animation->stateChanges);
 		stateChangeInitialize(stateChange, animation, rawStateChange, loadInfo);
 		if (executeResultIsFailed(executeResult)) { return; }
 	}
@@ -103,49 +103,49 @@ void animationInitialize(ANIMATION* animation, MOVABLE* movable, RAW_MOVABLE* ra
 	executeResultSetSucceeded(executeResult);
 }
 
-void animationDeinitialize(ANIMATION* animation)
+void animationDeinitialize(WK_ANIMATION* animation)
 {
 	assert(animation);
 	
 	for (unsigned int i = 0; i < animation->stateChanges.length; i++)
 	{
-		STATE_CHANGE* stateChange = magicArrayGetItem(&animation->stateChanges, i);
+		WK_STATE_CHANGE* stateChange = magicArrayGetItem(&animation->stateChanges, i);
 		stateChangeDeinitialize(stateChange);
 	}
 	magicArrayDeinitialize(&animation->stateChanges);
 	
 	for (unsigned int i = 0; i < animation->commands.length; i++)
 	{
-		COMMAND* command = magicArrayGetItem(&animation->commands, i);
+		WK_COMMAND* command = magicArrayGetItem(&animation->commands, i);
 		commandDeinitialize(command);
 	}
 	magicArrayDeinitialize(&animation->commands);
 	
 	for (unsigned int i = 0; i < animation->keyframes.length; i++)
 	{
-		KEYFRAME* keyframe = magicArrayGetItem(&animation->keyframes, i);
+		WK_KEYFRAME* keyframe = magicArrayGetItem(&animation->keyframes, i);
 		keyframeDeinitialize(keyframe);
 	}
 	magicArrayDeinitialize(&animation->keyframes);
 	
-	memset(animation, 0, sizeof(ANIMATION));
+	memset(animation, 0, sizeof(WK_ANIMATION));
 }
 
 // MARK: - Public interface
 
-unsigned int animationGetFrameDuration(ANIMATION* animation)
+unsigned int animationGetFrameDuration(WK_ANIMATION* animation)
 {
 	assert(animation);
 	return animation->frameDuration;
 }
 
-unsigned int animationGetNumKeyframes(ANIMATION* animation)
+unsigned int animationGetNumKeyframes(WK_ANIMATION* animation)
 {
 	assert(animation);
 	return animation->keyframes.length;
 }
 
-KEYFRAME* animationGetKeyframe(ANIMATION* animation, unsigned int keyframeIndex)
+WK_KEYFRAME* animationGetKeyframe(WK_ANIMATION* animation, unsigned int keyframeIndex)
 {
 	assert(animation);
 	return magicArrayGetItem(&animation->keyframes, keyframeIndex);

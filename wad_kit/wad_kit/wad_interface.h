@@ -24,11 +24,11 @@ WK_TEXTURE_PAGE* wadGetTexturePage(WK_WAD* wad, unsigned int texturePageIndex);
 unsigned char* wadGetTexturePageData(WK_WAD* wad, unsigned int texturePageIndex);
 
 unsigned int wadGetNumMeshes(WK_WAD* wad);
-MESH* wadGetMesh(WK_WAD* wad, unsigned int meshIndex);
+WK_MESH* wadGetMesh(WK_WAD* wad, unsigned int meshIndex);
 
 unsigned int wadGetNumMovables(WK_WAD* wad);
-MOVABLE* wadGetMovableByIndex(WK_WAD* wad, unsigned int movableIndex);
-MOVABLE* wadGetMovableById(WK_WAD* wad, MOVABLE_ID movableId);
+WK_MOVABLE* wadGetMovableByIndex(WK_WAD* wad, unsigned int movableIndex);
+WK_MOVABLE* wadGetMovableById(WK_WAD* wad, MOVABLE_ID movableId);
 
 unsigned int wadGetNumStatics(WK_WAD* wad);
 STATIC* wadGetStaticByIndex(WK_WAD* wad, unsigned int staticIndex);

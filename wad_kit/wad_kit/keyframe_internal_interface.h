@@ -11,7 +11,7 @@
 
 #include "private_interface.h"
 
-void keyframeInitialize(KEYFRAME* keyframe, ANIMATION* animation, RAW_ANIMATION* rawAnimation, WK_WAD_LOAD_INFO* loadInfo);
-void keyframeDeinitialize(KEYFRAME* keyframe);
+void keyframeInitialize(WK_KEYFRAME* keyframe, WK_ANIMATION* animation, RAW_ANIMATION* rawAnimation, WK_WAD_LOAD_INFO* loadInfo);
+void keyframeDeinitialize(WK_KEYFRAME* keyframe);
 
 #endif /* keyframe_internal_interface_h */

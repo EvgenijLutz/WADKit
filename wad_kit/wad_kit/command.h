@@ -11,47 +11,46 @@
 
 #include "private_interface.h"
 
-
-typedef struct POSITION_COMMAND
+typedef struct WK_COMMAND_POSITION
 {
 	short x;
 	short y;
 	short z;
 }
-POSITION_COMMAND;
+WK_COMMAND_POSITION;
 
-typedef struct JUMP_COMMAND
+typedef struct WK_COMMAND_JUMP
 {
 	short xy;
 	short yz;
 }
-JUMP_COMMAND;
+WK_COMMAND_JUMP;
 
-typedef struct PLAY_SOUND_COMMAND
+typedef struct WK_COMMAND_PLAY_SOUND
 {
 	unsigned short frame;
 	unsigned short soundID;
 }
-PLAY_SOUND_COMMAND;
+WK_COMMAND_PLAY_SOUND;
 
-typedef struct ACTION_COMMAND
+typedef struct WK_COMMAND_ACTION
 {
 	unsigned short frame;
 	unsigned short action;
 }
-ACTION_COMMAND;
+WK_COMMAND_ACTION;
 
-typedef struct COMMAND
+typedef struct WK_COMMAND
 {
 	WK_COMMAND_TYPE commandType;
 	union
 	{
-		POSITION_COMMAND positionCommand;
-		JUMP_COMMAND jumpCommand;
-		PLAY_SOUND_COMMAND playSoundCommand;
-		ACTION_COMMAND actionCommand;
+		WK_COMMAND_POSITION positionCommand;
+		WK_COMMAND_JUMP jumpCommand;
+		WK_COMMAND_PLAY_SOUND playSoundCommand;
+		WK_COMMAND_ACTION actionCommand;
 	} parameters;
 }
-COMMAND;
+WK_COMMAND;
 
 #endif /* command_h */

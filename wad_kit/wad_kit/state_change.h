@@ -11,25 +11,24 @@
 
 #include "private_interface.h"
 
-
-typedef struct DISPATCH
+typedef struct WK_DISPATCH
 {
 	unsigned short inRange;
 	unsigned short outRange;
 	unsigned short nextAnim;
 	unsigned short frameIn;
 }
-DISPATCH;
+WK_DISPATCH;
 
-typedef struct STATE_CHANGE
+typedef struct WK_STATE_CHANGE
 {
-	ANIMATION* animation;
+	WK_ANIMATION* animation;
 	unsigned short stateId;
 	/*!
-	 @b DISPATCH array.
+	 @b WK_DISPATCH array.
 	 */
 	MAGIC_ARRAY dispatches;
 }
-STATE_CHANGE;
+WK_STATE_CHANGE;
 
 #endif /* state_change_h */

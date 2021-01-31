@@ -8,77 +8,92 @@
 
 #include "private_interface.h"
 
-static void _vertex_updatePosition(VERTEX* vertex)
+static void _vertex_updatePosition(WK_VERTEX* vertex)
 {
-	float x = vertex->vx / 1024.0;
-	float y = vertex->vy / 1024.0;
-	float z = vertex->vz / 1024.0;
+	float x = vertex->rawPositionX / WK_COORDINATE_MULTIPLIER;
+	float y = vertex->rawPositionY / WK_COORDINATE_MULTIPLIER;
+	float z = vertex->rawPositionZ / WK_COORDINATE_MULTIPLIER;
 	vertex->position = vector3fCreate(-x, -y, z);
 }
 
-static void _vertex_updateNormal(VERTEX* vertex)
+static void _vertex_updateNormal(WK_VERTEX* vertex)
 {
-	float x = ((double)vertex->nx) / 16300.0;
-	float y = ((double)vertex->ny) / 16300.0;
-	float z = ((double)vertex->nz) / 16300.0;
+	float x = vertex->rawNormalX / WK_NORMAL_MULTIPLIER;
+	float y = vertex->rawNormalY / WK_NORMAL_MULTIPLIER;
+	float z = vertex->rawNormalZ / WK_NORMAL_MULTIPLIER;
 	vertex->normal = vector3fNormalize(vector3fCreate(-x, -y, z));
 }
 
-static void _vertex_updateShade(VERTEX* vertex)
+static void _vertex_updateShade(WK_VERTEX* vertex)
 {
-	//
-}
-
-
-void vertexInitializeWithRawPosition(VERTEX* vertex, short vx, short vy, short vz)
-{
-	assert(vertex);
+	//#define COLOR_TO_F(color) (1.0f / 255.0f * ((float)(color * 8)))
+	// grey_intensity = 255 - shade * 255 / 8191
 	
-	vertex->vx = vx;
-	vertex->vy = vy;
-	vertex->vz = vz;
+	// TODO: look at shade values, chech it
+	//assert(0);
 	
-	vertex->nx = 16300;
-	vertex->ny = 0;
-	vertex->nz = 0;
-	
-	vertex->shade = 0;
-	
-	_vertex_updatePosition(vertex);
-	_vertex_updateNormal(vertex);
-	_vertex_updateShade(vertex);
-}
-
-void vertexSetRawPosition(VERTEX* vertex, short vx, short vy, short vz)
-{
-	assert(vertex);
-	
-	vertex->vx = vx;
-	vertex->vy = vy;
-	vertex->vz = vz;
-	_vertex_updatePosition(vertex);
-}
-
-void vertexSetRawNormal(VERTEX* vertex, short nx, short ny, short nz)
-{
-	assert(vertex);
-	
-	vertex->nx = nx;
-	vertex->ny = ny;
-	vertex->nz = nz;
-	_vertex_updateNormal(vertex);
-}
-
-void vertexSetRawShade(VERTEX* vertex, short shade)
-{
-	assert(vertex);
-	
+	float shade = 1.0f / 255.0f * ((float)vertex->rawShade * 8.0f);
+	if (shade > 1.0f)
+	{
+		shade = 1.0f;
+	}
+	if (shade < 0.0f)
+	{
+		shade = 0.0f;
+	}
 	vertex->shade = shade;
+}
+
+
+void vertexInitializeWithRawPosition(WK_VERTEX* vertex, short vx, short vy, short vz)
+{
+	assert(vertex);
+	
+	vertex->rawPositionX = vx;
+	vertex->rawPositionY = vy;
+	vertex->rawPositionZ = vz;
+	
+	vertex->rawNormalX = (short)WK_NORMAL_MULTIPLIER;
+	vertex->rawNormalY = 0;
+	vertex->rawNormalZ = 0;
+	
+	vertex->rawShade = 0;
+	
+	_vertex_updatePosition(vertex);
+	_vertex_updateNormal(vertex);
+	_vertex_updateShade(vertex);
+}
+
+void vertexSetRawPosition(WK_VERTEX* vertex, short vx, short vy, short vz)
+{
+	assert(vertex);
+	
+	vertex->rawPositionX = vx;
+	vertex->rawPositionY = vy;
+	vertex->rawPositionZ = vz;
+	_vertex_updatePosition(vertex);
+}
+
+void vertexSetRawNormal(WK_VERTEX* vertex, short nx, short ny, short nz)
+{
+	assert(vertex);
+	
+	vertex->rawNormalX = nx;
+	vertex->rawNormalY = ny;
+	vertex->rawNormalZ = nz;
+	_vertex_updateNormal(vertex);
+}
+
+void vertexSetRawShade(WK_VERTEX* vertex, short shade)
+{
+	assert(vertex);
+	
+	vertex->rawShade = shade;
 	_vertex_updateShade(vertex);
 }
 
 
-vector3f vertexGetPosition(VERTEX* vertex)
+vector3f vertexGetPosition(WK_VERTEX* vertex)
 {
 	assert(vertex);
 	return vertex->position;

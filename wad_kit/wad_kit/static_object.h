@@ -16,7 +16,7 @@ typedef struct STATIC
 	WK_WAD* wad;
 	
 	STATIC_ID staticId;
-	MESH* mesh;
+	WK_MESH* mesh;
 	
 	// Visibility box
 	short vx1;

@@ -15,15 +15,20 @@ __attribute__((objc_direct_members))
 
 - (instancetype)initWithSystem:(SYSTEM*)system metalDevice:(id<MTLDevice>)metalDevice;
 
+- (GraphicsBufferItem*)createVertexBufferWithSize:(size_t)size;
+- (GraphicsBufferItem*)createMeshUniformBuffer;
+- (GraphicsBufferItem*)createViewportUniformBuffer;
+- (void)bufferItem:(GraphicsBufferItem*)item setData:(const void*)data;
+- (void)releaseBufferItem:(GraphicsBufferItem*)item;
+- (void)scheduleUploadBuffersWithCommandBuffer:(id<MTLCommandBuffer>)commandBuffer;
+
 @property (nonatomic, readonly) SYSTEM* system;
 @property (nonatomic, readonly) id<MTLDevice> metalDevice;
-@property (nonatomic, readonly) GRAPHICS_DEVICE* graphicsDevice;
+@property (nonatomic, readonly) GR_DEVICE* graphicsDevice;
 
 @property (nonatomic, readonly) MTLClearColor defaultRenderClearColor;
 @property (nonatomic, readonly) MTLPixelFormat defaultRenderColorPixelFormat;
 @property (nonatomic, readonly) MTLPixelFormat defaultDepthStencilPixelFormat;
-
-@property (nonatomic, readonly) id<MTLCommandQueue> uploadDataCommandQueue;
 
 @property (nonatomic, readonly) id<MTLDepthStencilState> depthStencilState;
 @property (nonatomic, readonly) id<MTLRenderPipelineState> opaqueTriangleRenderState;

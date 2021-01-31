@@ -11,20 +11,20 @@
 
 #include "private_interface.h"
 
-typedef struct /*__attribute__((__packed__))*/ ROTATION
+typedef struct /*__attribute__((__packed__))*/ WK_ROTATION
 {
-	unsigned short rotx;
-	unsigned short roty;
-	unsigned short rotz;
+	unsigned short rawEulerRotationX;
+	unsigned short rawEulerRotationY;
+	unsigned short rawEulerRotationZ;
 	
 	vector3f eulerRotation;
 	quaternionf quaternionRotation;
 }
-ROTATION;
+WK_ROTATION;
 
-typedef struct KEYFRAME
+typedef struct WK_KEYFRAME
 {
-	ANIMATION* animation;
+	WK_ANIMATION* animation;
 	
 	short bb1x;
 	short bb1y;
@@ -44,8 +44,8 @@ typedef struct KEYFRAME
 	vector3f modelOffset;
 	
 	/* Number of rotations is always equal to object's number of meshes */
-	ROTATION* rotations;
+	WK_ROTATION* rotations;
 }
-KEYFRAME;
+WK_KEYFRAME;
 
 #endif /* keyframe_h */

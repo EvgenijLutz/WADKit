@@ -11,19 +11,11 @@
 
 #include "private_interface.h"
 
-typedef struct JOINT
+typedef struct WK_JOINT
 {
-	MOVABLE* movable;
-	MESH* mesh;
+	WK_MOVABLE* movable;
+	WK_MESH* mesh;
 	
-	/**
-	 From @b documentation:
-	 The opCode takes the values 0, 1, 2, 3, where:
-	 0 = stack not used. Link the current mesh to the previous mesh.
-	 1 = pull the parent from the stack. Link the current mesh to the parent.
-	 2 = push the parent into the stack. Link the current mesh to the parent.
-	 3 = read the parent in the stack. Link the current mesh to the parent.
-	 */
 	JOINT_LOCATION_TYPE opCode;
 	
 	int dx;
@@ -32,6 +24,6 @@ typedef struct JOINT
 	
 	vector3f offset;
 }
-JOINT;
+WK_JOINT;
 
 #endif /* wad_kit_joint_h */

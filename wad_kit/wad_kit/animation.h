@@ -11,14 +11,14 @@
 
 #include "private_interface.h"
 
-typedef struct ANIMATION
+typedef struct WK_ANIMATION
 {
-	MOVABLE* movable;
+	WK_MOVABLE* movable;
 	
 	unsigned short stateId;
 	
 	/*!
-	 @b KEYFRAME array.
+	 @b WK_KEYFRAME array.
 	 */
 	MAGIC_ARRAY keyframes;
 	
@@ -36,15 +36,15 @@ typedef struct ANIMATION
 	unsigned short nextAnimationFrame;
 	
 	/*!
-	 Array of @b STATE_CHANGE elements.
+	 Array of @b WK_STATE_CHANGE elements.
 	 */
 	MAGIC_ARRAY stateChanges;
 	
 	/*!
-	 Array of @b COMMAND elements.
+	 Array of @b WK_COMMAND elements.
 	 */
 	MAGIC_ARRAY commands;
 }
-ANIMATION;
+WK_ANIMATION;
 
 #endif /* animation_h */

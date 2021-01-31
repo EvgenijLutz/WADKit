@@ -24,7 +24,7 @@ typedef struct GRAPHICS_VIEW
 	float width;
 	float height;
 	
-	GRAPHICS_DEVICE* device;
+	GR_DEVICE* device;
 	
 	/// Array of @b GRAPHICS_DRAWABLE objects.
 	MAGIC_ARRAY drawables;

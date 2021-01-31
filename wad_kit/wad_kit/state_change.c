@@ -10,7 +10,7 @@
 
 // MARK: - Private interface
 
-void stateChangeInitialize(STATE_CHANGE* stateChange, ANIMATION* animation, RAW_STATE_CHANGE* rawStateChange, WK_WAD_LOAD_INFO* loadInfo)
+void stateChangeInitialize(WK_STATE_CHANGE* stateChange, WK_ANIMATION* animation, RAW_STATE_CHANGE* rawStateChange, WK_WAD_LOAD_INFO* loadInfo)
 {
 	assert(stateChange);
 	
@@ -18,12 +18,12 @@ void stateChangeInitialize(STATE_CHANGE* stateChange, ANIMATION* animation, RAW_
 	
 	stateChange->animation = animation;
 	stateChange->stateId = rawStateChange->stateId;
-	magicArrayInitialize(&stateChange->dispatches, MAGIC_ARRAY_ITEM_DISTRIBUTION_DONT_CARE, sizeof(DISPATCH), 8);
+	magicArrayInitialize(&stateChange->dispatches, MAGIC_ARRAY_ITEM_DISTRIBUTION_DONT_CARE, sizeof(WK_DISPATCH), 8);
 	
 	for (unsigned int i = 0; i < rawStateChange->numDispatches; i++)
 	{
 		RAW_DISPATCH* rawDispatch = &loadInfo->rawDispatches[rawStateChange->dispatchesIndex + i];
-		DISPATCH* dispatch = magicArrayAddItem(&stateChange->dispatches);
+		WK_DISPATCH* dispatch = magicArrayAddItem(&stateChange->dispatches);
 		dispatch->inRange = rawDispatch->inRange;
 		dispatch->outRange = rawDispatch->outRange;
 		dispatch->nextAnim = rawDispatch->nextAnim;
@@ -33,7 +33,7 @@ void stateChangeInitialize(STATE_CHANGE* stateChange, ANIMATION* animation, RAW_
 	executeResultSetSucceeded(executeResult);
 }
 
-void stateChangeDeinitialize(STATE_CHANGE* stateChange)
+void stateChangeDeinitialize(WK_STATE_CHANGE* stateChange)
 {
 	assert(stateChange);
 	magicArrayDeinitialize(&stateChange->dispatches);

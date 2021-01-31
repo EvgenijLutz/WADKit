@@ -8,7 +8,7 @@
 
 #include "private_interface.h"
 
-GRAPHICS_VIEW* graphicsViewCreate(GRAPHICS_VIEW_GET_CURRENT_DRAWABLE_FUNC getCurrentDrawableFunc, GRAPHICS_DRAWABLE_RETURN_FUNC returnDrawableFunc, GRAPHICS_DRAWABLE_GET_TEXTURE_FUNC drawableGetTextureFunc, GRAPHICS_DRAWABLE_RETURN_TEXTURE_FUNC drawableReturnTexture, void* userInfo, float width, float height, GRAPHICS_DEVICE* graphicsDevice)
+GRAPHICS_VIEW* graphicsViewCreate(GRAPHICS_VIEW_GET_CURRENT_DRAWABLE_FUNC getCurrentDrawableFunc, GRAPHICS_DRAWABLE_RETURN_FUNC returnDrawableFunc, GRAPHICS_DRAWABLE_GET_TEXTURE_FUNC drawableGetTextureFunc, GRAPHICS_DRAWABLE_RETURN_TEXTURE_FUNC drawableReturnTexture, void* userInfo, float width, float height, GR_DEVICE* graphicsDevice)
 {
 	assert(graphicsDevice);
 	
@@ -71,7 +71,7 @@ void graphicsViewSubscribe(GRAPHICS_VIEW* graphicsView, GRAPHICS_VIEW_SUBSCRIBER
 }
 
 
-GRAPHICS_DEVICE* graphicsViewGetDevice(GRAPHICS_VIEW* graphicsView)
+GR_DEVICE* graphicsViewGetDevice(GRAPHICS_VIEW* graphicsView)
 {
 	assert(graphicsView);
 	return graphicsView->device;

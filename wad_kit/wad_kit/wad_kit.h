@@ -28,13 +28,34 @@ extern "C" {
 
 typedef struct WK_TEXTURE_PAGE WK_TEXTURE_PAGE;
 typedef struct WK_TEXTURE_SAMPLE WK_TEXTURE_SAMPLE;
-typedef struct VERTEX VERTEX;
-typedef struct POLYGON POLYGON;
-typedef struct MESH MESH;
-typedef struct JOINT JOINT;
-typedef struct KEYFRAME KEYFRAME;
-typedef struct ANIMATION ANIMATION;
-typedef struct MOVABLE MOVABLE;
+typedef struct WK_VERTEX WK_VERTEX;
+typedef struct WK_POLYGON WK_POLYGON;
+typedef struct WK_MESH WK_MESH;
+typedef struct WK_JOINT WK_JOINT;
+
+/**
+ @struct WK_ROTATION
+ @abstract Rotation of movable's joint or root mesh.
+ @discussion Represents rotation as:
+ 
+ @b - Raw @b ZXY-Euler rotation. Used by Tomb Raider 3 engine, right-handed @b Y-down coordinate system.
+ 
+ @b - @b ZXY-Euler rotation. Used by right-handed @b Y-up coordinate system.
+ 
+ @b - @b Quaternion rotation. Used by right-handed @b Y-up coordinate system.
+ */
+typedef struct WK_ROTATION WK_ROTATION;
+
+typedef struct WK_KEYFRAME WK_KEYFRAME;
+typedef struct WK_COMMAND_POSITION WK_COMMAND_POSITION;
+typedef struct WK_COMMAND_JUMP WK_COMMAND_JUMP;
+typedef struct WK_COMMAND_PLAY_SOUND WK_COMMAND_PLAY_SOUND;
+typedef struct WK_COMMAND_ACTION WK_COMMAND_ACTION;
+typedef struct WK_COMMAND WK_COMMAND;
+typedef struct WK_DISPATCH WK_DISPATCH;
+typedef struct WK_STATE_CHANGE WK_STATE_CHANGE;
+typedef struct WK_ANIMATION WK_ANIMATION;
+typedef struct WK_MOVABLE WK_MOVABLE;
 typedef struct STATIC STATIC;
 typedef struct WK_WAD WK_WAD;
 

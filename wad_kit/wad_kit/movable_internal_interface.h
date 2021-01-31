@@ -11,7 +11,7 @@
 
 #include "private_interface.h"
 
-void movableInitialize(MOVABLE* movable, RAW_MOVABLE* rawMovable, WK_WAD_LOAD_INFO* loadInfo);
-void movableDeinitialize(MOVABLE* movable);
+void movableInitialize(WK_MOVABLE* movable, RAW_MOVABLE* rawMovable, WK_WAD_LOAD_INFO* loadInfo);
+void movableDeinitialize(WK_MOVABLE* movable);
 
 #endif /* movable_internal_interface_h */

@@ -16,14 +16,14 @@ void commandQueueReleaseCommandBuffer(COMMAND_QUEUE* commandQueue, COMMAND_BUFFE
 	assert(commandBuffer);
 	assert(commandBuffer->commandQueue == commandQueue);
 	
-	GRAPHICS_DEVICE* device = commandQueue->device;
+	GR_DEVICE* device = commandQueue->device;
 	device->commandQueueReleaseCommandBufferFunc(commandQueue, commandBuffer);
 	magicArrayRemoveItem(&device->commandBuffers, commandBuffer);
 }
 
 // MARK: - Public interface
 
-COMMAND_QUEUE* graphicsDeviceCreateCommandQueue(GRAPHICS_DEVICE* device)
+COMMAND_QUEUE* graphicsDeviceCreateCommandQueue(GR_DEVICE* device)
 {
 	assert(device);
 	
@@ -40,7 +40,7 @@ void commandQueueRelease(COMMAND_QUEUE* commandQueue)
 {
 	assert(commandQueue);
 	
-	GRAPHICS_DEVICE* device = commandQueue->device;
+	GR_DEVICE* device = commandQueue->device;
 	device->releaseCommandQueueFunc(device, commandQueue);
 	debug_memset(commandQueue, 0, sizeof(COMMAND_QUEUE));
 	magicArrayRemoveItem(&device->commandQueues, commandQueue);

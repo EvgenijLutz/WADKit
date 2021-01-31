@@ -11,25 +11,25 @@
 
 #include "wad_kit.h"
 
-typedef struct MOVABLE
+typedef struct WK_MOVABLE
 {
 	WK_WAD* wad;
 	unsigned long numReferences;
 	
 	MOVABLE_ID movableId;
 	
-	MESH* rootMesh;
+	WK_MESH* rootMesh;
 	
 	/*!
-	 Collection of @b JOINT objects, where other meshes are located.
+	 Collection of @b WK_JOINT objects, where other meshes are located.
 	 */
 	MAGIC_ARRAY joints;
 	
 	/*!
-	 Collection of @b ANIMATION objects.
+	 Collection of @b WK_ANIMATION objects.
 	 */
 	MAGIC_ARRAY animations;
 }
-MOVABLE;
+WK_MOVABLE;
 
 #endif /* movable_h */

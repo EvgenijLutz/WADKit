@@ -9,6 +9,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/// Just to avoid compiler warnings
 @interface WKGraphicsResource : NSObject
 
 @end

@@ -11,6 +11,6 @@
 
 #include "private_interface.h"
 
-MESH* _wad_findMesh(unsigned short pointerListStart, unsigned short index, WK_WAD_LOAD_INFO* loadInfo);
+WK_MESH* _wad_findMesh(unsigned short pointerListStart, unsigned short index, WK_WAD_LOAD_INFO* loadInfo);
 
 #endif /* wad_private_interface_h */

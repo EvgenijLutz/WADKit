@@ -1,5 +1,5 @@
 //
-//  graphics_device.h
+//  device.h
 //  graphics
 //
 //  Created by Евгений Лютц on 03.01.21.
@@ -11,7 +11,7 @@
 
 #include "private_interface.h"
 
-typedef struct GRAPHICS_DEVICE
+typedef struct GR_DEVICE
 {
 	STRING name;
 	
@@ -19,8 +19,7 @@ typedef struct GRAPHICS_DEVICE
 	SEMAPHORE* accessSemaphore;
 	
 	MAGIC_ARRAY textures;
-	MAGIC_ARRAY meshes;
-	MAGIC_ARRAY meshUniforms;
+	MAGIC_ARRAY buffers;
 	MAGIC_ARRAY commandQueues;
 	MAGIC_ARRAY commandBuffers;
 	MAGIC_ARRAY renderCommandEncoders;
@@ -28,12 +27,14 @@ typedef struct GRAPHICS_DEVICE
 	GRAPHICS_DEVICE_CREATE_TEXTURE2D_WITH_DATA_FUNC createTexture2dWithDataFunc;
 	GRAPHICS_DEVICE_RELEASE_TEXTURE2D_FUNC releaseTexture2dFunc;
 	
-	GRAPHICS_DEVICE_CREATE_MESH_FUNC createMeshFunc;
-	GRAPHICS_MESH_RELEASE_FUNC releaseMeshFunc;
+	GR_DEVICE_CREATE_VERTEX_BUFFER_FUNC createVertexBufferFunc;
+	GR_DEVICE_CREATE_MESH_UNIFORMS_BUFFER_FUNC createMeshUniformsBufferFunc;
+	GR_DEVICE_CREATE_VIEWPORT_UNIFORMS_BUFFER_FUNC createViewportUniformsBufferFunc;
+	GR_BUFFER_SET_DATA_FUNC setBufferDataFunc;
+	GR_BUFFER_RELEASE_FUNC releaseBufferFunc;
+	GR_BUFFER_SET_LABEL_FUNC setBufferLabelFunc;
 	
-	GRAPHICS_DEVICE_CREATE_MESH_UNIFORMS_FUNC createMeshUniformsFunc;
-	GRAPHICS_MESH_UNIFORMS_RELEASE_FUNC meshUniformsReleaseFunc;
-	GRAPHICS_MESH_UNIFORMS_SET_DATA_FUNC meshUniformsSetDataFunc;
+	GRAPHICS_DEVICE_SCHEDULE_UPLOAD_BUFFERS_FUNC scheduleUploadBuffersFunc;
 	
 	GRAPHICS_DEVICE_CREATE_COMMAND_QUEUE_FUNC createCommandQueueFunc;
 	GRAPHICS_DEVICE_RELEASE_COMMAND_QUEUE_FUNC releaseCommandQueueFunc;
@@ -52,6 +53,6 @@ typedef struct GRAPHICS_DEVICE
 	
 	void* userInfo;
 }
-GRAPHICS_DEVICE;
+GR_DEVICE;
 
 #endif /* graphics_device_h */

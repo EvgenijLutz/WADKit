@@ -18,14 +18,13 @@
 
 #include "texture2d.h"
 #include "buffer_switch.h"
-#include "graphics_buffer.h"
-#include "graphics_mesh.h"
+#include "buffer.h"
 #include "command_queue.h"
 #include "command_buffer.h"
 #include "render_command_encoder.h"
 #include "graphics_view.h"
 #include "graphics_drawable.h"
-#include "graphics_device.h"
+#include "device.h"
 
 // MARK: - Private interface
 

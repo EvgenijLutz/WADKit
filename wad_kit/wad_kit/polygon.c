@@ -8,7 +8,7 @@
 
 #include "private_interface.h"
 
-void polygonInitializeRawFromBuffer(POLYGON* polygon, MESH* mesh, BUFFER_READER* buffer, EXECUTE_RESULT* executeResult)
+void polygonInitializeRawFromBuffer(WK_POLYGON* polygon, WK_MESH* mesh, BUFFER_READER* buffer, EXECUTE_RESULT* executeResult)
 {
 	assert(polygon);
 	assert(mesh);
@@ -76,50 +76,50 @@ void polygonInitializeRawFromBuffer(POLYGON* polygon, MESH* mesh, BUFFER_READER*
 }
 
 
-int polygonIsTriangle(POLYGON* polygon)
+int polygonIsTriangle(WK_POLYGON* polygon)
 {
 	assert(polygon);
 	return polygon->isTriangle;
 }
 
-VERTEX* polygonGetVertex1(POLYGON* polygon)
+WK_VERTEX* polygonGetVertex1(WK_POLYGON* polygon)
 {
 	assert(polygon);
 	return magicArrayGetItem(&polygon->mesh->vertices, polygon->v1);
 }
 
-VERTEX* polygonGetVertex2(POLYGON* polygon)
+WK_VERTEX* polygonGetVertex2(WK_POLYGON* polygon)
 {
 	assert(polygon);
 	return magicArrayGetItem(&polygon->mesh->vertices, polygon->v2);
 }
 
-VERTEX* polygonGetVertex3(POLYGON* polygon)
+WK_VERTEX* polygonGetVertex3(WK_POLYGON* polygon)
 {
 	assert(polygon);
 	return magicArrayGetItem(&polygon->mesh->vertices, polygon->v3);
 }
 
-VERTEX* polygonGetVertex4(POLYGON* polygon)
+WK_VERTEX* polygonGetVertex4(WK_POLYGON* polygon)
 {
 	assert(polygon);
 	return magicArrayGetItem(&polygon->mesh->vertices, polygon->v4);
 }
 
 
-WK_TEXTURE_SAMPLE* polygonGetTextureSample(POLYGON* polygon)
+WK_TEXTURE_SAMPLE* polygonGetTextureSample(WK_POLYGON* polygon)
 {
 	assert(polygon);
 	return magicArrayGetItem(&polygon->mesh->wad->textureSamples, polygon->textureSampleIndex);
 }
 
-unsigned short polygonGetTextureSampleShape(POLYGON* polygon)
+unsigned short polygonGetTextureSampleShape(WK_POLYGON* polygon)
 {
 	assert(polygon);
 	return polygon->textureSampleShape;
 }
 
-unsigned short polygonIsFlipped(POLYGON* polygon)
+unsigned short polygonIsFlipped(WK_POLYGON* polygon)
 {
 	assert(polygon);
 	return polygon->flipped;

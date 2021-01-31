@@ -13,7 +13,7 @@ RENDER_COMMAND_ENCODER* commandBufferStartRenderCommandEncoder(COMMAND_BUFFER* c
 	assert(commandBuffer);
 	assert(graphicsView);
 	
-	GRAPHICS_DEVICE* device = commandBuffer->commandQueue->device;
+	GR_DEVICE* device = commandBuffer->commandQueue->device;
 	semaphoreEnter(device->accessSemaphore);
 	void* renderCommandEncoderId = device->commandBufferStartRenderCommandEncoderFunc(commandBuffer, graphicsView);
 	RENDER_COMMAND_ENCODER* encoder = magicArrayAddItem(&device->renderCommandEncoders);
@@ -28,19 +28,20 @@ void renderCommandEncoderFinishEncoding(RENDER_COMMAND_ENCODER* renderCommandEnc
 {
 	assert(renderCommandEncoder);
 	
-	GRAPHICS_DEVICE* device = renderCommandEncoder->commandBuffer->commandQueue->device;
+	GR_DEVICE* device = renderCommandEncoder->commandBuffer->commandQueue->device;
 	semaphoreEnter(device->accessSemaphore);
 	device->renderCommandEncoderEndEncodingFunc(renderCommandEncoder);
 	magicArrayRemoveItem(&device->renderCommandEncoders, renderCommandEncoder);
 	semaphoreLeave(device->accessSemaphore);
 }
 
-void renderCommandEncoderScheduleDrawMesh(RENDER_COMMAND_ENCODER* encoder, GRAPHICS_MESH* mesh, GRAPHICS_MESH_UNIFORMS* uniforms)
+void renderCommandEncoderScheduleDrawMesh(RENDER_COMMAND_ENCODER* encoder, GR_BUFFER* vertexBuffer, unsigned int numVertices, TEXTURE2D* texture, GR_BUFFER* meshUniforms, GR_BUFFER* viewportUniforms)
 {
 	assert(encoder);
-	assert(mesh);
-	assert(uniforms);
+	assert(vertexBuffer);
+	assert(meshUniforms);
+	assert(viewportUniforms);
 	
-	GRAPHICS_DEVICE* device = encoder->commandBuffer->commandQueue->device;
-	device->renderCommandEncoderRenderTexturedMeshFunc(encoder, mesh, uniforms);
+	GR_DEVICE* device = encoder->commandBuffer->commandQueue->device;
+	device->renderCommandEncoderRenderTexturedMeshFunc(encoder, vertexBuffer, numVertices, texture, meshUniforms, viewportUniforms);
 }

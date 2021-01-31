@@ -8,7 +8,7 @@
 
 #include "private_interface.h"
 
-void commandInitialize(COMMAND* command, ANIMATION* animation, WK_WAD_LOAD_INFO* loadInfo)
+void commandInitialize(WK_COMMAND* command, WK_ANIMATION* animation, WK_WAD_LOAD_INFO* loadInfo)
 {
 	assert(command);
 	
@@ -57,7 +57,7 @@ void commandInitialize(COMMAND* command, ANIMATION* animation, WK_WAD_LOAD_INFO*
 	executeResultSetSucceeded(executeResult);
 }
 
-void commandDeinitialize(COMMAND* command)
+void commandDeinitialize(WK_COMMAND* command)
 {
 	assert(command);
 	//

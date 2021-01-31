@@ -11,21 +11,22 @@
 
 #include "wad_kit.h"
 
-typedef struct VERTEX
+typedef struct WK_VERTEX
 {
-	short vx;
-	short vy;
-	short vz;
+	short rawPositionX;
+	short rawPositionY;
+	short rawPositionZ;
 	
-	short nx;
-	short ny;
-	short nz;
+	short rawNormalX;
+	short rawNormalY;
+	short rawNormalZ;
 	
-	short shade;
+	short rawShade;
 	
 	vector3f position;
 	vector3f normal;
+	float shade;
 }
-VERTEX;
+WK_VERTEX;
 
 #endif /* wad_kit_vertex_h */

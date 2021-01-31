@@ -11,16 +11,16 @@
 
 #include "wad_kit.h"
 
-void polygonInitializeRawFromBuffer(POLYGON* polygon, MESH* mesh, BUFFER_READER* buffer, EXECUTE_RESULT* executeResult);
+void polygonInitializeRawFromBuffer(WK_POLYGON* polygon, WK_MESH* mesh, BUFFER_READER* buffer, EXECUTE_RESULT* executeResult);
 
-int polygonIsTriangle(POLYGON* polygon);
-VERTEX* polygonGetVertex1(POLYGON* polygon);
-VERTEX* polygonGetVertex2(POLYGON* polygon);
-VERTEX* polygonGetVertex3(POLYGON* polygon);
-VERTEX* polygonGetVertex4(POLYGON* polygon);
+int polygonIsTriangle(WK_POLYGON* polygon);
+WK_VERTEX* polygonGetVertex1(WK_POLYGON* polygon);
+WK_VERTEX* polygonGetVertex2(WK_POLYGON* polygon);
+WK_VERTEX* polygonGetVertex3(WK_POLYGON* polygon);
+WK_VERTEX* polygonGetVertex4(WK_POLYGON* polygon);
 
-WK_TEXTURE_SAMPLE* polygonGetTextureSample(POLYGON* polygon);
-unsigned short polygonGetTextureSampleShape(POLYGON* polygon);
-unsigned short polygonIsFlipped(POLYGON* polygon);
+WK_TEXTURE_SAMPLE* polygonGetTextureSample(WK_POLYGON* polygon);
+unsigned short polygonGetTextureSampleShape(WK_POLYGON* polygon);
+unsigned short polygonIsFlipped(WK_POLYGON* polygon);
 
 #endif /* polygon_interface_h */

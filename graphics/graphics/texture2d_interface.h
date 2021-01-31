@@ -11,7 +11,7 @@
 
 #include "graphics.h"
 
-TEXTURE2D* graphicsDeviceCreateTexture2dWithData(GRAPHICS_DEVICE* device, unsigned int width, unsigned int height, unsigned int numComponents, TEXTURE_USAGE usage, const void* data);
+TEXTURE2D* graphicsDeviceCreateTexture2dWithData(GR_DEVICE* device, unsigned int width, unsigned int height, unsigned int numComponents, TEXTURE_USAGE usage, const void* data);
 void texture2dRelease(TEXTURE2D* texture);
 
 #endif /* texture2d_interface_h */

@@ -11,11 +11,11 @@
 
 #include "wad_kit.h"
 
-void vertexInitializeWithRawPosition(VERTEX* vertex, short vx, short vy, short vz);
-void vertexSetRawPosition(VERTEX* vertex, short vx, short vy, short vz);
-void vertexSetRawNormal(VERTEX* vertex, short nx, short ny, short nz);
-void vertexSetRawShade(VERTEX* vertex, short shade);
+void vertexInitializeWithRawPosition(WK_VERTEX* vertex, short vx, short vy, short vz);
+void vertexSetRawPosition(WK_VERTEX* vertex, short vx, short vy, short vz);
+void vertexSetRawNormal(WK_VERTEX* vertex, short nx, short ny, short nz);
+void vertexSetRawShade(WK_VERTEX* vertex, short shade);
 
-vector3f vertexGetPosition(VERTEX* vertex);
+vector3f vertexGetPosition(WK_VERTEX* vertex);
 
 #endif /* vertex_interface_h */

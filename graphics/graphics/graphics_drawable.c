@@ -31,7 +31,7 @@ TEXTURE2D* graphicsDrawableGetTexture(GRAPHICS_DRAWABLE* graphicsDrawable)
 	void* textureId = graphicsDrawable->graphicsView->drawableGetTextureFunc(graphicsDrawable);
 	assert(textureId);
 	
-	GRAPHICS_DEVICE* device = graphicsDrawable->graphicsView->device;
+	GR_DEVICE* device = graphicsDrawable->graphicsView->device;
 	TEXTURE2D* texture = magicArrayAddItem(&device->textures);
 	texture->device = device;
 	texture->width = 0;		// TODO: get texture size and usage

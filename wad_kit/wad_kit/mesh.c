@@ -8,20 +8,20 @@
 
 #include "private_interface.h"
 
-static void _mesh_updateSphereData(MESH* mesh)
+static void _mesh_updateSphereData(WK_MESH* mesh)
 {
 	//
 }
 
-void meshInitializeFromBuffer(MESH* mesh, WK_WAD* wad, BUFFER_READER* buffer, EXECUTE_RESULT* executeResult)
+void meshInitializeFromBuffer(WK_MESH* mesh, WK_WAD* wad, BUFFER_READER* buffer, EXECUTE_RESULT* executeResult)
 {
 	assert(mesh);
 	char errorMessage[1024];
 	
 	mesh->wad = wad;
 	mesh->numReferences = 0;
-	//magicArrayInitialize(&mesh->vertices, sizeof(VERTEX), 64);
-	//magicArrayInitialize(&mesh->polygons, sizeof(POLYGON), 32);
+	//magicArrayInitialize(&mesh->vertices, sizeof(WK_VERTEX), 64);
+	//magicArrayInitialize(&mesh->polygons, sizeof(WK_POLYGON), 32);
 	magicArrayInitializeWithAllocator(&mesh->vertices, wad->rawVertexAllocator);
 	magicArrayInitializeWithAllocator(&mesh->polygons, wad->rawPolygonAllocator);
 	
@@ -121,7 +121,7 @@ void meshInitializeFromBuffer(MESH* mesh, WK_WAD* wad, BUFFER_READER* buffer, EX
 	unsigned int numQuads = 0;
 	for (unsigned int polygonIndex = 0; polygonIndex < numPolygons; polygonIndex++)
 	{
-		POLYGON* polygon = magicArrayAddItem(&mesh->polygons);
+		WK_POLYGON* polygon = magicArrayAddItem(&mesh->polygons);
 		polygonInitializeRawFromBuffer(polygon, mesh, buffer, executeResult);
 		if (executeResultIsFailed(executeResult)) { return; }
 		
@@ -138,7 +138,7 @@ void meshInitializeFromBuffer(MESH* mesh, WK_WAD* wad, BUFFER_READER* buffer, EX
 	executeResultSetSucceeded(executeResult);
 }
 
-void meshDeinitialize(MESH* mesh)
+void meshDeinitialize(WK_MESH* mesh)
 {
 	assert(mesh);
 	assert(mesh->numReferences == 0);
@@ -146,68 +146,68 @@ void meshDeinitialize(MESH* mesh)
 	magicArrayDeinitialize(&mesh->vertices);
 }
 
-WK_WAD* meshGetWad(MESH* mesh)
+WK_WAD* meshGetWad(WK_MESH* mesh)
 {
 	assert(mesh);
 	return mesh->wad;
 }
 
-int meshUsesNormals(MESH* mesh)
+int meshUsesNormals(WK_MESH* mesh)
 {
 	assert(mesh);
 	return mesh->usesNormals;
 }
 
-void meshSetUsesNormals(MESH* mesh, int uses)
+void meshSetUsesNormals(WK_MESH* mesh, int uses)
 {
 	assert(mesh);
 	mesh->usesNormals = (uses != 0);
 }
 
 
-unsigned int meshGetNumVertices(MESH* mesh)
+unsigned int meshGetNumVertices(WK_MESH* mesh)
 {
 	assert(mesh);
 	return mesh->vertices.length;
 }
 
-VERTEX meshGetVertex(MESH* mesh, unsigned int vertexIndex)
+WK_VERTEX meshGetVertex(WK_MESH* mesh, unsigned int vertexIndex)
 {
 	assert(mesh);
-	return *(VERTEX*)magicArrayGetItem(&mesh->vertices, vertexIndex);
+	return *(WK_VERTEX*)magicArrayGetItem(&mesh->vertices, vertexIndex);
 }
 
-void meshAddRawVertex(MESH* mesh, unsigned short vx, unsigned short vy, unsigned short vz)
+void meshAddRawVertex(WK_MESH* mesh, unsigned short vx, unsigned short vy, unsigned short vz)
 {
 	assert(mesh);
-	VERTEX* vertex = magicArrayAddItem(&mesh->vertices);
+	WK_VERTEX* vertex = magicArrayAddItem(&mesh->vertices);
 	vertexInitializeWithRawPosition(vertex, vx, vy, vz);
 	
 	// TODO: use mesh->usesNormals
 }
 
-void meshSetRawVertexNormal(MESH* mesh, unsigned int vertexIndex, short nx, short ny, short nz)
+void meshSetRawVertexNormal(WK_MESH* mesh, unsigned int vertexIndex, short nx, short ny, short nz)
 {
 	assert(mesh);
-	VERTEX* vertex = magicArrayAddItem(&mesh->vertices);
+	WK_VERTEX* vertex = magicArrayAddItem(&mesh->vertices);
 	vertexSetRawNormal(vertex, nx, ny, nz);
 }
 
-void meshSetRawVertexShade(MESH* mesh, unsigned int vertexIndex, short shade)
+void meshSetRawVertexShade(WK_MESH* mesh, unsigned int vertexIndex, short shade)
 {
 	assert(mesh);
-	VERTEX* vertex = magicArrayAddItem(&mesh->vertices);
+	WK_VERTEX* vertex = magicArrayAddItem(&mesh->vertices);
 	vertexSetRawShade(vertex, shade);
 }
 
 
-unsigned int meshGetNumPolygons(MESH* mesh)
+unsigned int meshGetNumPolygons(WK_MESH* mesh)
 {
 	assert(mesh);
 	return mesh->polygons.length;
 }
 
-POLYGON* meshGetPolygon(MESH* mesh, unsigned int polygonIndex)
+WK_POLYGON* meshGetPolygon(WK_MESH* mesh, unsigned int polygonIndex)
 {
 	assert(mesh);
 	return magicArrayGetItem(&mesh->polygons, polygonIndex);

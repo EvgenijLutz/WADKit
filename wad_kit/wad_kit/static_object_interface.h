@@ -12,7 +12,7 @@
 #include "wad_kit.h"
 
 STATIC_ID staticGetId(STATIC* staticObject);
-MESH* staticGetMesh(STATIC* staticObject);
+WK_MESH* staticGetMesh(STATIC* staticObject);
 
 const char* staticIdGetFabulousName(STATIC_ID staticId);
 const char* staticIdGetTerribleName(STATIC_ID staticId);

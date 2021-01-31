@@ -11,7 +11,7 @@
 
 #include "private_interface.h"
 
-void stateChangeInitialize(STATE_CHANGE* stateChange, ANIMATION* animation, RAW_STATE_CHANGE* rawStateChange, WK_WAD_LOAD_INFO* loadInfo);
-void stateChangeDeinitialize(STATE_CHANGE* stateChange);
+void stateChangeInitialize(WK_STATE_CHANGE* stateChange, WK_ANIMATION* animation, RAW_STATE_CHANGE* rawStateChange, WK_WAD_LOAD_INFO* loadInfo);
+void stateChangeDeinitialize(WK_STATE_CHANGE* stateChange);
 
 #endif /* state_change_private_interface_h */

@@ -11,6 +11,14 @@
 
 #include "wad_kit.h"
 
+/**
+ From @b documentation:
+ The opCode takes the values 0, 1, 2, 3, where:
+ @b 0 = stack not used. Link the current mesh to the previous mesh.
+ @b 1 = pull the parent from the stack. Link the current mesh to the parent.
+ @b 2 = push the parent into the stack. Link the current mesh to the parent.
+ @b 3 = read the parent in the stack. Link the current mesh to the parent.
+ */
 typedef enum JOINT_LOCATION_TYPE
 {
 	JOINT_LOCATION_TYPE_LINK_TO_PREVIOUS_MESH = 0,

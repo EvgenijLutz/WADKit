@@ -31,22 +31,22 @@
 #define MAKE_EULER_ANGLE(value) (M_PI * (float)(value) / 512.0f)
 #endif
 
-static void _keyframe_updateBoundingBox(KEYFRAME* keyframe)
+static void _keyframe_updateBoundingBox(WK_KEYFRAME* keyframe)
 {
 	//keyframe->boundingBoxStart = vector3fCreate(0, 0, 0);
 	//keyframe->boundingBoxEnd = vector3fCreate(0, 0, 0);
 }
 
-static void _keyframe_updateModelOffset(KEYFRAME* keyframe)
+static void _keyframe_updateModelOffset(WK_KEYFRAME* keyframe)
 {
 	//keyframe->modelOffset = vector3fCreate(0, 0, 0);
 }
 
-static void _keyframe_updateRotation(ROTATION* rotation)
+static void _keyframe_updateRotation(WK_ROTATION* rotation)
 {
-	const float x = MAKE_EULER_ANGLE(rotation->rotx);
-	const float y = MAKE_EULER_ANGLE(rotation->roty);
-	const float z = MAKE_EULER_ANGLE(rotation->rotz);
+	const float x = MAKE_EULER_ANGLE(rotation->rawEulerRotationX);
+	const float y = MAKE_EULER_ANGLE(rotation->rawEulerRotationY);
+	const float z = MAKE_EULER_ANGLE(rotation->rawEulerRotationZ);
 	
 	/*
 	 const float degrees = (float)(360.0 / 65536.0 * (double)angle);
@@ -75,7 +75,7 @@ static void _keyframe_updateRotation(ROTATION* rotation)
 	rotation->quaternionRotation = q;
 }
 
-void keyframeInitialize(KEYFRAME* keyframe, ANIMATION* animation, RAW_ANIMATION* rawAnimation, WK_WAD_LOAD_INFO* loadInfo)
+void keyframeInitialize(WK_KEYFRAME* keyframe, WK_ANIMATION* animation, RAW_ANIMATION* rawAnimation, WK_WAD_LOAD_INFO* loadInfo)
 {
 	assert(keyframe);
 	assert(animation);
@@ -105,11 +105,11 @@ void keyframeInitialize(KEYFRAME* keyframe, ANIMATION* animation, RAW_ANIMATION*
 	_keyframe_updateModelOffset(keyframe);
 	
 	const unsigned int numMeshes = animation->movable->joints.length + 1;
-	keyframe->rotations = malloc(sizeof(ROTATION) * numMeshes);
+	keyframe->rotations = malloc(sizeof(WK_ROTATION) * numMeshes);
 	
 	/**
 	 Tunrs out, movable can have 123 joints
-	 ANIMATION::keyframeSize is unsigned char, where max value is 255
+	 WK_ANIMATION::keyframeSize is unsigned char, where max value is 255
 	 9 words go for bounding box and offset
 	 other 123 pairs (123*2=246) of words - for rotation
 	 */
@@ -123,7 +123,7 @@ void keyframeInitialize(KEYFRAME* keyframe, ANIMATION* animation, RAW_ANIMATION*
 	
 	for (unsigned int rotationIndex = 0; rotationIndex < numMeshes; rotationIndex++)
 	{
-		ROTATION* rotation = &keyframe->rotations[rotationIndex];
+		WK_ROTATION* rotation = &keyframe->rotations[rotationIndex];
 		unsigned int angleSet = bufferReaderReadUInt16(buffer, executeResult);
 		if (executeResultIsFailed(executeResult)) { return; }
 		//wordsLeft--;
@@ -137,29 +137,29 @@ void keyframeInitialize(KEYFRAME* keyframe, ANIMATION* animation, RAW_ANIMATION*
 				if (executeResultIsFailed(executeResult)) { return; }
 				//wordsLeft--;
 				angleSet = angleSet * 0x10000 + nextWord;
-				rotation->rotz = MAKE_LITTLE_ANGLE((angleSet & 0x3ff));
+				rotation->rawEulerRotationZ = MAKE_LITTLE_ANGLE((angleSet & 0x3ff));
 				angleSet >>= 10;
-				rotation->roty = MAKE_LITTLE_ANGLE((angleSet & 0x3ff));
+				rotation->rawEulerRotationY = MAKE_LITTLE_ANGLE((angleSet & 0x3ff));
 				angleSet >>= 10;
-				rotation->rotx = MAKE_LITTLE_ANGLE((angleSet & 0x3ff));
+				rotation->rawEulerRotationX = MAKE_LITTLE_ANGLE((angleSet & 0x3ff));
 				break;
 
 			case ROTATION_USED_X_AXIS:
-				rotation->rotx = MAKE_BIG_ANGLE((angleSet & 0x3fff));
-				rotation->roty = 0;
-				rotation->rotz = 0;
+				rotation->rawEulerRotationX = MAKE_BIG_ANGLE((angleSet & 0x3fff));
+				rotation->rawEulerRotationY = 0;
+				rotation->rawEulerRotationZ = 0;
 				break;
 
 			case ROTATION_USED_Y_AXIS:
-				rotation->rotx = 0;
-				rotation->roty = MAKE_BIG_ANGLE((angleSet & 0x3fff));
-				rotation->rotz = 0;
+				rotation->rawEulerRotationX = 0;
+				rotation->rawEulerRotationY = MAKE_BIG_ANGLE((angleSet & 0x3fff));
+				rotation->rawEulerRotationZ = 0;
 				break;
 
 			case ROTATION_USED_Z_AXIS:
-				rotation->rotx = 0;
-				rotation->roty = 0;
-				rotation->rotz = MAKE_BIG_ANGLE((angleSet & 0x3fff));
+				rotation->rawEulerRotationX = 0;
+				rotation->rawEulerRotationY = 0;
+				rotation->rawEulerRotationZ = MAKE_BIG_ANGLE((angleSet & 0x3fff));
 				break;
 							
 			default:
@@ -184,18 +184,18 @@ void keyframeInitialize(KEYFRAME* keyframe, ANIMATION* animation, RAW_ANIMATION*
 	executeResultIsSucceeded(executeResult);
 }
 
-void keyframeDeinitialize(KEYFRAME* keyframe)
+void keyframeDeinitialize(WK_KEYFRAME* keyframe)
 {
 	assert(keyframe);
 	assert(keyframe->rotations);
 	
 	free(keyframe->rotations);
-	debug_memset(keyframe, 0, sizeof(KEYFRAME));
+	debug_memset(keyframe, 0, sizeof(WK_KEYFRAME));
 }
 
 // MARK: - Public interface
 
-vector3f keyframeGetRootOffset(KEYFRAME* keyframe)
+vector3f keyframeGetRootOffset(WK_KEYFRAME* keyframe)
 {
 	assert(keyframe);
 	
@@ -206,7 +206,7 @@ vector3f keyframeGetRootOffset(KEYFRAME* keyframe)
 	return vector3fCreate(-x, -y, z);
 }
 
-vector3f keyframeGetInterpolatedRootOffset(KEYFRAME* firstKeyframe, KEYFRAME* secondKeyframe, float interpolationCoefficient)
+vector3f keyframeGetInterpolatedRootOffset(WK_KEYFRAME* firstKeyframe, WK_KEYFRAME* secondKeyframe, float interpolationCoefficient)
 {
 	assert(firstKeyframe);
 	assert(secondKeyframe);
@@ -221,21 +221,21 @@ vector3f keyframeGetInterpolatedRootOffset(KEYFRAME* firstKeyframe, KEYFRAME* se
 }
 
 
-quaternionf keyframeGetQuaternionRotation(KEYFRAME* keyframe, unsigned int transformIndex)
+quaternionf keyframeGetQuaternionRotation(WK_KEYFRAME* keyframe, unsigned int transformIndex)
 {
 	assert(keyframe);
 	assert(keyframe->animation->movable->joints.length + 1 > transformIndex);
 	
-	ROTATION* rotation = &keyframe->rotations[transformIndex];
+	WK_ROTATION* rotation = &keyframe->rotations[transformIndex];
 	return rotation->quaternionRotation;
 }
 
-vector3f keyframeGetEulerRotation(KEYFRAME* keyframe, unsigned int transformIndex)
+vector3f keyframeGetEulerRotation(WK_KEYFRAME* keyframe, unsigned int transformIndex)
 {
 	assert(keyframe);
 	assert(keyframe->animation->movable->joints.length + 1 > transformIndex);
 	
-	ROTATION* rotation = &keyframe->rotations[transformIndex];
+	WK_ROTATION* rotation = &keyframe->rotations[transformIndex];
 	return rotation->eulerRotation;
 }
 
@@ -260,7 +260,7 @@ static inline float _calcRot(float r1, float r2, float interpolationCoefficient)
 	return r1 + (dif * interpolationCoefficient);
 }
 
-vector3f keyframeCalculateInterpolatedRotation(KEYFRAME* firstKeyframe, KEYFRAME* secondKeyframe, unsigned int transformIndex, float interpolationCoefficient)
+vector3f keyframeCalculateInterpolatedRotation(WK_KEYFRAME* firstKeyframe, WK_KEYFRAME* secondKeyframe, unsigned int transformIndex, float interpolationCoefficient)
 {
 	assert(firstKeyframe);
 	assert(secondKeyframe);

@@ -13,7 +13,7 @@
 
 typedef struct COMMAND_QUEUE
 {
-	GRAPHICS_DEVICE* device;
+	GR_DEVICE* device;
 	
 	void* commandQueueId;
 }

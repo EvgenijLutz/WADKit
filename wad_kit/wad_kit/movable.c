@@ -10,7 +10,7 @@
 
 // MARK: - Private interface
 
-void movableInitialize(MOVABLE* movable, RAW_MOVABLE* rawMovable, WK_WAD_LOAD_INFO* loadInfo)
+void movableInitialize(WK_MOVABLE* movable, RAW_MOVABLE* rawMovable, WK_WAD_LOAD_INFO* loadInfo)
 {
 	assert(movable);
 	assert(loadInfo);
@@ -22,7 +22,7 @@ void movableInitialize(MOVABLE* movable, RAW_MOVABLE* rawMovable, WK_WAD_LOAD_IN
 	movable->wad = wad;
 	movable->numReferences = 0;
 	movable->movableId = (MOVABLE_ID)rawMovable->objectId;
-	magicArrayInitialize(&movable->joints, MAGIC_ARRAY_ITEM_DISTRIBUTION_DONT_CARE, sizeof(JOINT), 4);
+	magicArrayInitialize(&movable->joints, MAGIC_ARRAY_ITEM_DISTRIBUTION_DONT_CARE, sizeof(WK_JOINT), 4);
 	magicArrayInitializeWithAllocator(&movable->animations, wad->animationAllocator);
 	
 	unsigned short numPointers = rawMovable->numPointers;
@@ -37,10 +37,10 @@ void movableInitialize(MOVABLE* movable, RAW_MOVABLE* rawMovable, WK_WAD_LOAD_IN
 	bufferReaderSetEditorPosition(buffer, loadInfo->linksDataLocation + firstLinkAddress * 4);
 	for (unsigned int i = 1; i < numPointers; i++)
 	{
-		MESH* mesh = _wad_findMesh(meshPointersStart, i, loadInfo);
+		WK_MESH* mesh = _wad_findMesh(meshPointersStart, i, loadInfo);
 		if (executeResultIsFailed(executeResult)) { return; }
 		
-		JOINT* joint = magicArrayAddItem(&movable->joints);
+		WK_JOINT* joint = magicArrayAddItem(&movable->joints);
 		jointInitialize(joint, movable, mesh, loadInfo);
 		if (executeResultIsFailed(executeResult)) { return; }
 	}
@@ -82,7 +82,7 @@ void movableInitialize(MOVABLE* movable, RAW_MOVABLE* rawMovable, WK_WAD_LOAD_IN
 			nextRawAnimation = &loadInfo->rawAnimations[rawMovable->animsIndex + animationIndex + 1];
 		}
 		
-		ANIMATION* animation = magicArrayAddItem(&movable->animations);
+		WK_ANIMATION* animation = magicArrayAddItem(&movable->animations);
 		animationInitialize(animation, movable, rawMovable, rawAnimation, nextRawAnimation, loadInfo);
 		if (executeResultIsFailed(executeResult)) { return; }
 	}
@@ -90,21 +90,21 @@ void movableInitialize(MOVABLE* movable, RAW_MOVABLE* rawMovable, WK_WAD_LOAD_IN
 	executeResultSetSucceeded(executeResult);
 }
 
-void movableDeinitialize(MOVABLE* movable)
+void movableDeinitialize(WK_MOVABLE* movable)
 {
 	assert(movable);
 	assert(movable->numReferences == 0);
 	
 	for (unsigned int i = 0; i < movable->animations.length; i++)
 	{
-		ANIMATION* animation = magicArrayGetItem(&movable->animations, i);
+		WK_ANIMATION* animation = magicArrayGetItem(&movable->animations, i);
 		animationDeinitialize(animation);
 	}
 	magicArrayDeinitialize(&movable->animations);
 	
 	for (unsigned int i = 0; i < movable->joints.length; i++)
 	{
-		JOINT* joint = magicArrayGetItem(&movable->joints, i);
+		WK_JOINT* joint = magicArrayGetItem(&movable->joints, i);
 		jointDeinitialize(joint);
 	}
 	magicArrayDeinitialize(&movable->joints);
@@ -121,39 +121,39 @@ void movableDeinitialize(MOVABLE* movable)
 
 // MARK: - Public interface
 
-MOVABLE_ID movableGetId(MOVABLE* movable)
+MOVABLE_ID movableGetId(WK_MOVABLE* movable)
 {
 	assert(movable);
 	return movable->movableId;
 }
 
 
-MESH* movableGetRootMesh(MOVABLE* movable)
+WK_MESH* movableGetRootMesh(WK_MOVABLE* movable)
 {
 	assert(movable);
 	return movable->rootMesh;
 }
 
-unsigned int movableGetNumJoints(MOVABLE* movable)
+unsigned int movableGetNumJoints(WK_MOVABLE* movable)
 {
 	assert(movable);
 	return movable->joints.length;
 }
 
-JOINT* movableGetJoint(MOVABLE* movable, unsigned int jointIndex)
+WK_JOINT* movableGetJoint(WK_MOVABLE* movable, unsigned int jointIndex)
 {
 	assert(movable);
 	return magicArrayGetItem(&movable->joints, jointIndex);
 }
 
 
-unsigned int movableGetNumAnimations(MOVABLE* movable)
+unsigned int movableGetNumAnimations(WK_MOVABLE* movable)
 {
 	assert(movable);
 	return movable->animations.length;
 }
 
-ANIMATION* movableGetAnimation(MOVABLE* movable, unsigned int animationIndex)
+WK_ANIMATION* movableGetAnimation(WK_MOVABLE* movable, unsigned int animationIndex)
 {
 	assert(movable);
 	return magicArrayGetItem(&movable->animations, animationIndex);

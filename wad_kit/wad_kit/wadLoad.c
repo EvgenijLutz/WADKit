@@ -112,7 +112,7 @@ static void _wad_loadDataFromLoader(WK_WAD_LOAD_INFO* loadInfo)
 	{
 		loadInfo->meshDataOffsets[numMeshes] = (unsigned int)(buffer->editorPosition - meshDataLocation);
 		
-		MESH* mesh = magicArrayAddItem(&wad->meshes);
+		WK_MESH* mesh = magicArrayAddItem(&wad->meshes);
 		meshInitializeFromBuffer(mesh, wad, buffer, executeResult);
 		if (executeResultIsFailed(executeResult)) { return; }
 		
@@ -193,7 +193,7 @@ static void _wad_loadDataFromLoader(WK_WAD_LOAD_INFO* loadInfo)
 	for (unsigned int i = 0; i < loadInfo->numMovables; i++)
 	{
 		RAW_MOVABLE* rawMovable = &loadInfo->rawMovables[i];
-		MOVABLE* movable = magicArrayAddItem(&wad->movables);
+		WK_MOVABLE* movable = magicArrayAddItem(&wad->movables);
 		movableInitialize(movable, rawMovable, loadInfo);
 	}
 	

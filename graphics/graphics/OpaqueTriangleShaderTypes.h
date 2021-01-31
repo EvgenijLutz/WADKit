@@ -18,7 +18,6 @@ typedef simd_float4x4 matrix4f;
 #include "graphics.h"
 #endif
 
-#include "graphics_vertex.h"
-#include "graphics_mesh_uniforms_data.h"
+#include "buffer_data.h"
 
 #endif /* OpaqueTriangleShaderTypes_h */

@@ -11,14 +11,14 @@
 
 #include "wad_kit.h"
 
-MOVABLE_ID movableGetId(MOVABLE* movable);
+MOVABLE_ID movableGetId(WK_MOVABLE* movable);
 const char* movableIdGetTerribleName(MOVABLE_ID movableId);
 
-MESH* movableGetRootMesh(MOVABLE* movable);
-unsigned int movableGetNumJoints(MOVABLE* movable);
-JOINT* movableGetJoint(MOVABLE* movable, unsigned int jointIndex);
+WK_MESH* movableGetRootMesh(WK_MOVABLE* movable);
+unsigned int movableGetNumJoints(WK_MOVABLE* movable);
+WK_JOINT* movableGetJoint(WK_MOVABLE* movable, unsigned int jointIndex);
 
-unsigned int movableGetNumAnimations(MOVABLE* movable);
-ANIMATION* movableGetAnimation(MOVABLE* movable, unsigned int animationIndex);
+unsigned int movableGetNumAnimations(WK_MOVABLE* movable);
+WK_ANIMATION* movableGetAnimation(WK_MOVABLE* movable, unsigned int animationIndex);
 
 #endif /* wad_kit_movable_interface_h */

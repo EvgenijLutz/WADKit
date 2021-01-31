@@ -12,7 +12,7 @@
 
 // MARK: - Texture interface
 
-static void* _metal_createTexture2dWithData(GRAPHICS_DEVICE* device, unsigned int width, unsigned int height, unsigned int numComponents, TEXTURE_USAGE usage, const void* data)
+static void* _metal_createTexture2dWithData(GR_DEVICE* device, unsigned int width, unsigned int height, unsigned int numComponents, TEXTURE_USAGE usage, const void* data)
 {
 	GraphicsDevice* graphicsDevice = (__bridge GraphicsDevice*)device->userInfo;
 	id<MTLDevice> metalDevice = graphicsDevice.metalDevice;
@@ -85,85 +85,90 @@ static void* _metal_createTexture2dWithData(GRAPHICS_DEVICE* device, unsigned in
 	return textureId;
 }
 
-static void _metal_releaseTexture2d(GRAPHICS_DEVICE* device, void* textureId)
+static void _metal_releaseTexture2d(GR_DEVICE* device, void* textureId)
 {
 	id<MTLTexture> texture = (__bridge_transfer id<MTLTexture>)textureId;
 	texture = nil;
 }
 
 
-// MARK: - Mesh interface
+// MARK: - Buffer interface
 
-static void* _metal_createMesh(GRAPHICS_DEVICE* device, GRAPHICS_VERTEX* vertices, unsigned int numVertices, TEXTURE2D* texture)
+static void* _metal_createVertexBuffer(GR_DEVICE* device, COMMAND_QUEUE* queue, GR_T_VERTEX* vertices, unsigned int numVertices)
 {
+	size_t bufferSize = sizeof(GR_T_VERTEX) * numVertices;
+	
 	GraphicsDevice* graphicsDevice = (__bridge GraphicsDevice*)device->userInfo;
-	id<MTLDevice> metalDevice = graphicsDevice.metalDevice;
-	
-	size_t bufferSize = sizeof(GRAPHICS_VERTEX) * numVertices;
-	id<MTLBuffer> vertexBuffer = [metalDevice newBufferWithLength:bufferSize options:MTLResourceStorageModePrivate];
-	id<MTLBuffer> uploadBuffer = [metalDevice newBufferWithLength:bufferSize options:MTLResourceStorageModeShared];
-	memcpy(uploadBuffer.contents, vertices, bufferSize);
-	
-	id<MTLCommandBuffer> commandBuffer = [graphicsDevice.uploadDataCommandQueue commandBuffer];
-	id<MTLBlitCommandEncoder> blit = [commandBuffer blitCommandEncoder];
-	[blit copyFromBuffer:uploadBuffer sourceOffset:0 toBuffer:vertexBuffer destinationOffset:0 size:bufferSize];
-	[blit endEncoding];
-	[commandBuffer commit];
-	[commandBuffer waitUntilCompleted];
-	
-	id<MTLTexture> metalTexture = (__bridge id<MTLTexture>)texture->textureId;
-	
-	GraphicsMesh* graphicsMesh = [[GraphicsMesh alloc] initWithVertexBuffer:vertexBuffer texture:metalTexture];
-	void* graphicsMeshId = (__bridge_retained void*)graphicsMesh;
-	return graphicsMeshId;
-}
-
-static void _metal_releaseMesh(GRAPHICS_MESH* mesh)
-{
-	GraphicsMesh* graphicsMesh = (__bridge_transfer GraphicsMesh*)mesh->meshId;
-	graphicsMesh = nil;
-}
-
-
-// MARK: - Mesh uniforms interface
-
-static void* _metal_createMeshUniforms(GRAPHICS_DEVICE* device)
-{
-	GraphicsDevice* graphicsDevice = (__bridge GraphicsDevice*)device->userInfo;
-	id<MTLDevice> metalDevice = graphicsDevice.metalDevice;
-	
-	size_t bufferSize = sizeof(GRAPHICS_MESH_UNIFORMS_DATA);
-	
-	GraphicsBuffer* uniforms = [[GraphicsBuffer alloc] initWithDevice:metalDevice size:bufferSize];
-	void* uniformsId = (__bridge_retained void*)uniforms;
-	return uniformsId;
-}
-
-static void _metal_releaseMeshUniforms(GRAPHICS_MESH_UNIFORMS* uniforms)
-{
-	GraphicsBuffer* meshUniforms = (__bridge_transfer GraphicsBuffer*)uniforms->uniformsId;
-	meshUniforms = nil;
-}
-
-static void _metal_meshUniformsSetData(GRAPHICS_MESH_UNIFORMS* uniforms, COMMAND_QUEUE* queue, GRAPHICS_MESH_UNIFORMS_DATA* data)
-{
-	GraphicsBuffer* meshUniforms = (__bridge GraphicsBuffer*)uniforms->uniformsId;
 	id<MTLCommandQueue> commandQueue = (__bridge id<MTLCommandQueue>)queue->commandQueueId;
 	
+	GraphicsBufferItem* item = [graphicsDevice createVertexBufferWithSize:bufferSize];
+	
 	id<MTLCommandBuffer> commandBuffer = [commandQueue commandBuffer];
-	id<MTLBlitCommandEncoder> blit = [commandBuffer blitCommandEncoder];
-	
-	[meshUniforms switchBuffers];
-	[meshUniforms uploadData:data withEncoder:blit];
-	
-	[blit endEncoding];
+	id<MTLBlitCommandEncoder> blitEncoder = [commandBuffer blitCommandEncoder];
+	[item.buffer setData:vertices forItem:item];
+	[item.buffer scheduleUploadDataWithEncoder:blitEncoder];
+	[blitEncoder endEncoding];
 	[commandBuffer commit];
+	
+	void* itemId = (__bridge void*)item;
+	return itemId;
+}
+
+static void* _metal_createMeshUniformsBuffer(GR_DEVICE* device)
+{
+	GraphicsDevice* graphicsDevice = (__bridge GraphicsDevice*)device->userInfo;
+	GraphicsBufferItem* item = [graphicsDevice createMeshUniformBuffer];
+	void* itemId = (__bridge void*)item;
+	return itemId;
+}
+
+static void* _metal_createViewportUniformsBuffer(GR_DEVICE* device)
+{
+	GraphicsDevice* graphicsDevice = (__bridge GraphicsDevice*)device->userInfo;
+	GraphicsBufferItem* item = [graphicsDevice createViewportUniformBuffer];
+	void* itemId = (__bridge void*)item;
+	return itemId;
+}
+
+static void _metal_setBufferData(GR_BUFFER* buffer, const void* data)
+{
+	GraphicsDevice* graphicsDevice = (__bridge GraphicsDevice*)buffer->device->userInfo;
+	GraphicsBufferItem* item = (__bridge GraphicsBufferItem*)buffer->bufferId;
+	[graphicsDevice bufferItem:item setData:data];
+}
+
+static void _metal_releaseBuffer(GR_BUFFER* buffer)
+{
+	GraphicsDevice* graphicsDevice = (__bridge GraphicsDevice*)buffer->device->userInfo;
+	GraphicsBufferItem* item = (__bridge GraphicsBufferItem*)buffer->bufferId;
+	[graphicsDevice releaseBufferItem:item];
+}
+
+static void _metal_setBufferLabel(GR_BUFFER* buffer, const char* label)
+{
+	GraphicsBufferItem* item = (__bridge GraphicsBufferItem*)buffer->bufferId;
+	GraphicsBuffer* graphicsBuffer = item.buffer;
+	
+	NSString* labelString = nil;
+	if (label)
+	{
+		labelString = [NSString stringWithUTF8String:label];
+	}
+	[graphicsBuffer setLabel:labelString];
+}
+
+
+static void _metal_scheduleUploadingBuffers(GR_DEVICE* device, COMMAND_BUFFER* commandBuffer)
+{
+	GraphicsDevice* graphicsDevice = (__bridge GraphicsDevice*)device->userInfo;
+	id<MTLCommandBuffer> metalCommandBuffer = (__bridge id<MTLCommandBuffer>)commandBuffer->commandBufferId;
+	[graphicsDevice scheduleUploadBuffersWithCommandBuffer:metalCommandBuffer];
 }
 
 
 // MARK: - Command queue interface
 
-static void* _metal_createCommandQueue(GRAPHICS_DEVICE* device)
+static void* _metal_createCommandQueue(GR_DEVICE* device)
 {
 	GraphicsDevice* graphicsDevice = (__bridge GraphicsDevice*)device->userInfo;
 	id<MTLDevice> metalDevice = graphicsDevice.metalDevice;
@@ -172,7 +177,7 @@ static void* _metal_createCommandQueue(GRAPHICS_DEVICE* device)
 	return commandQueueId;
 }
 
-static void _metal_releaseCommandQueue(GRAPHICS_DEVICE* device, COMMAND_QUEUE* commandQueue)
+static void _metal_releaseCommandQueue(GR_DEVICE* device, COMMAND_QUEUE* commandQueue)
 {
 	id<MTLCommandQueue> metalCommandQueue = (__bridge_transfer id<MTLCommandQueue>)commandQueue->commandQueueId;
 	metalCommandQueue = nil;
@@ -244,32 +249,54 @@ static void _metal_renderCommandEncoderEndEncoding(RENDER_COMMAND_ENCODER* rende
 	encoder = nil;
 }
 
-static void _metal_renderCommandEncoderRenderMesh(RENDER_COMMAND_ENCODER* renderCommandEncoder, GRAPHICS_MESH* mesh, GRAPHICS_MESH_UNIFORMS* uniforms)
+static void _metal_renderCommandEncoderRenderMesh(RENDER_COMMAND_ENCODER* encoder, GR_BUFFER* vertexBuffer, unsigned int numVertices, TEXTURE2D* texture, GR_BUFFER* meshUniforms, GR_BUFFER* viewportUniforms)
 {
-	GRAPHICS_DEVICE* graphicsDevice = renderCommandEncoder->commandBuffer->commandQueue->device;
-	GraphicsDevice* device = (__bridge GraphicsDevice*)graphicsDevice->userInfo;
+	GR_DEVICE* device = encoder->commandBuffer->commandQueue->device;
+	GraphicsDevice* graphicsDevice = (__bridge GraphicsDevice*)device->userInfo;
+	id<MTLRenderCommandEncoder> renderEncoder = (__bridge id<MTLRenderCommandEncoder>)encoder->renderCommandEncoderId;
 	
-	id<MTLRenderCommandEncoder> encoder = (__bridge id<MTLRenderCommandEncoder>)renderCommandEncoder->renderCommandEncoderId;
+	GraphicsBufferItem* vertexBufferItem = (__bridge GraphicsBufferItem*)vertexBuffer->bufferId;
+	assert(vertexBufferItem.buffer.type == GraphicsBufferTypeVertexBuffer);
+	id<MTLBuffer> metalVertexBuffer = vertexBufferItem.buffer.buffer;
 	
-	[encoder setDepthStencilState:device.depthStencilState];
-	[encoder setRenderPipelineState:device.opaqueTriangleRenderState];
-	[encoder setCullMode:MTLCullModeBack];
+	id<MTLTexture> metalTexture = (__bridge id<MTLTexture>)texture->textureId;
 	
-	GraphicsMesh* graphicsMesh = (__bridge GraphicsMesh*)mesh->meshId;
-	GraphicsBuffer* graphicsMeshUniforms = (__bridge GraphicsBuffer*)uniforms->uniformsId;
+	GraphicsBufferItem* meshUniformsBufferItem = (__bridge GraphicsBufferItem*)meshUniforms->bufferId;
+	assert(meshUniformsBufferItem.buffer.type == GraphicsBufferTypeMeshUniforms);
+	unsigned int meshUniformsBufferIndex = (unsigned int)meshUniformsBufferItem.index;
+	id<MTLBuffer> meshUniformsBuffer = meshUniformsBufferItem.buffer.buffer;
 	
-	[encoder setFrontFacingWinding:MTLWindingCounterClockwise];
-	[encoder setVertexBuffer:graphicsMesh.vertexBuffer offset:0 atIndex:0];
-	[encoder setVertexBuffer:graphicsMeshUniforms.buffer offset:0 atIndex:1];
-	[encoder setFragmentTexture:graphicsMesh.texture atIndex:0];
-	[encoder setFragmentBuffer:graphicsMeshUniforms.buffer offset:0 atIndex:1];
-	[encoder drawPrimitives:MTLPrimitiveTypeTriangle vertexStart:0 vertexCount:mesh->numVertices];
+	GraphicsBufferItem* viewportUniformBufferItem = (__bridge GraphicsBufferItem*)viewportUniforms->bufferId;
+	assert(viewportUniformBufferItem.buffer.type == GraphicsBufferTypeViewportUniforms);
+	id<MTLBuffer> viewportUniformBuffer = viewportUniformBufferItem.buffer.buffer;
+	
+	[renderEncoder setDepthStencilState:graphicsDevice.depthStencilState];
+	[renderEncoder setRenderPipelineState:graphicsDevice.opaqueTriangleRenderState];
+	[renderEncoder setCullMode:MTLCullModeBack];
+	
+	[renderEncoder setFrontFacingWinding:MTLWindingCounterClockwise];
+	[renderEncoder setVertexBuffer:metalVertexBuffer offset:0 atIndex:0];
+	[renderEncoder setVertexBytes:&meshUniformsBufferIndex length:sizeof(unsigned int) atIndex:1];
+	[renderEncoder setVertexBuffer:meshUniformsBuffer offset:0 atIndex:2];
+	[renderEncoder setVertexBuffer:viewportUniformBuffer offset:0 atIndex:3];
+	[renderEncoder setFragmentTexture:metalTexture atIndex:0];
+	[renderEncoder drawPrimitives:MTLPrimitiveTypeTriangle vertexStart:0 vertexCount:numVertices];
 }
 
 
 // MARK: - GraphicsDevice implementation
 
 @implementation GraphicsDevice
+{
+	/// Allocates GR_T_VERTEX and GR_TNW2_VERTEX buffers.
+	NSMutableArray<GraphicsBuffer*>* _texturedMeshBuffers;
+	
+	/// Allocates GR_VIEWPORT_UNIFORMS_DATA buffers
+	NSMutableArray<GraphicsBuffer*>* _viewportUniformBuffers;
+	
+	/// Allocates GR_MESH_UNIFORM_DATA
+	GraphicsBuffer* _meshUniformsAllocator;
+}
 
 - (instancetype)initWithSystem:(SYSTEM*)system metalDevice:(id<MTLDevice>)metalDevice
 {
@@ -279,36 +306,41 @@ static void _metal_renderCommandEncoderRenderMesh(RENDER_COMMAND_ENCODER* render
 		_system = system;
 		_metalDevice = metalDevice;
 		
+		_texturedMeshBuffers = [[NSMutableArray alloc] init];
+		_viewportUniformBuffers = [[NSMutableArray alloc] init];
+		_meshUniformsAllocator = [[GraphicsBuffer alloc] initWithDevice:_metalDevice itemSize:sizeof(GR_MESH_UNIFORM_DATA) capacityIncrement:32 numBuffers:3 type:GraphicsBufferTypeMeshUniforms];
+		
 		NSString* bundlePath = [NSBundle.mainBundle pathForResource:@"WKGraphicsResources" ofType:@"bundle"];
+		assert(bundlePath);
 		NSBundle* bundle = [[NSBundle alloc] initWithPath:bundlePath];
-		//id<MTLLibrary> library = [metalDevice newDefaultLibrary];
+		assert(bundle);
 		id<MTLLibrary> library = [metalDevice newDefaultLibraryWithBundle:bundle error:nil];
 		assert(library);
 		
-		// MARK: GRAPHICS_DEVICE implementation
-		_graphicsDevice = malloc(sizeof(GRAPHICS_DEVICE));
+		// MARK: GR_DEVICE implementation
+		_graphicsDevice = malloc(sizeof(GR_DEVICE));
 		stringInitializeWithUTF8String(&_graphicsDevice->name, metalDevice.name.UTF8String);
 		
 		_graphicsDevice->system = system;
 		_graphicsDevice->accessSemaphore = systemCreateSemaphore(system, 1);
 
 		magicArrayInitialize(&_graphicsDevice->textures, MAGIC_ARRAY_ITEM_DISTRIBUTION_DONT_CARE, sizeof(TEXTURE2D), 8);
-		magicArrayInitialize(&_graphicsDevice->meshes, MAGIC_ARRAY_ITEM_DISTRIBUTION_DONT_CARE, sizeof(GRAPHICS_MESH), 8);
-		magicArrayInitialize(&_graphicsDevice->meshUniforms, MAGIC_ARRAY_ITEM_DISTRIBUTION_DONT_CARE, sizeof(GRAPHICS_MESH_UNIFORMS), 8);
+		magicArrayInitialize(&_graphicsDevice->buffers, MAGIC_ARRAY_ITEM_DISTRIBUTION_DONT_CARE, sizeof(GR_BUFFER), 64);
 		magicArrayInitialize(&_graphicsDevice->commandQueues, MAGIC_ARRAY_ITEM_DISTRIBUTION_DONT_CARE, sizeof(COMMAND_QUEUE), 8);
-		//magicArrayInitialize(&_graphicsDevice->commandBuffers, MAGIC_ARRAY_ITEM_DISTRIBUTION_DONT_CARE, sizeof(COMMAND_BUFFER), 8);
-		magicArrayInitialize(&_graphicsDevice->commandBuffers, MAGIC_ARRAY_ITEM_DISTRIBUTION_DONT_CARE, sizeof(COMMAND_BUFFER), 1);
+		magicArrayInitialize(&_graphicsDevice->commandBuffers, MAGIC_ARRAY_ITEM_DISTRIBUTION_DONT_CARE, sizeof(COMMAND_BUFFER), 8);
 		magicArrayInitialize(&_graphicsDevice->renderCommandEncoders, MAGIC_ARRAY_ITEM_DISTRIBUTION_DONT_CARE, sizeof(RENDER_COMMAND_ENCODER), 8);
 		
 		_graphicsDevice->createTexture2dWithDataFunc = _metal_createTexture2dWithData;
 		_graphicsDevice->releaseTexture2dFunc = _metal_releaseTexture2d;
 		
-		_graphicsDevice->createMeshFunc = _metal_createMesh;
-		_graphicsDevice->releaseMeshFunc = _metal_releaseMesh;
+		_graphicsDevice->createVertexBufferFunc = _metal_createVertexBuffer;
+		_graphicsDevice->createMeshUniformsBufferFunc = _metal_createMeshUniformsBuffer;
+		_graphicsDevice->createViewportUniformsBufferFunc = _metal_createViewportUniformsBuffer;
+		_graphicsDevice->setBufferDataFunc = _metal_setBufferData;
+		_graphicsDevice->releaseBufferFunc = _metal_releaseBuffer;
+		_graphicsDevice->setBufferLabelFunc = _metal_setBufferLabel;
 		
-		_graphicsDevice->createMeshUniformsFunc = _metal_createMeshUniforms;
-		_graphicsDevice->meshUniformsReleaseFunc = _metal_releaseMeshUniforms;
-		_graphicsDevice->meshUniformsSetDataFunc = _metal_meshUniformsSetData;
+		_graphicsDevice->scheduleUploadBuffersFunc = _metal_scheduleUploadingBuffers;
 		
 		_graphicsDevice->createCommandQueueFunc = _metal_createCommandQueue;
 		_graphicsDevice->releaseCommandQueueFunc = _metal_releaseCommandQueue;
@@ -331,9 +363,6 @@ static void _metal_renderCommandEncoderRenderMesh(RENDER_COMMAND_ENCODER* render
 		_defaultRenderClearColor = MTLClearColorMake(0.1, 0.1, 0.1, 1.0);
 		_defaultRenderColorPixelFormat = MTLPixelFormatBGRA8Unorm;
 		_defaultDepthStencilPixelFormat = MTLPixelFormatDepth32Float_Stencil8;
-		
-		// MARK: Upload command queue
-		_uploadDataCommandQueue = [metalDevice newCommandQueue];
 		
 		// MARK: Depth/stencil state
 		MTLDepthStencilDescriptor* depthStateDesc = [[MTLDepthStencilDescriptor alloc] init];
@@ -385,11 +414,8 @@ static void _metal_renderCommandEncoderRenderMesh(RENDER_COMMAND_ENCODER* render
 	assert(_graphicsDevice->commandQueues.length == 0);
 	magicArrayDeinitialize(&_graphicsDevice->commandQueues);
 	
-	assert(_graphicsDevice->meshUniforms.length == 0);
-	magicArrayDeinitialize(&_graphicsDevice->meshUniforms);
-	
-	assert(_graphicsDevice->meshes.length == 0);
-	magicArrayDeinitialize(&_graphicsDevice->meshes);
+	assert(_graphicsDevice->buffers.length == 0);
+	magicArrayDeinitialize(&_graphicsDevice->buffers);
 	
 	assert(_graphicsDevice->textures.length == 0);
 	magicArrayDeinitialize(&_graphicsDevice->textures);
@@ -398,8 +424,67 @@ static void _metal_renderCommandEncoderRenderMesh(RENDER_COMMAND_ENCODER* render
 	
 	stringDeinitialize(&_graphicsDevice->name);
 	
-	debug_memset(_graphicsDevice, 0, sizeof(GRAPHICS_DEVICE));
+	debug_memset(_graphicsDevice, 0, sizeof(GR_DEVICE));
 	free(_graphicsDevice);
+}
+
+
+- (GraphicsBufferItem*)createVertexBufferWithSize:(size_t)size
+{
+	GraphicsBuffer* graphicsBuffer = [[GraphicsBuffer alloc] initWithDevice:_metalDevice itemSize:size capacityIncrement:1 numBuffers:1 type:GraphicsBufferTypeVertexBuffer];
+	[_texturedMeshBuffers addObject:graphicsBuffer];
+	
+	return [graphicsBuffer addItem];
+}
+
+- (GraphicsBufferItem*)createMeshUniformBuffer
+{
+	return [_meshUniformsAllocator addItem];
+}
+
+- (GraphicsBufferItem*)createViewportUniformBuffer
+{
+	GraphicsBuffer* graphicsBuffer = [[GraphicsBuffer alloc] initWithDevice:_metalDevice itemSize:sizeof(GR_VIEWPORT_UNIFORMS_DATA) capacityIncrement:1 numBuffers:3 type:GraphicsBufferTypeViewportUniforms];
+	[_viewportUniformBuffers addObject:graphicsBuffer];
+	
+	return [graphicsBuffer addItem];
+}
+
+- (void)bufferItem:(GraphicsBufferItem*)item setData:(const void*)data
+{
+	[item.buffer setData:data forItem:item];
+}
+
+- (void)releaseBufferItem:(GraphicsBufferItem*)item
+{
+	GraphicsBuffer* buffer = item.buffer;
+	
+	if (buffer.type == GraphicsBufferTypeVertexBuffer)
+	{
+		[_texturedMeshBuffers removeObject:buffer];
+		return;
+	}
+	else if (buffer.type == GraphicsBufferTypeViewportUniforms)
+	{
+		[_viewportUniformBuffers removeObject:buffer];
+		return;
+	}
+	
+	[buffer removeItem:item];
+}
+
+- (void)scheduleUploadBuffersWithCommandBuffer:(id<MTLCommandBuffer>)commandBuffer
+{
+	id<MTLBlitCommandEncoder> blitEncoder = [commandBuffer blitCommandEncoder];
+	
+	for (GraphicsBuffer* buffer in _viewportUniformBuffers)
+	{
+		[buffer scheduleUploadDataWithEncoder:blitEncoder];
+	}
+	
+	[_meshUniformsAllocator scheduleUploadDataWithEncoder:blitEncoder];
+	
+	[blitEncoder endEncoding];
 }
 
 @end

@@ -104,7 +104,7 @@ typedef struct WK_WAD
 	//MAGIC_ARRAY skeletons;
 	
 	/*!
-	 Array of @b MOVABLE elements.
+	 Array of @b WK_MOVABLE elements.
 	 */
 	MAGIC_ARRAY movables;
 	

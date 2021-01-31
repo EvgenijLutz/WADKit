@@ -11,9 +11,9 @@
 
 #include "wad_kit.h"
 
-unsigned int animationGetFrameDuration(ANIMATION* animation);
+unsigned int animationGetFrameDuration(WK_ANIMATION* animation);
 
-unsigned int animationGetNumKeyframes(ANIMATION* animation);
-KEYFRAME* animationGetKeyframe(ANIMATION* animation, unsigned int keyframeIndex);
+unsigned int animationGetNumKeyframes(WK_ANIMATION* animation);
+WK_KEYFRAME* animationGetKeyframe(WK_ANIMATION* animation, unsigned int keyframeIndex);
 
 #endif /* animation_interface_h */

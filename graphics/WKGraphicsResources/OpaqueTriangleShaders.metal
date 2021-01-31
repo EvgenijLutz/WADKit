@@ -14,28 +14,39 @@ using namespace metal;
 typedef struct FragmentIn
 {
 	float4 position [[ position ]];
+	float3 ambient;
 	float2 uv;
 }
 FragmentIn;
 
 vertex FragmentIn opaqueTexturedTriangle_vs(uint id [[ vertex_id ]],
-											constant GRAPHICS_VERTEX* vertices [[ buffer(0) ]],
-											constant GRAPHICS_MESH_UNIFORMS_DATA& uniforms [[ buffer(1) ]])
+											constant GR_T_VERTEX* vertices [[ buffer(0) ]],
+											constant uint& transformIndex [[ buffer (1) ]],
+											constant GR_MESH_UNIFORM_DATA* transforms [[ buffer(2) ]],
+											constant GR_VIEWPORT_UNIFORMS_DATA& viewportUniforms [[ buffer(3) ]])
 {
-	constant GRAPHICS_VERTEX& vInfo = vertices[id];
+	constant GR_T_VERTEX& vInfo = vertices[id];
 	float4 vertexPosition = float4(vInfo.position, 1.0f);
 	
-	// Calculate vertex location with first weight
+	constant GR_MESH_UNIFORM_DATA& transform = transforms[transformIndex];
+	
+	// Calculate vertex location
+	float4x4 modelViewProjection = viewportUniforms.projection * transform.modelView;
+	float4 position = modelViewProjection * vertexPosition;
+	
+	/*// Calculate vertex location with first weight
 	float4x4 modelViewProjection = uniforms.projection * uniforms.modelView[0];
 	float4 position1 = modelViewProjection * vertexPosition * vInfo.weights[0];
 	
 	// Calculate vertex location with second weight
 	modelViewProjection = uniforms.projection * uniforms.modelView[1];
-	float4 position2 = modelViewProjection * vertexPosition * vInfo.weights[1];
+	float4 position2 = modelViewProjection * vertexPosition * vInfo.weights[1];*/
 	
 	FragmentIn out =
 	{
-		.position = position1 + position2,
+		//.position = position1 + position2,
+		.position = position,
+		.ambient = transform.ambient,
 		.uv = vInfo.uv
 	};
 	
@@ -45,8 +56,7 @@ vertex FragmentIn opaqueTexturedTriangle_vs(uint id [[ vertex_id ]],
 #define RENDER_WITH_ALPHA_CHANNEL 0
 
 fragment float4 opaqueTexturedTriangle_fs(FragmentIn in [[ stage_in ]],
-										  texture2d<half> texture [[ texture(0) ]],
-										  constant GRAPHICS_MESH_UNIFORMS_DATA& uniforms [[ buffer(1) ]])
+										  texture2d<half> texture [[ texture(0) ]])
 {
 	constexpr sampler textureSampler = sampler(mag_filter::nearest, min_filter::nearest);
 	//constexpr sampler textureSampler = sampler(mag_filter::linear, min_filter::linear);
@@ -61,9 +71,9 @@ fragment float4 opaqueTexturedTriangle_fs(FragmentIn in [[ stage_in ]],
 #endif
 	}
 
-	color.x *= uniforms.ambient.x;
-	color.y *= uniforms.ambient.y;
-	color.z *= uniforms.ambient.z;
+	color.x *= in.ambient.x;
+	color.y *= in.ambient.y;
+	color.z *= in.ambient.z;
 	
 #if !RENDER_WITH_ALPHA_CHANNEL
 	color.a = 1.0f;

@@ -10,7 +10,7 @@
 
 // MARK: - Private interface
 
-void jointInitialize(JOINT* joint, MOVABLE* movable, MESH* mesh, WK_WAD_LOAD_INFO* loadInfo)
+void jointInitialize(WK_JOINT* joint, WK_MOVABLE* movable, WK_MESH* mesh, WK_WAD_LOAD_INFO* loadInfo)
 {
 	assert(joint);
 	assert(movable);
@@ -39,67 +39,66 @@ void jointInitialize(JOINT* joint, MOVABLE* movable, MESH* mesh, WK_WAD_LOAD_INF
 	jointUpdateOffset(joint);
 }
 
-void jointDeinitialize(JOINT* joint)
+void jointDeinitialize(WK_JOINT* joint)
 {
 	assert(joint);
 	joint->mesh->numReferences--;
 }
 
 
-void jointUpdateOffset(JOINT* joint)
+void jointUpdateOffset(WK_JOINT* joint)
 {
-	const float x = (float)joint->dx / JOINT_COORDINATE_MULTIPLIER;
-	const float y = (float)joint->dy / JOINT_COORDINATE_MULTIPLIER;
-	const float z = (float)joint->dz / JOINT_COORDINATE_MULTIPLIER;
+	const float x = (float)joint->dx / WK_COORDINATE_MULTIPLIER;
+	const float y = (float)joint->dy / WK_COORDINATE_MULTIPLIER;
+	const float z = (float)joint->dz / WK_COORDINATE_MULTIPLIER;
 	joint->offset = vector3fCreate(-x, -y, z);
 }
 
 // MARK: - Public interface
 
-MESH* jointGetMesh(JOINT* joint)
+WK_MESH* jointGetMesh(WK_JOINT* joint)
 {
 	assert(joint);
 	return joint->mesh;
 }
 
-JOINT_LOCATION_TYPE jointGetLocationType(JOINT* joint)
+JOINT_LOCATION_TYPE jointGetLocationType(WK_JOINT* joint)
 {
 	assert(joint);
 	return joint->opCode;
 }
 
-int jointGetRawOffsetX(JOINT* joint)
+int jointGetRawOffsetX(WK_JOINT* joint)
 {
 	assert(joint);
 	return joint->dx;
 }
 
-int jointGetRawOffsetY(JOINT* joint)
+int jointGetRawOffsetY(WK_JOINT* joint)
 {
 	assert(joint);
 	return joint->dy;
 }
 
-int jointGetRawOffsetZ(JOINT* joint)
+int jointGetRawOffsetZ(WK_JOINT* joint)
 {
 	assert(joint);
 	return joint->dz;
 }
 
-vector3f jointGetOffset(JOINT* joint)
+vector3f jointGetOffset(WK_JOINT* joint)
 {
 	assert(joint);
 	return joint->offset;
 }
 
 
-void jointSetOffset(JOINT* joint, vector3f offset)
+void jointSetOffset(WK_JOINT* joint, vector3f offset)
 {
 	assert(joint);
 	
 	joint->offset = offset;
-	joint->dx = -(int)(offset.x * JOINT_COORDINATE_MULTIPLIER);
-	joint->dy = -(int)(offset.y * JOINT_COORDINATE_MULTIPLIER);
-	joint->dz = (int)(offset.z * JOINT_COORDINATE_MULTIPLIER);
+	joint->dx = -(int)(offset.x * WK_COORDINATE_MULTIPLIER);
+	joint->dy = -(int)(offset.y * WK_COORDINATE_MULTIPLIER);
+	joint->dz = (int)(offset.z * WK_COORDINATE_MULTIPLIER);
 }
-

@@ -13,6 +13,6 @@
 
 RENDER_COMMAND_ENCODER* commandBufferStartRenderCommandEncoder(COMMAND_BUFFER* commandBuffer, GRAPHICS_VIEW* graphicsView);
 void renderCommandEncoderFinishEncoding(RENDER_COMMAND_ENCODER* renderCommandEncoder);
-void renderCommandEncoderScheduleDrawMesh(RENDER_COMMAND_ENCODER* encoder, GRAPHICS_MESH* mesh, GRAPHICS_MESH_UNIFORMS* uniforms);
+void renderCommandEncoderScheduleDrawMesh(RENDER_COMMAND_ENCODER* encoder, GR_BUFFER* vertexBuffer, unsigned int numVertices, TEXTURE2D* texture, GR_BUFFER* meshUniforms, GR_BUFFER* viewportUniforms);
 
 #endif /* render_command_encoder_interface_h */

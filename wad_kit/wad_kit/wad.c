@@ -10,7 +10,7 @@
 
 // MARK: - Private interface
 
-MESH* _wad_findMesh(unsigned short pointerListStart, unsigned short index, WK_WAD_LOAD_INFO* loadInfo)
+WK_MESH* _wad_findMesh(unsigned short pointerListStart, unsigned short index, WK_WAD_LOAD_INFO* loadInfo)
 {
 	if (pointerListStart + index >= loadInfo->numMeshPointers)
 	{
@@ -40,15 +40,15 @@ WK_WAD* wadCreate(void)
 	memset(wad, 0, sizeof(WK_WAD));
 	wad->version = 129;
 	
-	wad->rawVertexAllocator = dataAllocatorCreate(sizeof(VERTEX), 4096);
-	wad->rawPolygonAllocator = dataAllocatorCreate(sizeof(POLYGON), 512);
-	wad->animationAllocator = dataAllocatorCreate(sizeof(ANIMATION), 512);
-	wad->keyframeAllocator = dataAllocatorCreate(sizeof(KEYFRAME), 4096);
+	wad->rawVertexAllocator = dataAllocatorCreate(sizeof(WK_VERTEX), 4096);
+	wad->rawPolygonAllocator = dataAllocatorCreate(sizeof(WK_POLYGON), 512);
+	wad->animationAllocator = dataAllocatorCreate(sizeof(WK_ANIMATION), 512);
+	wad->keyframeAllocator = dataAllocatorCreate(sizeof(WK_KEYFRAME), 4096);
 	
 	magicArrayInitialize(&wad->texturePages, MAGIC_ARRAY_ITEM_DISTRIBUTION_DONT_CARE, sizeof(WK_TEXTURE_PAGE), 16);
 	magicArrayInitialize(&wad->textureSamples, MAGIC_ARRAY_ITEM_DISTRIBUTION_DONT_CARE, sizeof(WK_TEXTURE_SAMPLE), 256);
-	magicArrayInitialize(&wad->meshes, MAGIC_ARRAY_ITEM_DISTRIBUTION_DONT_CARE, sizeof(MESH), 128);
-	magicArrayInitialize(&wad->movables, MAGIC_ARRAY_ITEM_DISTRIBUTION_DONT_CARE, sizeof(MOVABLE), 32);
+	magicArrayInitialize(&wad->meshes, MAGIC_ARRAY_ITEM_DISTRIBUTION_DONT_CARE, sizeof(WK_MESH), 128);
+	magicArrayInitialize(&wad->movables, MAGIC_ARRAY_ITEM_DISTRIBUTION_DONT_CARE, sizeof(WK_MOVABLE), 32);
 	magicArrayInitialize(&wad->statics, MAGIC_ARRAY_ITEM_DISTRIBUTION_DONT_CARE, sizeof(STATIC), 32);
 	
 	return wad;
@@ -65,14 +65,14 @@ void wadRelease(WK_WAD* wad)
 	
 	for (unsigned int i = 0; i < wad->movables.length; i++)
 	{
-		MOVABLE* movable = magicArrayGetItem(&wad->movables, i);
+		WK_MOVABLE* movable = magicArrayGetItem(&wad->movables, i);
 		movableDeinitialize(movable);
 	}
 	magicArrayDeinitialize(&wad->movables);
 	
 	for (unsigned int i = 0; i < wad->meshes.length; i++)
 	{
-		MESH* mesh = magicArrayGetItem(&wad->meshes, i);
+		WK_MESH* mesh = magicArrayGetItem(&wad->meshes, i);
 		meshDeinitialize(mesh);
 	}
 	magicArrayDeinitialize(&wad->meshes);
@@ -133,7 +133,7 @@ unsigned int wadGetNumMeshes(WK_WAD* wad)
 	return wad->meshes.length;
 }
 
-MESH* wadGetMesh(WK_WAD* wad, unsigned int meshIndex)
+WK_MESH* wadGetMesh(WK_WAD* wad, unsigned int meshIndex)
 {
 	assert(wad);
 	return magicArrayGetItem(&wad->meshes, meshIndex);
@@ -146,20 +146,20 @@ unsigned int wadGetNumMovables(WK_WAD* wad)
 	return wad->movables.length;
 }
 
-MOVABLE* wadGetMovableByIndex(WK_WAD* wad, unsigned int movableIndex)
+WK_MOVABLE* wadGetMovableByIndex(WK_WAD* wad, unsigned int movableIndex)
 {
 	assert(wad);
 	return magicArrayGetItem(&wad->movables, movableIndex);
 }
 
-MOVABLE* wadGetMovableById(WK_WAD* wad, MOVABLE_ID movableId)
+WK_MOVABLE* wadGetMovableById(WK_WAD* wad, MOVABLE_ID movableId)
 {
 	assert(wad);
 	
-	MOVABLE* movable = NULL;
+	WK_MOVABLE* movable = NULL;
 	for (unsigned int i = 0; i < wad->movables.length; i++)
 	{
-		MOVABLE* currentMovable = magicArrayGetItem(&wad->movables, i);
+		WK_MOVABLE* currentMovable = magicArrayGetItem(&wad->movables, i);
 		if (currentMovable->movableId == movableId)
 		{
 			movable = currentMovable;

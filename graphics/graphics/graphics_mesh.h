@@ -10,19 +10,15 @@
 
 #include "private_interface.h"
 
-typedef struct GRAPHICS_MESH
+typedef struct GR_DRAWABLE
 {
-	GRAPHICS_DEVICE* device;
-	unsigned int numVertices;
-	void* meshId;
+	int type;
+	int visible;
+	
+	TEXTURE2D* texture;
+	GR_BUFFER* vertexBuffer;
+	GR_BUFFER* meshUniforms;
 }
-GRAPHICS_MESH;
-
-typedef struct GRAPHICS_MESH_UNIFORMS
-{
-	GRAPHICS_DEVICE* device;
-	void* uniformsId;
-}
-GRAPHICS_MESH_UNIFORMS;
+GR_DRAWABLE;
 
 #endif /* graphics_mesh_h */

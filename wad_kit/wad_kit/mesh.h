@@ -26,7 +26,7 @@ WK_SUBMESH_EXTENSION;
 
 typedef struct WK_MESH_EXTENSION
 {
-	MESH* mesh;
+	WK_MESH* mesh;
 	
 	vector3f sphereLocation;
 	float sphereRadius;
@@ -35,7 +35,7 @@ typedef struct WK_MESH_EXTENSION
 }
 WK_MESH_EXTENSION;*/
 
-typedef struct MESH
+typedef struct WK_MESH
 {
 	WK_WAD* wad;
 	//WK_MESH_EXTENSION* extension;
@@ -53,12 +53,12 @@ typedef struct MESH
 	
 	int usesNormals;
 	
-	/// Array of @b VERTEX elements.
+	/// Array of @b WK_VERTEX elements.
 	MAGIC_ARRAY vertices;
 	
-	/// Array of @b POLYGON elements.
+	/// Array of @b WK_POLYGON elements.
 	MAGIC_ARRAY polygons;
 }
-MESH;
+WK_MESH;
 
 #endif /* mesh_h */

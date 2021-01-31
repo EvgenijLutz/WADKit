@@ -11,11 +11,9 @@
 
 #include "private_interface.h"
 
-#define JOINT_COORDINATE_MULTIPLIER	1024.0f
+void jointInitialize(WK_JOINT* joint, WK_MOVABLE* movable, WK_MESH* mesh, WK_WAD_LOAD_INFO* loadInfo);
+void jointDeinitialize(WK_JOINT* joint);
 
-void jointInitialize(JOINT* joint, MOVABLE* movable, MESH* mesh, WK_WAD_LOAD_INFO* loadInfo);
-void jointDeinitialize(JOINT* joint);
-
-void jointUpdateOffset(JOINT* joint);
+void jointUpdateOffset(WK_JOINT* joint);
 
 #endif /* joint_private_interface_h */

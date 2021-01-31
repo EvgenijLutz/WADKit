@@ -11,9 +11,9 @@
 
 #include "wad_kit.h"
 
-typedef struct POLYGON
+typedef struct WK_POLYGON
 {
-	MESH* mesh;
+	WK_MESH* mesh;
 	
 	int isTriangle;
 	
@@ -32,6 +32,6 @@ typedef struct POLYGON
 	unsigned short textureSampleShape;
 	unsigned short textureSampleIndex;
 }
-POLYGON;
+WK_POLYGON;
 
 #endif /* wad_kit_polygon_h */

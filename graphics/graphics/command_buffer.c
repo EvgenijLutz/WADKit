@@ -13,7 +13,7 @@ COMMAND_BUFFER* commandQueueCreateCommandBuffer(COMMAND_QUEUE* commandQueue)
 	assert(commandQueue);
 	assert(commandQueue->device);
 	
-	GRAPHICS_DEVICE* device = commandQueue->device;
+	GR_DEVICE* device = commandQueue->device;
 	
 	semaphoreEnter(device->accessSemaphore);
 	
@@ -39,7 +39,7 @@ void commandBufferRelease(COMMAND_BUFFER* commandBuffer)
 	//commandQueueReleaseCommandBuffer(commandBuffer->commandQueue, commandBuffer);
 	
 	COMMAND_QUEUE* commandQueue = commandBuffer->commandQueue;
-	GRAPHICS_DEVICE* device = commandQueue->device;
+	GR_DEVICE* device = commandQueue->device;
 	
 	semaphoreEnter(device->accessSemaphore);
 	

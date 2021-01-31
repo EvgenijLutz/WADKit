@@ -112,7 +112,7 @@ STATIC_ID staticGetId(STATIC* staticObject)
 	return staticObject->staticId;
 }
 
-MESH* staticGetMesh(STATIC* staticObject)
+WK_MESH* staticGetMesh(STATIC* staticObject)
 {
 	assert(staticObject);
 	return staticObject->mesh;

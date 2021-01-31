@@ -7,14 +7,15 @@
 
 #import "GraphicsBuffer_apple.h"
 
-@interface BufferComponent : NSObject
+@implementation GraphicsBufferItem
+@end
 
+
+@interface BufferComponent : NSObject
 @property (nonatomic) id<MTLBuffer> uploadBuffer;
 @property (nonatomic) id<MTLBuffer> buffer;
-
 @end
 @implementation BufferComponent @end
-
 
 
 @implementation GraphicsBuffer
@@ -23,17 +24,23 @@
 	unsigned int _currentBuffer;
 	
 	NSArray<BufferComponent*>* _components;
+	
+	NSMutableArray<GraphicsBufferItem*>* _items;
+	NSUInteger _firstAvailableItem;
+	//NSUInteger _lastEngagedItem;
 }
 
-- (instancetype)initWithDevice:(id<MTLDevice>)device size:(size_t)size
+- (instancetype)initWithDevice:(id<MTLDevice>)device itemSize:(size_t)size capacityIncrement:(size_t)capacityIncrement numBuffers:(unsigned int)numBuffers type:(GraphicsBufferType)type
 {
 	self = [super init];
 	if (self)
 	{
 		_device = device;
-		_size = size;
+		_itemSize = size;
+		_capacityIncrement = capacityIncrement;
+		_type = type;
 		
-		_numBuffers = 3;
+		_numBuffers = numBuffers;
 		_currentBuffer = 0;
 		
 		NSMutableArray<BufferComponent*>* tempComponents = [[NSMutableArray alloc] init];
@@ -50,22 +57,126 @@
 		}
 		
 		_components = tempComponents;
+		
+		_items = [[NSMutableArray alloc] initWithCapacity:capacityIncrement];
+		for (unsigned int i = 0; i < capacityIncrement; i++)
+		{
+			GraphicsBufferItem* item = [[GraphicsBufferItem alloc] init];
+			item.buffer = self;
+			item.index = i;
+			item.engaged = NO;
+			
+			[_items addObject:item];
+		}
+		_firstAvailableItem = 0;
+		//_lastEngagedItem = 0;
 	}
 	return self;
 }
 
 
-- (void)switchBuffers
+- (GraphicsBufferItem*)addItem
 {
-	_currentBuffer = (_currentBuffer + 1) % _numBuffers;
+	if (_firstAvailableItem == _items.count)
+	{
+		NSUInteger oldCapacity = _items.count;
+		NSUInteger oldSize = oldCapacity * _itemSize;
+		NSUInteger newCapacity = oldCapacity + _capacityIncrement;
+		NSUInteger newSize = newCapacity * _itemSize;
+		for (unsigned int i = 0; i < _numBuffers; i++)
+		{
+			BufferComponent* component = _components[i];
+			
+			id<MTLBuffer> uploadBuffer = [_device newBufferWithLength:newSize options:MTLResourceStorageModeShared];
+			id<MTLBuffer> buffer = [_device newBufferWithLength:newSize options:MTLResourceStorageModePrivate];
+			
+			memcpy(uploadBuffer.contents, component.uploadBuffer.contents, oldSize);
+			
+			component.uploadBuffer = uploadBuffer;
+			component.buffer = buffer;
+		}
+		
+		for (unsigned int i = 0; i < _capacityIncrement; i++)
+		{
+			GraphicsBufferItem* item = [[GraphicsBufferItem alloc] init];
+			item.buffer = self;
+			item.index = oldCapacity + i;
+			item.engaged = NO;
+			[_items addObject:item];
+		}
+	}
+	
+	GraphicsBufferItem* selectedItem = _items[_firstAvailableItem];
+	selectedItem.engaged = YES;
+	
+	_firstAvailableItem++;
+	for (NSUInteger i = _firstAvailableItem; i < _items.count; i++)
+	{
+		GraphicsBufferItem* currentItem = _items[i];
+		if (!currentItem.engaged)
+		{
+			break;
+		}
+		
+		_firstAvailableItem++;
+	}
+	
+	return selectedItem;
 }
 
-- (void)uploadData:(const void*)data withEncoder:(id<MTLBlitCommandEncoder>)blitEncoder
+- (void)removeItem:(GraphicsBufferItem*)item
+{
+	item.engaged = NO;
+	if (item.index < _firstAvailableItem)
+	{
+		_firstAvailableItem = item.index;
+	}
+}
+
+- (void)setData:(const void*)data forItem:(GraphicsBufferItem*)item
 {
 	BufferComponent* component = _components[_currentBuffer];
-	memcpy(component.uploadBuffer.contents, data, _size);
 	
-	[blitEncoder copyFromBuffer:component.uploadBuffer sourceOffset:0 toBuffer:component.buffer destinationOffset:0 size:_size];
+	char* contents = component.uploadBuffer.contents;
+	void* dataStart = contents + item.index * _itemSize;
+	memcpy(dataStart, data, _itemSize);
+}
+
+- (void)scheduleUploadDataWithEncoder:(id<MTLBlitCommandEncoder>)blitEncoder
+{
+	BufferComponent* component = _components[_currentBuffer];
+	NSUInteger bufferSize = _items.count * _itemSize;
+	[blitEncoder copyFromBuffer:component.uploadBuffer sourceOffset:0 toBuffer:component.buffer destinationOffset:0 size:bufferSize];
+	
+	// Switch to next buffer
+	unsigned int lastBufferIndex = 0;
+	_currentBuffer = (_currentBuffer + 1) % _numBuffers;
+	
+	// Crutch
+	if (lastBufferIndex != _currentBuffer)
+	{
+		id<MTLBuffer> lastBuffer = _components[lastBufferIndex].uploadBuffer;
+		id<MTLBuffer> currentBuffer = _components[_currentBuffer].uploadBuffer;
+		memcpy(currentBuffer.contents, lastBuffer.contents, lastBuffer.length);
+	}
+}
+
+- (void)setLabel:(NSString*)label
+{
+	for (NSUInteger i = 0; i < _components.count; i++)
+	{
+		BufferComponent* component = _components[i];		
+		if (label)
+		{
+			component.buffer.label = [NSString stringWithFormat:@"%@ (buffer #%lu/%lu)", label, i, _components.count];
+			component.uploadBuffer.label = [NSString stringWithFormat:@"%@ (upload buffer #%lu/%lu)", label, i, _components.count];
+		}
+		else
+		{
+			component.buffer.label = nil;
+			component.uploadBuffer.label = nil;
+		}
+	}
 }
 
 

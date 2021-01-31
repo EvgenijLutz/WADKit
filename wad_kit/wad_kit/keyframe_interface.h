@@ -11,11 +11,11 @@
 
 #include "wad_kit.h"
 
-vector3f keyframeGetRootOffset(KEYFRAME* keyframe);
-vector3f keyframeGetInterpolatedRootOffset(KEYFRAME* firstKeyframe, KEYFRAME* secondKeyframe, float interpolationCoefficient);
+vector3f keyframeGetRootOffset(WK_KEYFRAME* keyframe);
+vector3f keyframeGetInterpolatedRootOffset(WK_KEYFRAME* firstKeyframe, WK_KEYFRAME* secondKeyframe, float interpolationCoefficient);
 
-quaternionf keyframeGetQuaternionRotation(KEYFRAME* keyframe, unsigned int transformIndex);
-vector3f keyframeGetEulerRotation(KEYFRAME* keyframe, unsigned int transformIndex);
-vector3f keyframeCalculateInterpolatedRotation(KEYFRAME* firstKeyframe, KEYFRAME* secondKeyframe, unsigned int transformIndex, float interpolationCoefficient);
+quaternionf keyframeGetQuaternionRotation(WK_KEYFRAME* keyframe, unsigned int transformIndex);
+vector3f keyframeGetEulerRotation(WK_KEYFRAME* keyframe, unsigned int transformIndex);
+vector3f keyframeCalculateInterpolatedRotation(WK_KEYFRAME* firstKeyframe, WK_KEYFRAME* secondKeyframe, unsigned int transformIndex, float interpolationCoefficient);
 
 #endif /* keyframe_interface_h */

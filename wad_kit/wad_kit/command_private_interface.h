@@ -11,7 +11,7 @@
 
 #include "private_interface.h"
 
-void commandInitialize(COMMAND* command, ANIMATION* animation, WK_WAD_LOAD_INFO* loadInfo);
-void commandDeinitialize(COMMAND* command);
+void commandInitialize(WK_COMMAND* command, WK_ANIMATION* animation, WK_WAD_LOAD_INFO* loadInfo);
+void commandDeinitialize(WK_COMMAND* command);
 
 #endif /* command_private_interface_h */

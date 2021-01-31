@@ -18,7 +18,7 @@ typedef struct TRANSFORM_DATA
 	
 	MESH_DATA* mesh;
 	MESH_DATA* skinJointMesh;
-	GRAPHICS_MESH_UNIFORMS* uniforms;
+	GR_BUFFER* transformUniforms;
 }
 TRANSFORM_DATA;
 
@@ -34,7 +34,7 @@ typedef struct WAD_EDITOR
 	WE_LIST* wadContentsList;
 	GRAPHICS_VIEW* outputView;
 	
-	GRAPHICS_DEVICE* device;
+	GR_DEVICE* device;
 	COMMAND_QUEUE* commandQueue;
 	
 	double lastUpdateTime;
@@ -62,11 +62,13 @@ typedef struct WAD_EDITOR
 	unsigned int translationsCapacity;
 	TRANSFORM_DATA* transforms;
 	
-	ANIMATION* selectedAnimation;
+	WK_ANIMATION* selectedAnimation;
 	float animationTime;
 	
 	int useInterpolation;
 	int useQuaternionRotations;
+	
+	GR_BUFFER* viewportUniforms;
 	
 	// TODO: undo/redo buffer
 }

@@ -8,7 +8,7 @@
 
 #include "private_interface.h"
 
-TEXTURE2D* graphicsDeviceCreateTexture2dWithData(GRAPHICS_DEVICE* device, unsigned int width, unsigned int height, unsigned int numComponents, TEXTURE_USAGE usage, const void* data)
+TEXTURE2D* graphicsDeviceCreateTexture2dWithData(GR_DEVICE* device, unsigned int width, unsigned int height, unsigned int numComponents, TEXTURE_USAGE usage, const void* data)
 {
 	assert(device);
 	assert(data);
@@ -30,7 +30,7 @@ void texture2dRelease(TEXTURE2D* texture)
 {
 	assert(texture);
 	
-	GRAPHICS_DEVICE* device = texture->device;
+	GR_DEVICE* device = texture->device;
 	device->releaseTexture2dFunc(device, texture->textureId);
 	debug_memset(texture, 0, sizeof(TEXTURE2D));
 	magicArrayRemoveItem(&device->textures, texture);

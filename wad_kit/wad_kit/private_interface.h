@@ -12,6 +12,16 @@
 #include "wad_kit.h"
 #include "../../../Foundation/Foundation/private_common.h"
 
+// MARK: - Macros
+
+#define WK_COORDINATE_MULTIPLIER	1024.0f
+#define WK_NORMAL_MULTIPLIER		16300.0
+#define WK_SHADE_MULTIPLIER			256.0
+#define WK_COLOR_TO_F(color)		(1.0f / 255.0f * ((float)(color * 8)))
+#define WK_COLOR_R(color)			COLOR_TO_F(((color & 0x7c00) >> 10))
+#define WK_COLOR_G(color)			COLOR_TO_F(((color & 0x03e0) >> 5))
+#define WK_COLOR_B(color)			COLOR_TO_F(((color & 0x001f)))
+
 // MARK: - Declarations
 
 // MARK: - Structures
