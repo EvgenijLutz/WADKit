@@ -1,5 +1,5 @@
 //
-//  OpaqueTriangleShaders.metal
+//  tShaders.metal
 //  graphics
 //
 //  Created by Евгений Лютц on 23.01.21.
@@ -19,11 +19,12 @@ typedef struct FragmentIn
 }
 FragmentIn;
 
-vertex FragmentIn opaqueTexturedTriangle_vs(uint id [[ vertex_id ]],
-											constant GR_T_VERTEX* vertices [[ buffer(0) ]],
-											constant uint& transformIndex [[ buffer (1) ]],
-											constant GR_MESH_UNIFORM_DATA* transforms [[ buffer(2) ]],
-											constant GR_VIEWPORT_UNIFORMS_DATA& viewportUniforms [[ buffer(3) ]])
+// Rendering textured triangles
+vertex FragmentIn t_vs(uint id [[ vertex_id ]],
+					   constant GR_T_VERTEX* vertices [[ buffer(0) ]],
+					   constant uint& transformIndex [[ buffer (1) ]],
+					   constant GR_MESH_UNIFORM_DATA* transforms [[ buffer(2) ]],
+					   constant GR_VIEWPORT_UNIFORMS_DATA& viewportUniforms [[ buffer(3) ]])
 {
 	constant GR_T_VERTEX& vInfo = vertices[id];
 	float4 vertexPosition = float4(vInfo.position, 1.0f);
@@ -53,18 +54,19 @@ vertex FragmentIn opaqueTexturedTriangle_vs(uint id [[ vertex_id ]],
 	return out;
 }
 
-#define RENDER_WITH_ALPHA_CHANNEL 0
-
-fragment float4 opaqueTexturedTriangle_fs(FragmentIn in [[ stage_in ]],
-										  texture2d<half> texture [[ texture(0) ]])
+fragment float4 t_fs(FragmentIn in [[ stage_in ]],
+					 texture2d<half> texture [[ texture(0) ]])
 {
+#if WK_USE_TEXTURE_FILTERING
+	constexpr sampler textureSampler = sampler(mag_filter::linear, min_filter::linear);
+#else
 	constexpr sampler textureSampler = sampler(mag_filter::nearest, min_filter::nearest);
-	//constexpr sampler textureSampler = sampler(mag_filter::linear, min_filter::linear);
+#endif
 	
 	float4 color = float4(texture.sample(textureSampler, in.uv));
 	if (color.r > 0.99 && color.g < 0.01 && color.b > 0.99)
 	{
-#if RENDER_WITH_ALPHA_CHANNEL
+#if WK_RENDER_WITH_ALPHA_CHANNEL
 		color.a = 0.0f;
 #else
 		color = float4(0.0, 0.0, 0.0, 1.0);
@@ -75,7 +77,7 @@ fragment float4 opaqueTexturedTriangle_fs(FragmentIn in [[ stage_in ]],
 	color.y *= in.ambient.y;
 	color.z *= in.ambient.z;
 	
-#if !RENDER_WITH_ALPHA_CHANNEL
+#if !WK_RENDER_WITH_ALPHA_CHANNEL
 	color.a = 1.0f;
 #endif
 	

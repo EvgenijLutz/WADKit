@@ -42,10 +42,11 @@
 		C917F3AE25C36FE700965B2B /* buffer_switch.c in Sources */ = {isa = PBXBuildFile; fileRef = C917F3AC25C36FE700965B2B /* buffer_switch.c */; };
 		C920D4E625BC2C0800E473DE /* GraphicsDevice_apple.m in Sources */ = {isa = PBXBuildFile; fileRef = C920D4E425BC2C0800E473DE /* GraphicsDevice_apple.m */; };
 		C944413E25C705EB00561FD1 /* WKGraphicsResource.m in Sources */ = {isa = PBXBuildFile; fileRef = C944413C25C705EB00561FD1 /* WKGraphicsResource.m */; };
-		C971EA3A25C5B95C006B7C5A /* OpaqueTriangleShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = C920D50F25BC600500E473DE /* OpaqueTriangleShaders.metal */; };
+		C971EA3A25C5B95C006B7C5A /* tShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = C920D50F25BC600500E473DE /* tShaders.metal */; };
 		C99A7A2225C3780F00A0E4C4 /* buffer.c in Sources */ = {isa = PBXBuildFile; fileRef = C99A7A1E25C3780F00A0E4C4 /* buffer.c */; };
 		C99A7A2325C3780F00A0E4C4 /* buffer_interface.h in Headers */ = {isa = PBXBuildFile; fileRef = C99A7A1F25C3780F00A0E4C4 /* buffer_interface.h */; };
 		C99A7A2425C3780F00A0E4C4 /* buffer.h in Headers */ = {isa = PBXBuildFile; fileRef = C99A7A2025C3780F00A0E4C4 /* buffer.h */; };
+		C9AA683025C75FE3001B0D50 /* tnw2Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = C9AA682F25C75FE3001B0D50 /* tnw2Shaders.metal */; };
 		C9E762A725BCC57700AB525C /* GraphicsBuffer_apple.m in Sources */ = {isa = PBXBuildFile; fileRef = C9E762A525BCC57600AB525C /* GraphicsBuffer_apple.m */; };
 /* End PBXBuildFile section */
 
@@ -88,7 +89,7 @@
 		C920D4E325BC2C0800E473DE /* GraphicsDevice_apple.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GraphicsDevice_apple.h; sourceTree = "<group>"; };
 		C920D4E425BC2C0800E473DE /* GraphicsDevice_apple.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GraphicsDevice_apple.m; sourceTree = "<group>"; };
 		C920D4F825BC465800E473DE /* graphics_mesh.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = graphics_mesh.h; sourceTree = "<group>"; };
-		C920D50F25BC600500E473DE /* OpaqueTriangleShaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = OpaqueTriangleShaders.metal; sourceTree = "<group>"; };
+		C920D50F25BC600500E473DE /* tShaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = tShaders.metal; sourceTree = "<group>"; };
 		C920D51225BC609200E473DE /* OpaqueTriangleShaderTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OpaqueTriangleShaderTypes.h; sourceTree = "<group>"; };
 		C944413525C6DCDD00561FD1 /* buffer_data.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = buffer_data.h; sourceTree = "<group>"; };
 		C944413C25C705EB00561FD1 /* WKGraphicsResource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WKGraphicsResource.m; sourceTree = "<group>"; };
@@ -100,6 +101,7 @@
 		C99A7A1E25C3780F00A0E4C4 /* buffer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = buffer.c; sourceTree = "<group>"; };
 		C99A7A1F25C3780F00A0E4C4 /* buffer_interface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = buffer_interface.h; sourceTree = "<group>"; };
 		C99A7A2025C3780F00A0E4C4 /* buffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = buffer.h; sourceTree = "<group>"; };
+		C9AA682F25C75FE3001B0D50 /* tnw2Shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = tnw2Shaders.metal; sourceTree = "<group>"; };
 		C9E762A425BCC57600AB525C /* GraphicsBuffer_apple.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GraphicsBuffer_apple.h; sourceTree = "<group>"; };
 		C9E762A525BCC57600AB525C /* GraphicsBuffer_apple.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GraphicsBuffer_apple.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -289,7 +291,8 @@
 		C971EA3325C5B951006B7C5A /* WKGraphicsResources */ = {
 			isa = PBXGroup;
 			children = (
-				C920D50F25BC600500E473DE /* OpaqueTriangleShaders.metal */,
+				C920D50F25BC600500E473DE /* tShaders.metal */,
+				C9AA682F25C75FE3001B0D50 /* tnw2Shaders.metal */,
 				C944413D25C705EB00561FD1 /* WKGraphicsResource.h */,
 				C944413C25C705EB00561FD1 /* WKGraphicsResource.m */,
 				C971EA3425C5B951006B7C5A /* Info.plist */,
@@ -451,7 +454,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				C944413E25C705EB00561FD1 /* WKGraphicsResource.m in Sources */,
-				C971EA3A25C5B95C006B7C5A /* OpaqueTriangleShaders.metal in Sources */,
+				C9AA683025C75FE3001B0D50 /* tnw2Shaders.metal in Sources */,
+				C971EA3A25C5B95C006B7C5A /* tShaders.metal in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

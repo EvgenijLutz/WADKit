@@ -12,6 +12,8 @@
 #include "graphics.h"
 #endif
 
+// MARK: - Textured vertices
+
 /// Vertex with UV data for texturing
 typedef struct GR_T_VERTEX
 {
@@ -34,29 +36,41 @@ typedef struct GR_VIEWPORT_UNIFORMS_DATA
 GR_VIEWPORT_UNIFORMS_DATA;
 
 
-// TODO: Later...
+// MARK: - Textured, with normals and weights
 
 typedef struct GR_TNW2_VERTEX
 {
 	vector3f position;
 	vector3f normal;
 	vector2f uv;
-	float weights[2];	// uses GR_W2_MESH_UNIFORMS_DATA.modelView[x]
+	float weights[2];	// uses GR_MESH_W2_UNIFORM_DATA.model[x]
 }
 GR_TNW2_VERTEX;
 
-#define WK_MESH_UNIFORM_DATA_NUM_POINT_LIGHTS 4
-
-typedef struct GRAPHICS_POINT_LIGHT
+typedef struct GR_POINT_LIGHT
 {
 	vector3f position;
 	vector4f colorAndRadius;
 }
-GRAPHICS_POINT_LIGHT;
+GR_POINT_LIGHT;
+
+typedef struct GR_MESH_W2_UNIFORM_DATA
+{
+	matrix4f model[2];
+	matrix4f view;
+	vector3f ambient;
+	GR_POINT_LIGHT lights[4];
+}
+GR_MESH_W2_UNIFORM_DATA;
+
+
+// MARK: - Later...
+
+#define WK_MESH_UNIFORM_DATA_NUM_POINT_LIGHTS 4
 
 typedef struct GR_W2_MESH_UNIFORMS_DATA
 {
-	//GRAPHICS_POINT_LIGHT pointLights[WK_MESH_UNIFORM_DATA_NUM_POINT_LIGHTS];
+	//GR_POINT_LIGHT pointLights[WK_MESH_UNIFORM_DATA_NUM_POINT_LIGHTS];
 	matrix4f modelView[2];	// used by GR_T_VERTEX.weights[x]
 	matrix4f projection;
 	vector3f ambient;

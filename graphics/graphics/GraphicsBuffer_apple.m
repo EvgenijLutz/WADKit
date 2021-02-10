@@ -144,12 +144,8 @@
 
 - (void)scheduleUploadDataWithEncoder:(id<MTLBlitCommandEncoder>)blitEncoder
 {
-	BufferComponent* component = _components[_currentBuffer];
-	NSUInteger bufferSize = _items.count * _itemSize;
-	[blitEncoder copyFromBuffer:component.uploadBuffer sourceOffset:0 toBuffer:component.buffer destinationOffset:0 size:bufferSize];
-	
 	// Switch to next buffer
-	unsigned int lastBufferIndex = 0;
+	unsigned int lastBufferIndex = _currentBuffer;
 	_currentBuffer = (_currentBuffer + 1) % _numBuffers;
 	
 	// Crutch
@@ -159,6 +155,11 @@
 		id<MTLBuffer> currentBuffer = _components[_currentBuffer].uploadBuffer;
 		memcpy(currentBuffer.contents, lastBuffer.contents, lastBuffer.length);
 	}
+	
+	BufferComponent* src = _components[lastBufferIndex];
+	BufferComponent* dst = _components[_currentBuffer];
+	NSUInteger bufferSize = _items.count * _itemSize;
+	[blitEncoder copyFromBuffer:src.uploadBuffer sourceOffset:0 toBuffer:dst.buffer destinationOffset:0 size:bufferSize];
 }
 
 - (void)setLabel:(NSString*)label

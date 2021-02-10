@@ -369,8 +369,8 @@ void wadEditorLoadWad(WAD_EDITOR* editor, const char* filePath)
 	
 	// Load wad
 	EXECUTE_RESULT executeResult;
-	editor->wad = wadCreateFromContentsOfResourceFile(editor->system, "tut1", &executeResult);
-	//editor->wad = wadCreateFromContentsOfResourceFile(editor->system, "1-tutorial", &executeResult);
+	//editor->wad = wadCreateFromContentsOfResourceFile(editor->system, "tut1", &executeResult);
+	editor->wad = wadCreateFromContentsOfResourceFile(editor->system, "1-tutorial", &executeResult);
 	
 	if (executeResultIsFailed(&executeResult))
 	{
@@ -792,9 +792,9 @@ static matrix4f _wadEditor_transform(WAD_EDITOR* wadEditor, WK_KEYFRAME* firstKe
 		else
 		{
 			vector3f rotation = keyframeCalculateInterpolatedRotation(firstKeyframe, secondKeyframe, componentIndex, keyframeInterpolationCoefficient);
-			matrix4f rotZMat = matrix4fRotation(rotation.z, vector3fCreate(0.0f, 0.0f, 1.0f));
-			matrix4f rotXMat = matrix4fRotation(rotation.x, vector3fCreate(1.0f, 0.0f, 0.0f));
-			matrix4f rotYMat = matrix4fRotation(rotation.y, vector3fCreate(0.0f, 1.0f, 0.0f));
+			matrix4f rotZMat = matrix4fRotationZ(rotation.z);
+			matrix4f rotXMat = matrix4fRotationX(rotation.x);
+			matrix4f rotYMat = matrix4fRotationY(rotation.y);
 			rotMat = matrix4fMul(rotXMat, rotZMat);
 			rotMat = matrix4fMul(rotYMat, rotMat);
 		}
@@ -809,9 +809,9 @@ static matrix4f _wadEditor_transform(WAD_EDITOR* wadEditor, WK_KEYFRAME* firstKe
 		else
 		{
 			vector3f rotation = keyframeGetEulerRotation(firstKeyframe, componentIndex);
-			matrix4f rotZMat = matrix4fRotation(rotation.z, vector3fCreate(0.0f, 0.0f, 1.0f));
-			matrix4f rotXMat = matrix4fRotation(rotation.x, vector3fCreate(1.0f, 0.0f, 0.0f));
-			matrix4f rotYMat = matrix4fRotation(rotation.y, vector3fCreate(0.0f, 1.0f, 0.0f));
+			matrix4f rotZMat = matrix4fRotationZ(rotation.z);
+			matrix4f rotXMat = matrix4fRotationX(rotation.x);
+			matrix4f rotYMat = matrix4fRotationY(rotation.y);
 			rotMat = matrix4fMul(rotXMat, rotZMat);
 			rotMat = matrix4fMul(rotYMat, rotMat);
 		}
@@ -865,7 +865,7 @@ static void _wadEditor_updateState(WAD_EDITOR* wadEditor)
 	else if (wadEditor->selectedMesh)
 	{
 		matrix4f viewMatrix = matrix4fTranslation(0.0f, 0.0f, -0.3f);
-		matrix4f rotationMatrix = matrix4fRotation(rotation, vector3fCreate(0.0f, 1.0f, 0.0f));
+		matrix4f rotationMatrix = matrix4fRotationY(rotation);
 		data.modelView = matrix4fMul(viewMatrix, rotationMatrix);
 		
 		TRANSFORM_DATA* firstTranslation = &wadEditor->transforms[0];
@@ -904,7 +904,7 @@ static void _wadEditor_updateState(WAD_EDITOR* wadEditor)
 			}
 		}
 		
-		matrix4f viewRotationMatrix = matrix4fRotation(rotation, vector3fCreate(0.0f, 1.0f, 0.0f));
+		matrix4f viewRotationMatrix = matrix4fRotationY(rotation);
 		matrix4f viewTranslationMatrix = matrix4fTranslation(0.0f, 0.0f, -0.8f);
 		viewTranslationMatrix = matrix4fTranslation(0.0f, -0.4f, -0.8f);
 		matrix4f viewMatrix = matrix4fMul(viewTranslationMatrix, viewRotationMatrix);
@@ -976,7 +976,7 @@ static void _wadEditor_updateState(WAD_EDITOR* wadEditor)
 	else if (wadEditor->selectedStatic)
 	{
 		matrix4f viewMatrix = matrix4fTranslation(0.0f, -0.7f, -1.7f);
-		matrix4f rotationMatrix = matrix4fRotation(rotation, vector3fCreate(0.0f, 1.0f, 0.0f));
+		matrix4f rotationMatrix = matrix4fRotationY(rotation);
 		data.modelView = matrix4fMul(viewMatrix, rotationMatrix);
 		
 		TRANSFORM_DATA* firstTranslation = &wadEditor->transforms[0];

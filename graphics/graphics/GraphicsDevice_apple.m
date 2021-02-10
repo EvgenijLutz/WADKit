@@ -391,8 +391,8 @@ static void _metal_renderCommandEncoderRenderMesh(RENDER_COMMAND_ENCODER* encode
 		pipelineDescriptor.colorAttachments[0].destinationAlphaBlendFactor = MTLBlendFactorOneMinusSourceAlpha;
 		
 		pipelineDescriptor.label = @"Opaque textured triangle pipeline";
-		pipelineDescriptor.vertexFunction = [library newFunctionWithName:@"opaqueTexturedTriangle_vs"];
-		pipelineDescriptor.fragmentFunction = [library newFunctionWithName:@"opaqueTexturedTriangle_fs"];
+		pipelineDescriptor.vertexFunction = [library newFunctionWithName:@"t_vs"];
+		pipelineDescriptor.fragmentFunction = [library newFunctionWithName:@"t_fs"];
 		assert(pipelineDescriptor.vertexFunction);
 		assert(pipelineDescriptor.fragmentFunction);
 		
