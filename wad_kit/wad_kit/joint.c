@@ -27,13 +27,13 @@ void jointInitialize(WK_JOINT* joint, WK_MOVABLE* movable, WK_MESH* mesh, WK_WAD
 	joint->opCode = (JOINT_LOCATION_TYPE)bufferReaderReadUInt32(buffer, executeResult);
 	if (executeResultIsFailed(executeResult)) { return; }
 	
-	joint->dx = bufferReaderReadUInt32(buffer, executeResult);
+	joint->rawOffsetX = bufferReaderReadUInt32(buffer, executeResult);
 	if (executeResultIsFailed(executeResult)) { return; }
 	
-	joint->dy = bufferReaderReadUInt32(buffer, executeResult);
+	joint->rawOffsetY = bufferReaderReadUInt32(buffer, executeResult);
 	if (executeResultIsFailed(executeResult)) { return; }
 	
-	joint->dz = bufferReaderReadUInt32(buffer, executeResult);
+	joint->rawOffsetZ = bufferReaderReadUInt32(buffer, executeResult);
 	if (executeResultIsFailed(executeResult)) { return; }
 	
 	jointUpdateOffset(joint);
@@ -48,9 +48,9 @@ void jointDeinitialize(WK_JOINT* joint)
 
 void jointUpdateOffset(WK_JOINT* joint)
 {
-	const float x = (float)joint->dx / WK_COORDINATE_MULTIPLIER;
-	const float y = (float)joint->dy / WK_COORDINATE_MULTIPLIER;
-	const float z = (float)joint->dz / WK_COORDINATE_MULTIPLIER;
+	const float x = (float)joint->rawOffsetX / WK_COORDINATE_MULTIPLIER;
+	const float y = (float)joint->rawOffsetY / WK_COORDINATE_MULTIPLIER;
+	const float z = (float)joint->rawOffsetZ / WK_COORDINATE_MULTIPLIER;
 	joint->offset = vector3fCreate(-x, -y, z);
 }
 
@@ -71,19 +71,19 @@ JOINT_LOCATION_TYPE jointGetLocationType(WK_JOINT* joint)
 int jointGetRawOffsetX(WK_JOINT* joint)
 {
 	assert(joint);
-	return joint->dx;
+	return joint->rawOffsetX;
 }
 
 int jointGetRawOffsetY(WK_JOINT* joint)
 {
 	assert(joint);
-	return joint->dy;
+	return joint->rawOffsetY;
 }
 
 int jointGetRawOffsetZ(WK_JOINT* joint)
 {
 	assert(joint);
-	return joint->dz;
+	return joint->rawOffsetZ;
 }
 
 vector3f jointGetOffset(WK_JOINT* joint)
@@ -98,7 +98,8 @@ void jointSetOffset(WK_JOINT* joint, vector3f offset)
 	assert(joint);
 	
 	joint->offset = offset;
-	joint->dx = -(int)(offset.x * WK_COORDINATE_MULTIPLIER);
-	joint->dy = -(int)(offset.y * WK_COORDINATE_MULTIPLIER);
-	joint->dz = (int)(offset.z * WK_COORDINATE_MULTIPLIER);
+	
+	joint->rawOffsetX = -(int)(offset.x * WK_COORDINATE_MULTIPLIER);
+	joint->rawOffsetY = -(int)(offset.y * WK_COORDINATE_MULTIPLIER);
+	joint->rawOffsetZ = (int)(offset.z * WK_COORDINATE_MULTIPLIER);
 }

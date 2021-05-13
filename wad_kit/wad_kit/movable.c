@@ -23,7 +23,7 @@ void movableInitialize(WK_MOVABLE* movable, RAW_MOVABLE* rawMovable, WK_WAD_LOAD
 	movable->numReferences = 0;
 	movable->movableId = (MOVABLE_ID)rawMovable->objectId;
 	magicArrayInitialize(&movable->joints, MAGIC_ARRAY_ITEM_DISTRIBUTION_DONT_CARE, sizeof(WK_JOINT), 4);
-	magicArrayInitializeWithAllocator(&movable->animations, wad->animationAllocator);
+	magicArrayInitializeWithAllocator(&movable->animations, wad->animationAllocator, 32);
 	
 	unsigned short numPointers = rawMovable->numPointers;
 	unsigned short meshPointersStart = rawMovable->pointersIndex;

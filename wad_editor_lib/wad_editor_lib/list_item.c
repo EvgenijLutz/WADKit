@@ -20,7 +20,7 @@ void listItemInitialize(WE_LIST_ITEM* item, WE_LIST* list, WE_LIST_ITEM* parent,
 	item->flags = flags;
 	item->data = data;
 	stringInitializeWithUTF8String(&item->title, title);
-	magicArrayInitializeWithAllocator(&item->children, list->itemAllocator);
+	magicArrayInitializeWithAllocator(&item->children, list->itemAllocator, 16);
 }
 
 void listItemDeinitialize(WE_LIST_ITEM* listItem)

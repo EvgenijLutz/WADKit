@@ -18,17 +18,21 @@
 #define USE_BIG_ANGLES 1
 
 #if USE_BIG_ANGLES
-#define MAKE_LITTLE_ANGLE(value) value * 4
-#define MAKE_BIG_ANGLE(value) value
-//#define MAKE_EULER_ANGLE(value) (M_PI * 2 * (float)(value) / 4096.0f)
-// Same as here:
-#define MAKE_EULER_ANGLE(value) (M_PI * (float)(value) / 2048.0f)
+
+#define MAKE_LITTLE_ANGLE(value) ((value) & 0x3ff) * 4
+#define MAKE_BIG_ANGLE(value) ((value) & 0x3fff)
+// Both defs give the same result:
+//#define WK_MAKE_EULER_ANGLE(value) (M_PI * 2 * (float)(value) / 4096.0f)
+#define WK_MAKE_EULER_ANGLE(value) (M_PI * (float)(value) / 2048.0f)
+
 #else
-#define MAKE_LITTLE_ANGLE(value) value
-#define MAKE_BIG_ANGLE(value) value / 4
-//#define MAKE_EULER_ANGLE(value) (M_PI * 2 * (float)(value) / 1024.0f)
-// Same as here:
-#define MAKE_EULER_ANGLE(value) (M_PI * (float)(value) / 512.0f)
+
+#define MAKE_LITTLE_ANGLE(value) ((value) & 0x3ff)
+#define MAKE_BIG_ANGLE(value) ((value) & 0x3fff) / 4
+// Both defs give the same result:
+//#define WK_MAKE_EULER_ANGLE(value) (M_PI * 2 * (float)(value) / 1024.0f)
+#define WK_MAKE_EULER_ANGLE(value) (M_PI * (float)(value) / 512.0f)
+
 #endif
 
 static void _keyframe_updateBoundingBox(WK_KEYFRAME* keyframe)
@@ -39,14 +43,17 @@ static void _keyframe_updateBoundingBox(WK_KEYFRAME* keyframe)
 
 static void _keyframe_updateModelOffset(WK_KEYFRAME* keyframe)
 {
-	//keyframe->modelOffset = vector3fCreate(0, 0, 0);
+	const float x = (float)keyframe->rawModelOffsetX / WK_COORDINATE_MULTIPLIER;
+	const float y = (float)keyframe->rawModelOffsetY / WK_COORDINATE_MULTIPLIER;
+	const float z = (float)keyframe->rawModelOffsetZ / WK_COORDINATE_MULTIPLIER;
+	keyframe->modelOffset = vector3fCreate(-x, -y, z);
 }
 
 static void _keyframe_updateRotation(WK_ROTATION* rotation)
 {
-	const float x = MAKE_EULER_ANGLE(rotation->rawEulerRotationX);
-	const float y = MAKE_EULER_ANGLE(rotation->rawEulerRotationY);
-	const float z = MAKE_EULER_ANGLE(rotation->rawEulerRotationZ);
+	const float x = WK_MAKE_EULER_ANGLE(rotation->rawEulerRotationX);
+	const float y = WK_MAKE_EULER_ANGLE(rotation->rawEulerRotationY);
+	const float z = WK_MAKE_EULER_ANGLE(rotation->rawEulerRotationZ);
 	
 	/*
 	 const float degrees = (float)(360.0 / 65536.0 * (double)angle);
@@ -55,24 +62,31 @@ static void _keyframe_updateRotation(WK_ROTATION* rotation)
 	
 	rotation->eulerRotation = vector3fCreate(-x, -y, z);
 	
-	// This code works only for xyz euler rotation, but we need zxy... [1]
+	// This code works only for xyz euler rotation, but we need zxy... {(1)}
 	/*vector3f euler = vector3fCreate(-x, -y, z);
-	rotation->quaternionRotation = quaternionfFromEulerVector3f(euler);*/
+	rotation->quaternionRotation = quaternionfFromEulerXYZVector3f(euler);*/
 	
-	// [1] ... So instead we'll create quatertions for each component and multiply them to make zxy quaternion rotation
-	vector3f eulerX = vector3fCreate(-x,  0, 0);
-	quaternionf qx = quaternionfFromEulerVector3f(eulerX);
+	// {(1)} ... So instead we'll create quatertions for each component and multiply them to make zxy quaternion rotation
+	/*vector3f eulerX = vector3fCreate(-x,  0, 0);
+	quaternionf qx = quaternionfFromEulerXYZVector3f(eulerX);
 	
 	vector3f eulerY = vector3fCreate( 0, -y, 0);
-	quaternionf qy = quaternionfFromEulerVector3f(eulerY);
+	quaternionf qy = quaternionfFromEulerXYZVector3f(eulerY);
 	
 	vector3f eulerZ = vector3fCreate( 0,  0, z);
-	quaternionf qz = quaternionfFromEulerVector3f(eulerZ);
+	quaternionf qz = quaternionfFromEulerXYZVector3f(eulerZ);
 	
 	quaternionf q = quaternionfMul(qx, qz);
 	q = quaternionfMul(qy, q);
 	
-	rotation->quaternionRotation = q;
+	rotation->quaternionRotation = q;*/
+	
+	// Or we can do this (quaternionfFromEulerZXYVector3f instead of multiple quaternionfFromEulerXYZVector3f)
+	rotation->quaternionRotation = quaternionfFromEulerZXYVector3f(rotation->eulerRotation);
+	
+	// Just checked if vector3fEulerZXYFromQuaternion and quaternionfFromEulerZXYVector3f work correctly
+	/*vector3f rotzxy = vector3fEulerZXYFromQuaternion(rotation->quaternionRotation);
+	rotation->quaternionRotation = quaternionfFromEulerZXYVector3f(rotzxy);*/
 }
 
 void keyframeInitialize(WK_KEYFRAME* keyframe, WK_ANIMATION* animation, RAW_ANIMATION* rawAnimation, WK_WAD_LOAD_INFO* loadInfo)
@@ -99,9 +113,9 @@ void keyframeInitialize(WK_KEYFRAME* keyframe, WK_ANIMATION* animation, RAW_ANIM
 	keyframe->bb2z = rawKeyframe->bb2z;
 	_keyframe_updateBoundingBox(keyframe);
 	
-	keyframe->offx = rawKeyframe->offx;
-	keyframe->offy = rawKeyframe->offy;
-	keyframe->offz = rawKeyframe->offz;
+	keyframe->rawModelOffsetX = rawKeyframe->offx;
+	keyframe->rawModelOffsetY = rawKeyframe->offy;
+	keyframe->rawModelOffsetZ = rawKeyframe->offz;
 	_keyframe_updateModelOffset(keyframe);
 	
 	const unsigned int numMeshes = animation->movable->joints.length + 1;
@@ -121,6 +135,7 @@ void keyframeInitialize(WK_KEYFRAME* keyframe, WK_ANIMATION* animation, RAW_ANIM
 	
 	//short wordsLeft = (rawAnimation->keyframeSize - 9);	// 9 words is bounding box
 	
+	// Animation keyframe decompression 🥴
 	for (unsigned int rotationIndex = 0; rotationIndex < numMeshes; rotationIndex++)
 	{
 		WK_ROTATION* rotation = &keyframe->rotations[rotationIndex];
@@ -137,29 +152,29 @@ void keyframeInitialize(WK_KEYFRAME* keyframe, WK_ANIMATION* animation, RAW_ANIM
 				if (executeResultIsFailed(executeResult)) { return; }
 				//wordsLeft--;
 				angleSet = angleSet * 0x10000 + nextWord;
-				rotation->rawEulerRotationZ = MAKE_LITTLE_ANGLE((angleSet & 0x3ff));
+				rotation->rawEulerRotationZ = MAKE_LITTLE_ANGLE(angleSet);
 				angleSet >>= 10;
-				rotation->rawEulerRotationY = MAKE_LITTLE_ANGLE((angleSet & 0x3ff));
+				rotation->rawEulerRotationY = MAKE_LITTLE_ANGLE(angleSet);
 				angleSet >>= 10;
-				rotation->rawEulerRotationX = MAKE_LITTLE_ANGLE((angleSet & 0x3ff));
+				rotation->rawEulerRotationX = MAKE_LITTLE_ANGLE(angleSet);
 				break;
 
 			case ROTATION_USED_X_AXIS:
-				rotation->rawEulerRotationX = MAKE_BIG_ANGLE((angleSet & 0x3fff));
+				rotation->rawEulerRotationX = MAKE_BIG_ANGLE(angleSet);
 				rotation->rawEulerRotationY = 0;
 				rotation->rawEulerRotationZ = 0;
 				break;
 
 			case ROTATION_USED_Y_AXIS:
 				rotation->rawEulerRotationX = 0;
-				rotation->rawEulerRotationY = MAKE_BIG_ANGLE((angleSet & 0x3fff));
+				rotation->rawEulerRotationY = MAKE_BIG_ANGLE(angleSet);
 				rotation->rawEulerRotationZ = 0;
 				break;
 
 			case ROTATION_USED_Z_AXIS:
 				rotation->rawEulerRotationX = 0;
 				rotation->rawEulerRotationY = 0;
-				rotation->rawEulerRotationZ = MAKE_BIG_ANGLE((angleSet & 0x3fff));
+				rotation->rawEulerRotationZ = MAKE_BIG_ANGLE(angleSet);
 				break;
 							
 			default:
@@ -198,12 +213,7 @@ void keyframeDeinitialize(WK_KEYFRAME* keyframe)
 vector3f keyframeGetRootOffset(WK_KEYFRAME* keyframe)
 {
 	assert(keyframe);
-	
-	float x = (float)keyframe->offx / 1024.0f;
-	float y = (float)keyframe->offy / 1024.0f;
-	float z = (float)keyframe->offz / 1024.0f;
-	
-	return vector3fCreate(-x, -y, z);
+	return keyframe->modelOffset;
 }
 
 vector3f keyframeGetInterpolatedRootOffset(WK_KEYFRAME* firstKeyframe, WK_KEYFRAME* secondKeyframe, float interpolationCoefficient)
@@ -225,21 +235,17 @@ quaternionf keyframeGetQuaternionRotation(WK_KEYFRAME* keyframe, unsigned int tr
 {
 	assert(keyframe);
 	assert(keyframe->animation->movable->joints.length + 1 > transformIndex);
-	
-	WK_ROTATION* rotation = &keyframe->rotations[transformIndex];
-	return rotation->quaternionRotation;
+	return keyframe->rotations[transformIndex].quaternionRotation;
 }
 
-vector3f keyframeGetEulerRotation(WK_KEYFRAME* keyframe, unsigned int transformIndex)
+vector3f keyframeGetEulerZXYRotation(WK_KEYFRAME* keyframe, unsigned int transformIndex)
 {
 	assert(keyframe);
 	assert(keyframe->animation->movable->joints.length + 1 > transformIndex);
-	
-	WK_ROTATION* rotation = &keyframe->rotations[transformIndex];
-	return rotation->eulerRotation;
+	return keyframe->rotations[transformIndex].eulerRotation;
 }
 
-static inline float _calcRot(float r1, float r2, float interpolationCoefficient)
+static inline float _interpolateEulerAngle(float r1, float r2, float interpolationCoefficient)
 {
 	const float twoPi = M_PI * 2.0f;
 	
@@ -260,20 +266,19 @@ static inline float _calcRot(float r1, float r2, float interpolationCoefficient)
 	return r1 + (dif * interpolationCoefficient);
 }
 
-vector3f keyframeCalculateInterpolatedRotation(WK_KEYFRAME* firstKeyframe, WK_KEYFRAME* secondKeyframe, unsigned int transformIndex, float interpolationCoefficient)
+vector3f keyframeCalculateInterpolatedEulerZXYRotation(WK_KEYFRAME* firstKeyframe, WK_KEYFRAME* secondKeyframe, unsigned int transformIndex, float interpolationCoefficient)
 {
 	assert(firstKeyframe);
 	assert(secondKeyframe);
-	//assert(firstKeyframe != secondKeyframe);
 	assert(firstKeyframe->animation->movable->joints.length + 1 > transformIndex);
 	assert(secondKeyframe->animation->movable->joints.length + 1 > transformIndex);
 		
-	vector3f firstRotation = keyframeGetEulerRotation(firstKeyframe, transformIndex);
-	vector3f secondRotation = keyframeGetEulerRotation(secondKeyframe, transformIndex);
+	vector3f firstRotation = keyframeGetEulerZXYRotation(firstKeyframe, transformIndex);
+	vector3f secondRotation = keyframeGetEulerZXYRotation(secondKeyframe, transformIndex);
 	
-	float rx = _calcRot(firstRotation.x, secondRotation.x, interpolationCoefficient);
-	float ry = _calcRot(firstRotation.y, secondRotation.y, interpolationCoefficient);
-	float rz = _calcRot(firstRotation.z, secondRotation.z, interpolationCoefficient);
+	float rx = _interpolateEulerAngle(firstRotation.x, secondRotation.x, interpolationCoefficient);
+	float ry = _interpolateEulerAngle(firstRotation.y, secondRotation.y, interpolationCoefficient);
+	float rz = _interpolateEulerAngle(firstRotation.z, secondRotation.z, interpolationCoefficient);
 	vector3f result = vector3fCreate(rx, ry, rz);
 	
 	return result;

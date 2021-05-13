@@ -25,7 +25,7 @@ void animationInitialize(WK_ANIMATION* animation, WK_MOVABLE* movable, RAW_MOVAB
 	animation->movable = movable;
 	animation->stateId = rawAnimation->stateId;
 	//magicArrayInitialize(&animation->keyframes, sizeof(WK_KEYFRAME), 64);
-	magicArrayInitializeWithAllocator(&animation->keyframes, wad->keyframeAllocator);
+	magicArrayInitializeWithAllocator(&animation->keyframes, wad->keyframeAllocator, 32);
 	animation->frameDuration = rawAnimation->frameDuration;
 	animation->moveSpeed = rawAnimation->speed;
 	animation->moveAcceleration = rawAnimation->acceleration;

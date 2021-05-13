@@ -22,8 +22,8 @@ void meshInitializeFromBuffer(WK_MESH* mesh, WK_WAD* wad, BUFFER_READER* buffer,
 	mesh->numReferences = 0;
 	//magicArrayInitialize(&mesh->vertices, sizeof(WK_VERTEX), 64);
 	//magicArrayInitialize(&mesh->polygons, sizeof(WK_POLYGON), 32);
-	magicArrayInitializeWithAllocator(&mesh->vertices, wad->rawVertexAllocator);
-	magicArrayInitializeWithAllocator(&mesh->polygons, wad->rawPolygonAllocator);
+	magicArrayInitializeWithAllocator(&mesh->vertices, wad->rawVertexAllocator, 64);
+	magicArrayInitializeWithAllocator(&mesh->polygons, wad->rawPolygonAllocator, 32);
 	
 	// MARK: Read mesh bounding sphere info
 	

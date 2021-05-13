@@ -50,7 +50,7 @@
 #include "state_change_private_interface.h"
 #include "keyframe_internal_interface.h"
 #include "animation_private_interface.h"
-#include "movable_internal_interface.h"
+#include "movable_private_interface.h"
 #include "static_object_private_interface.h"
 #include "wad_private_interface.h"
 

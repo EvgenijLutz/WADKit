@@ -596,7 +596,7 @@ void wadEditorLoadWad(WAD_EDITOR* editor, const char* filePath)
 		
 		MESH_DATA* meshData = magicArrayAddItem(&editor->meshes);
 		meshData->mesh = mesh;
-		magicArrayInitializeWithAllocator(&meshData->submeshes, editor->submeshAllocator);
+		magicArrayInitializeWithAllocator(&meshData->submeshes, editor->submeshAllocator, 4);
 		
 		for (unsigned int k = 0; k < numTempSubmeshes; k++)
 		{
@@ -657,7 +657,7 @@ void wadEditorLoadWad(WAD_EDITOR* editor, const char* filePath)
 		MOVABLE_DATA* movableData = magicArrayAddItem(&editor->movables);
 		movableData->movable = movable;
 		movableData->rootMesh = rootMeshData;
-		magicArrayInitializeWithAllocator(&movableData->jointedMeshes, editor->movableJointsAllocator);
+		magicArrayInitializeWithAllocator(&movableData->jointedMeshes, editor->movableJointsAllocator, 8);
 		
 		WE_LIST_ITEM* movableItem = listItemAddChild(item, LI_FLAG_MOVABLE, movableData, movableName);
 		
@@ -786,12 +786,12 @@ static matrix4f _wadEditor_transform(WAD_EDITOR* wadEditor, WK_KEYFRAME* firstKe
 		{
 			quaternionf rotQuat1 = keyframeGetQuaternionRotation(firstKeyframe, componentIndex);
 			quaternionf rotQuat2 = keyframeGetQuaternionRotation(secondKeyframe, componentIndex);
-			quaternionf rotQuat = simd_slerp(rotQuat1, rotQuat2, keyframeInterpolationCoefficient);
+			quaternionf rotQuat = quaternionfSlerp(rotQuat1, rotQuat2, keyframeInterpolationCoefficient);
 			rotMat = matrix4fFromQuaternionf(rotQuat);
 		}
 		else
 		{
-			vector3f rotation = keyframeCalculateInterpolatedRotation(firstKeyframe, secondKeyframe, componentIndex, keyframeInterpolationCoefficient);
+			vector3f rotation = keyframeCalculateInterpolatedEulerZXYRotation(firstKeyframe, secondKeyframe, componentIndex, keyframeInterpolationCoefficient);
 			matrix4f rotZMat = matrix4fRotationZ(rotation.z);
 			matrix4f rotXMat = matrix4fRotationX(rotation.x);
 			matrix4f rotYMat = matrix4fRotationY(rotation.y);
@@ -808,7 +808,7 @@ static matrix4f _wadEditor_transform(WAD_EDITOR* wadEditor, WK_KEYFRAME* firstKe
 		}
 		else
 		{
-			vector3f rotation = keyframeGetEulerRotation(firstKeyframe, componentIndex);
+			vector3f rotation = keyframeGetEulerZXYRotation(firstKeyframe, componentIndex);
 			matrix4f rotZMat = matrix4fRotationZ(rotation.z);
 			matrix4f rotXMat = matrix4fRotationX(rotation.x);
 			matrix4f rotYMat = matrix4fRotationY(rotation.y);
@@ -847,7 +847,7 @@ static void _wadEditor_updateState(WAD_EDITOR* wadEditor)
 	rotation += (float)(timeElapsed * rotationSpeed);
 	
 	const float fovyRadians = 65.0 * (M_PI / 180.0f);
-	float aspect = graphicsViewGetWidth(wadEditor->outputView) / graphicsViewGetHeight(wadEditor->outputView);
+	const float aspect = graphicsViewGetWidth(wadEditor->outputView) / graphicsViewGetHeight(wadEditor->outputView);
 	
 	GR_VIEWPORT_UNIFORMS_DATA viewportUniformsData;
 	viewportUniformsData.projection = matrix4fPerspectiveRightHand_MetalNDC(fovyRadians, aspect, 0.01f, 100.0f);
@@ -893,7 +893,7 @@ static void _wadEditor_updateState(WAD_EDITOR* wadEditor)
 				}
 				
 				unsigned int currentKeyframe = floorf(wadEditor->animationTime / animationSpeed);
-				keyframe = animationGetKeyframe(wadEditor->selectedAnimation, currentKeyframe);
+				keyframe = animationGetKeyframe(wadEditor->selectedAnimation, currentKeyframe % numKeyFrames);
 				
 				unsigned int nextKeyframeIndex = (currentKeyframe + 1) % numKeyFrames;
 				nextKeyframe = animationGetKeyframe(wadEditor->selectedAnimation, nextKeyframeIndex);
@@ -919,7 +919,7 @@ static void _wadEditor_updateState(WAD_EDITOR* wadEditor)
 		{
 			firstTranslation->modelMatrix = _wadEditor_transform(wadEditor, keyframe, nextKeyframe, 0, keyframeInterpolationCoefficient, 1);
 		}
-		data.modelView = matrix_multiply(viewMatrix, firstTranslation->modelMatrix);
+		data.modelView = matrix4fMul(viewMatrix, firstTranslation->modelMatrix);
 		meshUniformsBufferSetData(firstTranslation->transformUniforms, &data);
 		
 		unsigned int transformIndex = 0;
@@ -968,8 +968,8 @@ static void _wadEditor_updateState(WAD_EDITOR* wadEditor)
 			
 			currentTransform->mesh = jointData->mesh;
 			currentTransform->skinJointMesh = jointData->lataSkinJointMesh;
-			currentTransform->modelMatrix = matrix_multiply(parentTransform->modelMatrix, translationMatrix);
-			data.modelView = matrix_multiply(viewMatrix, currentTransform->modelMatrix);
+			currentTransform->modelMatrix = matrix4fMul(parentTransform->modelMatrix, translationMatrix);
+			data.modelView = matrix4fMul(viewMatrix, currentTransform->modelMatrix);
 			meshUniformsBufferSetData(currentTransform->transformUniforms, &data);
 		}
 	}

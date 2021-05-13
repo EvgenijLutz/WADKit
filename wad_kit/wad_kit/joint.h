@@ -18,9 +18,9 @@ typedef struct WK_JOINT
 	
 	JOINT_LOCATION_TYPE opCode;
 	
-	int dx;
-	int dy;
-	int dz;
+	int rawOffsetX;
+	int rawOffsetY;
+	int rawOffsetZ;
 	
 	vector3f offset;
 }

@@ -35,9 +35,9 @@ typedef struct WK_KEYFRAME
 	short bb2z;
 	
 	// Root mesh offset
-	short offx;
-	short offy;
-	short offz;
+	short rawModelOffsetX;
+	short rawModelOffsetY;
+	short rawModelOffsetZ;
 	
 	vector3f boundingBoxStart;
 	vector3f boundingBoxEnd;

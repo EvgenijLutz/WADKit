@@ -15,7 +15,7 @@ vector3f keyframeGetRootOffset(WK_KEYFRAME* keyframe);
 vector3f keyframeGetInterpolatedRootOffset(WK_KEYFRAME* firstKeyframe, WK_KEYFRAME* secondKeyframe, float interpolationCoefficient);
 
 quaternionf keyframeGetQuaternionRotation(WK_KEYFRAME* keyframe, unsigned int transformIndex);
-vector3f keyframeGetEulerRotation(WK_KEYFRAME* keyframe, unsigned int transformIndex);
-vector3f keyframeCalculateInterpolatedRotation(WK_KEYFRAME* firstKeyframe, WK_KEYFRAME* secondKeyframe, unsigned int transformIndex, float interpolationCoefficient);
+vector3f keyframeGetEulerZXYRotation(WK_KEYFRAME* keyframe, unsigned int transformIndex);
+vector3f keyframeCalculateInterpolatedEulerZXYRotation(WK_KEYFRAME* firstKeyframe, WK_KEYFRAME* secondKeyframe, unsigned int transformIndex, float interpolationCoefficient);
 
 #endif /* keyframe_interface_h */

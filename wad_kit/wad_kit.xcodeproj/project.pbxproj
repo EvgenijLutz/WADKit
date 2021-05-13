@@ -27,7 +27,7 @@
 		C93278A6259B4F8C00A94006 /* vertex.c in Sources */ = {isa = PBXBuildFile; fileRef = C93278A4259B4F8C00A94006 /* vertex.c */; };
 		C93278AB259B637F00A94006 /* polygon_interface.h in Headers */ = {isa = PBXBuildFile; fileRef = C93278A9259B637F00A94006 /* polygon_interface.h */; };
 		C93278AC259B637F00A94006 /* polygon.c in Sources */ = {isa = PBXBuildFile; fileRef = C93278AA259B637F00A94006 /* polygon.c */; };
-		C971663F259BB94B00FCD1FA /* movable_internal_interface.h in Headers */ = {isa = PBXBuildFile; fileRef = C971663D259BB94B00FCD1FA /* movable_internal_interface.h */; };
+		C971663F259BB94B00FCD1FA /* movable_private_interface.h in Headers */ = {isa = PBXBuildFile; fileRef = C971663D259BB94B00FCD1FA /* movable_private_interface.h */; };
 		C9716640259BB94B00FCD1FA /* movable.c in Sources */ = {isa = PBXBuildFile; fileRef = C971663E259BB94B00FCD1FA /* movable.c */; };
 		C9716646259BD62200FCD1FA /* joint_private_interface.h in Headers */ = {isa = PBXBuildFile; fileRef = C9716644259BD62200FCD1FA /* joint_private_interface.h */; };
 		C9716647259BD62200FCD1FA /* joint.c in Sources */ = {isa = PBXBuildFile; fileRef = C9716645259BD62200FCD1FA /* joint.c */; };
@@ -79,7 +79,7 @@
 		C94F564B2486477C0089C915 /* animation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = animation.h; sourceTree = "<group>"; };
 		C94F564D248648070089C915 /* texture_page.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = texture_page.h; sourceTree = "<group>"; };
 		C94F564E2486482C0089C915 /* movable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = movable.h; sourceTree = "<group>"; };
-		C971663D259BB94B00FCD1FA /* movable_internal_interface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = movable_internal_interface.h; sourceTree = "<group>"; };
+		C971663D259BB94B00FCD1FA /* movable_private_interface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = movable_private_interface.h; sourceTree = "<group>"; };
 		C971663E259BB94B00FCD1FA /* movable.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = movable.c; sourceTree = "<group>"; };
 		C9716644259BD62200FCD1FA /* joint_private_interface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = joint_private_interface.h; sourceTree = "<group>"; };
 		C9716645259BD62200FCD1FA /* joint.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = joint.c; sourceTree = "<group>"; };
@@ -247,7 +247,7 @@
 				C91CAD24259B80CE00052A9F /* Joint */,
 				C9BE3B1F248BE3A800C430A1 /* movable_id.h */,
 				C94F564E2486482C0089C915 /* movable.h */,
-				C971663D259BB94B00FCD1FA /* movable_internal_interface.h */,
+				C971663D259BB94B00FCD1FA /* movable_private_interface.h */,
 				C9BE3B20248BE46700C430A1 /* movable_interface.h */,
 				C971663E259BB94B00FCD1FA /* movable.c */,
 				C9BE3B24248BEB3600C430A1 /* movable_movableIdGetName.c */,
@@ -347,7 +347,7 @@
 				C90B1043259D2DC0000A6358 /* texture_sample_private_interface.h in Headers */,
 				C9D59E0724B239B90048F2CA /* texture_page_interface.h in Headers */,
 				C90B104F259D34A7000A6358 /* command_private_interface.h in Headers */,
-				C971663F259BB94B00FCD1FA /* movable_internal_interface.h in Headers */,
+				C971663F259BB94B00FCD1FA /* movable_private_interface.h in Headers */,
 				C9C73F5323A6A63B00FBB723 /* static_object_interface.h in Headers */,
 				C90B1067259E1115000A6358 /* wad_private_interface.h in Headers */,
 				C9C73F5B23A6A7F900FBB723 /* mesh_interface.h in Headers */,
