@@ -8,9 +8,6 @@
       location = "group:wad_kit/wad_kit.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:../TR-Graphics/TR Graphics/TR Graphics.xcodeproj">
-   </FileRef>
-   <FileRef
       location = "group:graphics/graphics.xcodeproj">
    </FileRef>
    <FileRef
