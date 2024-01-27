@@ -8,21 +8,6 @@
 import Foundation
 
 
-internal let verboseLog: Bool = true
-internal func wadLog(_ message: Any?) {
-    guard verboseLog else {
-        return
-    }
-    
-    guard let message else {
-        print("nil")
-        return
-    }
-    
-    print(String(describing: message))
-}
-
-
 public class WAD {
     public enum LoadError: Error {
         case custom(_ message: String)
@@ -67,7 +52,7 @@ public class WAD {
         
         // MARK: - Section 2 - Textures
         let numTextureSamples: UInt32 = try reader.read()
-        wadLog("\nNumber of texture samples: \(numTextureSamples)")
+        wadLog("Number of texture samples: \(numTextureSamples)")
         
         var rawTextureSamples: [RawTextureSample] = []
         for _ in 0 ..< numTextureSamples {
