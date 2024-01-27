@@ -8,6 +8,11 @@
 import Foundation
 
 
+public struct Keyframe {
+    //
+}
+
+
 public class Animation {
     public private(set) weak var owner: WAD?
     

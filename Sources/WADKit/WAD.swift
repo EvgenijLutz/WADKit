@@ -13,11 +13,11 @@ public class WAD {
         case custom(_ message: String)
     }
     
-    private(set) var version: Version = .TombRaiderTheLastRevelation
-    private(set) var texturePages: [TexturePage] = []
-    private(set) var textureSamples: [TextureSample] = []
-    private(set) var meshes: [Mesh] = []
-    private(set) var animations: [Animation] = []
+    public private(set) var version: Version = .TombRaiderTheLastRevelation
+    public private(set) var texturePages: [TexturePage] = []
+    public private(set) var textureSamples: [TextureSample] = []
+    public private(set) var meshes: [Mesh] = []
+    public private(set) var animations: [Animation] = []
     
     public init() {
         //version = .TombRaiderTheLastRevelation
@@ -52,14 +52,14 @@ public class WAD {
         
         // MARK: - Section 2 - Textures
         let numTextureSamples: UInt32 = try reader.read()
-        wadLog("Number of texture samples: \(numTextureSamples)")
+        wadImportLog("Number of texture samples: \(numTextureSamples)")
         
         var rawTextureSamples: [RawTextureSample] = []
         for _ in 0 ..< numTextureSamples {
             rawTextureSamples.append(
                 RawTextureSample(
-                    x: try reader.read(),
-                    y: try reader.read(),
+                    rawX: try reader.read(),
+                    rawY: try reader.read(),
                     page: try reader.read(),
                     flipX: try reader.read(),
                     addW: try reader.read(),
@@ -71,12 +71,12 @@ public class WAD {
         
         let texturePageSize: UInt32 = 256 * 256 * 3
         let textureMapsBytes: UInt32 = try reader.read()
-        wadLog("Total size of texture maps: \(textureMapsBytes)")
+        wadImportLog("Total size of texture maps: \(textureMapsBytes)")
         guard textureMapsBytes % texturePageSize == 0 else {
             throw LoadError.custom("Wrong total size of texture maps")
         }
         let numTexturePages = textureMapsBytes / texturePageSize
-        wadLog("Number of texture pages: \(numTexturePages)")
+        wadImportLog("Number of texture pages: \(numTexturePages)")
         var texturePages: [Data] = []
         for _ in 0..<numTexturePages {
             texturePages.append(try reader.readData(ofLength: texturePageSize))
@@ -84,7 +84,7 @@ public class WAD {
         
         // MARK: - Section 3 - Meshes
         let numMeshPointers: UInt32 = try reader.read()
-        wadLog("Number of mesh poitners: \(numMeshPointers)")
+        wadImportLog("Number of mesh poitners: \(numMeshPointers)")
         var meshPointers: [UInt32] = []
         for _ in 0..<numMeshPointers {
             meshPointers.append(try reader.read())
@@ -92,7 +92,7 @@ public class WAD {
         
         let numMeshesWords: UInt32 = try reader.read()
         let animationsOffset = reader.offset + Int(numMeshesWords) * 2
-        wadLog("Number of mesh buffer words: \(numMeshesWords) (\(numMeshesWords * 2) bytes)")
+        wadImportLog("Number of mesh buffer words: \(numMeshesWords) (\(numMeshesWords * 2) bytes)")
         
         repeat {
             // Bounding sphere
@@ -103,11 +103,11 @@ public class WAD {
                 rawRadius: try reader.read(),
                 unknown: try reader.read()
             )
-            //wadLog("\(boundingSphere)")
+            //wadImportLog("\(boundingSphere)")
             
             // Vertices
             let numVertives: UInt16 = try reader.read()
-            //wadLog("Number of vertices: \(numVertives)")
+            //wadImportLog("Number of vertices: \(numVertives)")
             
             var vertices: [Vertex] = []
             for _ in 0 ..< numVertives {
@@ -122,7 +122,7 @@ public class WAD {
             
             // Normals/Shades
             let numNormalsOrShades: Int16 = try reader.read()
-            //wadLog("Number of normals or shades: \(numNormalsOrShades)")
+            //wadImportLog("Number of normals or shades: \(numNormalsOrShades)")
             
             var normals: [Normal] = []
             var shades: [Shade] = []
@@ -146,7 +146,7 @@ public class WAD {
             
             // Polygons
             let numPolygons: UInt16 = try reader.read()
-            //wadLog("Number of polygons: \(numPolygons)")
+            //wadImportLog("Number of polygons: \(numPolygons)")
             var polygons: [Polygon] = []
             var numQuads = 0
             for _ in 0 ..< numPolygons {
@@ -170,20 +170,20 @@ public class WAD {
             )
             
             // Skip excess bytes
-            //wadLog("Total number of quads: \(numQuads)")
+            //wadImportLog("Total number of quads: \(numQuads)")
             if numQuads % 2 == 1 {
-                //wadLog("Skip 2 bytes because number of quads is odd...")
+                //wadImportLog("Skip 2 bytes because number of quads is odd...")
                 reader.skip(2)
             }
         } while reader.offset < animationsOffset
-        wadLog("Meshes read: \(wad.meshes.count)")
+        wadImportLog("Meshes read: \(wad.meshes.count)")
         
         
         // MARK: - Section 4 - Animations
-        wadLog("Jumping into the animation block from \(reader.offset) to \(animationsOffset)")
+        wadImportLog("Jumping into the animation block from \(reader.offset) to \(animationsOffset)")
         reader.set(animationsOffset)
         let numAnimations: UInt32 = try reader.read()
-        wadLog("Number of animations: \(numAnimations)")
+        wadImportLog("Number of animations: \(numAnimations)")
         
         struct RawAnimation {
             var keyframeOffset: UInt32
@@ -240,11 +240,11 @@ public class WAD {
             )
             rawAnimations.append(animation)
         }
-        wadLog("Animations read: \(rawAnimations.count)")
+        wadImportLog("Animations read: \(rawAnimations.count)")
         
         // State changes
         let numStateChanges: UInt32 = try reader.read()
-        wadLog("Number of state changes: \(numStateChanges)")
+        wadImportLog("Number of state changes: \(numStateChanges)")
         
         struct StateChange {
             var stateId: UInt16
@@ -264,7 +264,7 @@ public class WAD {
         
         // Dispatches
         let numDispatches: UInt32 = try reader.read()
-        wadLog("Number of dispatches: \(numDispatches)")
+        wadImportLog("Number of dispatches: \(numDispatches)")
         
         struct RawDispatch {
             var inRange: UInt16
@@ -286,7 +286,7 @@ public class WAD {
         
         // Commands
         let numCommandsWords: UInt32 = try reader.read()
-        wadLog("Number of commands words: \(numCommandsWords) (\(numCommandsWords * 2) bytes)")
+        wadImportLog("Number of commands words: \(numCommandsWords) (\(numCommandsWords * 2) bytes)")
         
         struct RawCommand {
             var command: UInt16
@@ -296,13 +296,13 @@ public class WAD {
         }
         let commandsBuffer = try reader.readData(ofLength: numCommandsWords * 2)
         //let commandsReader = DataReader(with: commandsBuffer)
-        wadLog("Read a commands buffer of \(commandsBuffer.count) bytes")
+        wadImportLog("Read a commands buffer of \(commandsBuffer.count) bytes")
         
         // Links
         let numLinksDWords: UInt32 = try reader.read()
         let linksBufferSize = Int(numLinksDWords * 4)
         let keyframesPackageAddress = reader.offset + linksBufferSize
-        wadLog("Number of links dwords: \(numLinksDWords) (\(linksBufferSize) bytes)")
+        wadImportLog("Number of links dwords: \(numLinksDWords) (\(linksBufferSize) bytes)")
         
         struct RawLink {
             var operationCode: Int32
@@ -311,12 +311,12 @@ public class WAD {
             var dz: Int32
         }
         let linksBuffer: Data = try reader.readData(ofLength: linksBufferSize)
-        wadLog("Read a links buffer of \(linksBuffer.count) bytes")
+        wadImportLog("Read a links buffer of \(linksBuffer.count) bytes")
         /*var rawLinks: [RawLink] = []
          repeat {
          let operationCode: Int32 = try reader.read()
          if operationCode < 0 || operationCode > 3 {
-         wadLog("links read: \(rawLinks.count), last link: \(rawLinks.last)")
+         wadImportLog("links read: \(rawLinks.count), last link: \(rawLinks.last)")
          throw LoadError.custom("Wrong operation code: \(operationCode)")
          }
          rawLinks.append(
@@ -328,28 +328,28 @@ public class WAD {
          )
          )
          } while reader.offset + 16 <= keyframesPackageAddress
-         wadLog(rawLinks.last)*/
+         wadImportLog(rawLinks.last)*/
         
         
         // Keyframes
-        wadLog("Jumping into the keyframes block from \(reader.offset) to \(keyframesPackageAddress)")
+        wadImportLog("Jumping into the keyframes block from \(reader.offset) to \(keyframesPackageAddress)")
         reader.set(keyframesPackageAddress)
         let numKeyframesWords: UInt32 = try reader.read()
         let modelsSectionAddress = reader.offset + Int(numKeyframesWords * 2)
-        wadLog("Number of keyframes words: \(numKeyframesWords) (\(numKeyframesWords * 2) bytes)")
+        wadImportLog("Number of keyframes words: \(numKeyframesWords) (\(numKeyframesWords * 2) bytes)")
         
         let keyframesBuffer = try reader.readData(ofLength: numKeyframesWords * 2)
         //let keyframesReader = DataReader(with: keyframesBuffer)
-        wadLog("Read a keyframes buffer of \(keyframesBuffer.count) bytes")
+        wadImportLog("Read a keyframes buffer of \(keyframesBuffer.count) bytes")
         
         
         // MARK: - Section 5 - Models
-        wadLog("Jumping into the models block from \(reader.offset) to \(modelsSectionAddress)")
+        wadImportLog("Jumping into the models block from \(reader.offset) to \(modelsSectionAddress)")
         reader.set(modelsSectionAddress)
         
         // Movables
         let numMovables: UInt32 = try reader.read()
-        wadLog("Number of movables: \(numMovables)")
+        wadImportLog("Number of movables: \(numMovables)")
         
         struct RawMovable {
             var objectId: MovableIdentifier
@@ -376,7 +376,7 @@ public class WAD {
         
         // Static objects
         let numStaticObjects: UInt32 = try reader.read()
-        wadLog("Number of static objects: \(numStaticObjects)")
+        wadImportLog("Number of static objects: \(numStaticObjects)")
         
         struct RawStaticObject {
             var objectId: UInt32
@@ -426,7 +426,7 @@ public class WAD {
         
         // Happy end
         if reader.offset == reader.data.count {
-            wadLog("Successfully reached the end of file 😌")
+            wadImportLog("Successfully reached the end of file 😌")
         }
         
         
@@ -451,7 +451,6 @@ public class WAD {
         // Animations
         for rawAnimation in rawAnimations {
             let animation = wad.createAnimation()
-            
             
             if rawAnimation.acceleration > 1 {
                 animation.lala()

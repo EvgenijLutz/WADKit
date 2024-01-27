@@ -45,18 +45,21 @@ fileprivate let logger: WADLogger = {
 }()
 
 
-internal let verboseLog: Bool = true
 internal func wadLog(_ message: Any?) {
-    guard verboseLog else {
-        return
-    }
-    
     guard let message else {
-        //print("nil")
         logger.log("nil")
         return
     }
     
-    //print(String(describing: message))
     logger.log("\(String(describing: message))")
+}
+
+
+fileprivate let importLog: Bool = false
+internal func wadImportLog(_ message: Any?) {
+    guard importLog else {
+        return
+    }
+    
+    wadLog(message)
 }

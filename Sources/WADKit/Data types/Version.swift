@@ -8,14 +8,14 @@
 import Foundation
 
 
-enum Version: UInt32 {
+public enum Version: UInt32 {
     case TombRaiderTheLastRevelation = 129
     case TombRaiderAbandonedNextGeneration = 130
 }
 
 
 extension Version: CustomStringConvertible {
-    var description: String {
+    public var description: String {
         let name: String = {
             switch self {
             case .TombRaiderTheLastRevelation: "Tomb Raider: The Last Revelation"
