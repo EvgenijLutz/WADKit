@@ -8,6 +8,11 @@
 import Foundation
 
 
+public enum WADError: Error {
+    case ownerNotFound
+}
+
+
 public class WAD {
     public enum LoadError: Error {
         case custom(_ message: String)

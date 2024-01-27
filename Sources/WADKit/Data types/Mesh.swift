@@ -210,40 +210,6 @@ public class Mesh {
 }
 
 
-
-class DataWriter {
-    private(set) var data = Data()
-    
-    func write<SomeType>(_ value: SomeType) where SomeType: BinaryInteger {
-        withUnsafePointer(to: value) { pointer in
-            data.append(Data(bytes: pointer, count: MemoryLayout<SomeType>.size))
-        }
-    }
-    
-    func write<SomeType>(_ value: SomeType) where SomeType: BinaryFloatingPoint {
-        withUnsafePointer(to: value) { pointer in
-            data.append(Data(bytes: pointer, count: MemoryLayout<SomeType>.size))
-        }
-    }
-    
-    func skip<SomeType>(_ bytesToSkip: SomeType) where SomeType: BinaryInteger {
-        let numBytes = Int(bytesToSkip)
-        guard numBytes > 0 else {
-            return
-        }
-        
-        data.append(Data(capacity: numBytes))
-    }
-}
-
-
-//extension DataWriter {
-//    func write(_ value: Float) {
-//        write(Float32(value))
-//    }
-//}
-
-
 public struct VertexBuffer {
     public enum LightingType {
         case normals
@@ -276,14 +242,15 @@ public struct TexturePageRemapInfo {
 
 
 extension Mesh {
+    enum MeshGenerationError: Error {
+        case vertexIndexOutOfRange(index: Int)
+        case other(_ message: String)
+    }
+    
     public func generateVertexBuffers(withRemappedTexturePages map: [TexturePageRemapInfo]) throws -> [VertexBuffer] {
         guard let owner else {
-            throw WAD.LoadError.custom("Owner not found")
+            throw WADError.ownerNotFound
         }
-        
-//        guard map.count != owner.texturePages.count else {
-//            throw WAD.LoadError.custom("Texture page remap info count doesn't match number of WAD's texture pages")
-//        }
         
         // Layout 1 - 36 stride
         // vx, vy, vz   0   12
@@ -308,18 +275,22 @@ extension Mesh {
         }
         var buffers: [BufferBuilder] = []
         
-        func getBufferBuilder(forTexturePage pageIndex: UInt16) throws -> BufferBuilder {
-            guard let textureIndex = map.first(where: { $0.pageIndex == pageIndex })?.textureIndex else {
-                throw WAD.LoadError.custom("Texture page remap info doesn't contain remap info for texture page \(pageIndex)")
+        func getTextureRemapInfo(forTexturePage pageIndex: UInt16) throws -> TexturePageRemapInfo {
+            guard let remapInfo = map.first(where: { $0.pageIndex == pageIndex }) else {
+                throw MeshGenerationError.other("Texture page remap info doesn't contain remap info for texture page \(pageIndex)")
             }
             
-            if let contents = buffers.first(where: { $0.textureIndex == textureIndex }) {
-                return contents
+            return remapInfo
+        }
+        
+        func getBufferBuilder(forTexture textureIndex: Int) -> BufferBuilder {
+            if let bufferBuilder = buffers.first(where: { $0.textureIndex == textureIndex }) {
+                return bufferBuilder
             }
             
-            let contents = BufferBuilder(textureIndex: textureIndex)
-            buffers.append(contents)
-            return contents
+            let bufferBuilder = BufferBuilder(textureIndex: textureIndex)
+            buffers.append(bufferBuilder)
+            return bufferBuilder
         }
         
         
@@ -328,10 +299,11 @@ extension Mesh {
         
         for polygon in self.polygons {
             guard polygon.sampleIndex < owner.textureSamples.count else {
-                throw WAD.LoadError.custom("Sample index is out of range \(polygon.sampleIndex) >= \(owner.textureSamples.count)")
+                throw MeshGenerationError.other("Sample index is out of range \(polygon.sampleIndex) >= \(owner.textureSamples.count)")
             }
             let sample = owner.textureSamples[Int(polygon.sampleIndex)]
-            let bufferBuilder = try getBufferBuilder(forTexturePage: sample.raw.page)
+            let remapInfo = try getTextureRemapInfo(forTexturePage: sample.raw.page)
+            let bufferBuilder = getBufferBuilder(forTexture: remapInfo.textureIndex)
             let writer = bufferBuilder.writer
             
             enum UVIndex {
@@ -344,7 +316,7 @@ extension Mesh {
             func writeVertex(_ index: UInt16, _ uvIndex: UVIndex) throws {
                 let vertexIndex = Int(index)
                 guard vertexIndex < vertices.count else {
-                    throw WAD.LoadError.custom("Vertex index is out of range")
+                    throw MeshGenerationError.other("Vertex index is out of range")
                 }
                 
                 // Write vertex
@@ -368,26 +340,26 @@ extension Mesh {
                 }()
                 switch correctedUVIndex {
                 case .v1:
-                    writer.write(sample.raw.left)
-                    writer.write(sample.raw.top)
+                    writer.write(sample.raw.left * remapInfo.uvMagnifier + remapInfo.offsetU)
+                    writer.write(sample.raw.top * remapInfo.uvMagnifier + remapInfo.offsetV)
                     
                 case .v2:
-                    writer.write(sample.raw.right)
-                    writer.write(sample.raw.top)
+                    writer.write(sample.raw.right * remapInfo.uvMagnifier + remapInfo.offsetU)
+                    writer.write(sample.raw.top * remapInfo.uvMagnifier + remapInfo.offsetV)
                     
                 case .v3:
-                    writer.write(sample.raw.right)
-                    writer.write(sample.raw.bottom)
+                    writer.write(sample.raw.right * remapInfo.uvMagnifier + remapInfo.offsetU)
+                    writer.write(sample.raw.bottom * remapInfo.uvMagnifier + remapInfo.offsetV)
                     
                 case .v4:
-                    writer.write(sample.raw.left)
-                    writer.write(sample.raw.bottom)
+                    writer.write(sample.raw.left * remapInfo.uvMagnifier + remapInfo.offsetU)
+                    writer.write(sample.raw.bottom * remapInfo.uvMagnifier + remapInfo.offsetV)
                 }
                 
                 // Write Normal/Shade
-                if !normals.isEmpty {
+                if lightingType == .normals {
                     guard vertexIndex < normals.count else {
-                        throw WAD.LoadError.custom("Normal index is out of range")
+                        throw MeshGenerationError.other("Normal index is out of range")
                     }
                     let normal = normals[vertexIndex]
                     writer.write(normal.x)
@@ -396,7 +368,7 @@ extension Mesh {
                 }
                 else {
                     guard vertexIndex < shades.count else {
-                        throw WAD.LoadError.custom("Shade index is out of range")
+                        throw MeshGenerationError.other("Shade index is out of range")
                     }
                     let shade = shades[vertexIndex]
                     writer.write(shade.value)
