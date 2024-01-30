@@ -8,8 +8,8 @@
 import Foundation
 
 
-// 1/4th pixel offset
-fileprivate let tinyOffset: Float = 1 / 256 / 4
+// half pixel offset
+fileprivate let tinyOffset: Float = 1 / 256 / 2
 
 
 struct RawTextureSample {
@@ -24,33 +24,36 @@ struct RawTextureSample {
     
     var left: Float {
         if flipX == 0 {
-            return Float(rawX) / 256 + tinyOffset
+            return Float(Int(rawX) + Int(addW) + 1) / 256 - tinyOffset
         }
         // Prevent arithmetic overflow
-        return Float(Int(rawX) + Int(addW) + 1) / 256 - tinyOffset
+        return Float(rawX) / 256 + tinyOffset
+        
     }
     
     var right: Float {
         if flipX == 0 {
-            return Float(Int(rawX) + Int(addW) + 1) / 256 - tinyOffset
+            return Float(rawX) / 256 + tinyOffset
         }
-        return Float(rawX) / 256 + tinyOffset
+        return Float(Int(rawX) + Int(addW) + 1) / 256 - tinyOffset
+        
     }
     
     
     var top: Float {
         if flipY == 0 {
-            return Float(rawY) / 256 + tinyOffset
+            return Float(Int(rawY) + Int(addH) + 1) / 256 - tinyOffset
         }
+        return Float(rawY) / 256 + tinyOffset
         
-        return Float(Int(rawY) + Int(addH) + 1) / 256 - tinyOffset
     }
     
     var bottom: Float {
         if flipY == 0 {
-            return Float(Int(rawY) + Int(addH) + 1) / 256 - tinyOffset
+            return Float(rawY) / 256 + tinyOffset
         }
-        return Float(rawY) / 256 + tinyOffset
+        return Float(Int(rawY) + Int(addH) + 1) / 256 - tinyOffset
+        
     }
 }
 

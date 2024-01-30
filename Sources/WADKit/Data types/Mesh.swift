@@ -22,9 +22,9 @@ public struct Vertex {
     public var rawY: Int16
     public var rawZ: Int16
     
-    public var x: Float { Float(rawX) / 1024 }
-    public var y: Float { Float(rawY) / 1024 }
-    public var z: Float { Float(rawZ) / 1024 }
+    public var x: Float { Float(rawX) / 1024.0 }
+    public var y: Float { Float(rawY) / 1024.0 }
+    public var z: Float { Float(rawZ) / 1024.0 }
 }
 
 
@@ -266,13 +266,16 @@ extension Mesh {
         /// Links a buffer with texture
         class BufferBuilder {
             let writer = DataWriter()
+            let opaque: Bool
             let textureIndex: Int
             var numVertices: Int = 0
             
-            init(textureIndex: Int) {
+            init(opaque: Bool, textureIndex: Int) {
+                self.opaque = opaque
                 self.textureIndex = textureIndex
             }
         }
+        // TODO: Also separate with opaque/transparent
         var buffers: [BufferBuilder] = []
         
         func getTextureRemapInfo(forTexturePage pageIndex: UInt16) throws -> TexturePageRemapInfo {
@@ -283,12 +286,12 @@ extension Mesh {
             return remapInfo
         }
         
-        func getBufferBuilder(forTexture textureIndex: Int) -> BufferBuilder {
+        func getBufferBuilder(forTexture textureIndex: Int, opaque: Bool) -> BufferBuilder {
             if let bufferBuilder = buffers.first(where: { $0.textureIndex == textureIndex }) {
                 return bufferBuilder
             }
             
-            let bufferBuilder = BufferBuilder(textureIndex: textureIndex)
+            let bufferBuilder = BufferBuilder(opaque: opaque, textureIndex: textureIndex)
             buffers.append(bufferBuilder)
             return bufferBuilder
         }
@@ -303,7 +306,8 @@ extension Mesh {
             }
             let sample = owner.textureSamples[Int(polygon.sampleIndex)]
             let remapInfo = try getTextureRemapInfo(forTexturePage: sample.raw.page)
-            let bufferBuilder = getBufferBuilder(forTexture: remapInfo.textureIndex)
+            // TODO: get sample's opaque or transparent value
+            let bufferBuilder = getBufferBuilder(forTexture: remapInfo.textureIndex, opaque: true)
             let writer = bufferBuilder.writer
             
             enum UVIndex {
@@ -321,17 +325,87 @@ extension Mesh {
                 
                 // Write vertex
                 let vertex = vertices[vertexIndex]
-                writer.write(vertex.x)
-                writer.write(vertex.y)
-                writer.write(vertex.z)
+                writer.write(-vertex.x)
+                writer.write(-vertex.y)
+                writer.write(-vertex.z)
                 
-                // Write UV
-                let correctedUVIndex = {
-                    if !polygon.flippedHorizontally {
+//                let rotatedUVIndex: UVIndex = {
+//                    switch polygon.sampleShape {
+//                    case .topLeft:
+//                        switch uvIndex {
+//                        case .v1: return .v1
+//                        case .v2: return .v2
+//                        default: return .v4
+//                        }
+//                        
+//                    case .topRight:
+//                        switch uvIndex {
+//                        case .v1: return .v2
+//                        case .v2: return .v3
+//                        default: return .v1
+//                        }
+//                        
+//                    case .bottomRight:
+//                        switch uvIndex {
+//                        case .v1: return .v3
+//                        case .v2: return .v4
+//                        default: return .v2
+//                        }
+//                        
+//                    case .bottomLeft:
+//                        switch uvIndex {
+//                        case .v1: return .v4
+//                        case .v2: return .v1
+//                        default: return .v3
+//                        }
+//                        
+//                    case .quad:
+//                        return uvIndex
+//                    }
+//                }()
+//                
+                let rotatedUVIndex: UVIndex = {
+                    switch polygon.sampleShape {
+                    case .topLeft:
+                        switch uvIndex {
+                        case .v1: return .v1
+                        case .v2: return .v2
+                        default: return .v4
+                        }
+                        
+                    case .topRight:
+                        switch uvIndex {
+                        case .v1: return .v2
+                        case .v2: return .v3
+                        default: return .v1
+                        }
+                        
+                    case .bottomRight:
+                        switch uvIndex {
+                        case .v1: return .v3
+                        case .v2: return .v4
+                        default: return .v2
+                        }
+                        
+                    case .bottomLeft:
+                        switch uvIndex {
+                        case .v1: return .v4
+                        case .v2: return .v1
+                        default: return .v3
+                        }
+                        
+                    case .quad:
                         return uvIndex
                     }
+                }()
+                
+                // Write UV
+                let correctedUVIndex: UVIndex = {
+                    if !polygon.flippedHorizontally {
+                        return rotatedUVIndex
+                    }
                     
-                    switch uvIndex {
+                    switch rotatedUVIndex {
                     case .v1: return .v2
                     case .v2: return .v1
                     case .v3: return .v4
@@ -383,6 +457,9 @@ extension Mesh {
                 try writeVertex(value.v1, .v1)
                 try writeVertex(value.v3, .v3)
                 try writeVertex(value.v2, .v2)
+//                try writeVertex(value.v1, .v2)
+//                try writeVertex(value.v3, .v3)
+//                try writeVertex(value.v2, .v1)
                 
             case .quad(let value):
                 try writeVertex(value.v1, .v1)

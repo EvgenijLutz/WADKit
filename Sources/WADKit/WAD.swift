@@ -13,6 +13,9 @@ public enum WADError: Error {
 }
 
 
+internal let texturePageSize = 256 * 256 * 3
+
+
 public class WAD {
     public enum LoadError: Error {
         case custom(_ message: String)
@@ -74,16 +77,15 @@ public class WAD {
             )
         }
         
-        let texturePageSize: UInt32 = 256 * 256 * 3
         let textureMapsBytes: UInt32 = try reader.read()
         wadImportLog("Total size of texture maps: \(textureMapsBytes)")
-        guard textureMapsBytes % texturePageSize == 0 else {
+        guard textureMapsBytes % UInt32(texturePageSize) == 0 else {
             throw LoadError.custom("Wrong total size of texture maps")
         }
-        let numTexturePages = textureMapsBytes / texturePageSize
+        let numTexturePages = textureMapsBytes / UInt32(texturePageSize)
         wadImportLog("Number of texture pages: \(numTexturePages)")
         var texturePages: [Data] = []
-        for _ in 0..<numTexturePages {
+        for _ in 0 ..< numTexturePages {
             texturePages.append(try reader.readData(ofLength: texturePageSize))
         }
         
@@ -91,7 +93,7 @@ public class WAD {
         let numMeshPointers: UInt32 = try reader.read()
         wadImportLog("Number of mesh poitners: \(numMeshPointers)")
         var meshPointers: [UInt32] = []
-        for _ in 0..<numMeshPointers {
+        for _ in 0 ..< numMeshPointers {
             meshPointers.append(try reader.read())
         }
         
@@ -217,10 +219,6 @@ public class WAD {
             var numberOfFrames: Int {
                 return Int(frameEnd) - Int(frameStart) + 1
             }
-            
-            //var numKeyframes: Int {
-            //    return
-            //}
         }
         
         var rawAnimations: [RawAnimation] = []
@@ -317,23 +315,23 @@ public class WAD {
         }
         let linksBuffer: Data = try reader.readData(ofLength: linksBufferSize)
         wadImportLog("Read a links buffer of \(linksBuffer.count) bytes")
-        /*var rawLinks: [RawLink] = []
-         repeat {
-         let operationCode: Int32 = try reader.read()
-         if operationCode < 0 || operationCode > 3 {
-         wadImportLog("links read: \(rawLinks.count), last link: \(rawLinks.last)")
-         throw LoadError.custom("Wrong operation code: \(operationCode)")
-         }
-         rawLinks.append(
-         RawLink(
-         operationCode: operationCode,
-         dx: try reader.read(),
-         dy: try reader.read(),
-         dz: try reader.read()
-         )
-         )
-         } while reader.offset + 16 <= keyframesPackageAddress
-         wadImportLog(rawLinks.last)*/
+        //var rawLinks: [RawLink] = []
+        //repeat {
+        //    let operationCode: Int32 = try reader.read()
+        //    if operationCode < 0 || operationCode > 3 {
+        //        wadImportLog("links read: \(rawLinks.count), last link: \(rawLinks.last)")
+        //        throw LoadError.custom("Wrong operation code: \(operationCode)")
+        //    }
+        //    rawLinks.append(
+        //        RawLink(
+        //            operationCode: operationCode,
+        //            dx: try reader.read(),
+        //            dy: try reader.read(),
+        //            dz: try reader.read()
+        //        )
+        //    )
+        //} while reader.offset + 16 <= keyframesPackageAddress
+        //wadImportLog(rawLinks.last)
         
         
         // Keyframes
@@ -466,9 +464,61 @@ public class WAD {
         return wad
     }
     
-    //func serialize() -> Data {
-    //    //
-    //}
+    
+    public func generateTextureRemapInfo(pagesPerRow: Int) -> [TexturePageRemapInfo] {
+        let numPagesInTexture = pagesPerRow * pagesPerRow
+        
+        var remapInfo: [TexturePageRemapInfo] = []
+        for index in texturePages.indices {
+            let indexInTexture = index % numPagesInTexture
+            let row = indexInTexture % pagesPerRow
+            let column = indexInTexture / pagesPerRow
+            //wadImportLog("\(indexInTexture) -> \(row) : \(column)")
+            
+            remapInfo.append(
+                TexturePageRemapInfo(
+                    pageIndex: index,
+                    textureIndex: index / numPagesInTexture,
+                    uvMagnifier: 1 / Float(pagesPerRow),
+                    offsetU: 1 / Float(pagesPerRow) * Float(row),
+                    offsetV: 1 / Float(pagesPerRow) * Float(column)
+                )
+            )
+        }
+        
+        return remapInfo
+    }
+    
+    
+    public func serialize() -> Data {
+        let dataWriter = DataWriter()
+        
+        // Version
+        dataWriter.write(version.rawValue)
+        
+        // Texture samples
+        dataWriter.write(UInt32(textureSamples.count))
+        for textureSample in textureSamples {
+            dataWriter.write(textureSample.raw.rawX)
+            dataWriter.write(textureSample.raw.rawY)
+            dataWriter.write(textureSample.raw.page)
+            dataWriter.write(textureSample.raw.flipX)
+            dataWriter.write(textureSample.raw.addW)
+            dataWriter.write(textureSample.raw.flipY)
+            dataWriter.write(textureSample.raw.addH)
+        }
+        
+        // Texture pages
+        let pagesSize = texturePages.count * texturePageSize
+        dataWriter.write(UInt32(pagesSize))
+        for texturePage in texturePages {
+            dataWriter.write(texturePage.contents)
+        }
+        
+        // TODO: Construct mesh pointers
+        
+        return dataWriter.data
+    }
 }
 
 extension WAD: CustomStringConvertible {
@@ -476,4 +526,3 @@ extension WAD: CustomStringConvertible {
         "WAD v\(version). Textures: \(texturePages.count), samples: \(textureSamples.count), meshes: \(meshes.count), animations: \(animations.count)"
     }
 }
-

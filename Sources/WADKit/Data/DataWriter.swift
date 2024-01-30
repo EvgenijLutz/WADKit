@@ -23,6 +23,10 @@ class DataWriter {
         }
     }
     
+    func write(_ value: Data) {
+        data.append(value)
+    }
+    
     func skip<SomeType>(_ bytesToSkip: SomeType) where SomeType: BinaryInteger {
         let numBytes = Int(bytesToSkip)
         guard numBytes > 0 else {
