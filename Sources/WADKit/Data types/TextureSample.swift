@@ -10,6 +10,7 @@ import Foundation
 
 // half pixel offset
 fileprivate let tinyOffset: Float = 1 / 256 / 2
+//fileprivate let tinyOffset: Float = 1 / 256 / 8
 
 
 struct RawTextureSample {

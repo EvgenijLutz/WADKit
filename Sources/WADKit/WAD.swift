@@ -13,9 +13,6 @@ public enum WADError: Error {
 }
 
 
-internal let texturePageSize = 256 * 256 * 3
-
-
 public class WAD {
     public enum LoadError: Error {
         case custom(_ message: String)
@@ -463,32 +460,6 @@ public class WAD {
         
         return wad
     }
-    
-    
-    public func generateTextureRemapInfo(pagesPerRow: Int) -> [TexturePageRemapInfo] {
-        let numPagesInTexture = pagesPerRow * pagesPerRow
-        
-        var remapInfo: [TexturePageRemapInfo] = []
-        for index in texturePages.indices {
-            let indexInTexture = index % numPagesInTexture
-            let row = indexInTexture % pagesPerRow
-            let column = indexInTexture / pagesPerRow
-            //wadImportLog("\(indexInTexture) -> \(row) : \(column)")
-            
-            remapInfo.append(
-                TexturePageRemapInfo(
-                    pageIndex: index,
-                    textureIndex: index / numPagesInTexture,
-                    uvMagnifier: 1 / Float(pagesPerRow),
-                    offsetU: 1 / Float(pagesPerRow) * Float(row),
-                    offsetV: 1 / Float(pagesPerRow) * Float(column)
-                )
-            )
-        }
-        
-        return remapInfo
-    }
-    
     
     public func serialize() -> Data {
         let dataWriter = DataWriter()

@@ -223,24 +223,6 @@ public struct VertexBuffer {
 }
 
 
-public struct TexturePageRemapInfo {
-    public let pageIndex: Int
-    public let textureIndex: Int
-    public let uvMagnifier: Float
-    public let offsetU: Float
-    public let offsetV: Float
-    
-    
-    public init(pageIndex: Int, textureIndex: Int, uvMagnifier: Float, offsetU: Float, offsetV: Float) {
-        self.pageIndex = pageIndex
-        self.textureIndex = textureIndex
-        self.uvMagnifier = uvMagnifier
-        self.offsetU = offsetU
-        self.offsetV = offsetV
-    }
-}
-
-
 extension Mesh {
     enum MeshGenerationError: Error {
         case vertexIndexOutOfRange(index: Int)
