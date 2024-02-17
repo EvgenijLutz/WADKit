@@ -104,10 +104,11 @@ public extension WAD {
                     
                     let start = c * texturePageWidth * 3 + r * 3
                     let r = texturePage[start + 0]
+                    let g = texturePage[start + 1]
                     let b = texturePage[start + 2]
                     
                     // Check for magenta color
-                    if r == 255 && b == 255 {
+                    if r == 255 && g == 0 && b == 255 {
                         texture.contents[pixelIndex + 0] = 0
                         texture.contents[pixelIndex + 1] = 0
                         texture.contents[pixelIndex + 2] = 0
@@ -115,7 +116,7 @@ public extension WAD {
                     }
                     else {
                         texture.contents[pixelIndex + 0] = b
-                        texture.contents[pixelIndex + 1] = texturePage[start + 1]
+                        texture.contents[pixelIndex + 1] = g
                         texture.contents[pixelIndex + 2] = r
                         
                         // 255 is already written

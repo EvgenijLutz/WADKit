@@ -311,42 +311,11 @@ extension Mesh {
                 writer.write(-vertex.y)
                 writer.write(-vertex.z)
                 
-//                let rotatedUVIndex: UVIndex = {
-//                    switch polygon.sampleShape {
-//                    case .topLeft:
-//                        switch uvIndex {
-//                        case .v1: return .v1
-//                        case .v2: return .v2
-//                        default: return .v4
-//                        }
-//                        
-//                    case .topRight:
-//                        switch uvIndex {
-//                        case .v1: return .v2
-//                        case .v2: return .v3
-//                        default: return .v1
-//                        }
-//                        
-//                    case .bottomRight:
-//                        switch uvIndex {
-//                        case .v1: return .v3
-//                        case .v2: return .v4
-//                        default: return .v2
-//                        }
-//                        
-//                    case .bottomLeft:
-//                        switch uvIndex {
-//                        case .v1: return .v4
-//                        case .v2: return .v1
-//                        default: return .v3
-//                        }
-//                        
-//                    case .quad:
-//                        return uvIndex
-//                    }
-//                }()
-//                
                 let rotatedUVIndex: UVIndex = {
+                    if case .quad = polygon.shape {
+                        return uvIndex
+                    }
+                    
                     switch polygon.sampleShape {
                     case .topLeft:
                         switch uvIndex {
@@ -439,9 +408,6 @@ extension Mesh {
                 try writeVertex(value.v1, .v1)
                 try writeVertex(value.v3, .v3)
                 try writeVertex(value.v2, .v2)
-//                try writeVertex(value.v1, .v2)
-//                try writeVertex(value.v3, .v3)
-//                try writeVertex(value.v2, .v1)
                 
             case .quad(let value):
                 try writeVertex(value.v1, .v1)
