@@ -2,19 +2,19 @@
 //  Version.swift
 //  WADKit
 //
-//  Created by Eugen Lutz on 27.01.24.
+//  Created by Evgenij Lutz on 27.01.24.
 //
 
 import Foundation
 
 
-public enum Version: UInt32 {
+public enum WADVersion: UInt32, Sendable {
     case TombRaiderTheLastRevelation = 129
     case TombRaiderAbandonedNextGeneration = 130
 }
 
 
-extension Version: CustomStringConvertible {
+extension WADVersion: CustomStringConvertible {
     public var description: String {
         let name: String = {
             switch self {
@@ -29,10 +29,10 @@ extension Version: CustomStringConvertible {
 
 
 extension DataReader {
-    func read() throws -> Version {
+    func read() throws -> WADVersion {
         let rawVersion: UInt32 = try read()
-        guard let version = Version(rawValue: rawVersion) else {
-            throw WAD.LoadError.custom("Wrong WAD version number: \(rawVersion)")
+        guard let version = WADVersion(rawValue: rawVersion) else {
+            throw WADError.other("Wrong WAD version number: \(rawVersion)")
         }
         
         return version

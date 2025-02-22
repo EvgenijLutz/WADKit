@@ -2,7 +2,7 @@
 //  Mesh.swift
 //  WADKit
 //
-//  Created by Eugen Lutz on 27.01.24.
+//  Created by Evgenij Lutz on 27.01.24.
 //
 
 import Foundation
@@ -190,7 +190,7 @@ extension DataReader {
 
 
 public class Mesh {
-    private (set) weak var owner: WAD?
+    private(set) weak var owner: WAD?
     
     public var boundingSphere: BoundingSphere
     public var vertices: [Vertex]

@@ -2,7 +2,7 @@
 //  Logging.swift
 //  WADKit
 //
-//  Created by Eugen Lutz on 27.01.24.
+//  Created by Evgenij Lutz on 27.01.24.
 //
 
 import Foundation
@@ -11,8 +11,9 @@ import Foundation
 
 import OSLog
 
+@available(iOS 14.0, *)
 @available(macOS 11.0, *)
-fileprivate class WADOSLogger: WADLogger {
+fileprivate class WADOSLogger: WADLogger, @unchecked Sendable {
     internal let logger = Logger(subsystem: "WADKit", category: "log")
     
     func log(_ message: String) {
@@ -23,12 +24,12 @@ fileprivate class WADOSLogger: WADLogger {
 #endif
 
 
-fileprivate protocol WADLogger {
+fileprivate protocol WADLogger: Sendable {
     func log(_ message: String)
 }
 
 
-fileprivate class WADPrintLogger: WADLogger {
+fileprivate class WADPrintLogger: WADLogger, @unchecked Sendable {
     func log(_ message: String) {
         print(message)
     }

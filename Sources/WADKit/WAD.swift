@@ -2,23 +2,21 @@
 //  WAD.swift
 //  WADKit
 //
-//  Created by Eugen Lutz on 27.01.24.
+//  Created by Evgenij Lutz on 27.01.24.
 //
 
 import Foundation
 
 
-public enum WADError: Error {
+public enum WADError: Error, Sendable {
     case ownerNotFound
+    
+    case other(_ message: String)
 }
 
 
 public class WAD {
-    public enum LoadError: Error {
-        case custom(_ message: String)
-    }
-    
-    public private(set) var version: Version = .TombRaiderTheLastRevelation
+    public private(set) var version: WADVersion = .TombRaiderTheLastRevelation
     public private(set) var texturePages: [TexturePage] = []
     public private(set) var textureSamples: [TextureSample] = []
     public private(set) var meshes: [Mesh] = []
@@ -77,7 +75,7 @@ public class WAD {
         let textureMapsBytes: UInt32 = try reader.read()
         wadImportLog("Total size of texture maps: \(textureMapsBytes)")
         guard textureMapsBytes % UInt32(texturePageSize) == 0 else {
-            throw LoadError.custom("Wrong total size of texture maps")
+            throw WADError.other("Wrong total size of texture maps")
         }
         let numTexturePages = textureMapsBytes / UInt32(texturePageSize)
         wadImportLog("Number of texture pages: \(numTexturePages)")
@@ -352,7 +350,7 @@ public class WAD {
         wadImportLog("Number of movables: \(numMovables)")
         
         struct RawMovable {
-            var objectId: MovableIdentifier
+            var objectId: TR4ObjectType
             var numPointers: UInt16
             var pointersIndex: UInt16
             var linksIndex: UInt32

@@ -2,7 +2,7 @@
 //  WAD extensions.swift
 //  WADKit
 //
-//  Created by Eugen Lutz on 31.01.24.
+//  Created by Evgenij Lutz on 31.01.24.
 //
 
 import Foundation
