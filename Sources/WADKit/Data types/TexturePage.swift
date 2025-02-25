@@ -8,19 +8,19 @@
 import Foundation
 
 
-public class TexturePage {
-    public private(set) weak var owner: WAD?
+public class WKTexturePage {
+    public private(set) weak var wad: WAD?
     public private(set) var contents: Data
     
     public var samples: [TextureSample] {
-        guard let owner else { return [] }
-        guard let page = owner.texturePages.firstIndex(where: { $0 === self }) else { return [] }
-        return owner.textureSamples.filter { $0.raw.page == page }
+        guard let wad else { return [] }
+        guard let page = wad.texturePages.firstIndex(where: { $0 === self }) else { return [] }
+        return wad.textureSamples.filter { $0.raw.page == page }
     }
     
     
-    init(owner: WAD, contents: Data) {
-        self.owner = owner
+    init(wad: WAD, contents: Data) {
+        self.wad = wad
         self.contents = contents
     }
 }

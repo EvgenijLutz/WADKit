@@ -20,8 +20,30 @@ extension DataReader {
 }
 
 
-class Movable {
-    var identifier: TR4ObjectType = .LARA
+public class WKMovable: @unchecked Sendable {
+    private var _identifier: TR4ObjectType
+    public var identifier: TR4ObjectType {
+        get {
+            withWadLock {
+                _identifier
+            }
+        }
+        
+        set {
+            withWadLock {
+                _identifier = newValue
+            }
+        }
+    }
+    
+    
+    private(set) public var meshes: [WKMesh]
+    
+    
+    internal init(identifier: TR4ObjectType, meshes: [WKMesh]) {
+        self._identifier = identifier
+        self.meshes = meshes
+    }
 }
 
 

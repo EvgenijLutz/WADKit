@@ -189,8 +189,8 @@ extension DataReader {
 }
 
 
-public class Mesh {
-    private(set) weak var owner: WAD?
+public class WKMesh: @unchecked Sendable {
+    private(set) weak var wad: WAD?
     
     public var boundingSphere: BoundingSphere
     public var vertices: [Vertex]
@@ -199,8 +199,8 @@ public class Mesh {
     public var polygons: [Polygon]
     
     
-    internal init(owner: WAD, boundingSphere: BoundingSphere, vertices: [Vertex], normals: [Normal], shades: [Shade], polygons: [Polygon]) {
-        self.owner = owner
+    internal init(wad: WAD, boundingSphere: BoundingSphere, vertices: [Vertex], normals: [Normal], shades: [Shade], polygons: [Polygon]) {
+        self.wad = wad
         self.boundingSphere = boundingSphere
         self.vertices = vertices
         self.normals = normals
@@ -223,14 +223,14 @@ public struct VertexBuffer {
 }
 
 
-extension Mesh {
+extension WKMesh {
     enum MeshGenerationError: Error {
         case vertexIndexOutOfRange(index: Int)
         case other(_ message: String)
     }
     
     public func generateVertexBuffers(withRemappedTexturePages map: [TexturePageRemapInfo]) throws -> [VertexBuffer] {
-        guard let owner else {
+        guard let wad else {
             throw WADError.ownerNotFound
         }
         
@@ -283,10 +283,10 @@ extension Mesh {
         
         
         for polygon in self.polygons {
-            guard polygon.sampleIndex < owner.textureSamples.count else {
-                throw MeshGenerationError.other("Sample index is out of range \(polygon.sampleIndex) >= \(owner.textureSamples.count)")
+            guard polygon.sampleIndex < wad.textureSamples.count else {
+                throw MeshGenerationError.other("Sample index is out of range \(polygon.sampleIndex) >= \(wad.textureSamples.count)")
             }
-            let sample = owner.textureSamples[Int(polygon.sampleIndex)]
+            let sample = wad.textureSamples[Int(polygon.sampleIndex)]
             let remapInfo = try getTextureRemapInfo(forTexturePage: sample.raw.page)
             // TODO: get sample's opaque or transparent value
             let bufferBuilder = getBufferBuilder(forTexture: remapInfo.textureIndex, opaque: true)

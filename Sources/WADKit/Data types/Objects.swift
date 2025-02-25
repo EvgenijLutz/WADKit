@@ -5,7 +5,7 @@
 //  Created by Evgenij Lutz on 21.02.25.
 //
 
-public enum TR4ObjectType: UInt32 {
+public enum TR4ObjectType: UInt32, Sendable {
     case LARA = 0
     case PISTOLS_ANIM
     case UZI_ANIM
@@ -757,7 +757,7 @@ public enum TR4ObjectType: UInt32 {
 }
 
 
-public enum StaticObjectType: UInt32 {
+public enum StaticObjectType: UInt32, Sendable {
     case PLANT0 = 0
     case PLANT1
     case PLANT2
@@ -830,7 +830,7 @@ public enum StaticObjectType: UInt32 {
 }
 
 
-public enum FloorType: UInt32 {
+public enum FloorType: UInt32, Sendable {
     case FLOOR_TYPE = 0
     case DOOR_TYPE
     case TILT_TYPE
@@ -858,7 +858,7 @@ public enum FloorType: UInt32 {
 }
 
 
-public enum TriggerType: UInt32 {
+public enum TriggerType: UInt32, Sendable {
     case TRIGGER = 0
     case PAD
     case SWITCH
@@ -874,7 +874,7 @@ public enum TriggerType: UInt32 {
     case MONKEY
 }
 
-public enum TriggerObjectType: UInt32 {
+public enum TriggerObjectType: UInt32, Sendable {
     case TO_OBJECT
     case TO_CAMERA
     case TO_SINK

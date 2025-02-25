@@ -8,16 +8,17 @@
 import Foundation
 
 
-public struct Keyframe {
+public struct WKKeyframe {
     //
 }
 
 
-public class Animation {
-    public private(set) weak var owner: WAD?
+/// Animation
+public class WKAnimation {
+    public private(set) weak var wad: WAD?
     
-    internal init(owner: WAD? = nil) {
-        self.owner = owner
+    internal init(wad: WAD) {
+        self.wad = wad
     }
     
     internal func lala() {

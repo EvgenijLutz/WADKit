@@ -6,28 +6,43 @@
 //
 
 import Foundation
+import os
 
 
 public enum WADError: Error, Sendable {
     case ownerNotFound
     
+    case wrongMeshPointerIndex
+    case wrongMeshOffset
+    
     case other(_ message: String)
 }
 
 
-public class WAD {
+private let wadLock = OSAllocatedUnfairLock()
+internal func withWadLock<T: Sendable>(_ block: @Sendable () throws -> T) rethrows -> T {
+    return try wadLock.withLock {
+        try block()
+    }
+}
+
+
+public class WAD: @unchecked Sendable {
+    
     public private(set) var version: WADVersion = .TombRaiderTheLastRevelation
-    public private(set) var texturePages: [TexturePage] = []
+    public private(set) var texturePages: [WKTexturePage] = []
     public private(set) var textureSamples: [TextureSample] = []
-    public private(set) var meshes: [Mesh] = []
-    public private(set) var animations: [Animation] = []
+    public private(set) var meshes: [WKMesh] = []
+    public private(set) var animations: [WKAnimation] = []
+    public private(set) var movables: [WKMovable] = []
+    public private(set) var staticObjects: [WKStaticObject] = []
     
     public init() {
         //version = .TombRaiderTheLastRevelation
     }
     
-    public func createTexturePage(withContentsOf data: Data) -> TexturePage {
-        let texturePage = TexturePage(owner: self, contents: data)
+    public func createTexturePage(withContentsOf data: Data) -> WKTexturePage {
+        let texturePage = WKTexturePage(wad: self, contents: data)
         texturePages.append(texturePage)
         return texturePage
     }
@@ -38,13 +53,19 @@ public class WAD {
         return textureSample
     }
     
-    public func createAnimation() -> Animation {
-        let animation = Animation(owner: self)
+    public func createAnimation() -> WKAnimation {
+        let animation = WKAnimation(wad: self)
         animations.append(animation)
         return animation
     }
     
-    public static func fromFileURL(url: URL) throws -> WAD {
+    
+//    public func replaceContents() async throws {
+//        
+//    }
+    
+    
+    public static func fromFileURL(url: URL) async throws -> WAD {
         let data = try Data(contentsOf: url)
         let reader = DataReader(with: data)
         
@@ -96,7 +117,11 @@ public class WAD {
         let animationsOffset = reader.offset + Int(numMeshesWords) * 2
         wadImportLog("Number of mesh buffer words: \(numMeshesWords) (\(numMeshesWords * 2) bytes)")
         
+        let meshStartOffset = reader.offset
+        var meshOffsets: [Int] = []
         repeat {
+            meshOffsets.append(reader.offset - meshStartOffset)
+            
             // Bounding sphere
             let boundingSphere = BoundingSphere(
                 rawCenterX: try reader.read(),
@@ -161,8 +186,8 @@ public class WAD {
             
             // Add mesh
             wad.meshes.append(
-                Mesh(
-                    owner: wad,
+                .init(
+                    wad: wad,
                     boundingSphere: boundingSphere,
                     vertices: vertices,
                     normals: normals,
@@ -377,7 +402,8 @@ public class WAD {
         wadImportLog("Number of static objects: \(numStaticObjects)")
         
         struct RawStaticObject {
-            var objectId: UInt32
+            //var objectId: UInt32
+            var objectId: StaticObjectType
             var pointersIndex: UInt16
             
             var vx1: UInt16
@@ -446,6 +472,34 @@ public class WAD {
         // already done
         
         
+        // Utilities
+        func findMesh(pointersIndex: UInt16) throws -> WKMesh {
+            let pointersIndex = Int(pointersIndex)
+            guard pointersIndex < meshPointers.count else {
+                throw WADError.wrongMeshPointerIndex
+            }
+            let meshPointer = Int(meshPointers[pointersIndex])
+            guard let meshIndex = meshOffsets.firstIndex(of: meshPointer) else {
+                throw WADError.wrongMeshOffset
+            }
+            return wad.meshes[Int(meshIndex)]
+        }
+        
+        func findMeshes(pointersIndex: UInt16, numPointers: UInt16) throws -> [WKMesh] {
+            let pointersIndex = Int(pointersIndex)
+            let numPointers = Int(numPointers) - 1
+            guard pointersIndex + numPointers < meshPointers.count else {
+                throw WADError.wrongMeshPointerIndex
+            }
+            let meshPointer = Int(meshPointers[pointersIndex])
+            guard let meshIndex = meshOffsets.firstIndex(of: meshPointer) else {
+                throw WADError.wrongMeshOffset
+            }
+            
+            return .init(wad.meshes[Int(meshIndex) ... Int(meshIndex) + numPointers])
+        }
+        
+        
         // Animations
         for rawAnimation in rawAnimations {
             let animation = wad.createAnimation()
@@ -453,6 +507,24 @@ public class WAD {
             if rawAnimation.acceleration > 1 {
                 animation.lala()
             }
+        }
+        
+        
+        // Movables
+        for rawMovable in rawMovables {
+            let identifier = rawMovable.objectId
+            let meshes = try findMeshes(pointersIndex: rawMovable.pointersIndex, numPointers: rawMovable.numPointers)
+            let movable = WKMovable(identifier: identifier, meshes: meshes)
+            wad.movables.append(movable)
+        }
+        
+        
+        // Statics
+        for rawStaticObject in rawStaticObjects {
+            let identifier = rawStaticObject.objectId
+            let mesh = try findMesh(pointersIndex: rawStaticObject.pointersIndex)
+            let staticObject = WKStaticObject(identifier: identifier, mesh: mesh)
+            wad.staticObjects.append(staticObject)
         }
         
         
