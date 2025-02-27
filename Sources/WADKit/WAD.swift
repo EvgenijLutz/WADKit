@@ -15,6 +15,8 @@ public enum WADError: Error, Sendable {
     case wrongMeshPointerIndex
     case wrongMeshOffset
     
+    case unknownJointLinkOperationCode(_ code: Int32)
+    
     case other(_ message: String)
 }
 
@@ -332,15 +334,47 @@ public class WAD: @unchecked Sendable {
             var dx: Int32
             var dy: Int32
             var dz: Int32
+            
+            var position: Vector3f {
+                return .init(
+                    x: -1 / 1024 * Float(dx),
+                    y: -1 / 1024 * Float(dy),
+                    z: -1 / 1024 * Float(dz)
+                )
+            }
         }
         let linksBuffer: Data = try reader.readData(ofLength: linksBufferSize)
-        wadImportLog("Read a links buffer of \(linksBuffer.count) bytes")
+        // You cannot read raw links here, because the link buffer is broken in some wads, you need to directly read it from offsets
+        wadImportLog("Read a links buffer of \(linksBufferSize) bytes")
+        
+        let linksReader = DataReader(with: linksBuffer)
+        func readLink(at offset: UInt32) throws -> RawLink {
+            linksReader.set(offset)
+            
+            let operationCode: Int32 = try linksReader.read()
+            if operationCode < 0 || operationCode > 3 {
+                throw WADError.other("Wrong operation code: \(operationCode)")
+            }
+            
+            return RawLink(
+                operationCode: operationCode,
+                dx: try linksReader.read(),
+                dy: try linksReader.read(),
+                dz: try linksReader.read()
+            )
+        }
+        
         //var rawLinks: [RawLink] = []
+        //var linksRead = 0
         //repeat {
+        //    linksRead += 1
         //    let operationCode: Int32 = try reader.read()
         //    if operationCode < 0 || operationCode > 3 {
-        //        wadImportLog("links read: \(rawLinks.count), last link: \(rawLinks.last)")
-        //        throw LoadError.custom("Wrong operation code: \(operationCode)")
+        //        if let last = rawLinks.last {
+        //            wadImportLog("links read: \(rawLinks.count), last link: \(last)")
+        //        }
+        //        continue
+        //        //throw WADError.other("Wrong operation code: \(operationCode)")
         //    }
         //    rawLinks.append(
         //        RawLink(
@@ -378,6 +412,13 @@ public class WAD: @unchecked Sendable {
             var objectId: TR4ObjectType
             var numPointers: UInt16
             var pointersIndex: UInt16
+            
+            /// Offset in integers.
+            ///
+            /// Offset in bytes is:
+            ///  ```swift
+            ///  linksIndex * 4
+            ///  ```
             var linksIndex: UInt32
             var keyframesOffset: UInt32
             var animsIndex: Int16
@@ -514,7 +555,67 @@ public class WAD: @unchecked Sendable {
         for rawMovable in rawMovables {
             let identifier = rawMovable.objectId
             let meshes = try findMeshes(pointersIndex: rawMovable.pointersIndex, numPointers: rawMovable.numPointers)
-            let movable = WKMovable(identifier: identifier, meshes: meshes)
+            
+            let rootJoint: WKJoint? = try {
+                let numLinks = Int(rawMovable.numPointers - 1)
+                if rawMovable.numPointers < 1 {
+                    return nil
+                }
+                
+                var rootJoint = WKJoint(position: .zero, mesh: meshes[0])
+                //if rawMovable.objectId == .ANIMATING5 {
+                //    rootJoint = rootJoint
+                //}
+                
+                
+                var path: [WKJointPath] = [.init(parent: true)]
+                
+                for i in 0 ..< numLinks {
+                    let link = try readLink(at: rawMovable.linksIndex * 4 + UInt32(i * 16))
+                    let position = link.position
+                    
+                    let mesh = meshes[i + 1]
+                    
+                    switch link.operationCode {
+                    case 0:
+                        // stack not used. Link the current mesh to the previous mesh.
+                        rootJoint.append(mesh, offset: position, at: path)
+                        path.append(.init(parent: false))
+                        
+                    case 1:
+                        // pull the parent from the stack. Link the current mesh to the parent.
+                        while path.count > 1 && path.last?.parent == false {
+                            path.removeLast()
+                        }
+                        path.removeLast()
+                        path.append(.init(parent: false))
+                        rootJoint.append(mesh, offset: position, at: path)
+                        path.append(.init(parent: false))
+                        
+                    case 2:
+                        // push the parent into the stack. Link the current mesh to the parent.
+                        path.removeLast()
+                        path.append(.init(parent: true))
+                        rootJoint.append(mesh, offset: position, at: path)
+                        path.append(.init(parent: false))
+                        
+                    case 3:
+                        // read the parent from the stack. Link the current mesh to the parent.
+                        while path.count > 1 && path.last?.parent == false {
+                            path.removeLast()
+                        }
+                        rootJoint.append(mesh, offset: position, at: path)
+                        path.append(.init(parent: false))
+                        
+                    default:
+                        throw WADError.unknownJointLinkOperationCode(link.operationCode)
+                    }
+                }
+                
+                return rootJoint
+            }()
+            
+            let movable = WKMovable(identifier: identifier, rootJoint: rootJoint)
             wad.movables.append(movable)
         }
         

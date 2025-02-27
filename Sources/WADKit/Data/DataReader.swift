@@ -53,7 +53,7 @@ class DataReader {
             throw DataReaderError.indexOutOfRange(offset: offset, endOffset: endIndex, type: SomeType.self)
         }
         
-        let value = try data[offset ..< endIndex].withUnsafeBytes {
+        let value = try data[data.startIndex.advanced(by: offset) ..< data.startIndex.advanced(by: endIndex)].withUnsafeBytes {
             // Method 1 - Will crash if memory is not properly aligned
             //return $0.load(as: SomeType.self)
             
