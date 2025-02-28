@@ -5,6 +5,9 @@
 //  Created by Evgenij Lutz on 21.02.25.
 //
 
+
+// MARK: Model
+
 public enum TR4ObjectType: UInt32, Sendable {
     case LARA = 0
     case PISTOLS_ANIM
@@ -756,6 +759,19 @@ public enum TR4ObjectType: UInt32, Sendable {
     case NUMBER_OBJECTS
 }
 
+extension DataReader {
+    func read() throws -> TR4ObjectType {
+        let rawValue: UInt32 = try read()
+        guard let value = TR4ObjectType(rawValue: rawValue) else {
+            throw DataReaderError.other("Unknown model identifier: \(rawValue)")
+        }
+        
+        return value
+    }
+}
+
+
+// MARK: Static object
 
 public enum StaticObjectType: UInt32, Sendable {
     case PLANT0 = 0
@@ -830,6 +846,20 @@ public enum StaticObjectType: UInt32, Sendable {
 }
 
 
+extension DataReader {
+    func read() throws -> StaticObjectType {
+        let rawValue: UInt32 = try read()
+        guard let value = StaticObjectType(rawValue: rawValue) else {
+            throw DataReaderError.other("Unknown static object identifier: \(rawValue)")
+        }
+        
+        return value
+    }
+}
+
+
+// MARK: Floor type
+
 public enum FloorType: UInt32, Sendable {
     case FLOOR_TYPE = 0
     case DOOR_TYPE
@@ -858,6 +888,8 @@ public enum FloorType: UInt32, Sendable {
 }
 
 
+// MARK: Trigger type
+
 public enum TriggerType: UInt32, Sendable {
     case TRIGGER = 0
     case PAD
@@ -873,6 +905,9 @@ public enum TriggerType: UInt32, Sendable {
     case HEAVYANTITRIGGER
     case MONKEY
 }
+
+
+// MARK: Trigger object type
 
 public enum TriggerObjectType: UInt32, Sendable {
     case TO_OBJECT

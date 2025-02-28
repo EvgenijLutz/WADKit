@@ -8,20 +8,18 @@
 import Foundation
 
 
-public struct WKKeyframe {
-    //
+public struct WKKeyframe: Sendable {
+        public var offset: WKVector
+    public var rotations: [WKRotation]
 }
 
 
 /// Animation
-public class WKAnimation {
-    public private(set) weak var wad: WAD?
+public struct WKAnimation: Sendable {
+    public var frameDuration: Int
     
-    internal init(wad: WAD) {
-        self.wad = wad
-    }
+    public var nextAnimation: Int
+    public var nextAnimationFrameIn: Int
     
-    internal func lala() {
-        //
-    }
+    internal(set) public var keyframes: [WKKeyframe] = []
 }

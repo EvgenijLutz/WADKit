@@ -12,7 +12,7 @@ public class WKTexturePage {
     public private(set) weak var wad: WAD?
     public private(set) var contents: Data
     
-    public var samples: [TextureSample] {
+    public var samples: [WKTextureSample] {
         guard let wad else { return [] }
         guard let page = wad.texturePages.firstIndex(where: { $0 === self }) else { return [] }
         return wad.textureSamples.filter { $0.raw.page == page }

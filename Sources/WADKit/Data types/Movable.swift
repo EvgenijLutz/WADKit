@@ -8,95 +8,41 @@
 import Foundation
 
 
-extension DataReader {
-    func read() throws -> TR4ObjectType {
-        let rawValue: UInt32 = try read()
-        guard let value = TR4ObjectType(rawValue: rawValue) else {
-            throw DataReaderError.other("Unknown movable identifier: \(rawValue)")
-        }
-        
-        return value
-    }
-}
-
-
-public struct Vector3f: Sendable {
-    public var x: Float
-    public var y: Float
-    public var z: Float
-    
-    public init() {
-        x = 0
-        y = 0
-        z = 0
-    }
-    
-    public init(x: Float, y: Float, z: Float) {
-        self.x = x
-        self.y = y
-        self.z = z
-    }
-    
-    
-    public static var zero: Vector3f {
-        return Vector3f()
-    }
-}
-
-
-struct WKJointPath {
+struct WKJointPath: Sendable {
     var parent: Bool
 }
 
 public struct WKJoint: Sendable {
-    public var position: Vector3f
-    public var mesh: WKMesh
+    public var offset: WKVector
+    public var mesh: Int
     
     public var joints: [WKJoint] = []
     
-    mutating func append(_ mesh: WKMesh, offset: Vector3f, at path: any Collection<WKJointPath>) {
+    mutating func append(_ mesh: Int, offset: WKVector, at path: any Collection<WKJointPath>) {
         // This should never happen
         if path.isEmpty {
-            joints.append(.init(position: offset, mesh: mesh))
+            // TODO: Throw
+            joints.append(.init(offset: offset, mesh: mesh))
         }
         else if path.count == 1 {
-            joints.append(.init(position: offset, mesh: mesh))
+            joints.append(.init(offset: offset, mesh: mesh))
         }
         else if !joints.isEmpty {
             joints[joints.count - 1].append(mesh, offset: offset, at: path.dropFirst())
         }
         // This should never happen
         else {
-            joints.append(.init(position: offset, mesh: mesh))
+            // TODO: Throw
+            joints.append(.init(offset: offset, mesh: mesh))
         }
     }
 }
 
 
-public class WKMovable: @unchecked Sendable {
-    private var _identifier: TR4ObjectType
-    public var identifier: TR4ObjectType {
-        get {
-            withWadLock {
-                _identifier
-            }
-        }
-        
-        set {
-            withWadLock {
-                _identifier = newValue
-            }
-        }
-    }
-    
-    
-    private(set) public var rootJoint: WKJoint?
-    
-    
-    internal init(identifier: TR4ObjectType, rootJoint: WKJoint?) {
-        self._identifier = identifier
-        self.rootJoint = rootJoint
-    }
+public struct WKModel: Sendable {
+    public var identifier: TR4ObjectType
+    public var rootJoint: WKJoint?
+    public var animations: [WKAnimation]
 }
 
 

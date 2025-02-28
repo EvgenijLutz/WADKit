@@ -58,7 +58,7 @@ struct RawTextureSample: Sendable {
     }
 }
 
-public class TextureSample {
+public class WKTextureSample {
     public private(set) weak var owner: WAD?
     internal var raw: RawTextureSample
     

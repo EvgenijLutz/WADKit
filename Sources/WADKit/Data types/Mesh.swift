@@ -8,7 +8,7 @@
 import Foundation
 
 
-public struct BoundingSphere {
+public struct WKBoundingSphere: Sendable {
     public internal(set) var rawCenterX: Int16
     public internal(set) var rawCenterY: Int16
     public internal(set) var rawCenterZ: Int16
@@ -17,7 +17,7 @@ public struct BoundingSphere {
 }
 
 
-public struct Vertex {
+public struct WKVector: Sendable {
     public var rawX: Int16
     public var rawY: Int16
     public var rawZ: Int16
@@ -25,10 +25,32 @@ public struct Vertex {
     public var x: Float { Float(rawX) / 1024.0 }
     public var y: Float { Float(rawY) / 1024.0 }
     public var z: Float { Float(rawZ) / 1024.0 }
+    
+    public static var zero: WKVector {
+        .init(rawX: 0, rawY: 0, rawZ: 0)
+    }
 }
 
 
-public struct Normal {
+/// Quaternion
+///
+/// [Quaternions](https://www.math.stonybrook.edu/~oleg/courses/mat150-spr16/lecture-5.pdf)
+public struct WKQuaternion: Sendable {
+    public var ix: Float
+    public var iy: Float
+    public var iz: Float
+    public var r: Float
+    
+    init(ix: Float, iy: Float, iz: Float, r: Float) {
+        self.ix = ix
+        self.iy = iy
+        self.iz = iz
+        self.r = r
+    }
+}
+
+
+public struct WKNormal: Sendable {
     public var rawX: Int16
     public var rawY: Int16
     public var rawZ: Int16
@@ -39,7 +61,24 @@ public struct Normal {
 }
 
 
-public struct Shade {
+public struct WKRotation: Sendable {
+    public var rawX: UInt16
+    public var rawY: UInt16
+    public var rawZ: UInt16
+    
+    public var x: Float { Float(rawX) / 4096 }
+    public var y: Float { Float(rawY) / 4096 }
+    public var z: Float { Float(rawZ) / 4096 }
+    
+    init(rawX: UInt16, rawY: UInt16, rawZ: UInt16) {
+        self.rawX = rawX
+        self.rawY = rawY
+        self.rawZ = rawZ
+    }
+}
+
+
+public struct WKShade: Sendable {
     private var _rawValue: Int16 = 0
     private var _value: Float = 0
     
@@ -72,28 +111,28 @@ public struct Shade {
 }
 
 
-public struct Polygon {
-    struct Triangle {
+public struct WKPolygon: Sendable {
+    struct Triangle: Sendable {
         var v1: UInt16
         var v2: UInt16
         var v3: UInt16
     }
     
-    struct Quad {
+    struct Quad: Sendable {
         var v1: UInt16
         var v2: UInt16
         var v3: UInt16
         var v4: UInt16
     }
     
-    enum Shape {
+    enum Shape: Sendable {
         case triangle(value: Triangle)
         case quad(value: Quad)
     }
     var shape: Shape
     
     
-    enum SampleShape {
+    enum SampleShape: Sendable {
         case topLeft
         case topRight
         case bottomRight
@@ -113,8 +152,8 @@ public struct Polygon {
 }
 
 extension DataReader {
-    func read() throws -> Polygon {
-        let shape: Polygon.Shape = try {
+    func read() throws -> WKPolygon {
+        let shape: WKPolygon.Shape = try {
             let rawShapeType: UInt16 = try read()
             
             switch rawShapeType {
@@ -143,7 +182,7 @@ extension DataReader {
         
         let flippedHorizontally: Bool = ((textureFlags & 0x8000) >> 15) == 1
         
-        let sampleShape: Polygon.SampleShape = try {
+        let sampleShape: WKPolygon.SampleShape = try {
             let rawSampleShape = ((textureFlags & 0x7000) >> 12)
             switch rawSampleShape {
             case 0: return .topLeft
@@ -175,7 +214,7 @@ extension DataReader {
         
         let unknown: UInt8 = try read()
         
-        return Polygon(
+        return WKPolygon(
             shape: shape,
             flippedHorizontally: flippedHorizontally,
             sampleShape: sampleShape,
@@ -189,18 +228,15 @@ extension DataReader {
 }
 
 
-public class WKMesh: @unchecked Sendable {
-    private(set) weak var wad: WAD?
-    
-    public var boundingSphere: BoundingSphere
-    public var vertices: [Vertex]
-    public var normals: [Normal]
-    public var shades: [Shade]
-    public var polygons: [Polygon]
+public struct WKMesh: Sendable {
+    public var boundingSphere: WKBoundingSphere
+    public var vertices: [WKVector]
+    public var normals: [WKNormal]
+    public var shades: [WKShade]
+    public var polygons: [WKPolygon]
     
     
-    internal init(wad: WAD, boundingSphere: BoundingSphere, vertices: [Vertex], normals: [Normal], shades: [Shade], polygons: [Polygon]) {
-        self.wad = wad
+    internal init(boundingSphere: WKBoundingSphere, vertices: [WKVector], normals: [WKNormal], shades: [WKShade], polygons: [WKPolygon]) {
         self.boundingSphere = boundingSphere
         self.vertices = vertices
         self.normals = normals
@@ -210,7 +246,7 @@ public class WKMesh: @unchecked Sendable {
 }
 
 
-public struct VertexBuffer {
+public struct WKVertexBuffer {
     public enum LightingType {
         case normals
         case shades
@@ -229,11 +265,7 @@ extension WKMesh {
         case other(_ message: String)
     }
     
-    public func generateVertexBuffers(withRemappedTexturePages map: [TexturePageRemapInfo]) throws -> [VertexBuffer] {
-        guard let wad else {
-            throw WADError.ownerNotFound
-        }
-        
+    public func generateVertexBuffers(in wad: borrowing WAD, withRemappedTexturePages map: [TexturePageRemapInfo]) throws -> [WKVertexBuffer] {
         // Layout 1 - 36 stride
         // vx, vy, vz   0   12
         // u, v         16  8
@@ -279,7 +311,7 @@ extension WKMesh {
         }
         
         
-        let lightingType: VertexBuffer.LightingType = shades.isEmpty ? .normals : .shades
+        let lightingType: WKVertexBuffer.LightingType = shades.isEmpty ? .normals : .shades
         
         
         for polygon in self.polygons {
@@ -421,7 +453,7 @@ extension WKMesh {
         }
         
         return buffers.map {
-            VertexBuffer(
+            WKVertexBuffer(
                 textureIndex: $0.textureIndex,
                 lightingType: lightingType,
                 numVertices: $0.numVertices,

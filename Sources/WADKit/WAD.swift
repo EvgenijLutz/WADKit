@@ -10,12 +10,16 @@ import os
 
 
 public enum WADError: Error, Sendable {
+    case notImplemented
+    
     case ownerNotFound
     
     case wrongMeshPointerIndex
     case wrongMeshOffset
     
     case unknownJointLinkOperationCode(_ code: Int32)
+    case invalidKeyframeBufferSize
+    case unknownAxisFormat
     
     case other(_ message: String)
 }
@@ -33,15 +37,16 @@ public class WAD: @unchecked Sendable {
     
     public private(set) var version: WADVersion = .TombRaiderTheLastRevelation
     public private(set) var texturePages: [WKTexturePage] = []
-    public private(set) var textureSamples: [TextureSample] = []
+    public private(set) var textureSamples: [WKTextureSample] = []
     public private(set) var meshes: [WKMesh] = []
-    public private(set) var animations: [WKAnimation] = []
-    public private(set) var movables: [WKMovable] = []
+    public private(set) var models: [WKModel] = []
     public private(set) var staticObjects: [WKStaticObject] = []
+    
     
     public init() {
         //version = .TombRaiderTheLastRevelation
     }
+    
     
     public func createTexturePage(withContentsOf data: Data) -> WKTexturePage {
         let texturePage = WKTexturePage(wad: self, contents: data)
@@ -49,22 +54,12 @@ public class WAD: @unchecked Sendable {
         return texturePage
     }
     
-    internal func createTextureSample(withRawTextureSample rawSample: RawTextureSample) -> TextureSample {
-        let textureSample = TextureSample(owner: self, raw: rawSample)
+    
+    internal func createTextureSample(withRawTextureSample rawSample: RawTextureSample) -> WKTextureSample {
+        let textureSample = WKTextureSample(owner: self, raw: rawSample)
         textureSamples.append(textureSample)
         return textureSample
     }
-    
-    public func createAnimation() -> WKAnimation {
-        let animation = WKAnimation(wad: self)
-        animations.append(animation)
-        return animation
-    }
-    
-    
-//    public func replaceContents() async throws {
-//        
-//    }
     
     
     public static func fromFileURL(url: URL) async throws -> WAD {
@@ -125,7 +120,7 @@ public class WAD: @unchecked Sendable {
             meshOffsets.append(reader.offset - meshStartOffset)
             
             // Bounding sphere
-            let boundingSphere = BoundingSphere(
+            let boundingSphere = WKBoundingSphere(
                 rawCenterX: try reader.read(),
                 rawCenterY: try reader.read(),
                 rawCenterZ: try reader.read(),
@@ -138,10 +133,10 @@ public class WAD: @unchecked Sendable {
             let numVertives: UInt16 = try reader.read()
             //wadImportLog("Number of vertices: \(numVertives)")
             
-            var vertices: [Vertex] = []
+            var vertices: [WKVector] = []
             for _ in 0 ..< numVertives {
                 vertices.append(
-                    Vertex(
+                    WKVector(
                         rawX: try reader.read(),
                         rawY: try reader.read(),
                         rawZ: try reader.read()
@@ -153,13 +148,13 @@ public class WAD: @unchecked Sendable {
             let numNormalsOrShades: Int16 = try reader.read()
             //wadImportLog("Number of normals or shades: \(numNormalsOrShades)")
             
-            var normals: [Normal] = []
-            var shades: [Shade] = []
+            var normals: [WKNormal] = []
+            var shades: [WKShade] = []
             
             if numNormalsOrShades > 0 {
                 for _ in 0 ..< numNormalsOrShades {
                     normals.append(
-                        Normal(
+                        WKNormal(
                             rawX: try reader.read(),
                             rawY: try reader.read(),
                             rawZ: try reader.read()
@@ -169,17 +164,17 @@ public class WAD: @unchecked Sendable {
             }
             else {
                 for _ in 0 ..< -numNormalsOrShades {
-                    shades.append(Shade(rawValue: try reader.read()))
+                    shades.append(WKShade(rawValue: try reader.read()))
                 }
             }
             
             // Polygons
             let numPolygons: UInt16 = try reader.read()
             //wadImportLog("Number of polygons: \(numPolygons)")
-            var polygons: [Polygon] = []
+            var polygons: [WKPolygon] = []
             var numQuads = 0
             for _ in 0 ..< numPolygons {
-                let polygon: Polygon = try reader.read()
+                let polygon: WKPolygon = try reader.read()
                 if case .quad(_) = polygon.shape {
                     numQuads += 1
                 }
@@ -189,7 +184,6 @@ public class WAD: @unchecked Sendable {
             // Add mesh
             wad.meshes.append(
                 .init(
-                    wad: wad,
                     boundingSphere: boundingSphere,
                     vertices: vertices,
                     normals: normals,
@@ -217,6 +211,7 @@ public class WAD: @unchecked Sendable {
         struct RawAnimation {
             var keyframeOffset: UInt32
             var frameDuration: UInt8
+            /// Keyframe size in words
             var keyframeSize: UInt8
             var stateId: UInt16
             var unknown1: UInt16
@@ -335,11 +330,11 @@ public class WAD: @unchecked Sendable {
             var dy: Int32
             var dz: Int32
             
-            var position: Vector3f {
+            var position: WKVector {
                 return .init(
-                    x: -1 / 1024 * Float(dx),
-                    y: -1 / 1024 * Float(dy),
-                    z: -1 / 1024 * Float(dz)
+                    rawX: Int16(dx),
+                    rawY: Int16(dy),
+                    rawZ: Int16(dz)
                 )
             }
         }
@@ -364,29 +359,6 @@ public class WAD: @unchecked Sendable {
             )
         }
         
-        //var rawLinks: [RawLink] = []
-        //var linksRead = 0
-        //repeat {
-        //    linksRead += 1
-        //    let operationCode: Int32 = try reader.read()
-        //    if operationCode < 0 || operationCode > 3 {
-        //        if let last = rawLinks.last {
-        //            wadImportLog("links read: \(rawLinks.count), last link: \(last)")
-        //        }
-        //        continue
-        //        //throw WADError.other("Wrong operation code: \(operationCode)")
-        //    }
-        //    rawLinks.append(
-        //        RawLink(
-        //            operationCode: operationCode,
-        //            dx: try reader.read(),
-        //            dy: try reader.read(),
-        //            dz: try reader.read()
-        //        )
-        //    )
-        //} while reader.offset + 16 <= keyframesPackageAddress
-        //wadImportLog(rawLinks.last)
-        
         
         // Keyframes
         wadImportLog("Jumping into the keyframes block from \(reader.offset) to \(keyframesPackageAddress)")
@@ -396,8 +368,67 @@ public class WAD: @unchecked Sendable {
         wadImportLog("Number of keyframes words: \(numKeyframesWords) (\(numKeyframesWords * 2) bytes)")
         
         let keyframesBuffer = try reader.readData(ofLength: numKeyframesWords * 2)
-        //let keyframesReader = DataReader(with: keyframesBuffer)
         wadImportLog("Read a keyframes buffer of \(keyframesBuffer.count) bytes")
+        
+        struct RawKeyframe {
+            var bb1x: Int16
+            var bb2x: Int16
+            var bb1y: Int16
+            var bb2y: Int16
+            var bb1z: Int16
+            var bb2z: Int16
+            var offx: Int16
+            var offy: Int16
+            var offz: Int16
+            var keys: [WKRotation]
+        }
+        let keyframesReader = DataReader(with: keyframesBuffer)
+        func readKeyFrame(numKeys: Int) throws -> RawKeyframe {
+            var keyframe = RawKeyframe(
+                bb1x: try keyframesReader.read(),
+                bb2x: try keyframesReader.read(),
+                bb1y: try keyframesReader.read(),
+                bb2y: try keyframesReader.read(),
+                bb1z: try keyframesReader.read(),
+                bb2z: try keyframesReader.read(),
+                offx: try keyframesReader.read(),
+                offy: try keyframesReader.read(),
+                offz: try keyframesReader.read(),
+                keys: []
+            )
+            
+            keyframe.keys = try (0 ..< numKeys).map { _ in
+                let word: UInt16 = try keyframesReader.read()
+                let axes = word & 0xC000
+                switch axes {
+                case 0x0000:
+                    let secondWord: UInt16 = try keyframesReader.read()
+                    let rotation: UInt32 = (UInt32(word) << 16) | UInt32(secondWord)
+                    let rotationX = UInt16(((0x3FF << 20) & rotation) >> 20)
+                    let rotationY = UInt16(((0x3FF << 10) & rotation) >> 10)
+                    let rotationZ = UInt16(((0x3FF <<  0) & rotation) >> 0)
+                    return WKRotation(
+                        rawX: rotationX * 4,
+                        rawY: rotationY * 4,
+                        rawZ: rotationZ * 4
+                    )
+                    
+                case 0x4000:
+                    return WKRotation(rawX: word & 0x3FFF, rawY: 0, rawZ: 0)
+                    
+                case 0x8000:
+                    return WKRotation(rawX: 0, rawY: word & 0x3FFF, rawZ: 0)
+                    
+                case 0xC000:
+                    return WKRotation(rawX: 0, rawY: 0, rawZ: word & 0x3FFF)
+                    
+                default:
+                    throw WADError.unknownAxisFormat
+                }
+            }
+            
+            return keyframe
+        }
         
         
         // MARK: - Section 5 - Models
@@ -406,7 +437,7 @@ public class WAD: @unchecked Sendable {
         
         // Movables
         let numMovables: UInt32 = try reader.read()
-        wadImportLog("Number of movables: \(numMovables)")
+        wadImportLog("Number of models: \(numMovables)")
         
         struct RawMovable {
             var objectId: TR4ObjectType
@@ -514,7 +545,7 @@ public class WAD: @unchecked Sendable {
         
         
         // Utilities
-        func findMesh(pointersIndex: UInt16) throws -> WKMesh {
+        func findMesh(pointersIndex: UInt16) throws -> Int {
             let pointersIndex = Int(pointersIndex)
             guard pointersIndex < meshPointers.count else {
                 throw WADError.wrongMeshPointerIndex
@@ -523,10 +554,10 @@ public class WAD: @unchecked Sendable {
             guard let meshIndex = meshOffsets.firstIndex(of: meshPointer) else {
                 throw WADError.wrongMeshOffset
             }
-            return wad.meshes[Int(meshIndex)]
+            return Int(meshIndex)
         }
         
-        func findMeshes(pointersIndex: UInt16, numPointers: UInt16) throws -> [WKMesh] {
+        func findMeshes(pointersIndex: UInt16, numPointers: UInt16) throws -> [Int] {
             let pointersIndex = Int(pointersIndex)
             let numPointers = Int(numPointers) - 1
             guard pointersIndex + numPointers < meshPointers.count else {
@@ -537,36 +568,23 @@ public class WAD: @unchecked Sendable {
                 throw WADError.wrongMeshOffset
             }
             
-            return .init(wad.meshes[Int(meshIndex) ... Int(meshIndex) + numPointers])
-        }
-        
-        
-        // Animations
-        for rawAnimation in rawAnimations {
-            let animation = wad.createAnimation()
-            
-            if rawAnimation.acceleration > 1 {
-                animation.lala()
-            }
+            return .init(Int(meshIndex) ... Int(meshIndex) + numPointers)
         }
         
         
         // Movables
-        for rawMovable in rawMovables {
+        for (modelIndex, rawMovable) in rawMovables.enumerated() {
             let identifier = rawMovable.objectId
             let meshes = try findMeshes(pointersIndex: rawMovable.pointersIndex, numPointers: rawMovable.numPointers)
             
+            // Joints
             let rootJoint: WKJoint? = try {
                 let numLinks = Int(rawMovable.numPointers - 1)
                 if rawMovable.numPointers < 1 {
                     return nil
                 }
                 
-                var rootJoint = WKJoint(position: .zero, mesh: meshes[0])
-                //if rawMovable.objectId == .ANIMATING5 {
-                //    rootJoint = rootJoint
-                //}
-                
+                var rootJoint = WKJoint(offset: .zero, mesh: meshes[0])
                 
                 var path: [WKJointPath] = [.init(parent: true)]
                 
@@ -615,8 +633,81 @@ public class WAD: @unchecked Sendable {
                 return rootJoint
             }()
             
-            let movable = WKMovable(identifier: identifier, rootJoint: rootJoint)
-            wad.movables.append(movable)
+            
+            // Number of animations for current model
+            let startRawAnimationIndex = Int(rawMovable.animsIndex)
+            let numAnimations = {
+                // Current model does not have any animation
+                if rawMovable.animsIndex < 0 {
+                    return 0
+                }
+                
+                // The nearest next model has animations
+                var nextIndex = modelIndex + 1
+                while nextIndex < rawMovables.count - 1 {
+                    let nextRawModel = rawMovables[nextIndex]
+                    if nextRawModel.animsIndex >= 0 {
+                        return Int(nextRawModel.animsIndex - rawMovable.animsIndex)
+                    }
+                    
+                    nextIndex += 1
+                }
+                
+                // Current model is the last model with animations
+                return rawAnimations.count - Int(rawMovable.animsIndex)
+            }()
+            
+            
+            // Animations
+            //rawMovable.animsIndex
+            let numMeshes = meshes.count
+            var animations: [WKAnimation] = []
+            for rawAnimationIndex in startRawAnimationIndex ..< startRawAnimationIndex + numAnimations {
+                let rawAnimation = rawAnimations[rawAnimationIndex]
+                let keyframeSize = Int(rawAnimation.keyframeSize * 2)
+                
+                let numKeyframes: Int = try {
+                    let nextRawAnimation: RawAnimation? = {
+                        guard rawAnimationIndex < rawAnimations.count - 1 else {
+                            return nil
+                        }
+                        
+                        return rawAnimations[rawAnimationIndex + 1]
+                    }()
+                    
+                    let nextOffset = {
+                        guard let nextRawAnimation else {
+                            return keyframesBuffer.count
+                        }
+                        
+                        return Int(nextRawAnimation.keyframeOffset)
+                    }()
+                    
+                    let offsetDelta = nextOffset - Int(rawAnimation.keyframeOffset)
+                    guard offsetDelta % keyframeSize == 0 else {
+                        throw WADError.invalidKeyframeBufferSize
+                    }
+                    
+                    return offsetDelta / keyframeSize
+                }()
+                
+                //rawAnimation.nextAnimation
+                let animation = try WKAnimation(
+                    frameDuration: Int(rawAnimation.frameDuration),
+                    nextAnimation: Int(rawAnimation.nextAnimation) - startRawAnimationIndex,
+                    nextAnimationFrameIn: Int(rawAnimation.frameIn),
+                    keyframes: (0 ..< numKeyframes).map { idx in
+                        keyframesReader.set(Int(rawAnimation.keyframeOffset) + keyframeSize * idx)
+                        let rawKeyframe = try readKeyFrame(numKeys: numMeshes)
+                        let offset = WKVector(rawX: rawKeyframe.offx, rawY: rawKeyframe.offy, rawZ: rawKeyframe.offz)
+                        return .init(offset: offset, rotations: rawKeyframe.keys)
+                    }
+                )
+                animations.append(animation)
+            }
+            
+            let movable = WKModel(identifier: identifier, rootJoint: rootJoint, animations: animations)
+            wad.models.append(movable)
         }
         
         
@@ -665,6 +756,6 @@ public class WAD: @unchecked Sendable {
 
 extension WAD: CustomStringConvertible {
     public var description: String {
-        "WAD v\(version). Textures: \(texturePages.count), samples: \(textureSamples.count), meshes: \(meshes.count), animations: \(animations.count)"
+        "WAD v\(version). Textures: \(texturePages.count), samples: \(textureSamples.count), meshes: \(meshes.count)"
     }
 }

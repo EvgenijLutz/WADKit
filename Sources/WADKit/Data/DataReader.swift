@@ -88,7 +88,7 @@ class DataReader {
             throw DataReaderError.indexOutOfRange(offset: offset, endOffset: endIndex, type: Data.self)
         }
         
-        let value = data[offset ..< endIndex]
+        let value = data[data.startIndex.advanced(by: offset) ..< data.startIndex.advanced(by: endIndex)]
         
         offset = endIndex
         return value
