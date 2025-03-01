@@ -8,6 +8,7 @@
 import Foundation
 
 
+// TODO: Make a struct and Sendable
 class DataReader {
     enum DataReaderError: Error {
         case strangeDataSize(offset: Int, type: Any.Type)
@@ -29,11 +30,11 @@ class DataReader {
         offset = 0
     }
     
-    func set<SomeType>(_ newOffset: SomeType) where SomeType: BinaryInteger {
+    func set<SomeType: BinaryInteger>(_ newOffset: SomeType) {
         offset = Int(newOffset)
     }
     
-    func skip<SomeType>(_ bytesToSkip: SomeType) where SomeType: BinaryInteger {
+    func skip<SomeType: BinaryInteger>(_ bytesToSkip: SomeType) {
         let numBytes = Int(bytesToSkip)
         offset += numBytes
     }
@@ -78,7 +79,7 @@ class DataReader {
         return value
     }
     
-    func readData<Integer>(ofLength length: Integer) throws -> Data where Integer: BinaryInteger {
+    func readData<Integer: BinaryInteger>(ofLength length: Integer) throws -> Data {
         guard length > 0 else {
             throw DataReaderError.strangeDataSize(offset: offset, type: Data.self)
         }

@@ -29,6 +29,29 @@ public struct WKVector: Sendable {
     public static var zero: WKVector {
         .init(rawX: 0, rawY: 0, rawZ: 0)
     }
+    
+    public func distance(to vector: WKVector) -> Float {
+        let dx = x - vector.x
+        let dy = y - vector.y
+        let dz = z - vector.z
+        return sqrt(dx * dx + dy * dy + dz * dz)
+    }
+    
+    public static func + (lhs: WKVector, rhs: WKVector) -> WKVector {
+        .init(
+            rawX: lhs.rawX + rhs.rawX,
+            rawY: lhs.rawY + rhs.rawY,
+            rawZ: lhs.rawZ + rhs.rawZ
+        )
+    }
+    
+    public static func - (lhs: WKVector, rhs: WKVector) -> WKVector {
+        .init(
+            rawX: lhs.rawX - rhs.rawX,
+            rawY: lhs.rawY - rhs.rawY,
+            rawZ: lhs.rawZ - rhs.rawZ
+        )
+    }
 }
 
 
@@ -247,15 +270,42 @@ public struct WKMesh: Sendable {
 
 
 public struct WKVertexBuffer: Sendable {
-    public enum LightingType: Sendable {
+    public enum LayoutType: Sendable {
         case normals
         case shades
+        case normalsWithWeights
     }
     
     public let textureIndex: Int
-    public let lightingType: LightingType
+    public let lightingType: LayoutType
     public let numVertices: Int
     public let data: Data
+}
+
+
+public struct JointConnection: Sendable {
+    public let mesh0: Int
+    public let offset0: WKVector
+    
+    public let mesh1: Int
+    public let offset1: WKVector
+    
+    public enum JointType: Sendable {
+        /// Vertex indices are hardcoded
+        case ponytail
+        
+        /// Nearest vertices are connected
+        case regular
+    }
+    public let jointType: JointType
+    
+    public init(mesh0: Int, offset0: WKVector, mesh1: Int, offset1: WKVector, jointType: JointType) {
+        self.mesh0 = mesh0
+        self.offset0 = offset0
+        self.mesh1 = mesh1
+        self.offset1 = offset1
+        self.jointType = jointType
+    }
 }
 
 
@@ -265,16 +315,46 @@ extension WKMesh {
         case other(_ message: String)
     }
     
-    public func generateVertexBuffers(in wad: borrowing WAD, withRemappedTexturePages map: [TexturePageRemapInfo]) async throws -> [WKVertexBuffer] {
-        // Layout 1 - 36 stride
+    
+    // TODO: Also include vertex generation info into WKVertexBuffer for mapping wad vertices into vertex buffer to enable editing the vertices in the wad editor.
+    /// Generates a vertex buffer
+    ///
+    /// If `joint` is specified, then it's a skin joint
+    public func generateVertexBuffers(in wad: borrowing WAD, jointInfo joint: JointConnection? = nil, withRemappedTexturePages map: [TexturePageRemapInfo]) async throws -> [WKVertexBuffer] {
+        // Layout 1 - 32 stride
         // vx, vy, vz   0   12
-        // u, v         16  8
-        // nx, ny, nz   24  12
+        // u, v         12  8
+        // nx, ny, nz   20  12
         
-        // Layout 2 - 28 stride
+        // Layout 2 - 24 stride
         // vx, vy, vz   0   12
-        // u, v         16  8
-        // shade        24  4
+        // u, v         12  8
+        // shade        20  4
+        
+        // Layout 3 - 52 stride
+        // vx, vy, vz   0   12  // Default position
+        // u, v         12  8
+        // nx, ny, nz   20  12
+        // ox, oy, oz   32  12  // Offset when rendering complete model
+        // w0, w1       44  8
+        
+        func getMesh(at index: Int?) -> WKMesh? {
+            guard let index else {
+                return nil
+            }
+            
+            guard index < wad.meshes.count else {
+                return nil
+            }
+            
+            return wad.meshes[index]
+        }
+        
+        //let mesh = getMesh(at: meshIndex)
+        let mesh0 = getMesh(at: joint?.mesh0)
+        //let offset0 = joint?.offset0
+        let mesh1 = getMesh(at: joint?.mesh1)
+        let offset1 = joint?.offset1
         
         
         /// Links a buffer with texture
@@ -311,7 +391,17 @@ extension WKMesh {
         }
         
         
-        let lightingType: WKVertexBuffer.LightingType = shades.isEmpty ? .normals : .shades
+        let lightingType: WKVertexBuffer.LayoutType = {
+            guard shades.isEmpty else {
+                return .shades
+            }
+            
+            if mesh0 != nil, mesh1 != nil {
+                return .normalsWithWeights
+            }
+            
+            return .normals
+        }()
         
         
         for polygon in self.polygons {
@@ -339,7 +429,7 @@ extension WKMesh {
                 
                 // Write vertex
                 let vertex = vertices[vertexIndex]
-                writer.write(-vertex.x)
+                writer.write(vertex.x)
                 writer.write(-vertex.y)
                 writer.write(-vertex.z)
                 
@@ -414,14 +504,14 @@ extension WKMesh {
                 }
                 
                 // Write Normal/Shade
-                if lightingType == .normals {
+                if lightingType == .normals || lightingType == .normalsWithWeights {
                     guard vertexIndex < normals.count else {
                         throw MeshGenerationError.other("Normal index is out of range")
                     }
                     let normal = normals[vertexIndex]
                     writer.write(normal.x)
-                    writer.write(normal.y)
-                    writer.write(normal.z)
+                    writer.write(-normal.y)
+                    writer.write(-normal.z)
                 }
                 else {
                     guard vertexIndex < shades.count else {
@@ -429,6 +519,41 @@ extension WKMesh {
                     }
                     let shade = shades[vertexIndex]
                     writer.write(shade.value)
+                }
+                
+                
+                // Write offset and weight
+                if lightingType == .normalsWithWeights {
+                    guard let mesh0, !mesh0.vertices.isEmpty/*, let offset0*/, let mesh1, !mesh1.vertices.isEmpty, let offset1 else {
+                        throw WADError.other("No mesh info for current joint. This should never happen.")
+                    }
+                    
+                    // TODO: Maybe the best thing to do is to hardcode vertex ids like here?
+                    // https://www.tombraiderforums.com/showthread.php?p=2992908
+                    
+                    let vertex0 = mesh0.vertices.sorted(by: { ($0 - offset1).distance(to: vertex) < ($1 - offset1).distance(to: vertex) })[0] - offset1
+                    let vertex1 = mesh1.vertices.sorted(by: { $0.distance(to: vertex) < $1.distance(to: vertex) })[0]
+                    
+                    struct WeightInfo {
+                        let offset: WKVector
+                        let w0: Float
+                        let w1: Float
+                    }
+                    let info: WeightInfo = if vertex0.distance(to: vertex) < vertex1.distance(to: vertex) {
+                        .init(offset: vertex0 - vertex, w0: 1, w1: 0)
+                    }
+                    else {
+                        .init(offset: vertex1 - vertex, w0: 0, w1: 1)
+                    }
+                    
+                    // Offset
+                    writer.write(info.offset.x)
+                    writer.write(-info.offset.y)
+                    writer.write(-info.offset.z)
+                    
+                    // Weight
+                    writer.write(info.w0)
+                    writer.write(info.w1)
                 }
                 
                 
