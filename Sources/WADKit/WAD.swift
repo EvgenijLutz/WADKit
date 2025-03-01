@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import os
+//import os
 
 
 public enum WADError: Error, Sendable {
@@ -25,16 +25,15 @@ public enum WADError: Error, Sendable {
 }
 
 
-private let wadLock = OSAllocatedUnfairLock()
-internal func withWadLock<T: Sendable>(_ block: @Sendable () throws -> T) rethrows -> T {
-    return try wadLock.withLock {
-        try block()
-    }
-}
+//private let wadLock = OSAllocatedUnfairLock()
+//internal func withWadLock<T: Sendable>(_ block: @Sendable () throws -> T) rethrows -> T {
+//    return try wadLock.withLock {
+//        try block()
+//    }
+//}
 
 
-public class WAD: @unchecked Sendable {
-    
+public struct WAD: Sendable {
     public private(set) var version: WADVersion = .TombRaiderTheLastRevelation
     public private(set) var texturePages: [WKTexturePage] = []
     public private(set) var textureSamples: [WKTextureSample] = []
@@ -48,17 +47,22 @@ public class WAD: @unchecked Sendable {
     }
     
     
-    public func createTexturePage(withContentsOf data: Data) -> WKTexturePage {
-        let texturePage = WKTexturePage(wad: self, contents: data)
+    public mutating func createTexturePage(withContentsOf data: Data) -> Int {
+        let texturePage = WKTexturePage(contents: data)
         texturePages.append(texturePage)
-        return texturePage
+        return texturePages.count
     }
     
     
-    internal func createTextureSample(withRawTextureSample rawSample: RawTextureSample) -> WKTextureSample {
-        let textureSample = WKTextureSample(owner: self, raw: rawSample)
+    public func getSamples(for pageIndex: Int) -> [WKTextureSample] {
+        return textureSamples.filter { $0.raw.page == pageIndex }
+    }
+    
+    
+    internal mutating func createTextureSample(withRawTextureSample rawSample: RawTextureSample) -> Int {
+        let textureSample = WKTextureSample(raw: rawSample)
         textureSamples.append(textureSample)
-        return textureSample
+        return textureSamples.count
     }
     
     
@@ -66,7 +70,7 @@ public class WAD: @unchecked Sendable {
         let data = try Data(contentsOf: url)
         let reader = DataReader(with: data)
         
-        let wad = WAD()
+        var wad = WAD()
         
         // MARK: - Section 1 - Version
         wad.version = try reader.read()

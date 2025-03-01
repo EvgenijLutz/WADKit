@@ -246,8 +246,8 @@ public struct WKMesh: Sendable {
 }
 
 
-public struct WKVertexBuffer {
-    public enum LightingType {
+public struct WKVertexBuffer: Sendable {
+    public enum LightingType: Sendable {
         case normals
         case shades
     }
@@ -265,7 +265,7 @@ extension WKMesh {
         case other(_ message: String)
     }
     
-    public func generateVertexBuffers(in wad: borrowing WAD, withRemappedTexturePages map: [TexturePageRemapInfo]) throws -> [WKVertexBuffer] {
+    public func generateVertexBuffers(in wad: borrowing WAD, withRemappedTexturePages map: [TexturePageRemapInfo]) async throws -> [WKVertexBuffer] {
         // Layout 1 - 36 stride
         // vx, vy, vz   0   12
         // u, v         16  8

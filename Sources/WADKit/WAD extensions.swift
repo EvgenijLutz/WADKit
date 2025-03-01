@@ -12,8 +12,8 @@ internal let texturePageWidth = 256
 internal let texturePageSize = texturePageWidth * texturePageWidth * 3
 
 
-public class FuckingTextureHolder {
-    public var contents: [UInt8]
+public class FuckingTextureHolder: @unchecked Sendable {
+    fileprivate(set) public var contents: [UInt8]
     
     init(textureWidth: Int) {
         contents = .init(repeating: 255, count: textureWidth * textureWidth * 4)
@@ -21,25 +21,16 @@ public class FuckingTextureHolder {
 }
 
 
-public struct TexturePageRemapInfo {
+public struct TexturePageRemapInfo: Sendable {
     public let pageIndex: Int
     public let textureIndex: Int
     public let uvMagnifier: Float
     public let offsetU: Float
     public let offsetV: Float
-    
-    
-    public init(pageIndex: Int, textureIndex: Int, uvMagnifier: Float, offsetU: Float, offsetV: Float) {
-        self.pageIndex = pageIndex
-        self.textureIndex = textureIndex
-        self.uvMagnifier = uvMagnifier
-        self.offsetU = offsetU
-        self.offsetV = offsetV
-    }
 }
 
 
-public struct CombinedTexturePages {
+public struct CombinedTexturePages: Sendable {
     public let textures: [FuckingTextureHolder]
     public let textureWidth: Int
     public let remapInfo: [TexturePageRemapInfo]
@@ -49,30 +40,24 @@ public struct CombinedTexturePages {
 public extension WAD {
     func generateTextureRemapInfo(pagesPerRow: Int) -> [TexturePageRemapInfo] {
         let numPagesInTexture = pagesPerRow * pagesPerRow
-        
-        var remapInfo: [TexturePageRemapInfo] = []
-        for index in texturePages.indices {
+        return texturePages.indices.map { index in
             let indexInTexture = index % numPagesInTexture
             let row = indexInTexture % pagesPerRow
             let column = indexInTexture / pagesPerRow
             //wadImportLog("\(indexInTexture) -> \(row) : \(column)")
             
-            remapInfo.append(
-                TexturePageRemapInfo(
-                    pageIndex: index,
-                    textureIndex: index / numPagesInTexture,
-                    uvMagnifier: 1 / Float(pagesPerRow),
-                    offsetU: 1 / Float(pagesPerRow) * Float(row),
-                    offsetV: 1 / Float(pagesPerRow) * Float(column)
-                )
+            return TexturePageRemapInfo(
+                pageIndex: index,
+                textureIndex: index / numPagesInTexture,
+                uvMagnifier: 1 / Float(pagesPerRow),
+                offsetU: 1 / Float(pagesPerRow) * Float(row),
+                offsetV: 1 / Float(pagesPerRow) * Float(column)
             )
         }
-        
-        return remapInfo
     }
     
     /// Generates a bundle of textures with BGRA8 pixel format and (texture page index) -> (texture index) remap info.
-    func generateCombinedTexturePages(pagesPerRow: Int) -> CombinedTexturePages {
+    func generateCombinedTexturePages(pagesPerRow: Int) async -> CombinedTexturePages {
         let remapInfo = generateTextureRemapInfo(pagesPerRow: pagesPerRow)
         
         let pagesPerRow = 8

@@ -58,19 +58,10 @@ struct RawTextureSample: Sendable {
     }
 }
 
-public class WKTextureSample {
-    public private(set) weak var owner: WAD?
+public struct WKTextureSample: Sendable {
     internal var raw: RawTextureSample
     
-    public var page: WKTexturePage? {
-        guard let owner else { return nil }
-        guard raw.page < owner.texturePages.count else { return nil }
-        return owner.texturePages[Int(raw.page)]
-    }
-    
-    
-    internal init(owner: WAD, raw: RawTextureSample) {
-        self.owner = owner
-        self.raw = raw
+    public var page: Int {
+        return Int(raw.page)
     }
 }
