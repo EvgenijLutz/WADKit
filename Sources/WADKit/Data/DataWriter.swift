@@ -11,13 +11,13 @@ import Foundation
 class DataWriter {
     private(set) var data = Data()
     
-    func write<SomeType>(_ value: SomeType) where SomeType: BinaryInteger {
+    func write<SomeType: BinaryInteger>(_ value: SomeType) {
         withUnsafePointer(to: value) { pointer in
             data.append(Data(bytes: pointer, count: MemoryLayout<SomeType>.size))
         }
     }
     
-    func write<SomeType>(_ value: SomeType) where SomeType: BinaryFloatingPoint {
+    func write<SomeType: BinaryFloatingPoint>(_ value: SomeType) {
         withUnsafePointer(to: value) { pointer in
             data.append(Data(bytes: pointer, count: MemoryLayout<SomeType>.size))
         }
@@ -27,7 +27,7 @@ class DataWriter {
         data.append(value)
     }
     
-    func skip<SomeType>(_ bytesToSkip: SomeType) where SomeType: BinaryInteger {
+    func skip<SomeType: BinaryInteger>(_ bytesToSkip: SomeType) {
         let numBytes = Int(bytesToSkip)
         guard numBytes > 0 else {
             return

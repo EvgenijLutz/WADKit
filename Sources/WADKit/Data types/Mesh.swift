@@ -30,6 +30,12 @@ public struct WKVector: Sendable {
         .init(rawX: 0, rawY: 0, rawZ: 0)
     }
     
+    public init(rawX: Int16 = 0, rawY: Int16 = 0, rawZ: Int16 = 0) {
+        self.rawX = rawX
+        self.rawY = rawY
+        self.rawZ = rawZ
+    }
+    
     public func distance(to vector: WKVector) -> Float {
         let dx = x - vector.x
         let dy = y - vector.y
@@ -52,6 +58,10 @@ public struct WKVector: Sendable {
             rawZ: lhs.rawZ - rhs.rawZ
         )
     }
+}
+
+extension WKVector: Equatable {
+    //
 }
 
 
@@ -274,12 +284,22 @@ public struct WKVertexBuffer: Sendable {
         case normals
         case shades
         case normalsWithWeights
+        
+        
+        public var stride: Int {
+            switch self {
+            case .normals: 32
+            case .shades: 24
+            case .normalsWithWeights: 52
+            }
+        }
     }
     
     public let textureIndex: Int
     public let lightingType: LayoutType
     public let numVertices: Int
-    public let data: Data
+    public let vertexBuffer: Data
+    //public let indexBuffer: Data
 }
 
 
@@ -338,6 +358,7 @@ extension WKMesh {
         // ox, oy, oz   32  12  // Offset when rendering complete model
         // w0, w1       44  8
         
+        
         func getMesh(at index: Int?) -> WKMesh? {
             guard let index else {
                 return nil
@@ -357,9 +378,39 @@ extension WKMesh {
         let offset1 = joint?.offset1
         
         
+        enum UVIndex {
+            case v1
+            case v2
+            case v3
+            case v4
+        }
+        
+        struct WeightInfo {
+            let offset: WKVector
+            let w0: Float
+            let w1: Float
+        }
+        
+        struct VertexRemapInfo {
+            var vector: WKVector = .zero
+            
+            var uvIndex: UVIndex = .v1
+            var sample: WKTextureSample = .init(raw: .init(rawX: 0, rawY: 0, page: 0, flipX: 0, addW: 0, flipY: 0, addH: 0))
+            var u: Int = -1
+            var v: Int = -1
+            
+            var normal: WKNormal? = nil
+            
+            var shade: Int? = nil
+            
+            var weightInfo: WeightInfo? = nil
+        }
+        
         /// Links a buffer with texture
         class BufferBuilder {
+            var remapInfo: [VertexRemapInfo] = []
             let writer = DataWriter()
+            let indexWriter = DataWriter()
             let opaque: Bool
             let textureIndex: Int
             var numVertices: Int = 0
@@ -414,21 +465,17 @@ extension WKMesh {
             let bufferBuilder = getBufferBuilder(forTexture: remapInfo.textureIndex, opaque: true)
             let writer = bufferBuilder.writer
             
-            enum UVIndex {
-                case v1
-                case v2
-                case v3
-                case v4
-            }
-            
             func writeVertex(_ index: UInt16, _ uvIndex: UVIndex) throws {
                 let vertexIndex = Int(index)
                 guard vertexIndex < vertices.count else {
                     throw MeshGenerationError.other("Vertex index is out of range")
                 }
                 
+                var vertexInfo = VertexRemapInfo()
+                
                 // Write vertex
                 let vertex = vertices[vertexIndex]
+                vertexInfo.vector = vertex
                 writer.write(vertex.x)
                 writer.write(-vertex.y)
                 writer.write(-vertex.z)
@@ -485,6 +532,8 @@ extension WKMesh {
                     case .v4: return .v3
                     }
                 }()
+                vertexInfo.uvIndex = correctedUVIndex
+                vertexInfo.sample = sample
                 switch correctedUVIndex {
                 case .v1:
                     writer.write(sample.raw.left * remapInfo.uvMagnifier + remapInfo.offsetU)
@@ -509,6 +558,7 @@ extension WKMesh {
                         throw MeshGenerationError.other("Normal index is out of range")
                     }
                     let normal = normals[vertexIndex]
+                    vertexInfo.normal = normal
                     writer.write(normal.x)
                     writer.write(-normal.y)
                     writer.write(-normal.z)
@@ -534,17 +584,14 @@ extension WKMesh {
                     let vertex0 = mesh0.vertices.sorted(by: { ($0 - offset1).distance(to: vertex) < ($1 - offset1).distance(to: vertex) })[0] - offset1
                     let vertex1 = mesh1.vertices.sorted(by: { $0.distance(to: vertex) < $1.distance(to: vertex) })[0]
                     
-                    struct WeightInfo {
-                        let offset: WKVector
-                        let w0: Float
-                        let w1: Float
-                    }
                     let info: WeightInfo = if vertex0.distance(to: vertex) < vertex1.distance(to: vertex) {
                         .init(offset: vertex0 - vertex, w0: 1, w1: 0)
                     }
                     else {
                         .init(offset: vertex1 - vertex, w0: 0, w1: 1)
                     }
+                    
+                    vertexInfo.weightInfo = info
                     
                     // Offset
                     writer.write(info.offset.x)
@@ -556,6 +603,7 @@ extension WKMesh {
                     writer.write(info.w1)
                 }
                 
+                // TODO: Write vertexInfo and index
                 
                 bufferBuilder.numVertices += 1
             }
@@ -582,7 +630,8 @@ extension WKMesh {
                 textureIndex: $0.textureIndex,
                 lightingType: lightingType,
                 numVertices: $0.numVertices,
-                data: $0.writer.data
+                vertexBuffer: $0.writer.data
+                //indexBuffer: $0.indexWriter.data
             )
         }
     }

@@ -6,7 +6,6 @@
 //
 
 import Foundation
-//import os
 
 
 public enum WADError: Error, Sendable {
@@ -21,18 +20,13 @@ public enum WADError: Error, Sendable {
     case invalidKeyframeBufferSize
     case unknownAxisFormat
     
+    case modelNotFound
+    
     case other(_ message: String)
 }
 
 
-//private let wadLock = OSAllocatedUnfairLock()
-//internal func withWadLock<T: Sendable>(_ block: @Sendable () throws -> T) rethrows -> T {
-//    return try wadLock.withLock {
-//        try block()
-//    }
-//}
-
-
+/// Ta-daaa
 public struct WAD: Sendable {
     public private(set) var version: WADVersion = .TombRaiderTheLastRevelation
     public private(set) var texturePages: [WKTexturePage] = []
@@ -63,6 +57,11 @@ public struct WAD: Sendable {
         let textureSample = WKTextureSample(raw: rawSample)
         textureSamples.append(textureSample)
         return textureSamples.count
+    }
+    
+    
+    public func findModel(_ identifier: TR4ObjectType) -> WKModel? {
+        models.first { $0.identifier == identifier }
     }
     
     
@@ -562,6 +561,9 @@ public struct WAD: Sendable {
         }
         
         func findMeshes(pointersIndex: UInt16, numPointers: UInt16) throws -> [Int] {
+            //if pointersIndex % 2 > 0 {
+            //    print("uh-ooh")
+            //}
             let pointersIndex = Int(pointersIndex)
             let numPointers = Int(numPointers) - 1
             guard pointersIndex + numPointers < meshPointers.count else {
@@ -579,6 +581,9 @@ public struct WAD: Sendable {
         // Movables
         for (modelIndex, rawMovable) in rawMovables.enumerated() {
             let identifier = rawMovable.objectId
+            if rawMovable.objectId == .MUMMY {
+                print("a-ha")
+            }
             let meshes = try findMeshes(pointersIndex: rawMovable.pointersIndex, numPointers: rawMovable.numPointers)
             
             // Joints
@@ -671,6 +676,10 @@ public struct WAD: Sendable {
                 let keyframeSize = Int(rawAnimation.keyframeSize * 2)
                 
                 let numKeyframes: Int = try {
+                    guard keyframeSize > 0 else {
+                        return 0
+                    }
+                    
                     let nextRawAnimation: RawAnimation? = {
                         guard rawAnimationIndex < rawAnimations.count - 1 else {
                             return nil

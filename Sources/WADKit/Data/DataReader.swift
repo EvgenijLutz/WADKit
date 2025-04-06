@@ -80,8 +80,12 @@ class DataReader {
     }
     
     func readData<Integer: BinaryInteger>(ofLength length: Integer) throws -> Data {
-        guard length > 0 else {
+        guard length >= 0 else {
             throw DataReaderError.strangeDataSize(offset: offset, type: Data.self)
+        }
+        
+        if length == 0 {
+            return Data()
         }
         
         let endIndex = offset + Int(length)

@@ -58,10 +58,19 @@ struct RawTextureSample: Sendable {
     }
 }
 
+extension RawTextureSample: Equatable {
+    //
+}
+
+
 public struct WKTextureSample: Sendable {
     internal var raw: RawTextureSample
     
     public var page: Int {
         return Int(raw.page)
     }
+}
+
+extension WKTextureSample: Equatable {
+    //
 }

@@ -8,10 +8,6 @@
 import Foundation
 
 
-internal let texturePageWidth = 256
-internal let texturePageSize = texturePageWidth * texturePageWidth * 3
-
-
 public class FuckingTextureHolder: @unchecked Sendable {
     fileprivate(set) public var contents: [UInt8]
     
@@ -32,7 +28,7 @@ public struct TexturePageRemapInfo: Sendable {
 
 public struct CombinedTexturePages: Sendable {
     public let textures: [FuckingTextureHolder]
-    public let textureWidth: Int
+    public let width: Int
     public let remapInfo: [TexturePageRemapInfo]
 }
 
@@ -113,7 +109,7 @@ public extension WAD {
         
         return .init(
             textures: textures,
-            textureWidth: textureWidth,
+            width: textureWidth,
             remapInfo: remapInfo
         )
     }
