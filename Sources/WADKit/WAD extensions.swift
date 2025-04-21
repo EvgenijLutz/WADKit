@@ -29,6 +29,12 @@ public struct TexturePageRemapInfo: Sendable {
 public struct CombinedTexturePages: Sendable {
     public let textures: [FuckingTextureHolder]
     public let width: Int
+    
+    /// Always equals to `width`.
+    public var height: Int {
+        width
+    }
+    
     public let remapInfo: [TexturePageRemapInfo]
 }
 

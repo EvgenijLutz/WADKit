@@ -91,6 +91,52 @@ public struct WKNormal: Sendable {
     public var x: Float { Float(rawX) / 16300 }
     public var y: Float { Float(rawY) / 16300 }
     public var z: Float { Float(rawZ) / 16300 }
+    
+    
+    public func length() -> Float {
+        return sqrt(x * x + y * y + z * z)
+    }
+    
+    
+    public init(rawX: Int16, rawY: Int16, rawZ: Int16) {
+#if false
+        self.rawX = rawX
+        self.rawY = rawY
+        self.rawZ = rawZ
+#if DEBUG
+        let len = length()
+        if len < 0.999 || len > 1.001 {
+            rawX = 16300
+            print("uh ooooh: \(len) -> (\(x), \(y), \(z))")
+        }
+#endif
+#else
+        let tx = Float(rawX) / 16300
+        let ty = Float(rawY) / 16300
+        let tz = Float(rawZ) / 16300
+        let len = sqrt(tx * tx + ty * ty + tz * tz)
+        if len < 0.999 || len > 1.001 {
+//#if DEBUG
+//            print("uh ooooh: \(len) -> (\(tx), \(ty), \(tz))")
+//#endif
+            if len < 0.0001 {
+                self.rawX = 16300
+                self.rawY = 0
+                self.rawZ = 0
+            }
+            else {
+                self.rawX = Int16(tx / len * 16300)
+                self.rawY = Int16(ty / len * 16300)
+                self.rawZ = Int16(tz / len * 16300)
+            }
+        }
+        else {
+            self.rawX = rawX
+            self.rawY = rawY
+            self.rawZ = rawZ
+        }
+#endif
+    }
 }
 
 
@@ -296,7 +342,8 @@ public struct WKVertexBuffer: Sendable {
     }
     
     public let textureIndex: Int
-    public let lightingType: LayoutType
+    public let doubleSided: Bool
+    public let layoutType: LayoutType
     public let numVertices: Int
     public let vertexBuffer: Data
     //public let indexBuffer: Data
@@ -412,11 +459,13 @@ extension WKMesh {
             let writer = DataWriter()
             let indexWriter = DataWriter()
             let opaque: Bool
+            let doubleSided: Bool
             let textureIndex: Int
             var numVertices: Int = 0
             
-            init(opaque: Bool, textureIndex: Int) {
+            init(opaque: Bool, doubleSided: Bool, textureIndex: Int) {
                 self.opaque = opaque
+                self.doubleSided = doubleSided
                 self.textureIndex = textureIndex
             }
         }
@@ -431,12 +480,12 @@ extension WKMesh {
             return remapInfo
         }
         
-        func getBufferBuilder(forTexture textureIndex: Int, opaque: Bool) -> BufferBuilder {
+        func getBufferBuilder(forTexture textureIndex: Int, opaque: Bool, doubleSided: Bool) -> BufferBuilder {
             if let bufferBuilder = buffers.first(where: { $0.textureIndex == textureIndex }) {
                 return bufferBuilder
             }
             
-            let bufferBuilder = BufferBuilder(opaque: opaque, textureIndex: textureIndex)
+            let bufferBuilder = BufferBuilder(opaque: opaque, doubleSided: doubleSided, textureIndex: textureIndex)
             buffers.append(bufferBuilder)
             return bufferBuilder
         }
@@ -461,8 +510,7 @@ extension WKMesh {
             }
             let sample = wad.textureSamples[Int(polygon.sampleIndex)]
             let remapInfo = try getTextureRemapInfo(forTexturePage: sample.raw.page)
-            // TODO: get sample's opaque or transparent value
-            let bufferBuilder = getBufferBuilder(forTexture: remapInfo.textureIndex, opaque: true)
+            let bufferBuilder = getBufferBuilder(forTexture: remapInfo.textureIndex, opaque: polygon.opaque, doubleSided: true)
             let writer = bufferBuilder.writer
             
             func writeVertex(_ index: UInt16, _ uvIndex: UVIndex) throws {
@@ -628,7 +676,8 @@ extension WKMesh {
         return buffers.map {
             WKVertexBuffer(
                 textureIndex: $0.textureIndex,
-                lightingType: lightingType,
+                doubleSided: $0.doubleSided,
+                layoutType: lightingType,
                 numVertices: $0.numVertices,
                 vertexBuffer: $0.writer.data
                 //indexBuffer: $0.indexWriter.data

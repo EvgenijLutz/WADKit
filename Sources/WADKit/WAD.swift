@@ -60,6 +60,15 @@ public struct WAD: Sendable {
     }
     
     
+    public func findModel(_ modelIndex: Int) -> WKModel? {
+        guard modelIndex >= 0 && modelIndex < models.count else {
+            return nil
+        }
+        
+        return models[modelIndex]
+    }
+    
+    
     public func findModel(_ identifier: TR4ObjectType) -> WKModel? {
         models.first { $0.identifier == identifier }
     }
