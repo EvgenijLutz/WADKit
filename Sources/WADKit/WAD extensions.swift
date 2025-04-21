@@ -62,7 +62,6 @@ public extension WAD {
     func generateCombinedTexturePages(pagesPerRow: Int) async -> CombinedTexturePages {
         let remapInfo = generateTextureRemapInfo(pagesPerRow: pagesPerRow)
         
-        let pagesPerRow = 8
         let pagesPerTexture = pagesPerRow * pagesPerRow
         let textureWidth = pagesPerRow * texturePageWidth
         var textures: [FuckingTextureHolder] = []

@@ -342,6 +342,7 @@ public struct WKVertexBuffer: Sendable {
     }
     
     public let textureIndex: Int
+    public let opaque: Bool
     public let doubleSided: Bool
     public let layoutType: LayoutType
     public let numVertices: Int
@@ -676,6 +677,7 @@ extension WKMesh {
         return buffers.map {
             WKVertexBuffer(
                 textureIndex: $0.textureIndex,
+                opaque: $0.opaque,
                 doubleSided: $0.doubleSided,
                 layoutType: lightingType,
                 numVertices: $0.numVertices,
