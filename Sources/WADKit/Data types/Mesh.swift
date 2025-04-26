@@ -60,28 +60,6 @@ public struct WKVector: Sendable {
     }
 }
 
-extension WKVector: Equatable {
-    //
-}
-
-
-/// Quaternion
-///
-/// [Quaternions](https://www.math.stonybrook.edu/~oleg/courses/mat150-spr16/lecture-5.pdf)
-public struct WKQuaternion: Sendable {
-    public var ix: Float
-    public var iy: Float
-    public var iz: Float
-    public var r: Float
-    
-    init(ix: Float, iy: Float, iz: Float, r: Float) {
-        self.ix = ix
-        self.iy = iy
-        self.iz = iz
-        self.r = r
-    }
-}
-
 
 public struct WKNormal: Sendable {
     public var rawX: Int16
