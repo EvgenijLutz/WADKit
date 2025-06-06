@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import DataIO
 
 
 public enum WADVersion: UInt32, Sendable {
@@ -29,7 +30,7 @@ extension WADVersion: CustomStringConvertible {
 
 
 extension DataReader {
-    func read() throws -> WADVersion {
+    mutating func read() throws -> WADVersion {
         let rawVersion: UInt32 = try read()
         guard let version = WADVersion(rawValue: rawVersion) else {
             throw WADError.other("Wrong WAD version number: \(rawVersion)")

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import DataIO
 
 
 public enum WADError: Error, Sendable {
@@ -74,9 +75,9 @@ public struct WAD: Sendable {
     }
     
     
-    public static func fromFileURL(url: URL) async throws -> WAD {
+    public static func fromFile(at url: URL) async throws -> WAD {
         let data = try Data(contentsOf: url)
-        let reader = DataReader(with: data)
+        var reader = DataReader(data)
         
         var wad = WAD()
         
@@ -354,7 +355,7 @@ public struct WAD: Sendable {
         // You cannot read raw links here, because the link buffer is broken in some wads, you need to directly read it from offsets
         wadImportLog("Read a links buffer of \(linksBufferSize) bytes")
         
-        let linksReader = DataReader(with: linksBuffer)
+        var linksReader = DataReader(linksBuffer)
         func readLink(at offset: UInt32) throws -> RawLink {
             linksReader.set(offset)
             
@@ -394,7 +395,7 @@ public struct WAD: Sendable {
             var offz: Int16
             var keys: [WKRotation]
         }
-        let keyframesReader = DataReader(with: keyframesBuffer)
+        var keyframesReader = DataReader(keyframesBuffer)
         func readKeyFrame(numKeys: Int) throws -> RawKeyframe {
             var keyframe = RawKeyframe(
                 bb1x: try keyframesReader.read(),

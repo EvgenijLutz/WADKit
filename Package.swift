@@ -3,6 +3,20 @@
 
 import PackageDescription
 
+func getDepandencies() -> [Package.Dependency] {
+#if true
+    // Local dependencies for development
+    [
+        .package(path: "../../DataIO"),
+    ]
+#else
+    // Remote dependencies for release
+    [
+        .package(url: "https://github.com/EvgenijLutz/DataIO.git", exact: .init(1, 0, 0)),
+    ]
+#endif
+}
+
 let package = Package(
     name: "WADKit",
     platforms: [
@@ -10,15 +24,18 @@ let package = Package(
         .iOS(.v18)
     ],
     products: [
-        // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
             name: "WADKit",
-            targets: ["WADKit"]),
+            targets: ["WADKit"]
+        ),
     ],
+    dependencies: getDepandencies(),
     targets: [
-        // Targets are the basic building blocks of a package, defining a module or a test suite.
-        // Targets can depend on other targets in this package and products from dependencies.
         .target(
-            name: "WADKit"),
+            name: "WADKit",
+            dependencies: [
+                .product(name: "DataIO", package: "DataIO")
+            ]
+        ),
     ]
 )

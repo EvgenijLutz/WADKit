@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import DataIO
 
 
 public struct WKBoundingSphere: Sendable {
@@ -209,7 +210,7 @@ public struct WKPolygon: Sendable {
 }
 
 extension DataReader {
-    func read() throws -> WKPolygon {
+    mutating func read() throws -> WKPolygon {
         let shape: WKPolygon.Shape = try {
             let rawShapeType: UInt16 = try read()
             

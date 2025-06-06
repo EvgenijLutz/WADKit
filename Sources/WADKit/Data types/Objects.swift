@@ -5,6 +5,8 @@
 //  Created by Evgenij Lutz on 21.02.25.
 //
 
+import DataIO
+
 
 // MARK: Model
 
@@ -760,7 +762,7 @@ public enum TR4ObjectType: UInt32, Sendable {
 }
 
 extension DataReader {
-    func read() throws -> TR4ObjectType {
+    mutating func read() throws -> TR4ObjectType {
         let rawValue: UInt32 = try read()
         guard let value = TR4ObjectType(rawValue: rawValue) else {
             throw DataReaderError.other("Unknown model identifier: \(rawValue)")
@@ -847,7 +849,7 @@ public enum StaticObjectType: UInt32, Sendable {
 
 
 extension DataReader {
-    func read() throws -> StaticObjectType {
+    mutating func read() throws -> StaticObjectType {
         let rawValue: UInt32 = try read()
         guard let value = StaticObjectType(rawValue: rawValue) else {
             throw DataReaderError.other("Unknown static object identifier: \(rawValue)")

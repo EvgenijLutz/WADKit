@@ -45,12 +45,6 @@ public struct WKModel: Sendable {
     public var animations: [WKAnimation]
 }
 
-
-extension DataReader {
-    
-}
-
-
 /*
  
  enum static_types {
