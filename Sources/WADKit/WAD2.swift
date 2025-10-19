@@ -392,7 +392,8 @@ public extension WAD2 {
                                 let v0: LEB128Long = try reader.read()
                                 let v1: LEB128Long = try reader.read()
                                 let v2: LEB128Long = try reader.read()
-                                let contents: WAD2PolygonContents = try {
+                                // let contents: WAD2PolygonContents = try {
+                                let _: WAD2PolygonContents = try {
                                     if isQuad {
                                         let v3: LEB128Long = try reader.read()
                                         return .quad(v0: v0.value, v1: v1.value, v2: v2.value, v3: v3.value)
